@@ -22,8 +22,6 @@ npm run lint
 ```
 .
 ├── AGENTS.md                  # 운영 지침 (워크플로우 본체) — 먼저 읽기
-├── 해커톤_워크플로우.md         # 4시간 타임라인 + 황금 규칙
-├── 해커톤_협업_워크플로우.md     # 2인 역할분담 버전
 ├── spec.md / plan.md / PROGRESS.md  # 계약서 템플릿 (주제 정해지면 채움)
 ├── data/                      # 공공데이터 자산
 │   ├── boundaries/            # 전국 시도/시군구 경계 GeoJSON·TopoJSON (확보됨)

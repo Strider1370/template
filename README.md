@@ -15,7 +15,7 @@ npm run dev      # http://localhost:3000
 빌드 검증은 `npm run build`. **이 스캐폴드는 `install`+`build` 통과 확인됨** (Node 24 / npm 11).
 
 그다음 순서:
-1. `AGENTS.md` + `해커톤_워크플로우.md` 읽고 워크플로우 시작
+1. `AGENTS.md` 읽고 워크플로우 시작
 2. `spec.md`에 **데모 시나리오**부터 작성
 3. `web/app/page.tsx`(스켈레톤) 교체하며 구현
 4. 단계마다 `PROGRESS.md` 갱신 + 작동 상태마다 체크포인트 커밋
@@ -24,7 +24,7 @@ npm run dev      # http://localhost:3000
 
 | 묶음 | 내용 |
 |---|---|
-| **워크플로우** | `AGENTS.md`(운영 지침) · `해커톤_워크플로우.md` · `해커톤_협업_워크플로우.md` |
+| **워크플로우** | `AGENTS.md` (운영 지침 · 단계별 Gate · 사전 준비된 자산) |
 | **계약서 템플릿** | `spec.md` · `plan.md` · `PROGRESS.md` (빈 템플릿) |
 | **스택** | `web/` — Next.js 14 + React 18 + TS + Tailwind + KRDS, 셋업 완료 |
 | **데이터** | 전국 시도/시군구 경계, 시도→시군구 매핑, 민방위 대피소 ~17,000곳 |
