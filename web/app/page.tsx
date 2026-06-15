@@ -125,7 +125,7 @@ export default function Home() {
       <section id="section-2" className="mx-auto max-w-container px-4 pb-16">
         <div className="rounded-krds-lg border border-gray-10 bg-gray-5 p-6 md:p-8">
           <Title size="m" color="gray-90">
-            다음 단계 (AGENTS.md 워크플로우)
+            다음 단계 (CLAUDE.md 워크플로우)
           </Title>
           <ol className="mt-4 space-y-3">
             {NEXT_STEPS.map(([k, v], i) => (
