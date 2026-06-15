@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Local inspection clones
+.repo-inspect/
+
+# Runtime MCP and secrets
+.mcp.json
+*.mcp.local.json
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Codex/local runtime state
+.codex/cache/
+.codex/logs/
+.codex/sessions/
+.codex/tmp/
+
+# Claude/local runtime state
+.claude/settings.local.json
+.claude/cache/
+.claude/logs/
+
+# code-review-graph generated state
+.code-review-graph/
+.crg/
+code-review-graph.db
+*.crg.db
+
+# Playwright generated artifacts
+test-results/
+playwright-report/
+blob-report/
+*.trace.zip
+*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
