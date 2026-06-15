@@ -43,4 +43,4 @@ Thumbs.db
 .idea/
 
 # 발표 레퍼런스 캡처 — 스크린샷은 재생성 가능(서드파티 렌더)이라 로컬 보관
-reference-capture/shots/
+presentation/slidev/reference-capture/shots/

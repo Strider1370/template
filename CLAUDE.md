@@ -35,6 +35,7 @@ npm run lint
 .
 ├── CLAUDE.md                  # 이 파일 — 운영 지침 + 키트 안내 (먼저 읽기)
 ├── spec.md / plan.md / PROGRESS.md  # 계약서 템플릿 (주제 정해지면 채움)
+├── presentation/              # 발표 덱 (reveal/ · slidev/) — 가이드: presentation/AGENTS.md
 ├── data/                      # 공공데이터 자산
 │   ├── boundaries/            # 전국 시도/시군구 경계 GeoJSON·TopoJSON (확보됨)
 │   └── data-sources.md        # 공공데이터 신청 경로 + 정적/실시간 전략
@@ -56,7 +57,7 @@ npm run lint
 |------|------|
 | `spec.md` | 스펙 — 무엇을 만드는가, **데모 시나리오 포함** |
 | `plan.md` | 구현 계획 — 어떻게 만드는가, 작업 분해 + 폴백 |
-| `presentation.html` | 발표자료 (HTML PPT) |
+| `presentation/` | 발표 덱 — reveal/ 또는 slidev/ (가이드: `presentation/AGENTS.md`) |
 | `PROGRESS.md` | 현재 단계 / 완료 / 막힌 부분 (세션 인수인계용) |
 
 ---
@@ -143,8 +144,9 @@ npm run lint
 - **Gate:** 데모 시나리오의 핵심 경로가 일단 끝까지 연결되는가 (완벽하지 않아도 됨).
 
 ### 6단계. 발표자료 1차 작성
-- 구현이 도는 동안 `spec.md` 기반 `presentation.html` 초안 작성. 데모 핵심 흐름을 슬라이드로.
-- **킥(차별점)을 중심 슬라이드로 배치**하라. 어떤 해외 사례에서 어떤 메커니즘을 이식했는지(벤치마킹 서사)를 함께 보여 설득력을 높여라.
+- `presentation/`에서 덱 제작 — **reveal/(단일 HTML·안전) 또는 slidev/(디자인 강함·빌드 필요) 택1**. 엔진 선택·사용법은 `presentation/AGENTS.md` 참고.
+- **킥(차별점)을 중심 슬라이드로** 배치하고, 어떤 해외 사례 메커니즘을 이식했는지(벤치마킹 서사)를 함께 보여라. 잘 만든 덱 레퍼런스·레시피·캡처도구는 `presentation/slidev/reference-capture/`.
+- 데모+킥에 시간 80%, 프로그램 로직은 1장. **라이브 데모는 GIF 백업 필수.**
 
 ### 7단계. 구현 검증 (스펙 대비)
 - `spec.md` 대비 검증(Playwright / 미리보기 브라우저). 실제 실행해 작동 확인, **안 되는 부분을 구체적으로 목록화**(에러·로그 포함).

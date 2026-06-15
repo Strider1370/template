@@ -1,0 +1,18 @@
+{
+  "name": "deck-slidev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --port 3030",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.49.29",
+    "@slidev/theme-default": "^0.25.0",
+    "@iconify-json/carbon": "^1.2.8",
+    "@iconify-json/ph": "^1.2.2",
+    "@iconify-json/twemoji": "^1.2.2",
+    "vue": "^3.4.0"
+  }
+}

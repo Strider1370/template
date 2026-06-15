@@ -6,8 +6,8 @@
 - 라이브: https://baizeai.github.io/talks/2025-06-11-kubecon-hk/
 - 소스(공개, **Apache-2.0**): https://github.com/BaizeAI/talks → `packages/2025-06-11-kubecon-hk/`
 - 기술: **Slidev** (기본 테마 + 커스텀 CSS + UnoCSS)
-- 스크린샷: `reference-capture/shots/kubecon-hk/` (`01.png`~`29.png`, 각 슬라이드 v-click/v-motion 다 펼친 최종 상태)
-  - 없으면 재생성: `node reference-capture/capture.mjs <덱URL>`
+- 스크린샷: `shots/kubecon-hk/` (`01.png`~`29.png`, 각 슬라이드 v-click/v-motion 다 펼친 최종 상태)
+  - 없으면 재생성(이 폴더에서): `npm install && node capture.mjs <덱URL>`
 
 ## "폴리시"의 정체 — 재현 레시피
 특별한 비밀 컴포넌트 없음. 아래 조합이 전부다:
