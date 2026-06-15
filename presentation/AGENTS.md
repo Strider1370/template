@@ -1,26 +1,28 @@
 # presentation/ — 발표 덱 만들기 안내
 
-해커톤 발표 자료(HTML 슬라이드)를 만드는 곳. **두 엔진 중 하나를 골라** 쓴다.
+해커톤 발표 자료(HTML 슬라이드)를 만드는 곳. **세 엔진 중 하나를 골라** 쓴다.
 (워크플로우상 위치: `CLAUDE.md` 6·9단계 — 구현 도는 동안 초안, 마지막에 보강.)
 
 ```
 presentation/
 ├── reveal/    # ① reveal.js — 단일 HTML, 빌드 없음 (안전빵)
-└── slidev/    # ② Slidev — 마크다운+Vue, 빌드 필요 (디자인 천장 높음)
+├── marp/      # ② Marp — 마크다운 → 단일 HTML/PDF, Notion 스타일 테마
+└── slidev/    # ③ Slidev — 마크다운+Vue, 빌드 SPA (디자인 천장 높음)
     └── reference-capture/   # 잘 만든 덱 벤치마킹 (레시피 + 캡처 도구)
 ```
 
 ## 어떤 엔진을 고를까
 
-| | **reveal/** (단일 HTML) | **slidev/** (Slidev) |
-|---|---|---|
-| 작성 | HTML 직접 | 마크다운(.md) + 약간의 Vue/UnoCSS |
-| 빌드 | 없음 — 파일 더블클릭(`file://`) | Node + npm 필요 (dev 서버/빌드) |
-| 디자인 천장 | 중상 (CSS 직접 깎는 만큼) | **상** (reference-capture의 KubeCon 덱처럼) |
-| 오프라인 시연 | **가장 안전** (벤더링됨) | `npm run build` 정적본으로 시연 |
-| 적합 | 빠르고 안전하게 / npm 부담될 때 | 팀이 npm 익숙 + 디자인 임팩트 원할 때 |
+| | **reveal/** | **marp/** | **slidev/** |
+|---|---|---|---|
+| 작성 | HTML 직접 | **마크다운** | 마크다운 + Vue/UnoCSS |
+| 결과물 | 단일 HTML | **단일 HTML + PDF/PPTX** | 빌드된 정적 SPA |
+| 빌드 | 없음(`file://`) | npm(`marp` CLI) | Node + npm |
+| 오프라인 시연 | ✅ 벤더링 | ✅ 단일 파일 | △ 빌드본 |
+| 디자인 | 직접 | **상(Notion 테마 내장)** | 상(레시피로) |
+| 적합 | 가장 안전·빠름 | **마크다운+예쁨+단일파일 균형** | 디자인 최대치+npm 익숙 |
 
-> 결론: **확신 없으면 reveal/** (무조건 돈다). **디자인으로 승부 + npm 익숙하면 slidev/**.
+> 결론: **마크다운으로 빠르게 + 예쁘게 + 단일 파일**을 원하면 `marp/`(추천). 빌드도 싫으면 `reveal/`. 디자인 최대치+모션이면 `slidev/`.
 
 ## ① reveal/ 쓰는 법
 1. `reveal/index.template.html` → `index.html` 복사
@@ -28,7 +30,17 @@ presentation/
 3. `index.html` 더블클릭(브라우저). 조작: `←/→/Space` · `S` 노트 · `F` 전체화면
 - 채워진 예시: `reveal/example-disaster-guide.html`, 상세: `reveal/README.md`
 
-## ② slidev/ 쓰는 법
+## ② marp/ 쓰는 법
+```bash
+cd presentation/marp
+npm install
+npm run build    # slides.md → output/index.html (단일 HTML, 오프라인 OK)
+npm run pdf      # PDF 백업 / npm run pptx / npm run watch
+```
+- `slides.md` 편집 (마크다운 + `<!-- _class: cover|section|end|big-number|pastel-blocks|… -->`).
+- 스크린샷은 `marp/assets/`에 두고 `![w:1040](./assets/x.png)`. 테마·레이아웃·라이선스: `marp/README.md`.
+
+## ③ slidev/ 쓰는 법
 ```bash
 cd presentation/slidev
 npm install
