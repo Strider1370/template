@@ -6,7 +6,7 @@ import { ROOT, checkFiles, gateResult, readText } from "../lib.mjs";
 
 const checks = checkFiles([
   "presentation/deck.json",
-  "presentation/slides.md",
+  "presentation/slidev/slides.md",
 ]);
 
 // deck.json JSON.parse + 최소 구조

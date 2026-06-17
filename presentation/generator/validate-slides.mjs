@@ -28,7 +28,7 @@ const presentationRoot = resolve(__dirname, "..");
 
 const slidesPath = process.argv[2]
   ? resolve(process.cwd(), process.argv[2])
-  : resolve(presentationRoot, "slides.md");
+  : resolve(presentationRoot, "slidev", "slides.md");
 const deckPath = process.argv[3]
   ? resolve(process.cwd(), process.argv[3])
   : resolve(presentationRoot, "deck.json");
