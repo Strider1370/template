@@ -32,10 +32,17 @@ export default mergeConfigs([
         },
       }),
       presetWebFonts({
-        // CDN (Google Fonts) at build time; falls back to system fonts if blocked.
+        // Pretendard is bundled locally (provider: 'none' → not fetched; @font-face in style.css).
+        // DM Sans / Noto Sans KR remain as Google-served latin/fallback enhancements.
+        provider: 'google',
         fonts: {
-          sans: ['DM Sans', 'Noto Sans KR'],
-          kr: 'Noto Sans KR',
+          sans: [
+            { name: 'Pretendard Variable', provider: 'none' },
+            { name: 'Pretendard', provider: 'none' },
+            'DM Sans',
+            'Noto Sans KR',
+          ],
+          kr: [{ name: 'Pretendard Variable', provider: 'none' }, 'Noto Sans KR'],
           hand: 'Playwrite IT Moderna',
         },
       }),

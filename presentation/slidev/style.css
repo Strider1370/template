@@ -1,3 +1,21 @@
+/* Pretendard — local bundle (offline, no CDN). woff2 variable font in public/fonts/. */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
+}
+
+/* Force Pretendard as the base family everywhere (wins regardless of UnoCSS web fonts). */
+#slide-content,
+.slidev-layout,
+.slidev-page {
+  font-family:
+    'Pretendard Variable', 'Pretendard', 'DM Sans', 'Noto Sans KR',
+    ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
 /* .slidev-code {
   font-size: 1em !important;
   line-height: 1.4em !important;
