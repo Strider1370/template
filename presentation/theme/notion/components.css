@@ -55,6 +55,13 @@
   margin: 0 0 18px 0;
 }
 
+/* 한글 줄바꿈: 어절 단위(단어 중간 끊김 방지) — 모든 슬라이드 텍스트 공통 */
+.slide h1, .slide h2, .slide h3, .slide p, .slide li,
+.slide .slide-title, .slide blockquote, .slide .body, .slide .quote-text {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 /* ============================================================
    1) hero  → .slide.cover   (← propca section.cover)
    ============================================================ */
@@ -76,11 +83,11 @@
 }
 .slide.cover h1 {
   color: #ffffff;
-  font-size: var(--notion-fs-hero);
+  font-size: 52pt;
   font-weight: 600;
   letter-spacing: -0.03em;
   margin: 0 0 24px;
-  line-height: 1.1;
+  line-height: 1.12;
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
   padding-bottom: 24px;
   width: 100%;
@@ -111,9 +118,11 @@
   list-style: none;
   padding: 0;
   margin: 16px 0 0 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  justify-content: center;
+  gap: 14px;
 }
 .slide.icon-list ul.flow-list li {
   background: var(--notion-canvas);
@@ -144,10 +153,10 @@
 .slide.compare .slide-inner {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   column-gap: 24px;
   row-gap: 16px;
-  align-content: start;
+  align-content: stretch;
   align-items: stretch;
   justify-content: stretch;
 }
@@ -157,10 +166,13 @@
   background: var(--notion-canvas);
   border: 1px solid var(--notion-hairline);
   border-radius: var(--notion-radius-lg);
-  padding: 24px;
+  padding: 28px 28px;
   width: 100%;
   min-width: 0;
   align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .slide.compare .col .col-label {
   font-family: var(--notion-font-mono);
@@ -222,13 +234,16 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
   flex: 1;
-  margin-top: 8px;
+  margin: 8px 0;
 }
 .slide.block-features .blocks > .block {
-  padding: 24px;
+  padding: 32px 28px;
   background: var(--notion-canvas-card);
   border: 1px solid var(--notion-hairline);
   border-radius: var(--notion-radius-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .slide.block-features .blocks > .block .ico {
   width: 44px; height: 44px;
@@ -286,14 +301,23 @@
   align-content: start;
 }
 .slide.split .slide-title { grid-column: 1 / -1; }
-.slide.split .col { min-width: 0; align-self: start; }
+.slide.split .col { min-width: 0; align-self: stretch; }
+.slide.split .col-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: var(--notion-canvas-card);
+  border: 1px dashed var(--notion-hairline-strong);
+  border-radius: var(--notion-radius-lg);
+  overflow: hidden;
+}
 .slide.split .col-media img {
   width: 100%;
-  max-height: 380px;
-  object-fit: contain;
-  border-radius: var(--notion-radius);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--notion-hairline);
+  height: 100%;
+  max-height: 440px;
+  object-fit: cover;
+  border-radius: var(--notion-radius-lg);
 }
 .slide.split .col-text .callout { margin-top: 0; }
 .slide.split .col-text ul { list-style: none; padding: 0; margin: 14px 0 0; }
@@ -317,7 +341,7 @@
 /* ============================================================
    8) architecture  → .slide.steps-result  (← propca section.lecture-example .steps/.result)
    ============================================================ */
-.slide.steps-result .slide-inner { justify-content: flex-start; }
+.slide.steps-result .slide-inner { justify-content: center; }
 .slide.steps-result .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -396,10 +420,12 @@
 }
 .slide.before-after .ba-col img {
   width: 100%;
-  max-height: 360px;
+  height: 300px;
+  max-height: 42vh;
   object-fit: cover;
   border-radius: 10px;
   border: 1px solid var(--notion-hairline);
+  background: var(--notion-canvas-card);
 }
 .slide.before-after .ba-col .ba-caption { font-size: 13pt; color: var(--notion-ink-sub); margin: 0; }
 .slide.before-after .ba-arrow {
@@ -427,13 +453,15 @@
   text-transform: uppercase;
 }
 .slide.big-number .ee-slot-number {
-  font-size: var(--notion-fs-big-number);
+  font-size: min(var(--notion-fs-big-number), 17vw);
   font-family: var(--notion-font-mono);
   font-weight: 800;
   color: var(--notion-purple);
   line-height: 1;
   margin: 24px 0 16px;
   letter-spacing: -0.05em;
+  white-space: nowrap;
+  max-width: 100%;
 }
 .slide.big-number .ee-slot-caption {
   font-size: var(--notion-fs-h2);
@@ -476,7 +504,7 @@
 /* ============================================================
    12) timeline  → .slide.timeline  (← propca section.timeline)
    ============================================================ */
-.slide.timeline .slide-inner { justify-content: flex-start; }
+.slide.timeline .slide-inner { justify-content: center; }
 .slide.timeline ol {
   list-style: none;
   counter-reset: step;
@@ -585,7 +613,8 @@
        (← propca .cols-2 + .callout)
    ============================================================ */
 .slide.limitation-guardrail .slide-inner { justify-content: flex-start; }
-.slide.limitation-guardrail .cols-2 { margin-top: 12px; flex: 1; align-content: start; }
+.slide.limitation-guardrail .cols-2 { margin-top: 12px; flex: 1; align-content: center; }
+.slide.limitation-guardrail .lg-col { display: flex; flex-direction: column; justify-content: center; }
 .slide.limitation-guardrail .lg-col h3 {
   font-family: var(--notion-font-mono);
   font-size: 13pt;
@@ -617,6 +646,7 @@
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   position: relative;
 }
 .slide.roadmap .tier .phase-detail {
@@ -629,7 +659,7 @@
 }
 .slide.roadmap .tier h3 { font-size: 18pt; color: var(--notion-ink); margin: 0 0 6px; }
 .slide.roadmap .tier p { font-size: 12pt; color: var(--notion-ink-mute); margin: 6px 0 18px; }
-.slide.roadmap .tier ul { list-style: none; padding: 0; margin: auto 0 0 0; }
+.slide.roadmap .tier ul { list-style: none; padding: 0; margin: 18px 0 0 0; }
 .slide.roadmap .tier ul li {
   font-size: 13pt;
   color: var(--notion-ink);
