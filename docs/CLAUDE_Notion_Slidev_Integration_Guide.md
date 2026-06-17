@@ -65,7 +65,7 @@ Stage 11 — 리허설 피드백 반영
 presentation/script.md
 → presentation/scenes.json
 → presentation/deck.json
-→ presentation/slides.md
+→ presentation/slidev/slides.md
 → Slidev build
 → 정적 HTML 백업
 → 자동 캡처 및 검증
@@ -212,7 +212,7 @@ Stage 09 Gate는 생성 계약만 검증한다.
 ```text
 presentation/scenes.json
 presentation/deck.json
-presentation/slides.md
+presentation/slidev/slides.md
 presentation/output/slidev/
 presentation/output/static/presentation.html
 ```
@@ -286,7 +286,7 @@ presentation/
 ```text
 presentation/theme/
 presentation/generator/
-presentation/slides.md
+presentation/slidev/slides.md
 presentation/output/
 ```
 
@@ -349,7 +349,8 @@ presentation/
 ├── qna.md
 ├── scenes.json
 ├── deck.json
-├── slides.md
+│
+├── slidev/                 # Slidev 프로젝트(엔진): slides.md(생성기 출력)·uno.config·global-bottom.vue·public/fonts(Pretendard 번들)·presets/
 │
 ├── sources/
 │   ├── notion-original/
@@ -624,7 +625,7 @@ expansion → expansion-map
 
 # 11. Slidev 생성 규칙
 
-`deck.json`을 읽어 `presentation/slides.md`를 생성한다.
+`deck.json`을 읽어 `presentation/slidev/slides.md`를 생성한다.
 
 우선순위:
 
@@ -788,7 +789,7 @@ reference manifest
 ```text
 presentation/scenes.json
 presentation/deck.json
-presentation/slides.md
+presentation/slidev/slides.md
 presentation/output/
 ```
 
@@ -807,7 +808,7 @@ presentation/output/
     "presentation:slidev": "node presentation/generator/generate-slidev.mjs",
     "presentation:static": "node presentation/generator/generate-static-html.mjs",
     "presentation:validate": "node presentation/generator/validate-slides.mjs",
-    "presentation:export-pdf": "slidev export presentation/slides.md --output presentation/output/presentation.pdf",
+    "presentation:export-pdf": "slidev export presentation/slidev/slides.md --output presentation/output/presentation.pdf",
     "presentation:build": "npm run presentation:scenes && npm run presentation:layouts && npm run presentation:slidev",
     "presentation:build-all": "npm run presentation:build && npm run presentation:static && npm run presentation:validate && npm run presentation:export-pdf"
   }

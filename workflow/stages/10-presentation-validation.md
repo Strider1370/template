@@ -4,10 +4,10 @@
 생성된 발표자료의 시각·시간 결함을 잡는다: overflow, 깨진 자산, 레이아웃 반복, 데모 화면 크기, 발표 시간. 캡처와 검증 보고서를 남긴다.
 
 ## 2. 시작 조건
-- Stage 09 Gate 통과, `presentation/slides.md` + `presentation/output/` 존재.
+- Stage 09 Gate 통과, `presentation/slidev/slides.md` + `presentation/output/` 존재.
 
 ## 3. 이번 단계에서 반드시 읽을 파일
-- `presentation/slides.md`, `presentation/output/`, `presentation/script.md`(시간 기준)
+- `presentation/slidev/slides.md`, `presentation/output/`, `presentation/script.md`(시간 기준)
 - guidance: `docs/CLAUDE_Notion_Slidev_Integration_Guide.md` §13 "캡처 레퍼런스 활용", §14 "Stage 10 검증 기준"(14.1~14.3). 이 섹션만.
 
 ## 4. 이번 단계에서 읽지 않아도 되는 파일

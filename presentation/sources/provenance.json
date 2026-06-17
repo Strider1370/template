@@ -20,7 +20,7 @@
     }
   ],
   "fonts": [
-    { "id": "pretendard", "license": "OFL-1.1", "origin": "orioncactus/pretendard", "bundled": false },
+    { "id": "pretendard", "license": "OFL-1.1", "origin": "orioncactus/pretendard", "bundled": true, "bundledAt": "presentation/slidev/public/fonts/PretendardVariable.woff2", "note": "Slidev 엔진은 로컬 woff2 번들(오프라인). Notion 정적 HTML 은 폰트명만(설치 시 적용)." },
     { "id": "noto-sans-kr", "license": "OFL-1.1", "origin": "google-fonts", "bundled": false },
     { "id": "inter", "license": "OFL-1.1", "origin": "google-fonts", "bundled": false },
     { "id": "fraunces", "license": "OFL-1.1", "origin": "google-fonts", "bundled": false }

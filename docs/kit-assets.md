@@ -80,5 +80,7 @@ npm run lint
 ---
 
 ## 발표 자산
-- 발표 파이프라인·엔진은 `presentation/AGENTS.md` 참고 (기본: Slidev primary + Notion 정적 HTML 백업).
+- 발표 파이프라인·엔진은 `presentation/AGENTS.md` 참고 (기본: Slidev primary + Notion 정적 HTML 백업). **deck.json 하나로 두 엔진(Slidev·Notion)을 `npm run presentation:build`에서 동시 생성.**
+- **레이아웃 프리셋: `presentation/slidev/presets/GALLERY.md`** — BaizeAI 덱(Apache-2.0)에서 추출한 Slidev 카드 레이아웃 12종(시그니처 프로스트 카드·compare·stat·steps·code-callout·bar-chart 등) + 복사용 스니펫. 미리보기 덱 `presentation/slidev/presets-preview.md`. 슬라이드를 직접 손볼 때 사용.
+- **한글 폰트**: `presentation/slidev/public/fonts/PretendardVariable.woff2` 로컬 번들(오프라인·CDN 무관). Slidev `style.css`/`uno.config.ts`에 연결됨.
 - 벤치마킹 캡처 도구: `presentation/slidev/reference-capture/` (해외 사례 덱 캡처 → 레퍼런스).

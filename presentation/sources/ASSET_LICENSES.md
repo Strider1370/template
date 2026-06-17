@@ -15,12 +15,14 @@
 
 | 폰트 | 출처 | 라이선스 | 비고 |
 |------|------|----------|------|
-| Pretendard | orioncactus/pretendard | OFL-1.1 | 본문 기본 |
+| Pretendard | orioncactus/pretendard | OFL-1.1 | 본문 기본. **Slidev 로컬 번들** `presentation/slidev/public/fonts/PretendardVariable.woff2` |
 | Noto Sans KR | Google Fonts | OFL-1.1 | 한글 폴백 |
 | Inter | Google Fonts | OFL-1.1 | 라틴 |
 | Fraunces | Google Fonts | OFL-1.1 | 세리프 강조 |
 
-> ⚠️ 오프라인 발표(Doc2 §17 #10): 위 폰트는 CDN 의존이 아니라 **로컬 번들**로 가져와야 인터넷 없이 깨지지 않는다. (현재 propca 원본은 CDN @import — 정적 HTML 백업 만들 때 로컬화 필요.)
+> ⚠️ 오프라인 발표(Doc2 §17 #10): 위 폰트는 CDN 의존이 아니라 **로컬 번들**로 가져와야 인터넷 없이 깨지지 않는다.
+> - **Slidev: 완료** — Pretendard 변수 폰트를 `presentation/slidev/public/fonts/`에 번들하고 `style.css` `@font-face`로 연결(CDN 무관).
+> - **Notion 정적 HTML: 미완** — 폰트 스택에 이름만 있음(`@font-face` 없음). 오프라인/미설치 환경에선 폴백됨. 완전 오프라인이 필요하면 woff2 를 base64 로 `@font-face` 인라인할 것.
 
 ## 아이콘
 

@@ -9,10 +9,10 @@
       "kind": "slidev",
       "renderer": "generate-slidev.mjs",
       "output": "presentation/output/slidev/",
-      "entry": "presentation/slides.md",
+      "entry": "presentation/slidev/slides.md",
       "source": "presentation/slidev/",
       "rendererKey": "slidev",
-      "notes": "기본 엔진. deck.json → slides.md → slidev build."
+      "notes": "기본 엔진. deck.json → slidev/slides.md → slidev build. (생성기가 slidev 프로젝트 안에 직접 출력)"
     },
     "notion-static-html": {
       "role": "fallback",

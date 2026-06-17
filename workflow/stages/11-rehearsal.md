@@ -7,7 +7,7 @@
 - Stage 10 Gate 통과, 검증된 발표자료 + 데모 영상 존재.
 
 ## 3. 이번 단계에서 반드시 읽을 파일
-- `presentation/slides.md`, `presentation/script.md`, `presentation/qna.md`, Stage 07 데모 영상/GIF
+- `presentation/slidev/slides.md`, `presentation/script.md`, `presentation/qna.md`, Stage 07 데모 영상/GIF
 - guidance: `docs/AI_Hackathon_Operating_System.md` §8 "Stage 11 Review"; `docs/CLAUDE_Notion_Slidev_Integration_Guide.md` §3 "Stage 11 — 리허설 반영". 이 섹션만.
 
 ## 4. 이번 단계에서 읽지 않아도 되는 파일

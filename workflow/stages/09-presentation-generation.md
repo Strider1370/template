@@ -8,6 +8,7 @@
 
 ## 3. 이번 단계에서 반드시 읽을 파일
 - `presentation/script.md`, `implementation/manifest.json`, Stage 07 캡처 목록, `presentation/generator/layout-registry.json`(16 layout·slot), `concept.md`(척추)
+  - 레이아웃 어휘 참조(선택): `presentation/slidev/presets/GALLERY.md` — BaizeAI 카드 언어 12종(생성기가 자동 적용). 미리보기는 `presentation/slidev/presets-preview.md`. 16 semantic 밖의 커스텀 슬라이드를 손으로 짤 때 스니펫을 복사해 쓴다.
 - guidance: `docs/CLAUDE_Notion_Slidev_Integration_Guide.md` §8(공통 Semantic Layout)·§9(중간 데이터 계약)·§10(레이아웃 선택)·§11(Slidev 생성)·§12(Notion Static HTML). 이 섹션만.
 
 ## 4. 이번 단계에서 읽지 않아도 되는 파일
@@ -26,7 +27,7 @@
    - **Closing 문구 = `concept.md`의 "기억에 남을 마지막 문장".**
    - `meta.engine`="slidev", `meta.presentationMinutes`는 state.yaml 값 반영.
 2. **검증.** `npm run presentation:validate-deck` (미등록 layout·필수필드·primary 엔진 검사).
-3. **렌더(자동).** `npm run presentation:slidev`(→ slides.md) + `npm run presentation:static`(→ output/static/presentation.html, 편집 오버레이 내장).
+3. **렌더(자동).** `npm run presentation:slidev`(→ `presentation/slidev/slides.md`) + `npm run presentation:static`(→ `output/static/presentation.html`, 편집 오버레이 내장). **둘 다 같은 deck.json 하나로 동시 생성** — `npm run presentation:build` 한 번이면 Slidev·Notion 양쪽이 함께 나온다.
 4. **정합 검증.** `npm run presentation:validate-slides` (slides.md ↔ deck.json 슬라이드 수 일치).
 5. (선택) Slidev 빌드: `cd presentation/slidev && npm install && npm run build`(라이브용). 안 되면 정적 HTML로 시연.
 6. **사람이 다듬기.** `presentation/output/static/presentation.html?edit=1`을 열면 편집 오버레이가 켜진다(번호/주소 배지·크기 호버·클릭복사·오버플로우경고·레이아웃/시간 배지·자산상태·편집맵 내보내기). 사용자가 주소(예: `slide-04.content.callout`)로 지칭하면 deck.json의 그 필드를 고치고 3~4를 다시 돌린다.
@@ -43,7 +44,7 @@
 - 해당 없음.
 
 ## 9. 생성해야 하는 산출물
-- `presentation/deck.json`(단일 계약), `presentation/slides.md`, `presentation/output/static/presentation.html`(+ 선택 `output/slidev/`).
+- `presentation/deck.json`(단일 계약), `presentation/slidev/slides.md`, `presentation/output/static/presentation.html`(+ 선택 `output/slidev/`).
 
 ## 10. 파일 소유권
 - 메인 전용: `presentation/deck.json`. 렌더 산출물은 스크립트가 생성.
