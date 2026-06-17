@@ -5,6 +5,48 @@
 **기본 방식 = 생성 파이프라인: Slidev(primary) + Notion 정적 HTML(백업).**
 (워크플로우상 위치: `CLAUDE.md` 6·9단계. 상세 명세: `docs/CLAUDE_Notion_Slidev_Integration_Guide.md`, 이하 "Doc2".)
 
+---
+
+## B안 흐름 (반자동 — 현재 기본)
+
+판단(슬라이드에 무엇을 담을지)은 **AI가 `presentation/deck.json` 을 직접 작성**한다.
+생성기는 그 deck.json 을 받아 **렌더링만** 한다. 사람은 결과 HTML 위에서 **편집 오버레이**로
+무엇을 고칠지 주소(`data-addr`)로 짚어, 다시 deck.json 을 수정한다.
+
+```
+AI 가 deck.json 작성 (계약 = generator/deck.schema.json)
+  → node generator/validate-deck.mjs            # 스키마 핵심 규칙 검증 (PASS 필수)
+  → npm run presentation:slidev  (= generate-slidev.mjs)   # deck.json → slides.md
+  → node generator/validate-slides.mjs          # slides.md ↔ deck 슬라이드 수 일치
+  → npm run presentation:static  (= generate-static-html.mjs)  # deck.json → output/static/presentation.html (단일 자기완결 HTML, 오프라인)
+```
+
+- 레퍼런스/테스트용 예시: `generator/example-deck.json` ("우리 동네 맞춤 재난 대비 가이드", 6장).
+  새 주제 시작 시 `cp generator/example-deck.json deck.json` 후 내용을 갈아끼우면 된다.
+- `generate-static-html` 은 `theme/notion/{tokens,typography,components}.css` + 편집 오버레이를
+  **<style>/<script> 로 인라인**한다(외부 URL 없음, 인터넷 없이 시연 가능).
+- 슬라이드별 `data-layout`(semanticLayout) · `data-duration` · `data-impl`(implementationStatus),
+  슬롯별 `data-addr="slide-NN.content.<slot>"`, 이미지 `data-addr="slide-NN.assets.<slot>"` 가 붙는다.
+- `implementationStatus` 가 `implemented` 가 아니면 mocked/fallback 배지 표시,
+  `dropped`/`blocked` 슬라이드는 양쪽 출력에서 제외된다.
+
+### 편집 모드 사용법 (사람용)
+
+생성된 `output/static/presentation.html` 을 브라우저로 열고:
+
+- 발표: `←/→`(또는 PageUp/Down) 으로 슬라이드 이동. 우하단 화살표 버튼도 동작.
+- 편집: 주소 끝에 `?edit=1` 을 붙이거나 페이지에서 **`e` 키**로 토글. 우상단 패널에서 레이어 on/off·닫기.
+  편집 모드는 발표 모드(`?edit` 없음)에선 완전히 비활성/비표시다.
+
+편집 오버레이 5기능(모두 `ee-` 접두사로 격리):
+1. **주소/번호 배지** — 모든 `[data-addr]` 에 순번 + 짧은 주소. 호버 시 아웃라인 + 툴팁(주소 / 크기 WxH / font-size / 넘침 여부). 클릭하면 **주소를 클립보드 복사**(토스트).
+2. **가독성·오버플로우 경고** — 박스를 넘치거나(본문 기준) 폰트가 16px 미만이면 빨간 아웃라인 + ⚠.
+3. **레이아웃·시간 배지** — 슬라이드 코너에 `<layout> · <duration>s · 누적 mm:ss`. 누적이 `meta.presentationMinutes*60`(없으면 `totalDurationSeconds`) 초과 시 빨강. 같은 layout 3연속이면 경고.
+4. **자산 상태** — `placeholder` 자산은 주황 점선 + 라벨, 깨진 이미지(naturalWidth==0)는 빨강 "404".
+5. **편집맵 내보내기** — 패널 버튼. 모든 `[data-addr]: 텍스트(또는 img src)` 를 한 줄씩 클립보드 복사(+ `edit-map.txt` 다운로드).
+
+→ 고칠 곳의 **주소를 복사**해 `deck.json` 의 해당 경로(`slide-NN.content.<slot>` 등)를 수정하고 다시 렌더하면 된다. 발표자 노트는 화면에 안 보이며, 편집 모드에서 `data-addr="slide-NN.speakerNotes"` 로 존재한다.
+
 AI가 슬라이드마다 HTML/CSS를 자유 생성하지 않는다. 대신:
 사람이 만든 템플릿·토큰을 보존 → 스크립트를 Scene으로 분해 → **등록된 semantic layout** 선택 → 슬롯에 내용·자산 삽입 → 렌더러가 결과 생성.
 
@@ -36,9 +78,10 @@ npm run presentation:validate   # slides.md ↔ deck.json 일치 검증
 npm run presentation:build      # scenes → layouts → slidev
 npm run presentation:build-all  # build + static + validate + export-pdf
 ```
-> ⚠️ 현재 `generator/`의 `generate-*` / `select-*` 는 **스캐폴드(스켈레톤)**다. 실행하면 "아직 미구현(스캐폴드) — Stage 09 첫 실사용 때 완성" 안내를 내고 깔끔히 종료한다. 핵심 생성 로직은 첫 실사용 때 다듬는다.
-> ✅ `validate-deck.mjs` / `validate-slides.mjs` 는 **실동작**한다(대상이 없으면 깔끔히 FAIL).
-> 스켈레톤이라도 `node generator/<file>.mjs` 로 직접 실행 가능.
+> ✅ `generate-slidev.mjs` / `generate-static-html.mjs` 는 **실동작**한다(B안). deck.json 이 없으면 안내만 내고 깔끔히 종료(exit 0).
+> ✅ `validate-deck.mjs` / `validate-slides.mjs` 도 **실동작**한다(대상이 없으면 깔끔히 FAIL). validate-slides 는 per-slide frontmatter 를 인지해 슬라이드 수를 센다.
+> ⚠️ `select-*` / `generate-scenes.mjs` 는 아직 스캐폴드다(A안 파이프라인용). B안에서는 deck.json 을 AI가 직접 쓰므로 불필요.
+> 모든 스크립트는 `node generator/<file>.mjs` 로 직접 실행 가능.
 
 ### 디렉터리 구조 (Doc2 §6)
 ```
