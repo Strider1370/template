@@ -9,13 +9,13 @@
     },
     {
       "semanticId": "problem-flow",
-      "renderers": { "slidev": "default", "notion-html": "timeline" },
-      "slots": ["title", "steps", "caption"]
+      "renderers": { "slidev": "default", "notion-html": "icon-list" },
+      "slots": ["title", "items"]
     },
     {
       "semanticId": "contrast",
       "renderers": { "slidev": "two-cols", "notion-html": "compare" },
-      "slots": ["title", "left", "right", "leftLabel", "rightLabel"]
+      "slots": ["title", "lead", "leftLabel", "left", "rightLabel", "right"]
     },
     {
       "semanticId": "insight-statement",
@@ -25,27 +25,27 @@
     {
       "semanticId": "product-overview",
       "renderers": { "slidev": "default", "notion-html": "block-features" },
-      "slots": ["title", "subtitle", "features"]
+      "slots": ["title", "features"]
     },
     {
       "semanticId": "demo-fullscreen",
       "renderers": { "slidev": "image", "notion-html": "bg-full" },
-      "slots": ["title", "image", "caption"]
+      "slots": ["title", "subtitle"]
     },
     {
       "semanticId": "demo-callout",
       "renderers": { "slidev": "image-right", "notion-html": "split" },
-      "slots": ["title", "image", "callout", "caption"]
+      "slots": ["title", "callout", "points"]
     },
     {
       "semanticId": "architecture",
-      "renderers": { "slidev": "default", "notion-html": "timeline" },
-      "slots": ["title", "diagram", "steps", "caption"]
+      "renderers": { "slidev": "default", "notion-html": "steps-result" },
+      "slots": ["title", "steps", "result"]
     },
     {
       "semanticId": "before-after",
       "renderers": { "slidev": "two-cols", "notion-html": "before-after" },
-      "slots": ["title", "before", "after", "beforeLabel", "afterLabel"]
+      "slots": ["title", "beforeLabel", "afterLabel", "beforeCaption", "afterCaption"]
     },
     {
       "semanticId": "big-number",
@@ -69,7 +69,7 @@
     },
     {
       "semanticId": "limitation-guardrail",
-      "renderers": { "slidev": "default", "notion-html": "icon-list" },
+      "renderers": { "slidev": "default", "notion-html": "limitation-guardrail" },
       "slots": ["title", "limitations", "guardrails"]
     },
     {
@@ -80,7 +80,7 @@
     {
       "semanticId": "closing",
       "renderers": { "slidev": "end", "notion-html": "end" },
-      "slots": ["title", "subtitle", "cta", "team", "contact"]
+      "slots": ["title", "subtitle", "cta", "tags", "contact"]
     }
   ],
   "selectionRules": {

@@ -67,14 +67,35 @@ function normAsset(v) {
 
 const slideAddr = (id) => id;
 const slotAddr = (id, slot) => id + ".content." + slot;
+// 중첩 주소: slide-NN.content.<slot>.<key|index>
+const subAddr = (id, slot, key) => id + ".content." + slot + "." + key;
 
-// 슬롯 한 개를 렌더. 배열이면 <ul>, 문자열이면 적절 태그.
-function renderSlot(id, slot, value, tag) {
+const addrAttr = (addr) => ' data-addr="' + esc(addr) + '"';
+
+// 편집 가능한 단순 텍스트 노드. tag/className/extra 속성 조립.
+function leaf(addr, value, tag, className) {
+  const t = tag || "div";
+  const cls = className ? ' class="' + esc(className) + '"' : "";
+  return "<" + t + cls + addrAttr(addr) + ">" + esc(value) + "</" + t + ">";
+}
+
+// 배열 항목을 문자열로 정규화(객체면 text/body/label 키 우선).
+function itemText(v, keys) {
+  if (v == null) return "";
+  if (typeof v === "string" || typeof v === "number") return String(v);
+  for (const k of keys || ["text", "body", "label", "heading"]) {
+    if (v[k] != null) return String(v[k]);
+  }
+  return JSON.stringify(v);
+}
+
+// generic 폴백(기존 동작): 슬롯 세로 나열.
+function renderSlotGeneric(id, slot, value, tag) {
   if (value == null) return "";
-  const addr = ' data-addr="' + esc(slotAddr(id, slot)) + '"';
+  const addr = addrAttr(slotAddr(id, slot));
   if (Array.isArray(value)) {
     const items = value
-      .map((v) => "<li>" + esc(typeof v === "object" ? JSON.stringify(v) : v) + "</li>")
+      .map((v) => "<li>" + esc(itemText(v)) + "</li>")
       .join("");
     return '<ul class="ee-slot ee-slot-' + esc(slot) + '"' + addr + ">" + items + "</ul>";
   }
@@ -85,17 +106,249 @@ function renderSlot(id, slot, value, tag) {
   return "<" + t + ' class="ee-slot ee-slot-' + esc(slot) + '"' + addr + ">" + esc(value) + "</" + t + ">";
 }
 
-function renderImage(id, slotName, asset) {
+function renderImageRaw(id, slotName, asset, className) {
   const a = normAsset(asset);
   if (!a) return "";
   return (
-    '<img class="ee-img" data-addr="' + esc(id + ".assets." + slotName) + '"' +
+    '<img class="' + esc(className || "ee-img") + '" data-addr="' + esc(id + ".assets." + slotName) + '"' +
     ' data-asset-status="' + esc(a.status) + '"' +
     ' src="' + esc(a.src) + '" alt="">'
   );
 }
 
-// 슬라이드 1장 → <section>
+// 슬라이드 제목(full-width 공통 헤더).
+function titleEl(id, content) {
+  return content.title != null ? leaf(slotAddr(id, "title"), content.title, "h1", "slide-title") : "";
+}
+
+// ---- 레이아웃별 내부구조 렌더러 ------------------------------------------
+// 각 함수는 .slide-inner 안의 내부 HTML을 반환한다. content/assets 펼침 + data-addr 유지.
+const LAYOUT_RENDERERS = {
+  // 1) hero → cover
+  hero(id, c) {
+    let h = "";
+    if (c.eyebrow != null) h += leaf(slotAddr(id, "eyebrow"), c.eyebrow, "div", "ee-slot ee-slot-eyebrow");
+    if (c.title != null) h += leaf(slotAddr(id, "title"), c.title, "h1");
+    if (c.subtitle != null) h += leaf(slotAddr(id, "subtitle"), c.subtitle, "h2");
+    if (c.footnote != null) h += leaf(slotAddr(id, "footnote"), c.footnote, "div", "ee-slot ee-slot-footnote");
+    return h;
+  },
+
+  // 2) problem-flow → icon-list
+  "problem-flow"(id, c) {
+    let h = titleEl(id, c);
+    const items = Array.isArray(c.items) ? c.items : [];
+    const lis = items
+      .map((it, i) => {
+        const addr = subAddr(id, "items", i);
+        if (it && typeof it === "object" && (it.label != null || it.text != null)) {
+          const label = it.label != null ? '<span class="li-label">' + esc(it.label) + "</span>" : "";
+          return "<li" + addrAttr(addr) + ">" + label + "<span>" + esc(it.text != null ? it.text : "") + "</span></li>";
+        }
+        return "<li" + addrAttr(addr) + "><span>" + esc(itemText(it)) + "</span></li>";
+      })
+      .join("");
+    return h + '<ul class="flow-list">' + lis + "</ul>";
+  },
+
+  // 3) contrast → compare
+  contrast(id, c) {
+    let h = titleEl(id, c);
+    if (c.lead != null) h += leaf(slotAddr(id, "lead"), c.lead, "p", "compare-lead");
+    const col = (label, labelSlot, body, bodySlot) => {
+      let inner = "";
+      if (label != null) inner += leaf(slotAddr(id, labelSlot), label, "div", "col-label");
+      if (Array.isArray(body)) {
+        inner += "<ul>" + body.map((v, i) => "<li" + addrAttr(subAddr(id, bodySlot, i)) + ">" + esc(itemText(v)) + "</li>").join("") + "</ul>";
+      } else if (body != null) {
+        inner += leaf(slotAddr(id, bodySlot), body, "p");
+      }
+      return '<div class="col">' + inner + "</div>";
+    };
+    h += col(c.leftLabel, "leftLabel", c.left, "left");
+    h += '<div class="vs">VS</div>';
+    h += col(c.rightLabel, "rightLabel", c.right, "right");
+    return h;
+  },
+
+  // 4) insight-statement → yellow-banner
+  "insight-statement"(id, c) {
+    let h = "";
+    if (c.title != null) h += leaf(slotAddr(id, "title"), c.title, "h1");
+    if (c.subtitle != null) h += leaf(slotAddr(id, "subtitle"), c.subtitle, "h2");
+    return h;
+  },
+
+  // 5) product-overview → block-features
+  "product-overview"(id, c) {
+    let h = titleEl(id, c);
+    const feats = Array.isArray(c.features) ? c.features : [];
+    const blocks = feats
+      .map((f, i) => {
+        const o = f && typeof f === "object" ? f : { heading: itemText(f) };
+        const ico = o.icon != null ? esc(o.icon) : String(i + 1);
+        const head = o.heading != null ? leaf(subAddr(id, "features", i + ".heading"), o.heading, "h3") : "";
+        const body = o.body != null ? leaf(subAddr(id, "features", i + ".body"), o.body, "p") : "";
+        return '<div class="block"><div class="ico">' + ico + "</div>" + head + body + "</div>";
+      })
+      .join("");
+    return h + '<div class="blocks">' + blocks + "</div>";
+  },
+
+  // 6) demo-fullscreen → bg-full (이미지는 .slide-inner 배경으로 처리, 별도 함수에서)
+  "demo-fullscreen"(id, c) {
+    let h = "";
+    if (c.title != null) h += leaf(slotAddr(id, "title"), c.title, "h1");
+    if (c.subtitle != null) h += leaf(slotAddr(id, "subtitle"), c.subtitle, "h2");
+    return h;
+  },
+
+  // 7) demo-callout → split (좌 이미지 / 우 콜아웃+포인트)
+  "demo-callout"(id, c, assets) {
+    let h = titleEl(id, c);
+    const media = '<div class="col col-media">' + renderImageRaw(id, "image", assets.image, "ee-img") + "</div>";
+    let text = "";
+    if (c.callout != null) text += leaf(slotAddr(id, "callout"), c.callout, "div", "callout");
+    if (Array.isArray(c.points)) {
+      text += "<ul>" + c.points.map((p, i) => "<li" + addrAttr(subAddr(id, "points", i)) + ">" + esc(itemText(p)) + "</li>").join("") + "</ul>";
+    }
+    return h + media + '<div class="col col-text">' + text + "</div>";
+  },
+
+  // 8) architecture → steps-result
+  architecture(id, c) {
+    let h = titleEl(id, c);
+    const steps = Array.isArray(c.steps) ? c.steps : [];
+    const cells = steps
+      .map((st, i) => {
+        const o = st && typeof st === "object" ? st : { body: itemText(st) };
+        const num = o.num != null ? esc(o.num) : "STEP " + (i + 1);
+        const body = o.body != null ? esc(o.body) : esc(itemText(o));
+        return '<div><div class="num">' + num + '</div><div class="body"' + addrAttr(subAddr(id, "steps", i)) + ">" + body + "</div></div>";
+      })
+      .join("");
+    h += '<div class="steps">' + cells + "</div>";
+    if (c.result != null) h += leaf(slotAddr(id, "result"), c.result, "div", "result");
+    return h;
+  },
+
+  // 9) before-after → before-after (이미지 인라인)
+  "before-after"(id, c, assets) {
+    let h = titleEl(id, c);
+    const col = (labelKey, label, imgSlot, capKey, cap) => {
+      let inner = "";
+      if (label != null) inner += leaf(slotAddr(id, labelKey), label, "h3");
+      inner += renderImageRaw(id, imgSlot, assets[imgSlot], "");
+      if (cap != null) inner += leaf(slotAddr(id, capKey), cap, "p", "ba-caption");
+      return '<div class="ba-col">' + inner + "</div>";
+    };
+    h += '<div class="ba-row">' +
+      col("beforeLabel", c.beforeLabel, "beforeImage", "beforeCaption", c.beforeCaption) +
+      '<div class="ba-arrow">→</div>' +
+      col("afterLabel", c.afterLabel, "afterImage", "afterCaption", c.afterCaption) +
+      "</div>";
+    return h;
+  },
+
+  // 10) big-number
+  "big-number"(id, c) {
+    let h = "";
+    if (c.label != null) h += leaf(slotAddr(id, "label"), c.label, "div", "ee-slot ee-slot-label");
+    if (c.number != null) h += leaf(slotAddr(id, "number"), c.number, "div", "ee-slot ee-slot-number");
+    if (c.caption != null) h += leaf(slotAddr(id, "caption"), c.caption, "p", "ee-slot ee-slot-caption");
+    return h;
+  },
+
+  // 11) card-grid → pastel-blocks
+  "card-grid"(id, c) {
+    let h = titleEl(id, c);
+    const cards = (Array.isArray(c.cards) ? c.cards : []).slice(0, 6);
+    const blocks = cards
+      .map((cd, i) => {
+        const o = cd && typeof cd === "object" ? cd : { heading: itemText(cd) };
+        const head = o.heading != null ? leaf(subAddr(id, "cards", i + ".heading"), o.heading, "h3") : "";
+        const body = o.body != null ? leaf(subAddr(id, "cards", i + ".body"), o.body, "p") : "";
+        return "<div>" + head + body + "</div>";
+      })
+      .join("");
+    return h + '<div class="blocks">' + blocks + "</div>";
+  },
+
+  // 12) timeline (가로 번호)
+  timeline(id, c) {
+    let h = titleEl(id, c);
+    const steps = Array.isArray(c.steps) ? c.steps : [];
+    const lis = steps
+      .map((st, i) => {
+        const o = st && typeof st === "object" ? st : { body: itemText(st) };
+        const head = o.heading != null ? '<span class="ts-heading">' + esc(o.heading) + "</span>" : "";
+        const body = o.body != null ? esc(o.body) : esc(itemText(o));
+        return "<li" + addrAttr(subAddr(id, "steps", i)) + ">" + head + body + "</li>";
+      })
+      .join("");
+    return h + "<ol>" + lis + "</ol>";
+  },
+
+  // 13) quote → hero-quote
+  quote(id, c) {
+    let h = "<blockquote>";
+    if (c.quote != null) h += leaf(slotAddr(id, "quote"), c.quote, "p", "quote-text");
+    if (c.attribution != null) h += leaf(slotAddr(id, "attribution"), c.attribution, "p", "quote-attr");
+    return h + "</blockquote>";
+  },
+
+  // 14) limitation-guardrail → cols-2 + callout
+  "limitation-guardrail"(id, c) {
+    let h = titleEl(id, c);
+    const col = (slot, items, label, extraCls) => {
+      const callouts = (Array.isArray(items) ? items : [])
+        .map((it, i) => leaf(subAddr(id, slot, i), itemText(it), "div", "callout"))
+        .join("");
+      return '<div class="lg-col ' + extraCls + '"><h3>' + esc(label) + "</h3>" + callouts + "</div>";
+    };
+    h += '<div class="cols-2">' +
+      col("limitations", c.limitations, "한계", "limitations") +
+      col("guardrails", c.guardrails, "안전장치", "guardrails") +
+      "</div>";
+    return h;
+  },
+
+  // 15) expansion-map → roadmap
+  "expansion-map"(id, c) {
+    let h = titleEl(id, c);
+    const tiers = Array.isArray(c.tiers) ? c.tiers : [];
+    const cells = tiers
+      .map((t, i) => {
+        const o = t && typeof t === "object" ? t : { heading: itemText(t) };
+        const cls = o.featured ? "tier featured" : "tier";
+        let inner = "";
+        if (o.phase != null) inner += leaf(subAddr(id, "tiers", i + ".phase"), o.phase, "div", "phase-detail");
+        if (o.heading != null) inner += leaf(subAddr(id, "tiers", i + ".heading"), o.heading, "h3");
+        if (o.body != null) inner += leaf(subAddr(id, "tiers", i + ".body"), o.body, "p");
+        if (Array.isArray(o.items)) {
+          inner += "<ul>" + o.items.map((it, j) => "<li" + addrAttr(subAddr(id, "tiers", i + ".items." + j)) + ">" + esc(itemText(it)) + "</li>").join("") + "</ul>";
+        }
+        return '<div class="' + cls + '">' + inner + "</div>";
+      })
+      .join("");
+    return h + '<div class="tiers">' + cells + "</div>";
+  },
+
+  // 16) closing → end
+  closing(id, c) {
+    let h = "";
+    if (c.title != null) h += leaf(slotAddr(id, "title"), c.title, "h1");
+    if (c.subtitle != null) h += leaf(slotAddr(id, "subtitle"), c.subtitle, "h2");
+    if (c.cta != null) h += leaf(slotAddr(id, "cta"), c.cta, "div", "end-cta");
+    if (Array.isArray(c.tags)) {
+      h += '<ul class="end-tags">' + c.tags.map((t, i) => "<li" + addrAttr(subAddr(id, "tags", i)) + ">" + esc(itemText(t)) + "</li>").join("") + "</ul>";
+    }
+    if (c.contact != null) h += leaf(slotAddr(id, "contact"), c.contact, "p", "end-contact");
+    return h;
+  },
+};
+
+// 슬라이드 1장 → <section> (래퍼·data-*·notes·뷰어·edit overlay 유지)
 function renderSlide(s) {
   const layout = layoutById.get(s.semanticLayout);
   const cls = (layout && layout.renderers["notion-html"]) || "default";
@@ -110,25 +363,43 @@ function renderSlide(s) {
     implBadge = '<div class="ee-impl-badge ee-impl-' + esc(impl) + '">' + esc(impl.toUpperCase()) + "</div>";
   }
 
-  // 슬롯 본문: layout-registry 슬롯 순서대로, content 에 있는 것만 렌더.
-  const slotNames = (layout && layout.slots) || Object.keys(content);
-  const tagMap = { title: "h1", subtitle: "h2", eyebrow: "div", label: "div", number: "div", quote: "blockquote" };
-  const parts = [];
-  for (const name of slotNames) {
-    if (content[name] == null) continue;
-    parts.push(renderSlot(s.id, name, content[name], tagMap[name]));
-  }
-  // content 에 있으나 슬롯목록 밖 키도 보존
-  for (const name of Object.keys(content)) {
-    if (slotNames.includes(name)) continue;
-    parts.push(renderSlot(s.id, name, content[name], tagMap[name]));
+  // 본문: 레이아웃별 렌더러가 있으면 그 고유 구조, 없으면 generic 폴백.
+  const renderer = LAYOUT_RENDERERS[s.semanticLayout];
+  let body;
+  let inlineImages = false; // 렌더러가 이미지를 직접 인라인했는지
+  if (renderer) {
+    body = renderer(s.id, content, assets);
+    inlineImages = ["demo-callout", "before-after", "demo-fullscreen"].includes(s.semanticLayout);
+  } else {
+    const slotNames = (layout && layout.slots) || Object.keys(content);
+    const tagMap = { title: "h1", subtitle: "h2", eyebrow: "div", label: "div", number: "div", quote: "blockquote" };
+    const parts = [];
+    for (const name of slotNames) {
+      if (content[name] == null) continue;
+      parts.push(renderSlotGeneric(s.id, name, content[name], tagMap[name]));
+    }
+    for (const name of Object.keys(content)) {
+      if (slotNames.includes(name)) continue;
+      parts.push(renderSlotGeneric(s.id, name, content[name], tagMap[name]));
+    }
+    body = parts.join("\n");
   }
 
-  // 이미지 자산
+  // 이미지 자산: 렌더러가 직접 인라인하지 않은 경우에만 하단 묶음으로.
+  // (인라인하더라도 편집 오버레이용으로 모든 asset 의 data-addr 노드는 유지해야 하므로
+  //  ee-assets 블록을 항상 출력하되, 인라인 레이아웃은 CSS 로 숨긴다.)
   const imgParts = [];
   for (const name of Object.keys(assets)) {
-    const html = renderImage(s.id, name, assets[name]);
+    const html = renderImageRaw(s.id, name, assets[name], "ee-img");
     if (html) imgParts.push(html);
+  }
+  const assetsBlock = imgParts.length ? '<div class="ee-assets">' + imgParts.join("\n") + "</div>" : "";
+
+  // demo-fullscreen: 첫 이미지를 .slide-inner 배경으로.
+  let innerStyle = "";
+  if (s.semanticLayout === "demo-fullscreen") {
+    const a = normAsset(assets.image || assets[Object.keys(assets)[0]]);
+    if (a) innerStyle = ' style="background-image:url(\'' + esc(a.src) + "')\"";
   }
 
   const notes = s.speakerNotes
@@ -142,10 +413,10 @@ function renderSlide(s) {
     ' data-layout="' + esc(s.semanticLayout) + '"' +
     ' data-duration="' + dur + '"' +
     ' data-impl="' + esc(impl) + '">' +
-    '<div class="notion-root slide-inner">' +
+    '<div class="notion-root slide-inner"' + innerStyle + ">" +
     implBadge +
-    parts.join("\n") +
-    (imgParts.length ? '<div class="ee-assets">' + imgParts.join("\n") + "</div>" : "") +
+    body +
+    assetsBlock +
     "</div>" +
     notes +
     "</section>"
