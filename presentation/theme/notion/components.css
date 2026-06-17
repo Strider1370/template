@@ -45,14 +45,26 @@
 }
 .cols-2 > * { margin: 0; min-width: 0; }
 
-/* 슬라이드 제목 공통(레이아웃 상단 full-width 제목) */
+/* 슬라이드 제목 공통(레이아웃 상단 full-width 제목, 상단 고정) */
 .slide .slide-title {
   font-size: calc(var(--notion-fs-h1) * var(--slide-scale, 1));
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.15;
   color: var(--notion-ink);
-  margin: 0 0 18px 0;
+  margin: 0 0 24px 0;
+}
+
+/* 본문 래퍼 공통: 제목 아래 남은 공간을 채우고 그 안에서 중앙정렬.
+   제목-앵커 레이아웃의 grid/flex 규칙은 각 .slide.X .slide-body 에 건다. */
+.slide .slide-body {
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--notion-space-3, 18px);
+  min-height: 0;
 }
 
 /* 한글 줄바꿈: 어절 단위(단어 중간 끊김 방지) — 모든 슬라이드 텍스트 공통 */
@@ -150,18 +162,18 @@
 /* ============================================================
    3) contrast  → .slide.compare   (← propca section.compare)
    ============================================================ */
-.slide.compare .slide-inner {
+.slide.compare .slide-inner { justify-content: flex-start; }
+.slide.compare .slide-body {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   column-gap: 24px;
   row-gap: 16px;
   align-content: center;
   align-items: stretch;
   justify-content: stretch;
 }
-.slide.compare .slide-title,
-.slide.compare > .slide-inner > .compare-lead { grid-column: 1 / -1; }
+.slide.compare .slide-body > .compare-lead { grid-column: 1 / -1; }
 .slide.compare .col {
   background: var(--notion-canvas);
   border: 1px solid var(--notion-hairline);
@@ -228,7 +240,7 @@
 /* ============================================================
    5) product-overview  → .slide.block-features  (← propca section.block-features)
    ============================================================ */
-.slide.block-features .slide-inner { justify-content: center; }
+.slide.block-features .slide-inner { justify-content: flex-start; }
 .slide.block-features .blocks {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -291,15 +303,14 @@
 /* ============================================================
    7) demo-callout  → .slide.split  (← propca section.split)
    ============================================================ */
-.slide.split .slide-inner {
+.slide.split .slide-inner { justify-content: flex-start; }
+.slide.split .slide-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr;
   column-gap: 48px;
   row-gap: 24px;
-  align-content: start;
+  align-content: center;
 }
-.slide.split .slide-title { grid-column: 1 / -1; }
 .slide.split .col { min-width: 0; align-self: stretch; }
 .slide.split .col-media {
   display: flex;
@@ -340,7 +351,7 @@
 /* ============================================================
    8) architecture  → .slide.steps-result  (← propca section.lecture-example .steps/.result)
    ============================================================ */
-.slide.steps-result .slide-inner { justify-content: center; }
+.slide.steps-result .slide-inner { justify-content: flex-start; }
 .slide.steps-result .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -503,7 +514,7 @@
 /* ============================================================
    12) timeline  → .slide.timeline  (← propca section.timeline)
    ============================================================ */
-.slide.timeline .slide-inner { justify-content: center; }
+.slide.timeline .slide-inner { justify-content: flex-start; }
 .slide.timeline ol {
   list-style: none;
   counter-reset: step;
@@ -630,7 +641,7 @@
 /* ============================================================
    15) expansion-map  → .slide.roadmap  (← propca section.roadmap)
    ============================================================ */
-.slide.roadmap .slide-inner { justify-content: center; }
+.slide.roadmap .slide-inner { justify-content: flex-start; }
 .slide.roadmap .tiers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

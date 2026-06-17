@@ -122,21 +122,23 @@ function titleEl(id, content) {
 }
 
 // ---- 레이아웃별 내부구조 렌더러 ------------------------------------------
-// 각 함수는 .slide-inner 안의 내부 HTML을 반환한다. content/assets 펼침 + data-addr 유지.
+// 각 함수는 { title, body } 를 반환한다.
+//  - title : 제목성 요소(slide-title / hero·banner·end 의 h1 등). .slide-inner 직속(상단 고정).
+//  - body  : 나머지 본문. renderSlide 가 <div class="slide-body"> 로 감싸 남은 공간을 채운다.
+// content/assets 펼침 + data-addr 유지.
 const LAYOUT_RENDERERS = {
-  // 1) hero → cover
+  // 1) hero → cover (풀블리드/중앙: title 도 body 안에 두어 함께 중앙정렬)
   hero(id, c) {
     let h = "";
     if (c.eyebrow != null) h += leaf(slotAddr(id, "eyebrow"), c.eyebrow, "div", "ee-slot ee-slot-eyebrow");
     if (c.title != null) h += leaf(slotAddr(id, "title"), c.title, "h1");
     if (c.subtitle != null) h += leaf(slotAddr(id, "subtitle"), c.subtitle, "h2");
     if (c.footnote != null) h += leaf(slotAddr(id, "footnote"), c.footnote, "div", "ee-slot ee-slot-footnote");
-    return h;
+    return { title: "", body: h };
   },
 
   // 2) problem-flow → icon-list
   "problem-flow"(id, c) {
-    let h = titleEl(id, c);
     const items = Array.isArray(c.items) ? c.items : [];
     const lis = items
       .map((it, i) => {
@@ -148,13 +150,13 @@ const LAYOUT_RENDERERS = {
         return "<li" + addrAttr(addr) + "><span>" + esc(itemText(it)) + "</span></li>";
       })
       .join("");
-    return h + '<ul class="flow-list">' + lis + "</ul>";
+    return { title: titleEl(id, c), body: '<ul class="flow-list">' + lis + "</ul>" };
   },
 
   // 3) contrast → compare
   contrast(id, c) {
-    let h = titleEl(id, c);
-    if (c.lead != null) h += leaf(slotAddr(id, "lead"), c.lead, "p", "compare-lead");
+    let b = "";
+    if (c.lead != null) b += leaf(slotAddr(id, "lead"), c.lead, "p", "compare-lead");
     const col = (label, labelSlot, body, bodySlot) => {
       let inner = "";
       if (label != null) inner += leaf(slotAddr(id, labelSlot), label, "div", "col-label");
@@ -165,23 +167,22 @@ const LAYOUT_RENDERERS = {
       }
       return '<div class="col">' + inner + "</div>";
     };
-    h += col(c.leftLabel, "leftLabel", c.left, "left");
-    h += '<div class="vs">VS</div>';
-    h += col(c.rightLabel, "rightLabel", c.right, "right");
-    return h;
+    b += col(c.leftLabel, "leftLabel", c.left, "left");
+    b += '<div class="vs">VS</div>';
+    b += col(c.rightLabel, "rightLabel", c.right, "right");
+    return { title: titleEl(id, c), body: b };
   },
 
-  // 4) insight-statement → yellow-banner
+  // 4) insight-statement → yellow-banner (풀블리드/중앙)
   "insight-statement"(id, c) {
     let h = "";
     if (c.title != null) h += leaf(slotAddr(id, "title"), c.title, "h1");
     if (c.subtitle != null) h += leaf(slotAddr(id, "subtitle"), c.subtitle, "h2");
-    return h;
+    return { title: "", body: h };
   },
 
   // 5) product-overview → block-features
   "product-overview"(id, c) {
-    let h = titleEl(id, c);
     const feats = Array.isArray(c.features) ? c.features : [];
     const blocks = feats
       .map((f, i) => {
@@ -192,32 +193,30 @@ const LAYOUT_RENDERERS = {
         return '<div class="block"><div class="ico">' + ico + "</div>" + head + body + "</div>";
       })
       .join("");
-    return h + '<div class="blocks">' + blocks + "</div>";
+    return { title: titleEl(id, c), body: '<div class="blocks">' + blocks + "</div>" };
   },
 
-  // 6) demo-fullscreen → bg-full (이미지는 .slide-inner 배경으로 처리, 별도 함수에서)
+  // 6) demo-fullscreen → bg-full (풀블리드/중앙, 이미지는 .slide-inner 배경으로)
   "demo-fullscreen"(id, c) {
     let h = "";
     if (c.title != null) h += leaf(slotAddr(id, "title"), c.title, "h1");
     if (c.subtitle != null) h += leaf(slotAddr(id, "subtitle"), c.subtitle, "h2");
-    return h;
+    return { title: "", body: h };
   },
 
   // 7) demo-callout → split (좌 이미지 / 우 콜아웃+포인트)
   "demo-callout"(id, c, assets) {
-    let h = titleEl(id, c);
     const media = '<div class="col col-media">' + renderImageRaw(id, "image", assets.image, "ee-img") + "</div>";
     let text = "";
     if (c.callout != null) text += leaf(slotAddr(id, "callout"), c.callout, "div", "callout");
     if (Array.isArray(c.points)) {
       text += "<ul>" + c.points.map((p, i) => "<li" + addrAttr(subAddr(id, "points", i)) + ">" + esc(itemText(p)) + "</li>").join("") + "</ul>";
     }
-    return h + media + '<div class="col col-text">' + text + "</div>";
+    return { title: titleEl(id, c), body: media + '<div class="col col-text">' + text + "</div>" };
   },
 
   // 8) architecture → steps-result
   architecture(id, c) {
-    let h = titleEl(id, c);
     const steps = Array.isArray(c.steps) ? c.steps : [];
     const cells = steps
       .map((st, i) => {
@@ -227,14 +226,13 @@ const LAYOUT_RENDERERS = {
         return '<div><div class="num">' + num + '</div><div class="body"' + addrAttr(subAddr(id, "steps", i)) + ">" + body + "</div></div>";
       })
       .join("");
-    h += '<div class="steps">' + cells + "</div>";
-    if (c.result != null) h += leaf(slotAddr(id, "result"), c.result, "div", "result");
-    return h;
+    let b = '<div class="steps">' + cells + "</div>";
+    if (c.result != null) b += leaf(slotAddr(id, "result"), c.result, "div", "result");
+    return { title: titleEl(id, c), body: b };
   },
 
   // 9) before-after → before-after (이미지 인라인)
   "before-after"(id, c, assets) {
-    let h = titleEl(id, c);
     const col = (labelKey, label, imgSlot, capKey, cap) => {
       let inner = "";
       if (label != null) inner += leaf(slotAddr(id, labelKey), label, "h3");
@@ -242,26 +240,25 @@ const LAYOUT_RENDERERS = {
       if (cap != null) inner += leaf(slotAddr(id, capKey), cap, "p", "ba-caption");
       return '<div class="ba-col">' + inner + "</div>";
     };
-    h += '<div class="ba-row">' +
+    const b = '<div class="ba-row">' +
       col("beforeLabel", c.beforeLabel, "beforeImage", "beforeCaption", c.beforeCaption) +
       '<div class="ba-arrow">→</div>' +
       col("afterLabel", c.afterLabel, "afterImage", "afterCaption", c.afterCaption) +
       "</div>";
-    return h;
+    return { title: titleEl(id, c), body: b };
   },
 
-  // 10) big-number
+  // 10) big-number (풀블리드/중앙)
   "big-number"(id, c) {
     let h = "";
     if (c.label != null) h += leaf(slotAddr(id, "label"), c.label, "div", "ee-slot ee-slot-label");
     if (c.number != null) h += leaf(slotAddr(id, "number"), c.number, "div", "ee-slot ee-slot-number");
     if (c.caption != null) h += leaf(slotAddr(id, "caption"), c.caption, "p", "ee-slot ee-slot-caption");
-    return h;
+    return { title: "", body: h };
   },
 
   // 11) card-grid → pastel-blocks
   "card-grid"(id, c) {
-    let h = titleEl(id, c);
     const cards = (Array.isArray(c.cards) ? c.cards : []).slice(0, 6);
     const blocks = cards
       .map((cd, i) => {
@@ -271,12 +268,11 @@ const LAYOUT_RENDERERS = {
         return "<div>" + head + body + "</div>";
       })
       .join("");
-    return h + '<div class="blocks">' + blocks + "</div>";
+    return { title: titleEl(id, c), body: '<div class="blocks">' + blocks + "</div>" };
   },
 
   // 12) timeline (가로 번호)
   timeline(id, c) {
-    let h = titleEl(id, c);
     const steps = Array.isArray(c.steps) ? c.steps : [];
     const lis = steps
       .map((st, i) => {
@@ -286,36 +282,35 @@ const LAYOUT_RENDERERS = {
         return "<li" + addrAttr(subAddr(id, "steps", i)) + ">" + head + body + "</li>";
       })
       .join("");
-    return h + "<ol>" + lis + "</ol>";
+    return { title: titleEl(id, c), body: "<ol>" + lis + "</ol>" };
   },
 
-  // 13) quote → hero-quote
+  // 13) quote → hero-quote (풀블리드/중앙)
   quote(id, c) {
     let h = "<blockquote>";
     if (c.quote != null) h += leaf(slotAddr(id, "quote"), c.quote, "p", "quote-text");
     if (c.attribution != null) h += leaf(slotAddr(id, "attribution"), c.attribution, "p", "quote-attr");
-    return h + "</blockquote>";
+    h += "</blockquote>";
+    return { title: "", body: h };
   },
 
   // 14) limitation-guardrail → cols-2 + callout
   "limitation-guardrail"(id, c) {
-    let h = titleEl(id, c);
     const col = (slot, items, label, extraCls) => {
       const callouts = (Array.isArray(items) ? items : [])
         .map((it, i) => leaf(subAddr(id, slot, i), itemText(it), "div", "callout"))
         .join("");
       return '<div class="lg-col ' + extraCls + '"><h3>' + esc(label) + "</h3>" + callouts + "</div>";
     };
-    h += '<div class="cols-2">' +
+    const b = '<div class="cols-2">' +
       col("limitations", c.limitations, "한계", "limitations") +
       col("guardrails", c.guardrails, "안전장치", "guardrails") +
       "</div>";
-    return h;
+    return { title: titleEl(id, c), body: b };
   },
 
   // 15) expansion-map → roadmap
   "expansion-map"(id, c) {
-    let h = titleEl(id, c);
     const tiers = Array.isArray(c.tiers) ? c.tiers : [];
     const cells = tiers
       .map((t, i) => {
@@ -331,10 +326,10 @@ const LAYOUT_RENDERERS = {
         return '<div class="' + cls + '">' + inner + "</div>";
       })
       .join("");
-    return h + '<div class="tiers">' + cells + "</div>";
+    return { title: titleEl(id, c), body: '<div class="tiers">' + cells + "</div>" };
   },
 
-  // 16) closing → end
+  // 16) closing → end (풀블리드/중앙)
   closing(id, c) {
     let h = "";
     if (c.title != null) h += leaf(slotAddr(id, "title"), c.title, "h1");
@@ -344,7 +339,7 @@ const LAYOUT_RENDERERS = {
       h += '<ul class="end-tags">' + c.tags.map((t, i) => "<li" + addrAttr(subAddr(id, "tags", i)) + ">" + esc(itemText(t)) + "</li>").join("") + "</ul>";
     }
     if (c.contact != null) h += leaf(slotAddr(id, "contact"), c.contact, "p", "end-contact");
-    return h;
+    return { title: "", body: h };
   },
 };
 
@@ -364,26 +359,35 @@ function renderSlide(s) {
   }
 
   // 본문: 레이아웃별 렌더러가 있으면 그 고유 구조, 없으면 generic 폴백.
+  // 렌더러는 { title, body } 를 반환한다. title(제목성 요소)은 .slide-inner 직속(상단 고정),
+  // body 는 <div class="slide-body"> 로 감싸 남은 공간을 채운다.
   const renderer = LAYOUT_RENDERERS[s.semanticLayout];
-  let body;
-  let inlineImages = false; // 렌더러가 이미지를 직접 인라인했는지
+  let titleHtml = "";
+  let bodyHtml = "";
   if (renderer) {
-    body = renderer(s.id, content, assets);
-    inlineImages = ["demo-callout", "before-after", "demo-fullscreen"].includes(s.semanticLayout);
+    const out = renderer(s.id, content, assets);
+    titleHtml = out.title || "";
+    bodyHtml = out.body || "";
   } else {
     const slotNames = (layout && layout.slots) || Object.keys(content);
     const tagMap = { title: "h1", subtitle: "h2", eyebrow: "div", label: "div", number: "div", quote: "blockquote" };
     const parts = [];
+    // title 슬롯은 제목성 요소로 분리(있으면 .slide-title 로 상단 고정).
+    if (content.title != null) {
+      titleHtml = leaf(slotAddr(s.id, "title"), content.title, "h1", "slide-title");
+    }
     for (const name of slotNames) {
+      if (name === "title") continue;
       if (content[name] == null) continue;
       parts.push(renderSlotGeneric(s.id, name, content[name], tagMap[name]));
     }
     for (const name of Object.keys(content)) {
-      if (slotNames.includes(name)) continue;
+      if (name === "title" || slotNames.includes(name)) continue;
       parts.push(renderSlotGeneric(s.id, name, content[name], tagMap[name]));
     }
-    body = parts.join("\n");
+    bodyHtml = parts.join("\n");
   }
+  const slideBody = bodyHtml ? '<div class="slide-body">' + bodyHtml + "</div>" : "";
 
   // 이미지 자산: 렌더러가 직접 인라인하지 않은 경우에만 하단 묶음으로.
   // (인라인하더라도 편집 오버레이용으로 모든 asset 의 data-addr 노드는 유지해야 하므로
@@ -422,7 +426,8 @@ function renderSlide(s) {
     scaleStyle + ">" +
     '<div class="notion-root slide-inner"' + innerStyle + ">" +
     implBadge +
-    body +
+    titleHtml +
+    slideBody +
     assetsBlock +
     "</div>" +
     notes +
