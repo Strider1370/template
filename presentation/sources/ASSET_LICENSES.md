@@ -30,6 +30,21 @@
 | Phosphor (ph) | @iconify-json/ph | MIT | |
 | Twemoji | @iconify-json/twemoji | CC-BY-4.0 | 출처표기 필요 |
 
+## Slidev 엔진 (코드 차용 — 시각 기준 아님)
+
+`presentation/slidev/`의 글로우 배경·페이드 전환·v-click 등장 "엔진"은 **BaizeAI/talks** 덱에서 이식했다.
+
+| 자산 | 출처 | 라이선스 | 사용 범위 / 비고 |
+|------|------|----------|------------------|
+| `global-bottom.vue` (글로우 배경 컴포넌트) | github.com/BaizeAI/talks → `packages/2025-06-11-kubecon-hk/global-bottom.vue` | Apache-2.0 | 사용/수정/배포 가능. **글로우 폴리곤 시스템 크레딧: @pi0, @Atinux** (컴포넌트 주석 명시). seedrandom 기반. |
+| `style.css` (페이드 전환·v-click 블러·코드블록 폴리시) | github.com/BaizeAI/talks → 동 패키지 `style.css` | Apache-2.0 | 사용/수정/배포 가능. Slidev 루트 자동 로드. |
+| `uno.config.ts` (presetWind3 dark·presetIcons·webfonts·delay-* safelist) | github.com/BaizeAI/talks → 동 패키지 `uno.config.ts` | Apache-2.0 | 사용/수정/배포 가능. 폰트만 한국어(Noto Sans KR)로 적응. |
+| `slides.md` headmatter 규약 (colorSchema:dark, transition:fade-out, css:unocss, mdc:true, glowSeed/glow) | github.com/BaizeAI/talks | Apache-2.0 | 규약 차용, 본문은 자체 작성(재난 가이드 데모). |
+
+- 저장소: https://github.com/BaizeAI/talks
+- 라이선스 전문: https://github.com/BaizeAI/talks/blob/main/LICENSE.md (Apache License 2.0)
+- 외부 에셋(KubeCon.svg, DaoCloud.svg 등 BaizeAI 고유 자산)은 가져오지 않았다.
+
 ## 참고 캡처
 
 | 자산 | 출처 | 라이선스 | 사용 범위 |
