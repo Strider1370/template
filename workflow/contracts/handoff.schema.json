@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "handoff.schema.json",
+  "title": "Stage Handoff Report",
+  "description": "각 단계 완료 후 workflow/history/stage-XX-<id>.md 와 함께 기록되는 구조화 메타데이터(YAML front-matter 또는 동반 JSON).",
+  "type": "object",
+  "required": ["stageNumber", "stageId", "status", "completed", "changedFiles", "gate", "nextReads"],
+  "properties": {
+    "stageNumber": { "type": "integer", "minimum": 0, "maximum": 12 },
+    "stageId": { "type": "string" },
+    "startedAt": { "type": ["string", "null"] },
+    "finishedAt": { "type": ["string", "null"] },
+    "usedMinutes": { "type": ["number", "null"] },
+    "status": { "type": "string", "enum": ["completed", "blocked", "gate_failed"] },
+    "completed": { "type": "array", "items": { "type": "string" } },
+    "changedFiles": { "type": "array", "items": { "type": "string" } },
+    "subagentResults": { "type": "array", "items": { "type": "object" } },
+    "gate": {
+      "type": "object",
+      "required": ["command", "result"],
+      "properties": {
+        "command": { "type": "string" },
+        "result": { "type": "string", "enum": ["pass", "fail", "skipped"] },
+        "report": { "type": ["string", "null"] }
+      }
+    },
+    "humanDecision": { "type": ["string", "null"] },
+    "fallbackUsed": { "type": "array", "items": { "type": "string" } },
+    "remainingRisks": { "type": "array", "items": { "type": "string" } },
+    "confirmedContracts": { "type": "array", "items": { "type": "string" } },
+    "nextReads": { "type": "array", "items": { "type": "string" } },
+    "nextDoNot": { "type": "array", "items": { "type": "string" } }
+  }
+}

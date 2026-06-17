@@ -1,0 +1,49 @@
+{
+  "name": "hackathon-workflow-engine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "단계 기반 LLM 해커톤 워크플로우 엔진 (한국 공공 서비스 스타터 키트)",
+  "type": "module",
+  "scripts": {
+    "workflow:status": "node workflow/scripts/status.mjs",
+    "workflow:start": "node workflow/scripts/start-stage.mjs",
+    "workflow:complete": "node workflow/scripts/complete-stage.mjs",
+    "workflow:resume": "node workflow/scripts/resume.mjs",
+    "workflow:approve": "node workflow/scripts/approve-stage.mjs",
+    "workflow:fail": "node workflow/scripts/fail-stage.mjs",
+
+    "gate:intake": "node workflow/gates/validate-intake.mjs",
+    "gate:research": "node workflow/gates/validate-research.mjs",
+    "gate:insight": "node workflow/gates/validate-insight.mjs",
+    "gate:spec": "node workflow/gates/validate-spec.mjs",
+    "gate:plan": "node workflow/gates/validate-plan.mjs",
+    "gate:build": "node workflow/gates/validate-build.mjs",
+    "gate:integration": "node workflow/gates/validate-integration.mjs",
+    "gate:demo": "node workflow/gates/validate-demo.mjs",
+    "gate:script": "node workflow/gates/validate-script.mjs",
+    "gate:presentation-generation": "node workflow/gates/validate-presentation-generation.mjs",
+    "gate:presentation-visual": "node workflow/gates/validate-presentation-visual.mjs",
+    "gate:rehearsal": "node workflow/gates/validate-rehearsal.mjs",
+    "gate:package": "node workflow/gates/validate-package.mjs",
+
+    "cross-review": "node workflow/gates/cross-review.mjs",
+
+    "presentation:scenes": "node presentation/generator/generate-scenes.mjs",
+    "presentation:layouts": "node presentation/generator/select-layouts.mjs",
+    "presentation:slidev": "node presentation/generator/generate-slidev.mjs",
+    "presentation:static": "node presentation/generator/generate-static-html.mjs",
+    "presentation:validate-deck": "node presentation/generator/validate-deck.mjs",
+    "presentation:validate-slides": "node presentation/generator/validate-slides.mjs",
+    "presentation:build": "npm run presentation:scenes && npm run presentation:layouts && npm run presentation:slidev",
+
+    "web:build": "npm --prefix web run build",
+    "web:lint": "npm --prefix web run lint",
+    "web:dev": "npm --prefix web run dev"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

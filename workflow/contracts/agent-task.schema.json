@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "agent-task.schema.json",
+  "title": "Subagent Task Contract",
+  "description": "서브에이전트에게 전체 지침 대신 전달하는 좁은 작업 계약. read는 최대 5개 주요 입력만.",
+  "type": "object",
+  "required": ["taskId", "stage", "agentRole", "objective", "read", "write", "doNotWrite", "completionCriteria", "reportFormat"],
+  "properties": {
+    "taskId": { "type": "string" },
+    "stage": { "type": "string" },
+    "agentRole": { "type": "string" },
+    "objective": { "type": "string" },
+    "read": { "type": "array", "items": { "type": "string" }, "maxItems": 5 },
+    "write": { "type": "array", "items": { "type": "string" } },
+    "doNotWrite": { "type": "array", "items": { "type": "string" } },
+    "deadlineMinutes": { "type": ["number", "null"] },
+    "completionCriteria": { "type": "array", "items": { "type": "string" } },
+    "reportFormat": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["completed", "changedFiles", "verification", "blockers", "fallbackUsed", "decisionsNeeded"] }
+    }
+  }
+}

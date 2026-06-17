@@ -1,0 +1,168 @@
+# workflow/stages.yaml — 전체 단계 지도. 시간 예산·지침·guidance 섹션·Gate·사용자승인을 중앙 관리.
+# guidance.sections = 해당 Stage에서만 Just-in-Time으로 읽을 docs/ 섹션. (그 외 섹션·문서는 읽지 않는다)
+workflowVersion: 1
+
+stages:
+  - number: 0
+    id: intake
+    instruction: workflow/stages/00-intake.md
+    guidance: []
+    budgetMinutes: 5
+    gate: npm run gate:intake
+    humanApproval: false
+
+  - number: 1
+    id: parallel-research
+    instruction: workflow/stages/01-parallel-research.md
+    guidance:
+      - file: docs/AI_Hackathon_Operating_System.md
+        sections:
+          - "4. Stage 01"
+          - "8. Stage 01 Review"
+    budgetMinutes: 20
+    gate: npm run gate:research
+    humanApproval: false
+
+  - number: 2
+    id: insight-selection
+    instruction: workflow/stages/02-insight-selection.md
+    guidance:
+      - file: docs/AI_Hackathon_Operating_System.md
+        sections:
+          - "5. Stage 02"
+          - "8. Stage 02 Review"
+    budgetMinutes: 10
+    gate: npm run gate:insight
+    humanApproval: true
+
+  - number: 3
+    id: spec
+    instruction: workflow/stages/03-spec.md
+    guidance:
+      - file: docs/AI_Hackathon_Operating_System.md
+        sections:
+          - "6. Stage 03"
+          - "8. Stage 03 Review"
+    budgetMinutes: 10
+    gate: npm run gate:spec
+    humanApproval: false
+
+  - number: 4
+    id: implementation-plan
+    instruction: workflow/stages/04-implementation-plan.md
+    guidance: []
+    budgetMinutes: 10
+    gate: npm run gate:plan
+    humanApproval: false
+
+  - number: 5
+    id: parallel-build
+    instruction: workflow/stages/05-parallel-build.md
+    guidance:
+      - file: docs/CLAUDE_Notion_Slidev_Integration_Guide.md
+        sections:
+          - "3. Stage 05"
+          - "15. 서브에이전트 권한"
+    budgetMinutes: 85
+    gate: npm run gate:build
+    humanApproval: false
+
+  - number: 6
+    id: integration
+    instruction: workflow/stages/06-integration.md
+    guidance: []
+    budgetMinutes: 20
+    gate: npm run gate:integration
+    humanApproval: false
+
+  - number: 7
+    id: demo-validation
+    instruction: workflow/stages/07-demo-validation.md
+    guidance: []
+    budgetMinutes: 15
+    gate: npm run gate:demo
+    humanApproval: false
+
+  - number: 8
+    id: script
+    instruction: workflow/stages/08-script.md
+    guidance:
+      - file: docs/AI_Hackathon_Operating_System.md
+        sections:
+          - "7. Stage 08"
+          - "8. Stage 08 Review"
+      - file: docs/CLAUDE_Notion_Slidev_Integration_Guide.md
+        sections:
+          - "3. Stage 08"
+    budgetMinutes: 10
+    gate: npm run gate:script
+    humanApproval: false
+
+  - number: 9
+    id: presentation-generation
+    instruction: workflow/stages/09-presentation-generation.md
+    guidance:
+      - file: docs/CLAUDE_Notion_Slidev_Integration_Guide.md
+        sections:
+          - "8. 공통 Semantic Layout"
+          - "9. 중간 데이터 계약"
+          - "10. 레이아웃 선택"
+          - "11. Slidev 생성 규칙"
+          - "12. Notion Static HTML 생성 규칙"
+    budgetMinutes: 20
+    gate: npm run gate:presentation-generation
+    humanApproval: false
+
+  - number: 10
+    id: presentation-validation
+    instruction: workflow/stages/10-presentation-validation.md
+    guidance:
+      - file: docs/CLAUDE_Notion_Slidev_Integration_Guide.md
+        sections:
+          - "13. 캡처 레퍼런스 활용"
+          - "14. Stage 10 검증 기준"
+    budgetMinutes: 10
+    gate: npm run gate:presentation-visual
+    humanApproval: false
+
+  - number: 11
+    id: rehearsal
+    instruction: workflow/stages/11-rehearsal.md
+    guidance:
+      - file: docs/AI_Hackathon_Operating_System.md
+        sections:
+          - "8. Stage 11 Review"
+      - file: docs/CLAUDE_Notion_Slidev_Integration_Guide.md
+        sections:
+          - "3. Stage 11"
+    budgetMinutes: 10
+    gate: npm run gate:rehearsal
+    humanApproval: true
+
+  - number: 12
+    id: package
+    instruction: workflow/stages/12-package.md
+    guidance: []
+    budgetMinutes: 5
+    gate: npm run gate:package
+    humanApproval: false
+
+bufferMinutes: 10
+
+# 핵심 실행 게이트(실제 검증 로직) vs 최소 게이트(필수파일 존재 + 체크리스트 출력) — 깊이 B 정책
+gatePolicy:
+  enforced:            # 실제 검증 로직을 가진 게이트
+    - spec
+    - build
+    - demo
+    - presentation-generation
+    - presentation-visual
+  checklist:           # 필수파일 존재확인 + 체크리스트 안내 후 통과(에이전트/사람 자가점검)
+    - intake
+    - research
+    - insight
+    - plan
+    - integration
+    - script
+    - rehearsal
+    - package
