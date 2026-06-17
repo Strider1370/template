@@ -30,7 +30,7 @@
   border: 1px solid var(--notion-hairline);
   border-left: 3px solid var(--notion-purple);
   background: var(--notion-canvas-card);
-  font-size: calc(16pt * var(--slide-scale, 1));
+  font-size: calc(23pt * var(--slide-scale, 1));
   display: block;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   color: var(--notion-ink);
@@ -75,7 +75,7 @@
 }
 .slide.cover .ee-slot-eyebrow {
   font-family: var(--notion-font-mono);
-  font-size: calc(13pt * var(--slide-scale, 1));
+  font-size: calc(19pt * var(--slide-scale, 1));
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--notion-pink);
@@ -83,7 +83,7 @@
 }
 .slide.cover h1 {
   color: #ffffff;
-  font-size: calc(52pt * var(--slide-scale, 1));
+  font-size: calc(58pt * var(--slide-scale, 1));
   font-weight: 600;
   letter-spacing: -0.03em;
   margin: 0 0 24px;
@@ -104,7 +104,7 @@
   bottom: 56px;
   right: 96px;
   color: rgba(255, 255, 255, 0.55);
-  font-size: calc(13pt * var(--slide-scale, 1));
+  font-size: calc(19pt * var(--slide-scale, 1));
   font-family: var(--notion-font-mono);
   letter-spacing: 0.04em;
   text-align: right;
@@ -129,7 +129,7 @@
   border: 1px solid var(--notion-hairline);
   border-radius: 10px;
   padding: 18px 22px;
-  font-size: calc(18pt * var(--slide-scale, 1));
+  font-size: calc(26pt * var(--slide-scale, 1));
   display: flex;
   align-items: center;
   gap: 16px;
@@ -139,7 +139,7 @@
 .slide.icon-list ul.flow-list li .li-label {
   flex: 0 0 auto;
   font-family: var(--notion-font-mono);
-  font-size: calc(13pt * var(--slide-scale, 1));
+  font-size: calc(19pt * var(--slide-scale, 1));
   font-weight: 600;
   color: var(--notion-ink);
   background: #fbf3db;
@@ -176,7 +176,7 @@
 }
 .slide.compare .col .col-label {
   font-family: var(--notion-font-mono);
-  font-size: calc(13pt * var(--slide-scale, 1));
+  font-size: calc(19pt * var(--slide-scale, 1));
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -184,15 +184,15 @@
   margin: 0 0 12px;
 }
 .slide.compare .col ul { margin: 0; padding-left: 22px; }
-.slide.compare .col ul li { font-size: calc(16pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0 0 8px; }
+.slide.compare .col ul li { font-size: calc(23pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0 0 8px; }
 .slide.compare .col ul li::marker { color: var(--notion-purple); }
-.slide.compare .col p { font-size: calc(16pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0; }
+.slide.compare .col p { font-size: calc(23pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0; }
 .slide.compare .vs {
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--notion-font-mono);
-  font-size: 22pt;
+  font-size: 30pt;
   font-weight: 800;
   color: var(--notion-purple);
   letter-spacing: 0.05em;
@@ -211,7 +211,7 @@
   padding: 90px 120px;
 }
 .slide.yellow-banner h1 {
-  font-size: calc(56pt * var(--slide-scale, 1));
+  font-size: calc(59pt * var(--slide-scale, 1));
   font-weight: 600;
   letter-spacing: -0.03em;
   color: var(--notion-ink);
@@ -251,7 +251,7 @@
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 22pt;
+  font-size: 30pt;
   font-weight: 600;
   margin-bottom: 14px;
 }
@@ -260,8 +260,8 @@
 .slide.block-features .blocks > .block:nth-child(3) .ico { background: var(--notion-teal); }
 .slide.block-features .blocks > .block:nth-child(4) .ico { background: var(--notion-orange); }
 .slide.block-features .blocks > .block:nth-child(5) .ico { background: var(--notion-green); }
-.slide.block-features .blocks > .block h3 { font-size: calc(17pt * var(--slide-scale, 1)); margin: 0 0 6px; color: var(--notion-ink); }
-.slide.block-features .blocks > .block p { font-size: calc(14pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0; line-height: 1.5; }
+.slide.block-features .blocks > .block h3 { font-size: calc(25pt * var(--slide-scale, 1)); margin: 0 0 6px; color: var(--notion-ink); }
+.slide.block-features .blocks > .block p { font-size: calc(20pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0; line-height: 1.5; }
 
 /* ============================================================
    6) demo-fullscreen  → .slide.bg-full  (← propca section.bg-full)
@@ -283,8 +283,8 @@
   z-index: 0;
 }
 .slide.bg-full .slide-inner > * { position: relative; z-index: 1; }
-.slide.bg-full h1 { color: #ffffff; font-size: calc(56pt * var(--slide-scale, 1)); font-weight: 600; letter-spacing: -0.03em; margin: 0 0 16px; line-height: 1.1; }
-.slide.bg-full h2 { color: rgba(255, 255, 255, 0.85); font-size: calc(24pt * var(--slide-scale, 1)); font-weight: 500; margin: 0; }
+.slide.bg-full h1 { color: #ffffff; font-size: calc(59pt * var(--slide-scale, 1)); font-weight: 600; letter-spacing: -0.03em; margin: 0 0 16px; line-height: 1.1; }
+.slide.bg-full h2 { color: rgba(255, 255, 255, 0.85); font-size: calc(32pt * var(--slide-scale, 1)); font-weight: 500; margin: 0; }
 /* bg-full 배경 이미지는 인라인 img 대신 .slide-inner background 로 처리 → assets img 숨김 */
 .slide.bg-full .ee-assets { display: none; }
 
@@ -321,7 +321,7 @@
 .slide.split .col-text .callout { margin-top: 0; }
 .slide.split .col-text ul { list-style: none; padding: 0; margin: 14px 0 0; }
 .slide.split .col-text ul li {
-  font-size: calc(16pt * var(--slide-scale, 1));
+  font-size: calc(23pt * var(--slide-scale, 1));
   color: var(--notion-ink);
   padding: 8px 0 8px 26px;
   position: relative;
@@ -358,14 +358,14 @@
 }
 .slide.steps-result .steps .num {
   font-family: var(--notion-font-mono);
-  font-size: calc(11pt * var(--slide-scale, 1));
+  font-size: calc(16pt * var(--slide-scale, 1));
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--notion-orange);
 }
 .slide.steps-result .steps .body {
-  font-size: calc(20pt * var(--slide-scale, 1));
+  font-size: calc(27pt * var(--slide-scale, 1));
   font-weight: 500;
   line-height: 1.35;
   color: var(--notion-ink);
@@ -375,7 +375,7 @@
   color: #ffffff;
   border-radius: var(--notion-radius-lg);
   padding: 26px 30px;
-  font-size: calc(22pt * var(--slide-scale, 1));
+  font-size: calc(30pt * var(--slide-scale, 1));
   font-weight: 500;
   line-height: 1.4;
 }
@@ -383,7 +383,7 @@
   content: '결과 →';
   display: inline-block;
   font-family: var(--notion-font-mono);
-  font-size: 11pt;
+  font-size: 16pt;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.55);
@@ -410,7 +410,7 @@
   gap: 12px;
 }
 .slide.before-after .ba-col h3 {
-  font-size: calc(18pt * var(--slide-scale, 1));
+  font-size: calc(26pt * var(--slide-scale, 1));
   color: var(--notion-ink-mute);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -426,9 +426,9 @@
   border: 1px solid var(--notion-hairline);
   background: var(--notion-canvas-card);
 }
-.slide.before-after .ba-col .ba-caption { font-size: calc(13pt * var(--slide-scale, 1)); color: var(--notion-ink-sub); margin: 0; }
+.slide.before-after .ba-col .ba-caption { font-size: calc(19pt * var(--slide-scale, 1)); color: var(--notion-ink-sub); margin: 0; }
 .slide.before-after .ba-arrow {
-  font-size: 56pt;
+  font-size: 59pt;
   color: var(--notion-purple);
   font-weight: 800;
   line-height: 1;
@@ -497,8 +497,8 @@
 .slide.pastel-blocks .blocks > div:nth-child(6n+4) { background: var(--notion-pastel-lavender); }
 .slide.pastel-blocks .blocks > div:nth-child(6n+5) { background: var(--notion-pastel-sky); }
 .slide.pastel-blocks .blocks > div:nth-child(6n+6) { background: var(--notion-pastel-yellow); }
-.slide.pastel-blocks .blocks h3 { font-size: calc(18pt * var(--slide-scale, 1)); margin: 0 0 6px; color: var(--notion-ink); }
-.slide.pastel-blocks .blocks p { font-size: calc(14pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); line-height: 1.45; margin: 0; }
+.slide.pastel-blocks .blocks h3 { font-size: calc(26pt * var(--slide-scale, 1)); margin: 0 0 6px; color: var(--notion-ink); }
+.slide.pastel-blocks .blocks p { font-size: calc(20pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); line-height: 1.45; margin: 0; }
 
 /* ============================================================
    12) timeline  → .slide.timeline  (← propca section.timeline)
@@ -520,7 +520,7 @@
   position: relative;
   padding: 56px 16px 0 16px;
   text-align: center;
-  font-size: calc(15pt * var(--slide-scale, 1));
+  font-size: calc(22pt * var(--slide-scale, 1));
   color: var(--notion-ink-mute);
   line-height: 1.5;
   z-index: 1;
@@ -550,7 +550,7 @@
   color: #ffffff;
   font-family: var(--notion-font-mono);
   font-weight: 700;
-  font-size: 14pt;
+  font-size: 20pt;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -584,7 +584,7 @@
 .slide.hero-quote blockquote::before {
   content: '\201C';
   font-family: var(--notion-font-sans);
-  font-size: 120pt;
+  font-size: 126pt;
   color: var(--notion-purple);
   line-height: 0.6;
   display: block;
@@ -592,7 +592,7 @@
   opacity: 0.5;
 }
 .slide.hero-quote blockquote .quote-text {
-  font-size: calc(30pt * var(--slide-scale, 1));
+  font-size: calc(39pt * var(--slide-scale, 1));
   font-style: normal;
   font-weight: 500;
   color: var(--notion-ink);
@@ -601,7 +601,7 @@
   margin: 0;
 }
 .slide.hero-quote blockquote .quote-attr {
-  font-size: calc(16pt * var(--slide-scale, 1));
+  font-size: calc(23pt * var(--slide-scale, 1));
   color: var(--notion-ink-sub);
   font-weight: 600;
   margin-top: 24px;
@@ -616,7 +616,7 @@
 .slide.limitation-guardrail .lg-col { display: flex; flex-direction: column; justify-content: center; }
 .slide.limitation-guardrail .lg-col h3 {
   font-family: var(--notion-font-mono);
-  font-size: calc(13pt * var(--slide-scale, 1));
+  font-size: calc(19pt * var(--slide-scale, 1));
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -624,7 +624,7 @@
   margin: 0 0 12px;
 }
 .slide.limitation-guardrail .lg-col.guardrails h3 { color: var(--notion-purple); }
-.slide.limitation-guardrail .callout { font-size: calc(15pt * var(--slide-scale, 1)); }
+.slide.limitation-guardrail .callout { font-size: calc(22pt * var(--slide-scale, 1)); }
 .slide.limitation-guardrail .lg-col.limitations .callout { border-left-color: var(--notion-orange); }
 
 /* ============================================================
@@ -647,18 +647,18 @@
   position: relative;
 }
 .slide.roadmap .tier .phase-detail {
-  font-size: calc(14pt * var(--slide-scale, 1));
+  font-size: calc(20pt * var(--slide-scale, 1));
   font-weight: 600;
   color: var(--notion-purple);
   letter-spacing: -0.01em;
   margin-bottom: 8px;
   line-height: 1.2;
 }
-.slide.roadmap .tier h3 { font-size: calc(18pt * var(--slide-scale, 1)); color: var(--notion-ink); margin: 0 0 6px; }
-.slide.roadmap .tier p { font-size: calc(12pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 6px 0 18px; }
+.slide.roadmap .tier h3 { font-size: calc(26pt * var(--slide-scale, 1)); color: var(--notion-ink); margin: 0 0 6px; }
+.slide.roadmap .tier p { font-size: calc(17pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 6px 0 18px; }
 .slide.roadmap .tier ul { list-style: none; padding: 0; margin: 18px 0 0 0; }
 .slide.roadmap .tier ul li {
-  font-size: calc(13pt * var(--slide-scale, 1));
+  font-size: calc(19pt * var(--slide-scale, 1));
   color: var(--notion-ink);
   padding: 5px 0;
   border-top: 1px solid var(--notion-hairline);
@@ -671,7 +671,7 @@
   top: -12px; right: 16px;
   background: var(--notion-purple);
   color: #ffffff;
-  font-size: 11pt;
+  font-size: 16pt;
   font-weight: 600;
   padding: 3px 12px;
   border-radius: var(--notion-radius-sm);
@@ -689,7 +689,7 @@
 }
 .slide.end h1 {
   color: #ffffff;
-  font-size: calc(62pt * var(--slide-scale, 1));
+  font-size: calc(65pt * var(--slide-scale, 1));
   font-weight: 600;
   letter-spacing: -0.03em;
   margin: 0 0 12px;
@@ -700,7 +700,7 @@
   background: var(--notion-purple);
   color: #ffffff;
   font-weight: 600;
-  font-size: calc(17pt * var(--slide-scale, 1));
+  font-size: calc(25pt * var(--slide-scale, 1));
   padding: 14px 28px;
   border-radius: var(--notion-radius-pill);
   display: inline-block;
@@ -720,7 +720,7 @@
   color: #ffffff;
   padding: 7px 16px;
   border-radius: var(--notion-radius-pill);
-  font-size: calc(14pt * var(--slide-scale, 1));
+  font-size: calc(20pt * var(--slide-scale, 1));
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
-.slide.end .end-contact { color: rgba(255, 255, 255, 0.55); font-size: calc(14pt * var(--slide-scale, 1)); margin: 0; }
+.slide.end .end-contact { color: rgba(255, 255, 255, 0.55); font-size: calc(20pt * var(--slide-scale, 1)); margin: 0; }

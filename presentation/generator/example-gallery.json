@@ -52,8 +52,7 @@
       },
       "speakerNotes": "problem-flow → icon-list: 흐름 항목을 라벨+텍스트 행으로.",
       "durationSeconds": 40,
-      "implementationStatus": "implemented",
-      "contentScale": 1.18
+      "implementationStatus": "implemented"
     },
     {
       "id": "slide-03",
@@ -77,8 +76,7 @@
       },
       "speakerNotes": "contrast → compare: 좌우 컬럼 + VS.",
       "durationSeconds": 40,
-      "implementationStatus": "implemented",
-      "contentScale": 1.2
+      "implementationStatus": "implemented"
     },
     {
       "id": "slide-04",
@@ -119,7 +117,7 @@
       "speakerNotes": "product-overview → block-features: 아이콘 블록 3개.",
       "durationSeconds": 40,
       "implementationStatus": "implemented",
-      "contentScale": 1.28
+      "contentScale": 1.1
     },
     {
       "id": "slide-06",
@@ -186,8 +184,7 @@
       },
       "speakerNotes": "architecture → steps-result: 단계 카드 + 네이비 결과 바.",
       "durationSeconds": 40,
-      "implementationStatus": "implemented",
-      "contentScale": 1.2
+      "implementationStatus": "implemented"
     },
     {
       "id": "slide-09",
@@ -292,7 +289,7 @@
       "speakerNotes": "timeline: 가로 번호 단계.",
       "durationSeconds": 30,
       "implementationStatus": "implemented",
-      "contentScale": 1.12
+      "contentScale": 1.1
     },
     {
       "id": "slide-13",
@@ -325,8 +322,7 @@
       },
       "speakerNotes": "limitation-guardrail: 좌 한계 / 우 안전장치, 각 항목 callout.",
       "durationSeconds": 40,
-      "implementationStatus": "mocked",
-      "contentScale": 1.18
+      "implementationStatus": "mocked"
     },
     {
       "id": "slide-15",
@@ -368,7 +364,7 @@
       "speakerNotes": "expansion-map → roadmap: 3 tier, 첫 tier featured.",
       "durationSeconds": 40,
       "implementationStatus": "implemented",
-      "contentScale": 1.28
+      "contentScale": 1.1
     },
     {
       "id": "slide-16",

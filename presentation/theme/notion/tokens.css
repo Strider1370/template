@@ -73,11 +73,11 @@
   --notion-slide-pad-x: 88px;
 
   /* ---- Type scale (원본 pt 기준; 16:9 슬라이드 가독성) ---- */
-  --notion-fs-body: 17pt;
-  --notion-fs-h3: 17pt;
-  --notion-fs-h2: 22pt;
-  --notion-fs-h1: 28pt;
-  --notion-fs-hero: 60pt;
-  --notion-fs-big-number: 200pt;
+  --notion-fs-body: 25pt;
+  --notion-fs-h3: 25pt;
+  --notion-fs-h2: 30pt;
+  --notion-fs-h1: 38pt;
+  --notion-fs-hero: 63pt;
+  --notion-fs-big-number: 210pt;
   --notion-line: 1.55;
 }
