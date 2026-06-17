@@ -153,10 +153,10 @@
 .slide.compare .slide-inner {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto auto;
   column-gap: 24px;
   row-gap: 16px;
-  align-content: stretch;
+  align-content: center;
   align-items: stretch;
   justify-content: stretch;
 }
@@ -228,13 +228,12 @@
 /* ============================================================
    5) product-overview  → .slide.block-features  (← propca section.block-features)
    ============================================================ */
-.slide.block-features .slide-inner { justify-content: flex-start; }
+.slide.block-features .slide-inner { justify-content: center; }
 .slide.block-features .blocks {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
-  flex: 1;
-  margin: 8px 0;
+  margin: 24px 0 0;
 }
 .slide.block-features .blocks > .block {
   padding: 32px 28px;
@@ -631,13 +630,12 @@
 /* ============================================================
    15) expansion-map  → .slide.roadmap  (← propca section.roadmap)
    ============================================================ */
-.slide.roadmap .slide-inner { justify-content: flex-start; }
+.slide.roadmap .slide-inner { justify-content: center; }
 .slide.roadmap .tiers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  flex: 1;
-  margin-top: 8px;
+  margin-top: 24px;
 }
 .slide.roadmap .tier {
   background: var(--notion-canvas);
@@ -646,7 +644,6 @@
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   position: relative;
 }
 .slide.roadmap .tier .phase-detail {
