@@ -1,0 +1,72 @@
+# Stage 05 — Parallel Build (병렬 구현)
+
+## 1. 목적
+UI/Data/AI/Demo/Presentation 에이전트를 병렬로 돌려 데모 핵심경로를 구현한다. Presentation Agent는 구현을 기다리지 않고 발표 초안을 병렬 작성한다. 작동 상태마다 체크포인트 커밋.
+
+## 2. 시작 조건
+- Stage 04 Gate 통과, `plan.md` + `file-ownership.yaml` 존재.
+
+## 3. 이번 단계에서 반드시 읽을 파일
+- `plan.md`, `workflow/decisions/file-ownership.yaml`, `spec.md`(필요 헤딩), `demo/demo.scenario.yaml`
+- guidance: `docs/CLAUDE_Notion_Slidev_Integration_Guide.md` §3 "Stage 05 — 병렬 구현 중 발표 초안" 및 §15 "서브에이전트 권한"(Stage 05 Presentation Agent). 이 섹션만.
+
+## 4. 이번 단계에서 읽지 않아도 되는 파일
+- 리서치 원문, 발표 생성 상세 규칙(§8~12은 Stage 09), 타 단계 history.
+
+## 5. 필수 입력
+- `plan.md`, `file-ownership.yaml`. 없으면 시작하지 않는다.
+
+## 6. 메인 에이전트의 역할
+- 각 에이전트에 좁은 Agent Task 계약만 전달(전체 지침 X).
+- 결과를 받아 충돌 없이 모은다(통합 자체는 Stage 06).
+- 작동하는 상태가 되면 체크포인트 커밋(매 변경마다 X). `state.yaml.lastSuccessfulCheckpoint`에 commit 기록.
+- `web/` 스캐폴드·기존 컴포넌트/유틸 재사용을 강제(같은 것 새로 만들기 금지). 막히면 `examples/disaster-guide/` 참고.
+
+## 7. 병렬 서브에이전트 구성
+- UI Agent / Data Agent / AI Agent / Demo Agent / Presentation Agent (5개). 단일 세션이면 메인이 순차로.
+
+## 8. 각 서브에이전트의 작업 계약
+`agent-task.yaml` 형식, `read`≤5, `write`=file-ownership.yaml의 자기 경로만, `doNotWrite`=spec/plan/package.json/state.yaml/타 에이전트 경로.
+- UI: `web/app/<feature>/`,`web/components/<feature>/` — 완료: fixture로 렌더, Wow Moment 화면에 보임, 타입 OK, `npm run web:build` 통과.
+- Data: `web/lib/`,`web/public/data/`,`web/scripts/` — 완료: fixture/정제 JSON 제공(403 데이터는 사람 다운로드분 가공).
+- AI: AI 호출 모듈 경로 — 완료: 폴백(하드코딩 응답) 포함, 키 없을 때도 동작.
+- Demo: `demo/` — 완료: demo.scenario.yaml 경로대로 클릭 흐름 준비.
+- Presentation: `presentation/draft-outline.md` 등 — 완료: Problem/Insight/Solution/Closing + 데모 placeholder + 발표 구조 초안(구현 안 기다림).
+
+## 9. 생성해야 하는 산출물
+- 데모 핵심경로 구현 코드(`web/`), fixture 데이터, AI 폴백, `presentation/draft-outline.md`(발표 초안).
+
+## 10. 파일 소유권
+- 메인 전용: `spec.md`,`plan.md`,`package.json`,`state.yaml`,`stages.yaml`.
+- 에이전트별: §8의 write 경로(상호 침범 금지). `presentation/`은 Presentation Agent + 메인만.
+
+## 11. 제한 시간
+- 85분(최대 구간). 초과 시 데모 핵심경로 외 기능을 폴백/드롭(단계 생략 X, 범위 축소).
+
+## 12. 완료 조건
+- `npm run web:build` 통과, fixture로 데모 핵심경로가 화면에서 끝까지 이어짐, 발표 초안 존재.
+
+## 13. 기계적 Gate (Mechanical)
+- 명령: `npm run gate:build`
+- 분류: **enforced**. `web/` 빌드 실제 실행 + 타입체크 + 핵심 산출물 존재를 검사.
+
+## 14. LLM Review Gate
+- `npm run cross-review -- spec.md` 대비 구현 요지(또는 변경 요약) (Codex 우선 → 클로드 폴백).
+- 검토: 구현이 spec의 데모경로/Wow Moment를 반영하는가, 범위 일탈 없는가.
+
+## 15. 사용자 승인 여부
+- `humanApproval: false`.
+
+## 16. 실패 시 폴백
+- 외부 연동 막히면 즉시 fixture/하드코딩으로 데모를 살린다(붙잡지 않음). 빌드 깨지면 마지막 체크포인트로 롤백 후 범위 축소.
+
+## 17. 다음 단계에 전달할 정보
+- 구현된 `web/`, fixture, `presentation/draft-outline.md`, 각 에이전트 보고(구현/모킹/폴백/드롭 상태) (Stage 06 통합 입력).
+
+## 18. 금지 사항
+- spec에 없는 기능 추가 금지, 과한 리팩토링/추상화 금지.
+- 데모에 안 보이는 곳(인증·설정)에 시간 쓰기 금지.
+- 매 변경 커밋 금지(작동 시점에만).
+
+## 19. 단계 완료 보고 형식
+- `workflow/templates/stage-report.md` → `workflow/history/stage-05-parallel-build.md`.

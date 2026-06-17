@@ -1,0 +1,50 @@
+/* ============================================================
+   theme/notion/components.css — 최소 스캐폴드.
+   정적 HTML(notion-html 렌더러)이 사용할 공통 컴포넌트 스타일.
+   tokens.css 변수만 참조한다(슬라이드별 inline CSS 금지, Doc2 §5.1).
+   출처: presentation/marp/themes/propca-notion-style.css (카드/칩/콜아웃 등).
+   ※ Stage 09 첫 실사용 때 layout-registry 의 notion-html 렌더러에 맞춰 확장.
+   ============================================================ */
+@import url('./tokens.css');
+
+/* 카드 (card-grid / product-overview 슬롯) */
+.notion-card {
+  background: var(--notion-canvas-card);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  padding: var(--notion-space-4);
+}
+
+/* 콜아웃 (demo-callout / limitation-guardrail) */
+.notion-callout {
+  border: 1px solid var(--notion-hairline);
+  border-left: 3px solid var(--notion-purple);
+  background: var(--notion-canvas-card);
+  border-radius: var(--notion-radius);
+  padding: var(--notion-space-3) var(--notion-space-4);
+}
+
+/* 칩/태그 */
+.notion-chip {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: var(--notion-radius-pill);
+  font-family: var(--notion-font-mono);
+  font-size: 11pt;
+  background: var(--notion-canvas-card);
+  color: var(--notion-ink-mute);
+  border: 1px solid var(--notion-hairline);
+}
+
+/* big-number (impact) */
+.notion-big-number {
+  font-family: var(--notion-font-mono);
+  font-size: var(--notion-fs-big-number);
+  font-weight: 800;
+  color: var(--notion-purple);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+/* TODO(Stage 09): compare / before-after / timeline / roadmap / hero-quote 등
+   layout-registry renderers["notion-html"] 가 가리키는 클래스들을 propca 테마에서 이식. */

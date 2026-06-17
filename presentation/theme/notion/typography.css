@@ -1,0 +1,51 @@
+/* ============================================================
+   theme/notion/typography.css — 최소 스캐폴드.
+   tokens.css 의 폰트/타입스케일 변수를 참조한다.
+   출처: presentation/marp/themes/propca-notion-style.css (typography 블록).
+   ※ Stage 09 첫 실사용 때 정적 HTML/Slidev 공통으로 확장.
+   ============================================================ */
+@import url('./tokens.css');
+
+.notion-root {
+  font-family: var(--notion-font-sans);
+  color: var(--notion-ink);
+  font-size: var(--notion-fs-body);
+  line-height: var(--notion-line);
+  font-weight: 400;
+}
+
+.notion-root h1 {
+  font-size: var(--notion-fs-h1);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--notion-ink);
+}
+.notion-root h2 {
+  font-size: var(--notion-fs-h2);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--notion-ink-mute);
+}
+.notion-root h3 {
+  font-size: var(--notion-fs-h3);
+  font-weight: 600;
+  color: var(--notion-ink);
+}
+.notion-root p,
+.notion-root li {
+  font-size: var(--notion-fs-body);
+  line-height: var(--notion-line);
+  color: var(--notion-ink-mute);
+}
+.notion-root strong { color: var(--notion-purple); font-weight: 600; }
+.notion-root a { color: var(--notion-link); text-decoration: none; }
+.notion-root code {
+  font-family: var(--notion-font-mono);
+  background: rgba(86, 69, 212, 0.1);
+  color: var(--notion-purple);
+  padding: 2px 7px;
+  border-radius: var(--notion-radius-sm);
+}
+
+/* TODO(Stage 09): blockquote / table / pre / mono label 등 propca 타이포 이식 확장. */
