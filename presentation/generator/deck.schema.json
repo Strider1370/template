@@ -101,6 +101,13 @@
           "description": "발표자 노트. Doc2 §11: 반드시 포함."
         },
         "durationSeconds": { "type": "integer", "minimum": 0 },
+        "contentScale": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 2,
+          "default": 1,
+          "description": "슬라이드 본문 콘텐츠 글자 배율. 미지정 시 1(변화 없음). 여백 많으면 키우고 빽빽하면 줄인다. 프레임·간격은 고정, 글자만 스케일."
+        },
         "layoutReason": {
           "type": "string",
           "description": "레이아웃 선택 이유 로그. Doc2 §10."

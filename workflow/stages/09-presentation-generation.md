@@ -30,6 +30,9 @@
 4. **정합 검증.** `npm run presentation:validate-slides` (slides.md ↔ deck.json 슬라이드 수 일치).
 5. (선택) Slidev 빌드: `cd presentation/slidev && npm install && npm run build`(라이브용). 안 되면 정적 HTML로 시연.
 6. **사람이 다듬기.** `presentation/output/static/presentation.html?edit=1`을 열면 편집 오버레이가 켜진다(번호/주소 배지·크기 호버·클릭복사·오버플로우경고·레이아웃/시간 배지·자산상태·편집맵 내보내기). 사용자가 주소(예: `slide-04.content.callout`)로 지칭하면 deck.json의 그 필드를 고치고 3~4를 다시 돌린다.
+7. **캡처 보고 크기 맞추기(LLM 루프).** **렌더 → `npm run presentation:capture` → 캡처(`presentation/output/captures/*.png`)를 *직접 보고* 슬라이드별 `contentScale`(deck.json slide 속성, 0.5~2, 미지정=1)과 내용을 조정 → 재렌더**. 1~2회 반복.
+   - 원칙: **내용을 공간에 맞추지 말고(억지 채움 금지), 공간을 내용에 맞춰라** — 여백이 많으면 `contentScale`로 키우고, 빽빽하거나 오버플로우면 줄여라.
+   - `contentScale`은 본문 글자만 배율 조정한다(프레임·간격·이미지는 고정). 기본값 1은 시각 변화 없음.
 
 > `npm run presentation:build` = validate-deck → slidev → static → validate-slides 한 번에.
 

@@ -406,13 +406,20 @@ function renderSlide(s) {
     ? '<div class="ee-notes" hidden data-addr="' + esc(s.id + ".speakerNotes") + '">' + esc(s.speakerNotes) + "</div>"
     : "";
 
+  // per-slide 콘텐츠 배율 노브. 미지정/1 이면 시각 변화 0 (CSS calc 의 기본값 1).
+  // --slide-scale 는 section 에 주입(콘텐츠 font-size 만 calc 로 곱함). 프레임/간격은 불변.
+  const scaleRaw = typeof s.contentScale === "number" ? s.contentScale : 1;
+  const scale = Math.min(2, Math.max(0.5, scaleRaw));
+  const scaleStyle = scale !== 1 ? ' style="--slide-scale:' + scale + '"' : "";
+
   return (
     '<section class="slide ' + esc(cls) + '"' +
     ' data-addr="' + esc(slideAddr(s.id)) + '"' +
     ' data-slide-id="' + esc(s.id) + '"' +
     ' data-layout="' + esc(s.semanticLayout) + '"' +
     ' data-duration="' + dur + '"' +
-    ' data-impl="' + esc(impl) + '">' +
+    ' data-impl="' + esc(impl) + '"' +
+    scaleStyle + ">" +
     '<div class="notion-root slide-inner"' + innerStyle + ">" +
     implBadge +
     body +
@@ -464,10 +471,10 @@ const baseCss = `
   .slide.end h1,.slide.end h2{color:#fff;}
   .slide.big-number .slide-inner{align-items:center;text-align:center;}
   .slide.big-number .ee-slot-number{
-    font-family:var(--notion-font-mono);font-size:var(--notion-fs-big-number,200pt);
+    font-family:var(--notion-font-mono);font-size:calc(var(--notion-fs-big-number,200pt) * var(--slide-scale, 1));
     font-weight:800;color:var(--notion-purple,#5645d4);line-height:1;letter-spacing:-.05em;
   }
-  .ee-slot-eyebrow{font-family:var(--notion-font-mono);font-size:13pt;
+  .ee-slot-eyebrow{font-family:var(--notion-font-mono);font-size:calc(13pt * var(--slide-scale, 1));
     letter-spacing:.08em;text-transform:uppercase;color:var(--notion-purple,#5645d4);}
   .ee-assets{display:flex;gap:var(--notion-space-3,18px);flex-wrap:wrap;margin-top:var(--notion-space-2,12px);}
   .ee-img{max-width:48%;max-height:46vh;border-radius:var(--notion-radius-lg,12px);

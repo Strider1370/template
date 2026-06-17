@@ -32,15 +32,28 @@
       "content": {
         "title": "재난 정보가 시민에게 닿기까지 막히는 지점",
         "items": [
-          { "label": "1단계", "text": "전국 단위 일반 공지가 일괄 발송된다" },
-          { "label": "2단계", "text": "시민은 내 동네 해당 여부를 직접 판별해야 한다" },
-          { "label": "3단계", "text": "대피소·물품 정보를 여러 사이트에서 따로 검색한다" },
-          { "label": "4단계", "text": "결국 행동으로 옮기지 못하고 정보가 사장된다" }
+          {
+            "label": "1단계",
+            "text": "전국 단위 일반 공지가 일괄 발송된다"
+          },
+          {
+            "label": "2단계",
+            "text": "시민은 내 동네 해당 여부를 직접 판별해야 한다"
+          },
+          {
+            "label": "3단계",
+            "text": "대피소·물품 정보를 여러 사이트에서 따로 검색한다"
+          },
+          {
+            "label": "4단계",
+            "text": "결국 행동으로 옮기지 못하고 정보가 사장된다"
+          }
         ]
       },
       "speakerNotes": "problem-flow → icon-list: 흐름 항목을 라벨+텍스트 행으로.",
       "durationSeconds": 40,
-      "implementationStatus": "implemented"
+      "implementationStatus": "implemented",
+      "contentScale": 1.18
     },
     {
       "id": "slide-03",
@@ -64,7 +77,8 @@
       },
       "speakerNotes": "contrast → compare: 좌우 컬럼 + VS.",
       "durationSeconds": 40,
-      "implementationStatus": "implemented"
+      "implementationStatus": "implemented",
+      "contentScale": 1.2
     },
     {
       "id": "slide-04",
@@ -85,14 +99,27 @@
       "content": {
         "title": "세 가지 핵심 기능",
         "features": [
-          { "icon": "📍", "heading": "위치 자동 판별", "body": "GPS로 현재 동네의 위험 유형을 즉시 분류한다" },
-          { "icon": "🏠", "heading": "대피소 안내", "body": "가장 가까운 대피소 3곳과 경로를 보여준다" },
-          { "icon": "✅", "heading": "준비물 체크", "body": "상황별 비상물품 체크리스트를 생성한다" }
+          {
+            "icon": "📍",
+            "heading": "위치 자동 판별",
+            "body": "GPS로 현재 동네의 위험 유형을 즉시 분류한다"
+          },
+          {
+            "icon": "🏠",
+            "heading": "대피소 안내",
+            "body": "가장 가까운 대피소 3곳과 경로를 보여준다"
+          },
+          {
+            "icon": "✅",
+            "heading": "준비물 체크",
+            "body": "상황별 비상물품 체크리스트를 생성한다"
+          }
         ]
       },
       "speakerNotes": "product-overview → block-features: 아이콘 블록 3개.",
       "durationSeconds": 40,
-      "implementationStatus": "implemented"
+      "implementationStatus": "implemented",
+      "contentScale": 1.28
     },
     {
       "id": "slide-06",
@@ -103,7 +130,10 @@
         "subtitle": "위치 버튼 한 번이면 전체 가이드가 생성됩니다"
       },
       "assets": {
-        "image": { "src": "../../../web/public/hero-neighborhood.png", "status": "real" }
+        "image": {
+          "src": "../../../web/public/hero-neighborhood.png",
+          "status": "real"
+        }
       },
       "speakerNotes": "demo-fullscreen → bg-full: 이미지를 배경으로, 오버레이 위 텍스트.",
       "durationSeconds": 40,
@@ -123,7 +153,10 @@
         ]
       },
       "assets": {
-        "image": { "src": "../../../web/public/hero-neighborhood.png", "status": "real" }
+        "image": {
+          "src": "../../../web/public/hero-neighborhood.png",
+          "status": "real"
+        }
       },
       "speakerNotes": "demo-callout → split: 좌 이미지 / 우 콜아웃+포인트.",
       "durationSeconds": 50,
@@ -136,15 +169,25 @@
       "content": {
         "title": "동작 구조",
         "steps": [
-          { "num": "STEP 1", "body": "GPS 좌표 수집" },
-          { "num": "STEP 2", "body": "공개데이터와 매칭" },
-          { "num": "STEP 3", "body": "행동 항목 생성" }
+          {
+            "num": "STEP 1",
+            "body": "GPS 좌표 수집"
+          },
+          {
+            "num": "STEP 2",
+            "body": "공개데이터와 매칭"
+          },
+          {
+            "num": "STEP 3",
+            "body": "행동 항목 생성"
+          }
         ],
         "result": "사용자는 5초 안에 자기 동네 맞춤 대비 가이드를 받는다"
       },
       "speakerNotes": "architecture → steps-result: 단계 카드 + 네이비 결과 바.",
       "durationSeconds": 40,
-      "implementationStatus": "implemented"
+      "implementationStatus": "implemented",
+      "contentScale": 1.2
     },
     {
       "id": "slide-09",
@@ -158,8 +201,14 @@
         "afterCaption": "한 화면에서 5초"
       },
       "assets": {
-        "beforeImage": { "src": "../../../web/public/hero-neighborhood.png", "status": "real" },
-        "afterImage": { "src": "../../../web/public/hero-neighborhood.png", "status": "real" }
+        "beforeImage": {
+          "src": "../../../web/public/hero-neighborhood.png",
+          "status": "real"
+        },
+        "afterImage": {
+          "src": "../../../web/public/hero-neighborhood.png",
+          "status": "real"
+        }
       },
       "speakerNotes": "before-after: 좌/우 이미지 + 화살표.",
       "durationSeconds": 40,
@@ -185,12 +234,30 @@
       "content": {
         "title": "지원 재난 유형",
         "cards": [
-          { "heading": "지진", "body": "진동 대피 행동 요령" },
-          { "heading": "호우·침수", "body": "저지대 대피 경로" },
-          { "heading": "산불", "body": "풍향 기반 대피 방향" },
-          { "heading": "폭염", "body": "무더위 쉼터 안내" },
-          { "heading": "한파", "body": "취약계층 보온 안내" },
-          { "heading": "태풍", "body": "사전 점검 체크리스트" }
+          {
+            "heading": "지진",
+            "body": "진동 대피 행동 요령"
+          },
+          {
+            "heading": "호우·침수",
+            "body": "저지대 대피 경로"
+          },
+          {
+            "heading": "산불",
+            "body": "풍향 기반 대피 방향"
+          },
+          {
+            "heading": "폭염",
+            "body": "무더위 쉼터 안내"
+          },
+          {
+            "heading": "한파",
+            "body": "취약계층 보온 안내"
+          },
+          {
+            "heading": "태풍",
+            "body": "사전 점검 체크리스트"
+          }
         ]
       },
       "speakerNotes": "card-grid → pastel-blocks: 파스텔 6블록.",
@@ -204,15 +271,28 @@
       "content": {
         "title": "재난 발생 시 권장 행동 타임라인",
         "steps": [
-          { "heading": "0분", "body": "알림 수신 즉시 위치 확인" },
-          { "heading": "1분", "body": "대피소 경로 확인" },
-          { "heading": "3분", "body": "비상물품 챙기기" },
-          { "heading": "5분", "body": "대피 시작" }
+          {
+            "heading": "0분",
+            "body": "알림 수신 즉시 위치 확인"
+          },
+          {
+            "heading": "1분",
+            "body": "대피소 경로 확인"
+          },
+          {
+            "heading": "3분",
+            "body": "비상물품 챙기기"
+          },
+          {
+            "heading": "5분",
+            "body": "대피 시작"
+          }
         ]
       },
       "speakerNotes": "timeline: 가로 번호 단계.",
       "durationSeconds": 30,
-      "implementationStatus": "implemented"
+      "implementationStatus": "implemented",
+      "contentScale": 1.12
     },
     {
       "id": "slide-13",
@@ -245,7 +325,8 @@
       },
       "speakerNotes": "limitation-guardrail: 좌 한계 / 우 안전장치, 각 항목 callout.",
       "durationSeconds": 40,
-      "implementationStatus": "mocked"
+      "implementationStatus": "mocked",
+      "contentScale": 1.18
     },
     {
       "id": "slide-15",
@@ -258,26 +339,36 @@
             "phase": "Phase 1",
             "heading": "수도권 시범",
             "body": "서울·경기 우선 적용",
-            "items": ["대피소 데이터 연동", "오프라인 캐시"],
+            "items": [
+              "대피소 데이터 연동",
+              "오프라인 캐시"
+            ],
             "featured": true
           },
           {
             "phase": "Phase 2",
             "heading": "전국 확대",
             "body": "광역시·도 커버리지",
-            "items": ["전국 대피소", "다국어 지원"]
+            "items": [
+              "전국 대피소",
+              "다국어 지원"
+            ]
           },
           {
             "phase": "Phase 3",
             "heading": "실시간 연동",
             "body": "경보 시스템 통합",
-            "items": ["실시간 경보", "푸시 알림"]
+            "items": [
+              "실시간 경보",
+              "푸시 알림"
+            ]
           }
         ]
       },
       "speakerNotes": "expansion-map → roadmap: 3 tier, 첫 tier featured.",
       "durationSeconds": 40,
-      "implementationStatus": "implemented"
+      "implementationStatus": "implemented",
+      "contentScale": 1.28
     },
     {
       "id": "slide-16",
@@ -287,7 +378,12 @@
         "title": "동네 단위로, 모두가 대비된 도시",
         "subtitle": "다음 단계: 실시간 경보 연동과 전국 대피소 커버리지",
         "cta": "데모 체험: localhost:5173",
-        "tags": ["#재난대비", "#공공데이터", "#오프라인", "#위치기반"],
+        "tags": [
+          "#재난대비",
+          "#공공데이터",
+          "#오프라인",
+          "#위치기반"
+        ],
         "contact": "팀 동네방재 · junn1370@gmail.com"
       },
       "speakerNotes": "closing → end: 네이비 마감, CTA + 태그 + 연락처.",
