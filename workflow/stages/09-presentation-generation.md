@@ -1,66 +1,77 @@
 # Stage 09 — Presentation Generation (발표자료 생성)
 
 ## 1. 목적
-스크립트를 `scenes.json → deck.json → slides.md → Slidev build → 정적 HTML 백업`으로 변환한다. 기존 layout/component를 우선 쓰고, 실제 앱 캡처를 삽입하며, speaker notes를 포함한다.
+발표 스크립트를 슬라이드로 만든다. **방식 = 반자동(B안):** 판단(슬라이드에 무엇을 담나)은 AI가 `deck.json`을 직접 작성하고, 변환(슬라이드/HTML 렌더)은 렌더러가 자동 처리한다. Slidev(기본) + Notion 정적 HTML(오프라인 백업) 둘 다 같은 `deck.json` 하나로 생성한다.
 
 ## 2. 시작 조건
-- Stage 08 Gate 통과, `presentation/script.md` 존재.
+- Stage 08 Gate 통과, `presentation/script.md`·`presentation/qna.md`·`implementation/manifest.json` 존재.
 
 ## 3. 이번 단계에서 반드시 읽을 파일
-- `presentation/script.md`, Stage 07 캡처/영상, `implementation/manifest.json`
-- guidance: `docs/CLAUDE_Notion_Slidev_Integration_Guide.md` §8 "공통 Semantic Layout", §9 "중간 데이터 계약", §10 "레이아웃 선택", §11 "Slidev 생성 규칙", §12 "Notion Static HTML 생성 규칙". 이 섹션만.
+- `presentation/script.md`, `implementation/manifest.json`, Stage 07 캡처 목록, `presentation/generator/layout-registry.json`(16 layout·slot), `concept.md`(척추)
+- guidance: `docs/CLAUDE_Notion_Slidev_Integration_Guide.md` §8(공통 Semantic Layout)·§9(중간 데이터 계약)·§10(레이아웃 선택)·§11(Slidev 생성)·§12(Notion Static HTML). 이 섹션만.
 
 ## 4. 이번 단계에서 읽지 않아도 되는 파일
-- 리서치 원문, AI_Hackathon_OS의 사고기준 섹션, 무관한 구현 세부.
+- 리서치 원문, AI_Hackathon_OS 사고기준, 타 단계 history.
 
 ## 5. 필수 입력
-- `presentation/script.md`. 없으면 시작하지 않는다.
+- `presentation/script.md`, `implementation/manifest.json`. 없으면 시작하지 않는다.
 
-## 6. 메인 에이전트의 역할
-- 변환 파이프라인 실행: script.md → `presentation/scenes.json` → `presentation/deck.json` → `presentation/slides.md` → Slidev 빌드 → `presentation/output/`(정적 HTML 백업 포함).
-- 기존 Slidev layout/component를 우선 사용(무단 재디자인 금지). CSS 우선순위(engine→template→Notion tokens→adaptation→overrides) 준수.
-- 실제 앱 캡처(Stage 07 산출)를 삽입(placeholder 대체). speaker notes 포함.
-- 킥(차별점)을 중심 슬라이드로, 벤치마킹 서사(해외 메커니즘 이식)를 함께 배치.
+## 6. 메인 에이전트의 역할 — B안 흐름
+1. **deck.json 작성(판단).** `script.md`를 슬라이드로 분해해 `presentation/deck.json`을 직접 쓴다. 각 슬라이드:
+   - `semanticLayout`은 `layout-registry.json`의 16개 중에서만 고른다(임의 layout 금지). 규칙(§10): answer-first→hero, demo+wow→demo-callout, insight→contrast/insight-statement, impact+숫자→big-number, 한계→limitation-guardrail, 마지막→closing.
+   - `content` 슬롯은 해당 layout의 slot 이름에 맞춰 채운다.
+   - `assets` 이미지는 **Stage 07 실제 앱 캡처 우선**(목업보다). 각 자산은 `{ "src": "...", "status": "real|placeholder" }`.
+   - `speakerNotes` 반드시 포함. `durationSeconds` 배분(데모+킥 ≥50%).
+   - `implementationStatus`가 implemented가 아니면 표시(mocked/fallback) 또는 제거(dropped/blocked) — manifest 기준.
+   - **Closing 문구 = `concept.md`의 "기억에 남을 마지막 문장".**
+   - `meta.engine`="slidev", `meta.presentationMinutes`는 state.yaml 값 반영.
+2. **검증.** `npm run presentation:validate-deck` (미등록 layout·필수필드·primary 엔진 검사).
+3. **렌더(자동).** `npm run presentation:slidev`(→ slides.md) + `npm run presentation:static`(→ output/static/presentation.html, 편집 오버레이 내장).
+4. **정합 검증.** `npm run presentation:validate-slides` (slides.md ↔ deck.json 슬라이드 수 일치).
+5. (선택) Slidev 빌드: `cd presentation/slidev && npm install && npm run build`(라이브용). 안 되면 정적 HTML로 시연.
+6. **사람이 다듬기.** `presentation/output/static/presentation.html?edit=1`을 열면 편집 오버레이가 켜진다(번호/주소 배지·크기 호버·클릭복사·오버플로우경고·레이아웃/시간 배지·자산상태·편집맵 내보내기). 사용자가 주소(예: `slide-04.content.callout`)로 지칭하면 deck.json의 그 필드를 고치고 3~4를 다시 돌린다.
+
+> `npm run presentation:build` = validate-deck → slidev → static → validate-slides 한 번에.
 
 ## 7. 병렬 서브에이전트 구성
-- presentation-agent 1개(또는 메인 직접). 자산/캡처 처리가 크면 capture 보조 1개.
+- 없음(deck.json 작성은 판단 집약). 렌더는 스크립트가 처리.
 
 ## 8. 각 서브에이전트의 작업 계약
-- presentation-agent: `read`=[script.md, scenes/deck 계약 섹션, 캡처 경로], `write`=`presentation/`(slides·output·scenes·deck), `doNotWrite`=spec/plan/web 코드. 완료: Slidev 빌드 통과 + 정적 HTML 생성 + 캡처 삽입.
+- 해당 없음.
 
 ## 9. 생성해야 하는 산출물
-- `presentation/scenes.json`, `presentation/deck.json`, `presentation/slides.md`, `presentation/output/`(Slidev 빌드 + 정적 HTML 백업).
+- `presentation/deck.json`(단일 계약), `presentation/slides.md`, `presentation/output/static/presentation.html`(+ 선택 `output/slidev/`).
 
 ## 10. 파일 소유권
-- 메인/presentation-agent: `presentation/` 전체. web 코드·spec·plan은 건드리지 않음.
+- 메인 전용: `presentation/deck.json`. 렌더 산출물은 스크립트가 생성.
 
 ## 11. 제한 시간
-- 20분. 초과 시 슬라이드 수를 줄이되(데모+킥 슬라이드 보존) 정적 HTML 백업은 반드시 생성.
+- 20분. 초과 시 슬라이드 수를 줄이되(데모+킥 보존) deck.json→렌더 흐름은 유지.
 
 ## 12. 완료 조건
-- slides.md + Slidev 빌드 산출 + 정적 HTML 백업 존재, 실제 캡처 삽입, speaker notes 포함.
+- deck.json(검증 통과) + slides.md(정합) + output/static/presentation.html 존재. speakerNotes 모든 슬라이드 포함.
 
 ## 13. 기계적 Gate (Mechanical)
 - 명령: `npm run gate:presentation-generation`
-- 분류: **enforced**. scenes/deck/slides 존재·파싱 + Slidev 빌드 산출 + 정적 HTML 존재를 실제 검사.
+- 분류: **enforced**. deck.json 파싱·slides.md·정적 HTML 산출물 존재 검사. (deck 무결성/슬라이드 정합은 presentation:validate-deck/-slides로 보강)
 
 ## 14. LLM Review Gate
-- `npm run cross-review -- presentation/slides.md` (Codex 우선 → 클로드 폴백).
-- 검토: 슬라이드가 script와 일치하는가, 무단 재디자인/placeholder 잔존 없는가, 킥 슬라이드 부각.
+- `npm run cross-review -- presentation/deck.json` (Codex 우선 → 클로드 폴백).
+- 검토: 실제 캡처 우선 적용, 미구현 기능 과장 없음(manifest), 데모 슬라이드 비중, 레이아웃 반복, 척추(concept.md)와 일치.
 
 ## 15. 사용자 승인 여부
-- `humanApproval: false`.
+- `humanApproval: false`. (단 편집 오버레이로 사람 피드백 반영 루프 권장)
 
 ## 16. 실패 시 폴백
-- Slidev 빌드 실패 시 정적 HTML(단일 파일·안전) 백업으로 전환해 데모 발표를 보장. 캡처 없으면 fixture 화면 스크린샷으로 대체.
+- 렌더러가 막히면 정적 HTML만이라도 확보(라이브는 HTML로). 그래도 안 되면 기존 `presentation/marp`·`reveal`로 수기 작성(대체 엔진, 보존됨).
 
 ## 17. 다음 단계에 전달할 정보
-- `presentation/slides.md`, `presentation/output/`(빌드·HTML) (Stage 10 검증 입력).
+- `presentation/deck.json`, `slides.md`, `output/` (Stage 10 검증 입력).
 
 ## 18. 금지 사항
-- inline style·`!important` 남용으로 충돌 해결 금지.
-- 미구현 화면을 캡처처럼 위조 금지.
-- script에 없는 내용 추가 금지.
+- 등록 안 된 layout 임의 생성 금지(Doc2 §17 #2). deck.json 엔진별 중복 작성 금지.
+- 실제 캡처가 있으면 목업 우선 금지(캡처 우선). 외부 URL 자산 금지(로컬 복사).
+- 미구현 기능을 implemented처럼 표현 금지.
 
 ## 19. 단계 완료 보고 형식
 - `workflow/templates/stage-report.md` → `workflow/history/stage-09-presentation-generation.md`.
