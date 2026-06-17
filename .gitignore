@@ -50,5 +50,6 @@ presentation/marp/output/
 
 # Slidev 빌드 산출물 (빌드는 로컬에서 재생성)
 presentation/slidev/dist/
+presentation/slidev/dist-presets/
 # 발표 생성 런타임 산출물 (deck.json/slides.md 는 Stage 09 실행 시 생성)
 presentation/output/
