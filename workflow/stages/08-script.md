@@ -7,7 +7,7 @@
 - Stage 07 Gate 통과, 데모 검증 산출물 + `implementation/manifest.json` 존재.
 
 ## 3. 이번 단계에서 반드시 읽을 파일
-- `spec.md`(1·8·9·14 헤딩 중심), `implementation/manifest.json`, Stage 07 검증 결과, `presentation/draft-outline.md`(Stage 05 초안)
+- **`concept.md`(내러티브 척추)**, `spec.md`(1·8·9·14 헤딩 중심), `implementation/manifest.json`, Stage 07 검증 결과, `presentation/draft-outline.md`(Stage 05 초안)
 - guidance: `docs/AI_Hackathon_Operating_System.md` §7 "Stage 08"(7.1~7.3) 및 §8 "Stage 08 Review"; `docs/CLAUDE_Notion_Slidev_Integration_Guide.md` §3 "Stage 08 — 발표 스크립트". 이 섹션만.
 
 ## 4. 이번 단계에서 읽지 않아도 되는 파일
@@ -18,6 +18,7 @@
 
 ## 6. 메인 에이전트의 역할
 - `presentation/script.md`(5분) 작성: Answer First → 문제 → Insight/킥 → 데모 → Closing. 데모+킥 ≥50%, 프로그램 로직은 1장 분량.
+- **내러티브 척추 = `concept.md`.** 첫 문장은 한 문장 피치, 데모는 Wow Moment, **Closing은 concept.md의 "기억에 남을 마지막 문장"을 그대로** 쓴다(처음의 한 문장으로 수렴).
 - **manifest에서 implemented/mocked가 아닌 기능은 발표에 넣지 않는다.** 라이브 데모는 GIF 백업 전제로 서술.
 - `presentation/qna.md`(예상 질문 + 답변) 작성: 차별점·AI 필요성·구현 한계·데이터 출처 대비.
 

@@ -7,7 +7,7 @@
 - Stage 02 Gate 통과 + 사용자 승인, `selected-direction.md` 존재.
 
 ## 3. 이번 단계에서 반드시 읽을 파일
-- `workflow/decisions/selected-direction.md`, `research/integrated-findings.md`, `research/feasibility.md`
+- **`concept.md`(북극성 — 스펙은 이걸 풀어쓸 뿐 배신 금지)**, `workflow/decisions/selected-direction.md`, `research/integrated-findings.md`, `research/feasibility.md`
 - guidance: `docs/AI_Hackathon_Operating_System.md` §6 "Stage 03 — Spec 확정"(6.1~6.11) 및 §8 "Stage 03 Review". 이 섹션만.
 
 ## 4. 이번 단계에서 읽지 않아도 되는 파일
@@ -17,6 +17,7 @@
 - `selected-direction.md`. 없으면 시작하지 않는다.
 
 ## 6. 메인 에이전트의 역할
+- `spec.md`는 `concept.md`의 한 문장 피치·킥·Wow Moment·마지막 문장을 **풀어쓴다**(무뎌뜨리거나 바꾸지 않는다). 충돌하면 concept.md가 우선.
 - `spec.md`를 아래 16헤딩 **정확히 그대로** 작성한다.
 - `demo/demo.scenario.yaml`을 작성한다(스텝별 화면·selector·assertion 계획 포함).
 - "4시간 현실성" 헤딩에서 범위가 과한지 판정하고, 과하면 범위 밖으로 옮긴다.

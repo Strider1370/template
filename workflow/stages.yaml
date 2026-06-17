@@ -19,7 +19,7 @@ stages:
         sections:
           - "4. Stage 01"
           - "8. Stage 01 Review"
-    budgetMinutes: 20
+    budgetMinutes: 15
     gate: npm run gate:research
     humanApproval: false
 
@@ -31,7 +31,7 @@ stages:
         sections:
           - "5. Stage 02"
           - "8. Stage 02 Review"
-    budgetMinutes: 10
+    budgetMinutes: 15
     gate: npm run gate:insight
     humanApproval: true
 
@@ -152,6 +152,7 @@ bufferMinutes: 10
 # 핵심 실행 게이트(실제 검증 로직) vs 최소 게이트(필수파일 존재 + 체크리스트 출력) — 깊이 B 정책
 gatePolicy:
   enforced:            # 실제 검증 로직을 가진 게이트
+    - insight
     - spec
     - build
     - demo
@@ -160,7 +161,6 @@ gatePolicy:
   checklist:           # 필수파일 존재확인 + 체크리스트 안내 후 통과(에이전트/사람 자가점검)
     - intake
     - research
-    - insight
     - plan
     - integration
     - script

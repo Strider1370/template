@@ -50,6 +50,7 @@
 |------|------|
 | `workflow/state.yaml` | 현재 단계/상태 (머신) |
 | `PROGRESS.md` | 현재/완료/막힌 부분 (사람용 요약) |
+| `concept.md` | **북극성(척추)** — Stage 02 산출물 (한 문장 피치·킥·Wow·마지막 문장). 03·05·08이 기준선으로 읽음 |
 | `spec.md` | 스펙 — Stage 03 산출물 (데모 시나리오·Wow Moment 포함) |
 | `plan.md` | 구현 계획 — Stage 04 산출물 (작업분해·폴백·파일 소유권) |
 | `workflow/history/` | 단계별 Handoff (세션 인수인계) |
