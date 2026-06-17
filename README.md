@@ -2,7 +2,7 @@
 
 > 4시간 AI 해커톤에서 **새 주제를 받자마자 바로 구현**하기 위한 출발점.
 > 검증된 Next.js + KRDS 스택, 한국 지역·지도 공공데이터, 재사용 코드 패턴, 그리고
-> AI 에이전트용 운영 워크플로우(`CLAUDE.md`)가 한 묶음으로 들어있다.
+> AI 에이전트용 **단계 기반 워크플로우 엔진**(`workflow/` + `CLAUDE.md` 라우터)이 한 묶음으로 들어있다.
 
 ## 빠른 시작 (대회 당일)
 
@@ -14,17 +14,18 @@ npm run dev      # http://localhost:3000
 
 빌드 검증은 `npm run build`. **이 스캐폴드는 `install`+`build` 통과 확인됨** (Node 24 / npm 11).
 
-그다음 순서:
-1. `CLAUDE.md` 읽고 워크플로우 시작 (새 세션이면 자동 로드됨)
-2. `spec.md`에 **데모 시나리오**부터 작성
-3. `web/app/page.tsx`(스켈레톤) 교체하며 구현
-4. 단계마다 `PROGRESS.md` 갱신 + 작동 상태마다 체크포인트 커밋
+그다음 순서 (워크플로우 엔진):
+1. `npm install` (루트 — 워크플로우 도구) → `npm run workflow:status` 로 현재 단계 확인
+2. `CLAUDE.md`(라우터) 읽고 → 현재 단계 지침(`workflow/stages/NN-*.md`)대로 진행
+3. 단계마다 Gate 실행(`npm run gate:<stage>`) → 통과 시 Handoff 후 `npm run workflow:complete`
+4. 새 세션은 `npm run workflow:resume` 로 복원 (이전 대화 추측 금지, `state.yaml`로 복원)
 
 ## 들어있는 것
 
 | 묶음 | 내용 |
 |---|---|
-| **워크플로우** | `CLAUDE.md` (운영 지침 · 단계별 Gate · 사전 준비된 자산) |
+| **워크플로우 엔진** | `workflow/` (state.yaml · stages.yaml · 13단계 지침 · Gate · 상태전환 스크립트) + `CLAUDE.md` 라우터 |
+| **운영 지침** | `docs/` (기획 품질 기준 · 발표 생성 · 엔진 구조) |
 | **계약서 템플릿** | `spec.md` · `plan.md` · `PROGRESS.md` (빈 템플릿) |
 | **스택** | `web/` — Next.js 14 + React 18 + TS + Tailwind + KRDS, 셋업 완료 |
 | **데이터** | 전국 시도/시군구 경계, 시도→시군구 매핑, 민방위 대피소 ~17,000곳 |
