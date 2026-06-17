@@ -1,49 +1,34 @@
-# workflow/state.yaml — 단일 진실 원천(현재 상태). 새 세션은 이 파일을 가장 먼저 읽는다.
-# 갱신은 메인 에이전트만. 상태 전환은 workflow/scripts/*.mjs 를 통해서.
 workflowVersion: 1
-
-# bootstrap = 엔진/템플릿 설치·수정 중 | run = 해커톤 주제 실행 중 | maintenance = 엔진 부분 수정
-workflowMode: bootstrap
-
+workflowMode: run
 project:
-  name: ""
-  topic: ""
+  name: ''
+  topic: ''
   startedAt: null
   deadlineMinutes: 240
   presentationMinutes: 5
-
 current:
   stageNumber: 0
   stageId: intake
-  status: not_started   # not_started | in_progress | blocked | awaiting_approval | gate_failed | completed
+  status: not_started
   startedAt: null
   budgetMinutes: 5
-
 completedStages: []
-
 requiredReads:
   - workflow/stages/00-intake.md
-
 activeAgents: []
-
 blockedBy: []
-
 nextGate:
   command: npm run gate:intake
   report: workflow/history/stage-00-gate.md
-
 humanApproval:
   required: false
-  status: not_required   # not_required | pending | approved | rejected
+  status: not_required
   decisionFile: null
-
 lastHandoff: null
-
 lastSuccessfulCheckpoint:
   stageNumber: null
   stageId: null
   commit: null
-
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -51,5 +36,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-
-lastUpdatedAt: null
+lastUpdatedAt: '2026-06-17T06:32:30.324Z'
