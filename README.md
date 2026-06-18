@@ -35,11 +35,15 @@ cd ../..
 - `presentation/slidev`의 `@slidev/theme-default`·UnoCSS·아이콘·**Pretendard 폰트(`public/fonts/`에 커밋됨)**는 install/저장소에 이미 들어온다 — 별도 폰트 다운로드 불필요.
 
 ### 선택 — 발표 캡처 도구 (Stage 09·10 LLM 캡처 루프에만)
-`npm run presentation:capture`(슬라이드 PNG 자동 캡처)는 **Playwright + Chromium**이 있어야 동작한다. 사람이 직접 발표/프리뷰만 할 거면 **불필요**(없으면 안내 후 그냥 건너뜀, 오류로 막지 않음).
+`npm run presentation:capture`(슬라이드 PNG 자동 캡처)는 **Playwright + Chromium**이 있어야 동작한다. 사람이 직접 발표/프리뷰만 할 거면 **불필요**(없으면 안내 후 그냥 건너뜀, 오류로 막지 않음). 스크립트에 OS 종속 경로/환경변수는 없다 — 표준 설치면 그대로 된다.
 ```bash
 npm i -g playwright && npx playwright install chromium
-# 또는 브라우저 경로를 직접: PLAYWRIGHT_BROWSERS_PATH=<경로>
+# 브라우저를 특정 위치에 깔았다면 env 로 지정(선택):
+#   macOS/Linux : PLAYWRIGHT_BROWSERS_PATH=<경로> npm run presentation:capture
+#   Windows(PS) : $env:PLAYWRIGHT_BROWSERS_PATH="<경로>"; npm run presentation:capture
 ```
+
+> **크로스플랫폼:** 모든 스크립트는 Windows·macOS·Linux 공용으로 맞춰져 있다(OS 전용 셸 구문·하드코딩 경로 없음). 윈도우에서 그대로 `npm run ...` 하면 된다.
 
 ### 키 / 시크릿 (`.env.local`에만, 저장소에 커밋 금지)
 | 키 | 언제 필요 | 메모 |

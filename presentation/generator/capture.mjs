@@ -40,7 +40,8 @@ function loadPlaywright() {
     const root = execSync("npm root -g", { encoding: "utf8" }).trim();
     if (root) candidates.push(root);
   } catch { /* ignore */ }
-  candidates.push("/opt/node22/lib/node_modules");
+  // 일부 리눅스 CI/컨테이너의 전역 모듈 경로(있을 때만). 윈도우/맥에선 npm root -g 로 충분.
+  if (process.platform === "linux") candidates.push("/opt/node22/lib/node_modules");
   for (const base of candidates) {
     try { return createRequire(resolve(base, "_.js"))("playwright"); } catch { /* next */ }
   }
