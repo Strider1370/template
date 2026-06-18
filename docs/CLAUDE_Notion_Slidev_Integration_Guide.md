@@ -387,7 +387,6 @@ presentation/
 │
 ├── assets/
 │   ├── screenshots/
-│   ├── recordings/
 │   ├── images/
 │   ├── icons/
 │   └── charts/
@@ -860,21 +859,17 @@ Stage-Based Workflow Engine은 다음을 결정한다.
 
 # 19. P1 운영 안정성 규칙
 
-## 19.1 영상 백업
+## 19.1 데모 백업 (스크린샷)
+
+라이브 데모가 깨질 때 대비. **영상/GIF는 만들지 않는다**(Stage 07) — 단계별 스크린샷이 백업이다.
 
 필수:
 
 ```text
-demo.webm 또는 demo.mp4 중 하나
+demo/ — 단계별 스크린샷(.png) + Wow 캡처
 ```
 
-선택:
-
-```text
-demo.gif
-```
-
-GIF 변환 실패는 전체 발표 Gate 실패로 처리하지 않는다.
+정지 스크린샷으로 동적 Wow(예: 슬라이더 실시간 재정렬)가 안 담기면, Wow 순간 전후 2~3장을 연속으로 찍어 변화를 보여준다.
 
 ## 19.2 자산 라이선스와 출처
 

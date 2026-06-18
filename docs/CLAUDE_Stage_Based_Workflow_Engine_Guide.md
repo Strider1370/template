@@ -727,8 +727,7 @@ dist/submission/
 ├── web/
 ├── presentation.html
 ├── presentation.pdf
-├── demo.webm 또는 demo.mp4
-├── demo.gif                 # 선택
+├── demo/                    # 단계별 스크린샷 + Wow 캡처 (영상 대신)
 ├── README.md
 ├── qna.md
 ├── sources.md
