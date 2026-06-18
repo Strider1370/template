@@ -19,7 +19,7 @@
 ## 6. 메인 에이전트의 역할
 - `presentation/script.md`(5분) 작성: Answer First → 문제 → Insight/킥 → 데모 → Closing. 데모+킥 ≥50%, 프로그램 로직은 1장 분량.
 - **내러티브 척추 = `concept.md`.** 첫 문장은 한 문장 피치, 데모는 Wow Moment, **Closing은 concept.md의 "기억에 남을 마지막 문장"을 그대로** 쓴다(처음의 한 문장으로 수렴).
-- **manifest에서 implemented/mocked가 아닌 기능은 발표에 넣지 않는다.** 라이브 데모는 GIF 백업 전제로 서술.
+- **manifest에서 implemented/mocked가 아닌 기능은 발표에 넣지 않는다.** 라이브 데모는 단계별 스크린샷 백업 전제로 서술.
 - `presentation/qna.md`(예상 질문 + 답변) 작성: 차별점·AI 필요성·구현 한계·데이터 출처 대비.
 
 ## 7. 병렬 서브에이전트 구성

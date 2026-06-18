@@ -1,7 +1,7 @@
 # Stage 07 — Demo Validation (데모 검증)
 
 ## 1. 목적
-Playwright로 데모 시나리오를 2회 연속 완주하고 Wow Moment assertion을 통과시킨다. 스크린샷·영상/GIF·실패로그를 남겨 라이브 실패에 대비한다.
+**사람이 데모를 직접 돌려 Wow Moment가 화면에 뜨는지 1차 확인**하고, **예비로 서브에이전트가** 시나리오를 완주하며 단계별 스크린샷을 남긴다(라이브 실패 백업). **메인은 그동안 Stage 08 준비를 겹쳐 진행**한다. 영상/GIF는 만들지 않는다 — 단계별 스크린샷이 백업이다.
 
 ## 2. 시작 조건
 - Stage 06 Gate 통과, 통합 앱 + `implementation/manifest.json` 존재.
@@ -17,32 +17,34 @@ Playwright로 데모 시나리오를 2회 연속 완주하고 Wow Moment asserti
 - 실행되는 앱 + `demo.scenario.yaml`. 없으면 시작하지 않는다.
 
 ## 6. 메인 에이전트의 역할
-- 앱을 띄우고 Playwright로 demo.scenario.yaml의 스텝/selector/assertion을 실행.
-- **데모를 2회 연속 완주**시킨다(재현성 확인).
-- Wow Moment assertion 통과 확인, 스크린샷 저장, 데모 영상/GIF 캡처.
-- 실패 시 로그를 구체적으로 기록하고 폴백(fixture 강제/단계 축소)을 적용.
+1. **사람이 1차 확인.** 앱을 띄워 데모 핵심경로를 돌려보고 **Wow Moment가 화면에 뜨는지 사람이 눈으로 확인**한다(가장 빠르고 확실한 신호).
+2. **겹치기.** Wow가 확인되면 메인은 **곧장 Stage 08(스크립트) 입력 준비를 시작**한다(서브에이전트 검증을 기다리지 않는다).
+3. **예비 검증 = 서브에이전트.** 동시에 데모 검증 서브에이전트를 띄워 `demo.scenario.yaml`대로 핵심경로를 **2회 완주**(재현성)시키고 **단계별 스크린샷 + Wow 캡처 + 짧은 검증 리포트**를 남긴다.
+4. **문제 발견 시 반영.** 서브에이전트가 깨짐/불일치를 보고하면 메인이 받아 수정하고, 필요하면 Stage 08 입력을 조정한다.
+> 영상/GIF는 만들지 않는다 — 단계별 스크린샷이 라이브 실패 시 백업이다.
 
 ## 7. 병렬 서브에이전트 구성
-- 없음(검증 집약). 실패 디버그가 크면 fix-agent 1개.
+- **데모 검증 에이전트 1개**(예비 검증·캡처 담당). 메인은 이 에이전트가 도는 동안 **Stage 08 준비를 병렬로** 한다. 실패 디버그가 크면 fix-agent 추가.
 
 ## 8. 각 서브에이전트의 작업 계약
+- demo-validation-agent: `read`=[`demo/demo.scenario.yaml`, 앱 실행법, `implementation/manifest.json`], `write`=`demo/`(스크린샷·리포트)만, `doNotWrite`=앱 소스·spec/plan. 완료: 핵심경로 **2회 완주**, 단계별 스크린샷 + **Wow 캡처**, `demo/validation-report.md`(완주 여부·Wow 확인·발견 문제).
 - (선택) fix-agent: `read`=[실패 로그, 해당 화면 코드], `write`=해당 경로만, 완료: 실패 스텝 재현 가능.
 
 ## 9. 생성해야 하는 산출물
-- `demo/` 하위: 스크린샷, 데모 영상(`demo.webm`/`demo.mp4`), GIF(선택), Playwright 결과/로그.
+- `demo/` 하위: **단계별 스크린샷 + Wow 캡처**(라이브 실패 백업), `demo/validation-report.md`(완주·Wow·발견 문제). **영상/GIF는 만들지 않는다.**
 
 ## 10. 파일 소유권
 - 메인 전용: `demo/` 검증 산출물.
 
 ## 11. 제한 시간
-- 15분. 초과 시 Wow Moment 1개만이라도 2회 완주 + 영상 확보(생략 X, 범위 축소).
+- 15분(메인은 병렬로 Stage 08을 준비하므로 벽시계는 더 짧다). 초과 시 Wow Moment 1개만이라도 2회 완주 + 단계별 스크린샷 확보(생략 X, 범위 축소).
 
 ## 12. 완료 조건
-- 데모 2회 연속 완주, Wow Moment assertion pass, 영상/GIF + 스크린샷 존재.
+- 사람이 Wow 확인 + 서브에이전트가 핵심경로 2회 완주 + 단계별 스크린샷(Wow 포함) + `demo/validation-report.md` 존재. (영상 불필요.)
 
 ## 13. 기계적 Gate (Mechanical)
 - 명령: `npm run gate:demo`
-- 분류: **enforced**. Playwright 실행 결과(완주·assertion pass) + 영상/스크린샷 파일 존재를 실제 검사.
+- 분류: **enforced**. `demo/demo.scenario.yaml` + 단계별 스크린샷 파일 존재를 실제 검사. (완주·Wow는 사람 1차 확인 + 서브에이전트 리포트로 보강.)
 
 ## 14. LLM Review Gate
 - `npm run cross-review -- demo/`(검증 리포트 요지) (Codex 우선 → 클로드 폴백).
@@ -52,10 +54,10 @@ Playwright로 데모 시나리오를 2회 연속 완주하고 Wow Moment asserti
 - `humanApproval: false`.
 
 ## 16. 실패 시 폴백
-- 라이브가 불안정하면 영상/GIF를 발표 백업으로 확정. 특정 스텝 실패 시 그 스텝을 fixture로 고정하거나 데모 범위를 축소.
+- 라이브가 불안정하면 **단계별 스크린샷을 발표 백업**으로 확정(넘기며 설명). 특정 스텝 실패 시 그 스텝을 fixture로 고정하거나 데모 범위를 축소.
 
 ## 17. 다음 단계에 전달할 정보
-- 데모 영상/GIF·스크린샷, 검증 결과(어떤 기능이 실제로 보였는가) (Stage 08 스크립트·Stage 09 캡처 입력).
+- 단계별 스크린샷·Wow 캡처, 검증 결과(어떤 기능이 실제로 보였는가) (Stage 08 스크립트·Stage 09 캡처 입력).
 
 ## 18. 금지 사항
 - 1회만 돌고 통과 처리 금지(2회 연속 필요).

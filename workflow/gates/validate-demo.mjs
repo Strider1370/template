@@ -27,23 +27,16 @@ const screenshots = shotDirs.flatMap((d) =>
 );
 const screenshotOk = screenshots.length >= 1;
 
-// 3) 데모 영상 webm/mp4 (demo/ 또는 presentation/assets/recordings)
-const videoDirs = ["demo", "presentation/assets/recordings"];
-const videos = videoDirs.flatMap((d) =>
-  listFiles(d).filter((f) => /\.(webm|mp4)$/i.test(f)),
-);
-const videoOk = videos.length >= 1;
-
 const checks = [
   { label: "exists: demo/demo.scenario.yaml", ok: scenarioOk },
-  { label: `스크린샷 ≥1 (찾음 ${screenshots.length}, ${shotDirs.join(" | ")})`, ok: screenshotOk },
-  { label: `데모 영상 webm/mp4 ≥1 (찾음 ${videos.length}, ${videoDirs.join(" | ")})`, ok: videoOk },
+  { label: `스크린샷 ≥1 (단계별+Wow) (찾음 ${screenshots.length}, ${shotDirs.join(" | ")})`, ok: screenshotOk },
 ];
 
-const notes = [];
+const notes = [
+  "사람이 1차로 Wow 확인 → 서브에이전트가 예비로 시나리오 완주·단계별 스크린샷 캡처. 메인은 그동안 Stage 08 준비(겹치기). 영상은 만들지 않음 — 단계별 스크린샷이 라이브 실패 백업.",
+];
 if (!scenarioOk) notes.push("demo/demo.scenario.yaml 이 없다.");
-if (!screenshotOk) notes.push("스크린샷이 없다 — demo/ 또는 presentation/assets/screenshots 에 png 저장.");
-if (!videoOk) notes.push("데모 영상이 없다 — demo/ 또는 presentation/assets/recordings 에 demo.webm/mp4 저장.");
+if (!screenshotOk) notes.push("스크린샷이 없다 — demo/ 또는 presentation/assets/screenshots 에 png 저장(단계별+Wow).");
 
 const ok = checks.every((c) => c.ok);
 gateResult("demo", ok, { checks, notes });

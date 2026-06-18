@@ -4,17 +4,17 @@
 최종 제출물을 `dist/submission/`으로 패키징한다. Slidev PDF export와 sources.md 생성을 포함해 제출에 필요한 모든 산출물을 한곳에 모은다.
 
 ## 2. 시작 조건
-- Stage 11 Gate 통과 + 사용자 최종 승인, 확정 발표자료 + 데모 영상 존재.
+- Stage 11 Gate 통과 + 사용자 최종 승인, 확정 발표자료 + 데모 스크린샷 존재.
 
 ## 3. 이번 단계에서 반드시 읽을 파일
-- `research/sources.json`, `presentation/output/`, `presentation/qna.md`, `spec.md`, 데모 영상/GIF 경로
+- `research/sources.json`, `presentation/output/`, `presentation/qna.md`, `spec.md`, 데모 스크린샷 경로
 - guidance: 없음.
 
 ## 4. 이번 단계에서 읽지 않아도 되는 파일
 - 리서치 원문, 사고기준/생성 상세 규칙, 타 단계 history.
 
 ## 5. 필수 입력
-- 확정 발표자료, 데모 영상, `spec.md`, `sources.json`. 없으면 시작하지 않는다.
+- 확정 발표자료, 데모 스크린샷, `spec.md`, `sources.json`. 없으면 시작하지 않는다.
 
 ## 6. 메인 에이전트의 역할
 - Slidev PDF export 실행 → `presentation.pdf` 생성(존재·페이지 수 확인).
@@ -29,13 +29,13 @@
 - 해당 없음.
 
 ## 9. 생성해야 하는 산출물
-- `dist/submission/`: `web/`, `presentation.html`, `presentation.pdf`, `demo.webm`(또는 `demo.mp4`), `demo.gif`(선택), `README.md`, `qna.md`, `sources.md`, `spec.md`.
+- `dist/submission/`: `web/`, `presentation.html`, `presentation.pdf`, `demo/`(단계별 스크린샷+Wow), `README.md`, `qna.md`, `sources.md`, `spec.md`.
 
 ## 10. 파일 소유권
 - 메인 전용: `dist/submission/`, `sources.md`, `README.md`.
 
 ## 11. 제한 시간
-- 5분. 초과 시 필수 항목(web/, presentation.html, pdf, demo 영상, README, spec, sources) 우선, 선택 항목(gif)은 생략 가능.
+- 5분. 초과 시 필수 항목(web/, presentation.html, pdf, demo 스크린샷, README, spec, sources) 우선.
 
 ## 12. 완료 조건
 - `dist/submission/`에 필수 산출물 모두 존재, presentation.pdf 페이지 수 > 0, sources.md 생성.
@@ -52,7 +52,7 @@
 - `humanApproval: false`. (발표 승인은 Stage 11에서 받음.)
 
 ## 16. 실패 시 폴백
-- PDF export 실패 시 정적 HTML + 슬라이드 캡처 PDF로 대체. 영상 export 실패 시 GIF만이라도 포함. 필수 항목 우선.
+- PDF export 실패 시 정적 HTML + 슬라이드 캡처 PDF로 대체. 필수 항목 우선.
 
 ## 17. 다음 단계에 전달할 정보
 - 없음(최종 단계). `dist/submission/`이 제출물. push는 여기서 마지막에 한 번.
