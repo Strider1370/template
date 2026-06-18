@@ -3,7 +3,7 @@
  * generate-slidev.mjs — deck.json → presentation/slidev/slides.md (Slidev)
  *
  * BaizeAI/talks(Apache-2.0) 카드 언어로 렌더한다:
- *  - 다크 + glow 배경(theme:none, colorSchema:dark, transition:fade-out, global-bottom.vue).
+ *  - 기본 테마 + 다크 + glow 배경(colorSchema:dark, transition:fade-out, global-bottom.vue).
  *  - 반투명 프로스트 카드(border-white/10 + bg-white/5 + backdrop-blur) + 아이콘 헤더.
  *  - <v-clicks> 스태거 등장 + 중앙 대형 타이틀 + 하단 콜아웃 필.
  *  - 16개 semanticLayout 각각에 전용 카드 템플릿을 매핑(layout-registry.json).
@@ -91,7 +91,7 @@ function pill(text, cls = "") {
   return `<div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm ${cls}">${text}</div>`;
 }
 function header(icon, color, title) {
-  return `## <span class="${icon} ${color}" /> ${title}`;
+  return `# <span class="${icon} ${color}" /> ${title}`;
 }
 function itemRow(it, accent = "") {
   const { title, desc } = itemParts(it);
@@ -109,6 +109,44 @@ function bullets(items) {
 }
 function colsFor(n) {
   return n <= 2 ? 2 : n === 4 ? 2 : 3;
+}
+
+// 가운데 정렬로 두는 레이아웃(타이틀/숫자/인용/마무리). 그 외 본문 슬라이드는 위 정렬(큰 제목).
+const CENTERED = new Set(["hero", "insight-statement", "big-number", "quote", "closing"]);
+
+// ---- BaizeAI 색깔 패널 언어 (compare 슬라이드 그대로) ----
+// 색 테두리(border 2 solid X-800) + 틴트 배경(bg X-800/20) + 헤더 바(X-800/40) + 아이콘 항목.
+// 마크업은 빈 줄 없이 하나의 HTML 트리로 낸다(=BaizeAI 방식, MDC 재진입 방지).
+function panelItem(it, iconCls, iconColor) {
+  const { title, desc } = itemParts(it);
+  if (desc) {
+    return `      <div flex items-start gap-2 py-1>
+        <div ${iconCls} text-${iconColor}-300 text-xl mt-1 shrink-0 />
+        <div><div font-bold>${title}</div><div text-sm opacity-80>${desc}</div></div>
+      </div>`;
+  }
+  return `      <div flex items-center gap-2 py-1>
+        <div ${iconCls} text-${iconColor}-300 text-xl shrink-0 />
+        <span text-lg>${title}</span>
+      </div>`;
+}
+function colorPanel({ color, headIcon, head, items, itemIcon, itemColor, vclick }) {
+  const rows = asArr(items).map((it) => panelItem(it, itemIcon, itemColor || color)).join("\n");
+  const vc = vclick ? " v-click" : "";
+  return `  <div${vc} border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden>
+    <div bg="${color}-800/40" px-5 py-3 flex items-center>
+      <div ${headIcon} text-${color}-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>${head}</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+${rows}
+    </div>
+  </div>`;
+}
+// 본문 제목(h1) + 선택적 서브타이틀. 기본 테마가 h1 을 크게 렌더한다.
+function titleH1(title, sub) {
+  const s = sub ? `\n\n<div text-xl opacity-70 mt-1>${toText(sub)}</div>` : "";
+  return `# ${toText(title)}${s}`;
 }
 
 // 이미지: 실파일 존재 + status:real 일 때만 렌더, 아니면 플레이스홀더 박스.
@@ -153,22 +191,19 @@ ${clickList(asArr(c.items), "")}
   },
 
   contrast(c) {
-    const lead = c.lead ? `<div class="opacity-80 text-center mb-5">${toText(c.lead)}</div>\n\n` : "";
-    const left = frost(
-      `<div class="text-sm font-bold tracking-wide text-red-300/90 mb-3">${toText(c.leftLabel) || L.before}</div>\n<div class="space-y-2 text-left opacity-90">\n${asArr(c.left).map((x) => `<div>· ${toText(x)}</div>`).join("\n")}\n</div>`
-    );
-    const right = `<div v-click>${frost(
-      `<div class="text-sm font-bold tracking-wide text-cyan-300 mb-3">${toText(c.rightLabel) || L.after}</div>\n<div class="space-y-2 text-left">\n${asArr(c.right).map((x) => `<div>· ${toText(x)}</div>`).join("\n")}\n</div>`,
-      "ring-1 ring-cyan-400/20"
-    )}</div>`;
-    return `## ${toText(c.title)}
+    const left = colorPanel({
+      color: "red", headIcon: "i-carbon:warning-alt", head: toText(c.leftLabel) || L.before,
+      items: c.left, itemIcon: "i-carbon:close", itemColor: "red",
+    });
+    const right = colorPanel({
+      color: "green", headIcon: "i-carbon:idea", head: toText(c.rightLabel) || L.after,
+      items: c.right, itemIcon: "i-carbon:checkmark", itemColor: "green", vclick: true,
+    });
+    return `${titleH1(c.title, c.lead)}
 
-${lead}<div class="mt-2 grid grid-cols-2 gap-6 items-start">
-
+<div mt-8 grid grid-cols-2 gap-6 items-start>
 ${left}
-
 ${right}
-
 </div>`;
   },
 
@@ -200,7 +235,7 @@ ${right}
 </div>`;
       })
       .join("\n\n");
-    return `## ${toText(c.title) || L.solution}
+    return `# ${toText(c.title) || L.solution}
 
 <div class="mt-6 grid grid-cols-${n} gap-5">
 
@@ -215,7 +250,7 @@ ${cards}
 
   "demo-fullscreen"(c, s) {
     const sub = c.subtitle ? `<div class="opacity-60 text-sm mt-3 text-center">${toText(c.subtitle)}</div>` : "";
-    return `## ${toText(c.title)}
+    return `# ${toText(c.title)}
 
 <div class="mt-4">
 
@@ -230,7 +265,7 @@ ${sub}`;
     const callouts = clickList(asArr(c.callout), "");
     const points = c.points ? `\n\n<div class="mt-4 text-sm opacity-70">\n${bullets(c.points)}\n</div>` : "";
     const caption = c.caption ? `\n\n<div class="opacity-50 text-xs text-center">${toText(c.caption)}</div>` : "";
-    return `## ${toText(c.title)}
+    return `# ${toText(c.title)}
 
 <div class="mt-4 grid grid-cols-2 gap-6 items-center">
 
@@ -266,7 +301,7 @@ ${callouts}
     const result = c.result
       ? `\n\n<div v-click class="mt-6 flex justify-center">${pill(`<span class="i-carbon:arrow-right text-cyan-300" /> <b>${L.result}:</b> ${toText(c.result)}`, "text-cyan-100")}</div>`
       : "";
-    return `## ${toText(c.title)}
+    return `# ${toText(c.title)}
 
 <div class="mt-6 grid gap-3 max-w-3xl mx-auto w-full">
 
@@ -276,23 +311,20 @@ ${rows}
   },
 
   "before-after"(c) {
-    const before = frost(
-      `<div class="text-sm font-bold text-red-300/90 mb-2">${toText(c.beforeLabel) || L.before}</div>\n<div class="opacity-85">${toText(c.beforeCaption)}</div>`
-    );
-    const after = `<div v-click>${frost(
-      `<div class="text-sm font-bold text-cyan-300 mb-2">${toText(c.afterLabel) || L.after}</div>\n<div>${toText(c.afterCaption)}</div>`,
-      "ring-1 ring-cyan-400/20"
-    )}</div>`;
-    return `## ${toText(c.title)}
+    const before = `  <div border="2 solid red-800" bg="red-800/20" rounded-lg overflow-hidden>
+    <div bg="red-800/40" px-5 py-3 flex items-center><div i-carbon:close-outline text-red-300 text-2xl mr-2 /><span font-bold text-xl>${toText(c.beforeLabel) || L.before}</span></div>
+    <div px-5 py-4 text-lg opacity-90>${toText(c.beforeCaption)}</div>
+  </div>`;
+    const after = `  <div v-click border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
+    <div bg="green-800/40" px-5 py-3 flex items-center><div i-carbon:checkmark-outline text-green-300 text-2xl mr-2 /><span font-bold text-xl>${toText(c.afterLabel) || L.after}</span></div>
+    <div px-5 py-4 text-lg>${toText(c.afterCaption)}</div>
+  </div>`;
+    return `${titleH1(c.title)}
 
-<div class="mt-8 grid grid-cols-[1fr_auto_1fr] gap-4 items-center">
-
+<div mt-8 grid grid-cols-[1fr_auto_1fr] gap-4 items-center>
 ${before}
-
-<div class="i-carbon:arrow-right text-3xl opacity-50 mx-auto" />
-
+  <div i-carbon:arrow-right text-4xl opacity-50 mx-auto />
 ${after}
-
 </div>`;
   },
 
@@ -313,7 +345,7 @@ ${caption}
   "card-grid"(c) {
     const cards = asArr(c.cards);
     const n = colsFor(cards.length);
-    return `## ${toText(c.title)}
+    return `# ${toText(c.title)}
 
 <div class="mt-6 grid grid-cols-${n} gap-4">
 
@@ -336,7 +368,7 @@ ${clickList(cards, "")}
 </div>`;
       })
       .join("\n\n");
-    return `## ${toText(c.title)}
+    return `# ${toText(c.title)}
 
 <div class="mt-6 grid gap-3 max-w-3xl mx-auto w-full">
 
@@ -358,21 +390,19 @@ ${rows}
   },
 
   "limitation-guardrail"(c) {
-    const limits = frost(
-      `<div class="flex items-center gap-2 text-amber-300 font-bold mb-3"><span class="i-carbon:warning-alt" /> ${L.limits}</div>\n<div class="space-y-2 text-left opacity-90">\n${asArr(c.limitations).map((x) => `<div>· ${toText(x)}</div>`).join("\n")}\n</div>`
-    );
-    const guards = `<div v-click>${frost(
-      `<div class="flex items-center gap-2 text-green-300 font-bold mb-3"><span class="i-carbon:shield-checkmark" /> ${L.guards}</div>\n<div class="space-y-2 text-left">\n${asArr(c.guardrails).map((x) => `<div>· ${toText(x)}</div>`).join("\n")}\n</div>`,
-      "ring-1 ring-green-400/20"
-    )}</div>`;
-    return `## ${toText(c.title)}
+    const limits = colorPanel({
+      color: "amber", headIcon: "i-carbon:warning-alt", head: L.limits,
+      items: c.limitations, itemIcon: "i-carbon:dot-mark", itemColor: "amber",
+    });
+    const guards = colorPanel({
+      color: "green", headIcon: "i-carbon:shield-checkmark", head: L.guards,
+      items: c.guardrails, itemIcon: "i-carbon:checkmark", itemColor: "green", vclick: true,
+    });
+    return `${titleH1(c.title)}
 
-<div class="mt-6 grid grid-cols-2 gap-6 items-start">
-
+<div mt-8 grid grid-cols-2 gap-6 items-start>
 ${limits}
-
 ${guards}
-
 </div>`;
   },
 
@@ -390,7 +420,7 @@ ${guards}
 </div>`;
       })
       .join("\n\n");
-    return `## ${toText(c.title)}
+    return `# ${toText(c.title)}
 
 <div class="mt-6 grid grid-cols-${n} gap-5">
 
@@ -422,7 +452,7 @@ ${subtitle}
 // 미등록/누락 레이아웃 폴백: 슬롯을 카드/리스트로 일반 렌더.
 function fallbackRender(c) {
   const lines = [];
-  if (c.title) lines.push("## " + toText(c.title), "");
+  if (c.title) lines.push("# " + toText(c.title), "");
   for (const [k, v] of Object.entries(c)) {
     if (k === "title") continue;
     if (Array.isArray(v)) {
@@ -463,7 +493,7 @@ const head = [
   "---",
   "# Engine ported from BaizeAI/talks (Apache-2.0) — glow background + fade transitions + v-click reveals.",
   "# See presentation/sources/ASSET_LICENSES.md",
-  "theme: none",
+  "# theme 키 생략 = Slidev 기본 테마 (BaizeAI 와 동일 — heading 크기/레이아웃을 기본 테마가 제공).",
   "layout: center",
   "highlighter: shiki",
   "css: unocss",
@@ -485,10 +515,13 @@ visibleSlides.forEach((s, idx) => {
   const content = s.content || {};
   const renderer = renderers[s.semanticLayout] || (layoutById.has(s.semanticLayout) ? renderers[layoutById.get(s.semanticLayout).semanticId] : null);
 
+  const centered = CENTERED.has(s.semanticLayout);
   const body = [];
   if (idx > 0) {
     body.push("---");
-    body.push("layout: center");
+    // 타이틀/숫자/인용/마무리는 가운데 정렬, 본문 슬라이드는 기본(위 정렬)+여백으로 큰 제목.
+    if (centered) body.push("layout: center");
+    else body.push("class: px-14 py-10");
     body.push("title: " + JSON.stringify(deriveTitle(s)));
     body.push("glowSeed: " + seedFor(s, idx));
     body.push("glow: " + glowFor(idx));

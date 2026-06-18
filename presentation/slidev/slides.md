@@ -1,11 +1,10 @@
 ---
 # Engine ported from BaizeAI/talks (Apache-2.0) — glow background + fade transitions + v-click reveals.
 # See presentation/sources/ASSET_LICENSES.md
-theme: none
+# theme 키 생략 = Slidev 기본 테마 (BaizeAI 와 동일 — heading 크기/레이아웃을 기본 테마가 제공).
 layout: center
 highlighter: shiki
 css: unocss
-canvasWidth: 820
 colorSchema: dark
 transition: fade-out
 title: "우리 동네 맞춤 재난 대비 가이드"
@@ -32,34 +31,55 @@ glow: full
 -->
 
 ---
-layout: center
+class: px-14 py-10
 title: "재난 정보는 많지만, 내게 맞는 정보는 없다"
 glowSeed: 285
 glow: left
 ---
 
-## 재난 정보는 많지만, 내게 맞는 정보는 없다
+# 재난 정보는 많지만, 내게 맞는 정보는 없다
 
-<div class="mt-2 grid grid-cols-2 gap-6 items-start">
-
-<div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 ">
-<div class="text-sm font-bold tracking-wide text-red-300/90 mb-3">기존 방식</div>
-<div class="space-y-2 text-left opacity-90">
-<div>· 전국 단위 일반 공지</div>
-<div>· 수십 페이지 PDF 매뉴얼</div>
-<div>· 내 동네 대피소는 직접 검색</div>
-</div>
-</div>
-
-<div v-click><div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 ring-1 ring-cyan-400/20">
-<div class="text-sm font-bold tracking-wide text-cyan-300 mb-3">우리 접근</div>
-<div class="space-y-2 text-left">
-<div>· 내 위치 기준 자동 필터링</div>
-<div>· 지금 할 일 3가지로 압축</div>
-<div>· 가까운 대피소 즉시 안내</div>
-</div>
-</div></div>
-
+<div mt-8 grid grid-cols-2 gap-6 items-start>
+  <div border="2 solid red-800" bg="red-800/20" rounded-lg overflow-hidden>
+    <div bg="red-800/40" px-5 py-3 flex items-center>
+      <div i-carbon:warning-alt text-red-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>기존 방식</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:close text-red-300 text-xl shrink-0 />
+        <span text-lg>전국 단위 일반 공지</span>
+      </div>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:close text-red-300 text-xl shrink-0 />
+        <span text-lg>수십 페이지 PDF 매뉴얼</span>
+      </div>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:close text-red-300 text-xl shrink-0 />
+        <span text-lg>내 동네 대피소는 직접 검색</span>
+      </div>
+    </div>
+  </div>
+  <div v-click border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
+    <div bg="green-800/40" px-5 py-3 flex items-center>
+      <div i-carbon:idea text-green-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>우리 접근</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
+        <span text-lg>내 위치 기준 자동 필터링</span>
+      </div>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
+        <span text-lg>지금 할 일 3가지로 압축</span>
+      </div>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
+        <span text-lg>가까운 대피소 즉시 안내</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--
@@ -67,13 +87,13 @@ glow: left
 -->
 
 ---
-layout: center
+class: px-14 py-10
 title: "위치를 누르면 우리 동네 가이드가 즉시 생성됩니다"
 glowSeed: 286
 glow: right
 ---
 
-## 위치를 누르면 우리 동네 가이드가 즉시 생성됩니다
+# 위치를 누르면 우리 동네 가이드가 즉시 생성됩니다
 
 <div class="mt-4 grid grid-cols-2 gap-6 items-center">
 
@@ -135,7 +155,7 @@ glow: center
 -->
 
 ---
-layout: center
+class: px-14 py-10
 title: "한계와 안전장치"
 glowSeed: 288
 glow: bottom
@@ -143,28 +163,49 @@ glow: bottom
 
 <div class="absolute top-4 right-6 text-xs px-2 py-0.5 rounded-full border border-amber-400/40 bg-amber-400/10 text-amber-200">MOCKED</div>
 
-## 한계와 안전장치
+# 한계와 안전장치
 
-<div class="mt-6 grid grid-cols-2 gap-6 items-start">
-
-<div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 ">
-<div class="flex items-center gap-2 text-amber-300 font-bold mb-3"><span class="i-carbon:warning-alt" /> 한계</div>
-<div class="space-y-2 text-left opacity-90">
-<div>· 대피소 데이터는 공개 갱신 주기에 의존</div>
-<div>· 실시간 재난 경보 연동은 미구현(mocked)</div>
-<div>· 위치 권한 거부 시 수동 지역 선택 필요</div>
-</div>
-</div>
-
-<div v-click><div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 ring-1 ring-green-400/20">
-<div class="flex items-center gap-2 text-green-300 font-bold mb-3"><span class="i-carbon:shield-checkmark" /> 안전장치</div>
-<div class="space-y-2 text-left">
-<div>· 데이터 출처·갱신일 화면에 명시</div>
-<div>· 오프라인 캐시로 통신 두절에도 동작</div>
-<div>· 추정치는 '내부 측정' 라벨로 구분 표기</div>
-</div>
-</div></div>
-
+<div mt-8 grid grid-cols-2 gap-6 items-start>
+  <div border="2 solid amber-800" bg="amber-800/20" rounded-lg overflow-hidden>
+    <div bg="amber-800/40" px-5 py-3 flex items-center>
+      <div i-carbon:warning-alt text-amber-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>한계</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
+        <span text-lg>대피소 데이터는 공개 갱신 주기에 의존</span>
+      </div>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
+        <span text-lg>실시간 재난 경보 연동은 미구현(mocked)</span>
+      </div>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
+        <span text-lg>위치 권한 거부 시 수동 지역 선택 필요</span>
+      </div>
+    </div>
+  </div>
+  <div v-click border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
+    <div bg="green-800/40" px-5 py-3 flex items-center>
+      <div i-carbon:shield-checkmark text-green-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>안전장치</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
+        <span text-lg>데이터 출처·갱신일 화면에 명시</span>
+      </div>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
+        <span text-lg>오프라인 캐시로 통신 두절에도 동작</span>
+      </div>
+      <div flex items-center gap-2 py-1>
+        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
+        <span text-lg>추정치는 '내부 측정' 라벨로 구분 표기</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--
