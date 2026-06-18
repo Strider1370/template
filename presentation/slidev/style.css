@@ -42,6 +42,20 @@
   font-weight: 700;
 }
 
+/* 글로우 배경 레이어 고정 — global-bottom 의 .bg{position:absolute;inset:0} 는 부모(positioned
+   ancestor)의 높이를 빌리는데, 일부 Slidev 버전/DOM에선 그 부모가 높이 0이라 글로우가 통째로
+   찌부러져(.bg/.clip height 0) "검은 배경만" 보인다. fixed + 100vw/vh 로 부모 의존을 끊는다. */
+.bg.transform-gpu {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+.clip {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 /* .slidev-code {
   font-size: 1em !important;
   line-height: 1.4em !important;
