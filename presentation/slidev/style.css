@@ -22,6 +22,26 @@
   display: none !important;
 }
 
+/* 발표용 타이포 위계 (theme:none 이라 heading 크기가 본문(16px)으로 죽어 있어 복원).
+   글자 크기만 키운다 — 레이아웃/정렬은 건드리지 않는다. */
+.slidev-layout {
+  font-size: 18px; /* 본문 기본(기존 16) 살짝 키움 */
+}
+.slidev-layout h1 {
+  font-size: 2.6em;
+  font-weight: 800;
+  line-height: 1.12;
+}
+.slidev-layout h2 {
+  font-size: 1.65em;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.slidev-layout h3 {
+  font-size: 1.25em;
+  font-weight: 700;
+}
+
 /* .slidev-code {
   font-size: 1em !important;
   line-height: 1.4em !important;
