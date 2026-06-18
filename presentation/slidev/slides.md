@@ -5,6 +5,7 @@ theme: none
 layout: center
 highlighter: shiki
 css: unocss
+canvasWidth: 820
 colorSchema: dark
 transition: fade-out
 title: "우리 동네 맞춤 재난 대비 가이드"

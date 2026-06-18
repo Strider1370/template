@@ -22,26 +22,6 @@
   display: none !important;
 }
 
-/* 발표용 타이포 위계 (theme:none 이라 heading 크기가 본문(16px)으로 죽어 있어 복원).
-   글자 크기만 키운다 — 레이아웃/정렬은 건드리지 않는다. */
-.slidev-layout {
-  font-size: 18px; /* 본문 기본(기존 16) 살짝 키움 */
-}
-.slidev-layout h1 {
-  font-size: 2.6em;
-  font-weight: 800;
-  line-height: 1.12;
-}
-.slidev-layout h2 {
-  font-size: 1.65em;
-  font-weight: 700;
-  line-height: 1.2;
-}
-.slidev-layout h3 {
-  font-size: 1.25em;
-  font-weight: 700;
-}
-
 /* 글로우 배경 레이어 고정 — global-bottom 의 .bg{position:absolute;inset:0} 는 부모(positioned
    ancestor)의 높이를 빌리는데, 일부 Slidev 버전/DOM에선 그 부모가 높이 0이라 글로우가 통째로
    찌부러져(.bg/.clip height 0) "검은 배경만" 보인다. fixed + 100vw/vh 로 부모 의존을 끊는다. */

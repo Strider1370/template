@@ -19,11 +19,12 @@
     "@iconify/utils": "^2.3.0",
     "@proj-airi/lobe-icons": "^1.0.7",
     "@slidev/cli": "^51.8.0",
+    "@slidev/client": "^51.8.0",
+    "@slidev/theme-default": "^0.25.0",
     "@types/seedrandom": "^3.0.8",
     "playwright-chromium": "^1.52.0",
     "seedrandom": "^3.0.5",
-    "unocss": "^66.1.2",
-    "@slidev/client": "^51.8.0"
+    "unocss": "^66.1.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
