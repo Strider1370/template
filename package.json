@@ -39,6 +39,7 @@
     "presentation:build": "npm run presentation:validate-deck && npm run presentation:slidev && npm run presentation:static && npm run presentation:validate-slides",
 
     "web:build": "npm --prefix web run build",
+    "web:check-identity": "node web/scripts/check-identity.mjs",
     "web:lint": "npm --prefix web run lint",
     "web:dev": "npm --prefix web run dev"
   },
