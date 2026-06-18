@@ -457,17 +457,12 @@ const visibleSlides = (deck.slides || []).filter(
   (s) => s.implementationStatus !== "dropped" && s.implementationStatus !== "blocked"
 );
 
-// 중앙 정렬이 어울리는 레이아웃(hero/문장/빅넘버/인용/마무리)만 center.
-// 내용형(대비·기능·단계·카드 등)은 default — 제목을 상단에 고정한다(center면 제목이 화면 중앙에 떠 제목바가 없어 보임).
-const CENTERED_LAYOUTS = new Set(["hero", "insight-statement", "big-number", "quote", "closing"]);
-const layoutFor = (semanticLayout) => (CENTERED_LAYOUTS.has(semanticLayout) ? "center" : "default");
-
 const head = [
   "---",
   "# Engine ported from BaizeAI/talks (Apache-2.0) — glow background + fade transitions + v-click reveals.",
   "# See presentation/sources/ASSET_LICENSES.md",
   "theme: none",
-  "layout: " + (visibleSlides.length ? layoutFor(visibleSlides[0].semanticLayout) : "center"),
+  "layout: center",
   "highlighter: shiki",
   "css: unocss",
   "colorSchema: dark",
@@ -491,7 +486,7 @@ visibleSlides.forEach((s, idx) => {
   const body = [];
   if (idx > 0) {
     body.push("---");
-    body.push("layout: " + layoutFor(s.semanticLayout));
+    body.push("layout: center");
     body.push("title: " + JSON.stringify(deriveTitle(s)));
     body.push("glowSeed: " + seedFor(s, idx));
     body.push("glow: " + glowFor(idx));
