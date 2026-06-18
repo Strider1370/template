@@ -174,7 +174,7 @@ glow: bottom
 layout: center
 title: "동네 단위로, 모두가 대비된 도시"
 glowSeed: 289
-glow: top-left
+glow: top
 ---
 
 <div class="text-center">

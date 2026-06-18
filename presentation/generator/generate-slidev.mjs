@@ -435,7 +435,9 @@ function fallbackRender(c) {
 }
 
 // ---- glow 배분(슬라이드마다 다르게) ----
-const GLOWS = ["full", "left", "right", "center", "bottom", "top-left", "top-right", "bottom-right"];
+// 글로우 분포 — 구석(top-left/top-right/bottom-right)은 글로우가 한쪽에 몰려 나머지가
+// 검게 보이므로 제외. 화면에 넓게 퍼지는 분포만 순환한다.
+const GLOWS = ["full", "left", "right", "center", "bottom", "top"];
 function glowFor(idx) {
   return idx === 0 ? "full" : GLOWS[idx % GLOWS.length];
 }
