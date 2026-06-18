@@ -114,26 +114,33 @@ function colsFor(n) {
 // 가운데 정렬로 두는 레이아웃(타이틀/숫자/인용/마무리). 그 외 본문 슬라이드는 위 정렬(큰 제목).
 const CENTERED = new Set(["hero", "insight-statement", "big-number", "quote", "closing"]);
 
+// ---- 편집 주소 (Notion 정적 HTML 과 동일 규약: id.content.slot[.index] / id.assets.name) ----
+// global-top.vue 편집 오버레이가 data-addr 를 읽어 배지·주소복사·오버플로우 경고에 쓴다.
+const da = (addr) => (addr ? ` data-addr="${addr}"` : "");
+const slotA = (id, slot) => (id ? `${id}.content.${slot}` : "");
+const subA = (base, i) => (base ? `${base}.${i}` : "");
+const assetA = (id, name) => (id ? `${id}.assets.${name}` : "");
+
 // ---- BaizeAI 색깔 패널 언어 (compare 슬라이드 그대로) ----
 // 색 테두리(border 2 solid X-800) + 틴트 배경(bg X-800/20) + 헤더 바(X-800/40) + 아이콘 항목.
 // 마크업은 빈 줄 없이 하나의 HTML 트리로 낸다(=BaizeAI 방식, MDC 재진입 방지).
-function panelItem(it, iconCls, iconColor) {
+function panelItem(it, iconCls, iconColor, addr) {
   const { title, desc } = itemParts(it);
   if (desc) {
-    return `      <div flex items-start gap-2 py-1>
+    return `      <div flex items-start gap-2 py-1${da(addr)}>
         <div ${iconCls} text-${iconColor}-300 text-xl mt-1 shrink-0 />
         <div><div font-bold>${title}</div><div text-sm opacity-80>${desc}</div></div>
       </div>`;
   }
-  return `      <div flex items-center gap-2 py-1>
+  return `      <div flex items-center gap-2 py-1${da(addr)}>
         <div ${iconCls} text-${iconColor}-300 text-xl shrink-0 />
         <span text-lg>${title}</span>
       </div>`;
 }
-function colorPanel({ color, headIcon, head, items, itemIcon, itemColor, vclick }) {
-  const rows = asArr(items).map((it) => panelItem(it, itemIcon, itemColor || color)).join("\n");
+function colorPanel({ color, headIcon, head, items, itemIcon, itemColor, vclick, addr, itemAddr }) {
+  const rows = asArr(items).map((it, i) => panelItem(it, itemIcon, itemColor || color, subA(itemAddr, i))).join("\n");
   const vc = vclick ? " v-click" : "";
-  return `  <div${vc} border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden>
+  return `  <div${vc}${da(addr)} border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden>
     <div bg="${color}-800/40" px-5 py-3 flex items-center>
       <div ${headIcon} text-${color}-300 text-2xl mr-2 shrink-0 />
       <span font-bold text-xl>${head}</span>
@@ -144,9 +151,11 @@ ${rows}
   </div>`;
 }
 // 본문 제목(h1) + 선택적 서브타이틀. 기본 테마가 h1 을 크게 렌더한다.
-function titleH1(title, sub) {
-  const s = sub ? `\n\n<div text-xl opacity-70 mt-1>${toText(sub)}</div>` : "";
-  return `# ${toText(title)}${s}`;
+// addr 가 있으면 raw <h1>(= 마크다운 # 과 동일 렌더)로 내보내 data-addr 를 붙인다.
+function titleH1(title, sub, addr, subAddr) {
+  const s = sub ? `\n\n<div text-xl opacity-70 mt-1${da(subAddr)}>${toText(sub)}</div>` : "";
+  const h = addr ? `<h1${da(addr)}>${toText(title)}</h1>` : `# ${toText(title)}`;
+  return `${h}${s}`;
 }
 
 // ---- BaizeAI 카드 그리드/스텝 (127·1766·1303 소스 그대로) ----
@@ -154,7 +163,7 @@ const ACCENTS = ["cyan", "amber", "green", "sky", "purple", "rose"];
 const HUES = ["sky", "purple", "indigo", "emerald", "rose", "amber"];
 
 // 중립 카드(127): white/5 + 헤더바(white/10)+아이콘 + 본문(하위 items or desc).
-function neutralCard(card, idx) {
+function neutralCard(card, idx, addr) {
   const { title, desc, icon } = itemParts(card);
   const accent = ACCENTS[idx % ACCENTS.length];
   const ic = icon || "i-carbon:dot-mark";
@@ -168,7 +177,7 @@ function neutralCard(card, idx) {
   } else {
     body = `      <div text-sm opacity-80>${desc || ""}</div>`;
   }
-  return `  <div border="2 solid white/5" rounded-lg overflow-hidden bg="white/5" backdrop-blur-sm h-full>
+  return `  <div${da(addr)} border="2 solid white/5" rounded-lg overflow-hidden bg="white/5" backdrop-blur-sm h-full>
     <div flex items-center bg="white/10" backdrop-blur px-3 py-2>
       <div ${ic} text-${accent}-300 text-xl mr-2 shrink-0 />
       <div font-semibold text-lg>${title}</div>
@@ -180,14 +189,14 @@ ${body}
 }
 
 // 다색 카드(1766): tier/색 구분. items 를 dot 행으로.
-function coloredCard(card, idx) {
+function coloredCard(card, idx, addr) {
   const { title, desc } = itemParts(card);
   const color = HUES[idx % HUES.length];
   const list = card && typeof card === "object" && Array.isArray(card.items) ? card.items : null;
   const body = list
     ? list.map((x) => `      <div flex items-center gap-2 py-1><div i-carbon:dot-mark text-${color}-300 shrink-0 /><span text-sm>${toText(x)}</span></div>`).join("\n")
     : `      <div text-sm opacity-80>${desc || ""}</div>`;
-  return `  <div border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden h-full>
+  return `  <div${da(addr)} border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden h-full>
     <div bg="${color}-800/40" px-4 py-2 flex items-center justify-center>
       <span font-bold text-lg>${title}</span>
     </div>
@@ -198,10 +207,10 @@ ${body}
 }
 
 // v-clicks 스태거 카드 그리드(블록 사이 빈 줄 필수 = BaizeAI 127 방식). h-75 고정높이로 꽉 채움.
-function cardGrid(cards, render, { cols, height = "h-75" } = {}) {
+function cardGrid(cards, render, { cols, height = "h-75", addrBase } = {}) {
   const list = asArr(cards);
   const n = cols || colsFor(list.length);
-  const inner = list.map((c, i) => render(c, i)).join("\n\n");
+  const inner = list.map((c, i) => render(c, i, subA(addrBase, i))).join("\n\n");
   return `<div mt-6 grid grid-cols-${n} gap-4 ${height}>
 
 <v-clicks>
@@ -214,16 +223,16 @@ ${inner}
 }
 
 // 스텝 패널(1303): 색깔 패널 + 헤더 + 스텝 행(번호 or dot).
-function stepPanel({ color, head, headIcon, steps, numbered }) {
+function stepPanel({ color, head, headIcon, steps, numbered, addr, itemAddr }) {
   const rows = asArr(steps).map((st, i) => {
     const { title, desc } = itemParts(st);
     const marker = numbered
       ? `<div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="${color}-800/60" text-${color}-100 text-sm font-bold>${i + 1}</div>`
       : `<div i-carbon:dot-mark text-${color}-300 text-xl shrink-0 />`;
     const d = desc ? `<div text-sm opacity-70>${desc}</div>` : "";
-    return `      <div flex items-center gap-3 py-1>${marker}<div><div font-medium text-lg>${title}</div>${d}</div></div>`;
+    return `      <div flex items-center gap-3 py-1${da(subA(itemAddr, i))}>${marker}<div><div font-medium text-lg>${title}</div>${d}</div></div>`;
   }).join("\n");
-  return `  <div border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden>
+  return `  <div${da(addr)} border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden>
     <div bg="${color}-800/40" px-5 py-3 flex items-center>
       <div ${headIcon} text-${color}-300 text-2xl mr-2 shrink-0 />
       <span font-bold text-xl>${head}</span>
@@ -245,69 +254,75 @@ function calloutBar(icon, text) {
 }
 
 // 데모 callout 한 줄(white/5 행).
-function calloutRow(it, idx) {
+function calloutRow(it, idx, addr) {
   const { title, desc } = itemParts(it);
   const accent = ACCENTS[idx % ACCENTS.length];
   const d = desc ? `<div text-sm opacity-70 mt-1 pl-7>${desc}</div>` : "";
-  return `<div border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+  return `<div${da(addr)} border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
 <div flex items-center gap-2><div i-carbon:checkmark text-${accent}-300 text-xl shrink-0 /><span font-medium text-lg>${title}</span></div>${d}
 </div>`;
 }
 
-// 이미지: 실파일 존재 + status:real 일 때만 렌더, 아니면 플레이스홀더 박스.
-function imageBlock(assets, label) {
+// 이미지: 실파일 존재 + status:real 일 때만 렌더, 아니면 플레이스홀더 박스. addr 가 있으면 편집주소·자산상태 부여.
+function imageBlock(assets, label, addr) {
   const a = assets && (assets.image || assets.main || assets.screenshot || assets.primary);
   let src = null, status = "real";
   if (typeof a === "string") src = a;
   else if (a && typeof a === "object") { src = a.src; status = a.status || "real"; }
   if (src && status === "real" && existsSync(resolve(slidevDir, src))) {
-    return `![${label}](${src}){.rounded-xl .shadow-2xl .mx-auto}`;
+    return `<img src="${src}" alt="${label}" class="rounded-xl shadow-2xl mx-auto"${da(addr)} data-asset-status="real">`;
   }
   // 실제 스크린샷이 없을 때의 자리 표시. BaizeAI 엔 데모 스크린샷 패턴이 없어 white/5 중립 패널로 일관성만 맞춘 추정 스타일.
   const cap = src ? `<div text-xs opacity-40 mt-2 break-all>${src}</div>` : "";
-  return `<div border="2 solid white/10" bg="white/5" backdrop-blur-sm rounded-xl grid place-items-center text-center class="h-[55vh]">
+  return `<div border="2 solid white/10" bg="white/5" backdrop-blur-sm rounded-xl grid place-items-center text-center class="h-[55vh]"${da(addr)} data-asset-status="placeholder">
   <div><div i-carbon:image text-6xl opacity-40 mx-auto /><div opacity-60 mt-2>${label}</div>${cap}</div>
 </div>`;
 }
 
 // ---- 레이아웃별 렌더러 (semanticId → body string) ----
 const renderers = {
-  hero(c) {
-    const eyebrow = c.eyebrow ? `<div class="text-cyan-300 tracking-widest text-sm font-semibold uppercase opacity-90">${toText(c.eyebrow)}</div>` : "";
-    const subtitle = c.subtitle ? `<div class="mt-4 max-w-3xl opacity-80 text-lg">${toText(c.subtitle)}</div>` : "";
-    const footnote = c.footnote ? `\n\n<div v-click class="mt-8">${pill(toText(c.footnote), "opacity-80")}</div>` : "";
+  hero(c, s) {
+    const id = s && s.id;
+    const eyebrow = c.eyebrow ? `<div class="text-cyan-300 tracking-widest text-sm font-semibold uppercase opacity-90"${da(slotA(id, "eyebrow"))}>${toText(c.eyebrow)}</div>` : "";
+    const subtitle = c.subtitle ? `<div class="mt-4 max-w-3xl opacity-80 text-lg"${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>` : "";
+    const footnote = c.footnote ? `\n\n<div v-click class="mt-8"${da(slotA(id, "footnote"))}>${pill(toText(c.footnote), "opacity-80")}</div>` : "";
     return `<div class="flex flex-col items-center justify-center text-center">
 
 ${eyebrow}
 
-# ${toText(c.title)}
+<h1${da(slotA(id, "title"))}>${toText(c.title)}</h1>
 
 ${subtitle}
 </div>${footnote}`;
   },
 
-  "problem-flow"(c) {
+  "problem-flow"(c, s) {
+    const id = s && s.id;
     const panel = colorPanel({
       color: "amber", headIcon: "i-carbon:warning-alt", head: L.problem,
       items: c.items, itemIcon: "i-carbon:warning-alt", itemColor: "amber",
+      addr: slotA(id, "items"), itemAddr: slotA(id, "items"),
     });
-    return `${titleH1(c.title)}
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
 <div mt-8>
 ${panel}
 </div>`;
   },
 
-  contrast(c) {
+  contrast(c, s) {
+    const id = s && s.id;
     const left = colorPanel({
       color: "red", headIcon: "i-carbon:warning-alt", head: toText(c.leftLabel) || L.before,
       items: c.left, itemIcon: "i-carbon:close", itemColor: "red",
+      addr: slotA(id, "left"), itemAddr: slotA(id, "left"),
     });
     const right = colorPanel({
       color: "green", headIcon: "i-carbon:idea", head: toText(c.rightLabel) || L.after,
       items: c.right, itemIcon: "i-carbon:checkmark", itemColor: "green", vclick: true,
+      addr: slotA(id, "right"), itemAddr: slotA(id, "right"),
     });
-    return `${titleH1(c.title, c.lead)}
+    return `${titleH1(c.title, c.lead, slotA(id, "title"), slotA(id, "lead"))}
 
 <div mt-8 grid grid-cols-2 gap-6 items-start>
 ${left}
@@ -315,48 +330,52 @@ ${right}
 </div>`;
   },
 
-  "insight-statement"(c) {
+  "insight-statement"(c, s) {
+    const id = s && s.id;
     const sub = c.subtitle
-      ? `\n\n<div v-click class="mt-8 mx-auto max-w-2xl">${frost(`<div class="opacity-90">${toText(c.subtitle)}</div>`)}</div>`
+      ? `\n\n<div v-click class="mt-8 mx-auto max-w-2xl">${frost(`<div class="opacity-90"${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>`)}</div>`
       : "";
     return `<div class="text-center">
 
 <div class="text-cyan-300 font-bold tracking-widest text-sm">${L.insight}</div>
 
-# ${toText(c.title)}
+<h1${da(slotA(id, "title"))}>${toText(c.title)}</h1>
 
 </div>${sub}`;
   },
 
-  "product-overview"(c) {
-    return `${titleH1(toText(c.title) || L.solution)}
+  "product-overview"(c, s) {
+    const id = s && s.id;
+    return `${titleH1(toText(c.title) || L.solution, null, slotA(id, "title"))}
 
-${cardGrid(c.features, neutralCard)}`;
+${cardGrid(c.features, neutralCard, { addrBase: slotA(id, "features") })}`;
   },
 
   "demo-fullscreen"(c, s) {
-    const sub = c.subtitle ? `\n\n<div opacity-60 mt-3>${toText(c.subtitle)}</div>` : "";
-    return `${titleH1(c.title)}
+    const id = s && s.id;
+    const sub = c.subtitle ? `\n\n<div opacity-60 mt-3${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>` : "";
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
 <div mt-4>
 
-${imageBlock(s.assets, L.demo)}
+${imageBlock(s.assets, L.demo, assetA(id, "image"))}
 
 </div>${sub}`;
   },
 
   "demo-callout"(c, s) {
-    const rows = asArr(c.callout).map((it, i) => calloutRow(it, i)).join("\n\n");
+    const id = s && s.id;
+    const rows = asArr(c.callout).map((it, i) => calloutRow(it, i, subA(slotA(id, "callout"), i))).join("\n\n");
     const callouts = rows ? `<v-clicks>\n\n${rows}\n\n</v-clicks>` : "";
-    const points = c.points ? `\n\n<div mt-4 text-sm opacity-70>\n${bullets(c.points)}\n</div>` : "";
-    const caption = c.caption ? `\n\n<div opacity-50 text-xs>${toText(c.caption)}</div>` : "";
-    return `${titleH1(c.title)}
+    const points = c.points ? `\n\n<div mt-4 text-sm opacity-70${da(slotA(id, "points"))}>\n${bullets(c.points)}\n</div>` : "";
+    const caption = c.caption ? `\n\n<div opacity-50 text-xs${da(slotA(id, "caption"))}>${toText(c.caption)}</div>` : "";
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
 <div mt-6 grid grid-cols-2 gap-8 items-center>
 
 <div>
 
-${imageBlock(s.assets, L.demo)}
+${imageBlock(s.assets, L.demo, assetA(id, "image"))}
 
 </div>
 
@@ -369,29 +388,32 @@ ${callouts}
 </div>${points}${caption}`;
   },
 
-  architecture(c) {
+  architecture(c, s) {
+    const id = s && s.id;
     const panel = stepPanel({
       color: "blue", head: L.flow, headIcon: "i-carbon:flow",
       steps: c.steps, numbered: true,
+      addr: slotA(id, "steps"), itemAddr: slotA(id, "steps"),
     });
     const result = c.result ? "\n\n" + calloutBar("i-carbon:idea", `<b>${L.result}:</b> ${toText(c.result)}`) : "";
-    return `${titleH1(c.title)}
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
 <div mt-8>
 ${panel}
 </div>${result}`;
   },
 
-  "before-after"(c) {
-    const before = `  <div border="2 solid red-800" bg="red-800/20" rounded-lg overflow-hidden>
+  "before-after"(c, s) {
+    const id = s && s.id;
+    const before = `  <div${da(slotA(id, "beforeCaption"))} border="2 solid red-800" bg="red-800/20" rounded-lg overflow-hidden>
     <div bg="red-800/40" px-5 py-3 flex items-center><div i-carbon:close-outline text-red-300 text-2xl mr-2 /><span font-bold text-xl>${toText(c.beforeLabel) || L.before}</span></div>
     <div px-5 py-4 text-lg opacity-90>${toText(c.beforeCaption)}</div>
   </div>`;
-    const after = `  <div v-click border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
+    const after = `  <div v-click${da(slotA(id, "afterCaption"))} border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
     <div bg="green-800/40" px-5 py-3 flex items-center><div i-carbon:checkmark-outline text-green-300 text-2xl mr-2 /><span font-bold text-xl>${toText(c.afterLabel) || L.after}</span></div>
     <div px-5 py-4 text-lg>${toText(c.afterCaption)}</div>
   </div>`;
-    return `${titleH1(c.title)}
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
 <div mt-8 grid gap-4 items-center class="grid-cols-[1fr_auto_1fr]">
 ${before}
@@ -400,60 +422,68 @@ ${after}
 </div>`;
   },
 
-  "big-number"(c) {
-    const label = c.label ? `<div class="opacity-70 tracking-wide">${toText(c.label)}</div>` : "";
-    const caption = c.caption ? `<div class="mt-4 opacity-55 text-sm max-w-xl mx-auto">${toText(c.caption)}</div>` : "";
+  "big-number"(c, s) {
+    const id = s && s.id;
+    const label = c.label ? `<div class="opacity-70 tracking-wide"${da(slotA(id, "label"))}>${toText(c.label)}</div>` : "";
+    const caption = c.caption ? `<div class="mt-4 opacity-55 text-sm max-w-xl mx-auto"${da(slotA(id, "caption"))}>${toText(c.caption)}</div>` : "";
     return `<div class="text-center">
 
 ${label}
 
-<div v-click class="my-3 text-7xl font-extrabold text-cyan-300 leading-none">${toText(c.number)}</div>
+<div v-click class="my-3 text-7xl font-extrabold text-cyan-300 leading-none"${da(slotA(id, "number"))}>${toText(c.number)}</div>
 
 ${caption}
 
 </div>`;
   },
 
-  "card-grid"(c) {
-    return `${titleH1(c.title)}
+  "card-grid"(c, s) {
+    const id = s && s.id;
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
-${cardGrid(c.cards, neutralCard)}`;
+${cardGrid(c.cards, neutralCard, { addrBase: slotA(id, "cards") })}`;
   },
 
-  timeline(c) {
+  timeline(c, s) {
+    const id = s && s.id;
     const panel = stepPanel({
       color: "indigo", head: L.flow, headIcon: "i-carbon:roadmap",
       steps: c.steps, numbered: true,
+      addr: slotA(id, "steps"), itemAddr: slotA(id, "steps"),
     });
-    return `${titleH1(c.title)}
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
 <div mt-8>
 ${panel}
 </div>`;
   },
 
-  quote(c) {
+  quote(c, s) {
+    const id = s && s.id;
     return `<div class="text-center max-w-3xl mx-auto">
 
 <div class="text-6xl text-cyan-300/30 leading-none">&ldquo;</div>
 
-<blockquote class="text-2xl font-medium leading-relaxed">${toText(c.quote)}</blockquote>
+<blockquote class="text-2xl font-medium leading-relaxed"${da(slotA(id, "quote"))}>${toText(c.quote)}</blockquote>
 
-<div class="mt-6 opacity-70">— ${toText(c.attribution)}</div>
+<div class="mt-6 opacity-70"${da(slotA(id, "attribution"))}>— ${toText(c.attribution)}</div>
 
 </div>`;
   },
 
-  "limitation-guardrail"(c) {
+  "limitation-guardrail"(c, s) {
+    const id = s && s.id;
     const limits = colorPanel({
       color: "amber", headIcon: "i-carbon:warning-alt", head: L.limits,
       items: c.limitations, itemIcon: "i-carbon:dot-mark", itemColor: "amber",
+      addr: slotA(id, "limitations"), itemAddr: slotA(id, "limitations"),
     });
     const guards = colorPanel({
       color: "green", headIcon: "i-carbon:shield-checkmark", head: L.guards,
       items: c.guardrails, itemIcon: "i-carbon:checkmark", itemColor: "green", vclick: true,
+      addr: slotA(id, "guardrails"), itemAddr: slotA(id, "guardrails"),
     });
-    return `${titleH1(c.title)}
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
 <div mt-8 grid grid-cols-2 gap-6 items-start>
 ${limits}
@@ -461,21 +491,23 @@ ${guards}
 </div>`;
   },
 
-  "expansion-map"(c) {
-    return `${titleH1(c.title)}
+  "expansion-map"(c, s) {
+    const id = s && s.id;
+    return `${titleH1(c.title, null, slotA(id, "title"))}
 
-${cardGrid(c.tiers, coloredCard)}`;
+${cardGrid(c.tiers, coloredCard, { addrBase: slotA(id, "tiers") })}`;
   },
 
-  closing(c) {
-    const subtitle = c.subtitle ? `<div class="opacity-70 mt-3 max-w-2xl mx-auto">${toText(c.subtitle)}</div>` : "";
-    const cta = c.cta ? `\n\n<div v-click class="mt-8">${pill(`<span class="i-carbon:play" /> ${toText(c.cta)}`, "text-cyan-100")}</div>` : "";
-    const tags = c.tags ? `\n\n<div class="mt-4 flex flex-wrap gap-2 justify-center">${asArr(c.tags).map((t) => pill(toText(t), "text-xs opacity-75")).join("")}</div>` : "";
+  closing(c, s) {
+    const id = s && s.id;
+    const subtitle = c.subtitle ? `<div class="opacity-70 mt-3 max-w-2xl mx-auto"${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>` : "";
+    const cta = c.cta ? `\n\n<div v-click class="mt-8"${da(slotA(id, "cta"))}>${pill(`<span class="i-carbon:play" /> ${toText(c.cta)}`, "text-cyan-100")}</div>` : "";
+    const tags = c.tags ? `\n\n<div class="mt-4 flex flex-wrap gap-2 justify-center"${da(slotA(id, "tags"))}>${asArr(c.tags).map((t) => pill(toText(t), "text-xs opacity-75")).join("")}</div>` : "";
     const foot = [c.team, c.contact].filter(Boolean).map(toText).join(" · ");
-    const contact = foot ? `\n\n<div class="mt-8">${pill(`<span class="i-carbon:logo-github" /> ${foot}`, "opacity-80")}</div>` : "";
+    const contact = foot ? `\n\n<div class="mt-8"${da(slotA(id, "contact"))}>${pill(`<span class="i-carbon:logo-github" /> ${foot}`, "opacity-80")}</div>` : "";
     return `<div class="text-center">
 
-# ${toText(c.title)}
+<h1${da(slotA(id, "title"))}>${toText(c.title)}</h1>
 
 ${subtitle}
 
@@ -523,6 +555,7 @@ const visibleSlides = (deck.slides || []).filter(
   (s) => s.implementationStatus !== "dropped" && s.implementationStatus !== "blocked"
 );
 
+const s0 = visibleSlides[0] || {};
 const head = [
   "---",
   "# Engine ported from BaizeAI/talks (Apache-2.0) — glow background + fade transitions + v-click reveals.",
@@ -540,6 +573,10 @@ const head = [
   "clicks: 0",
   "glowSeed: " + (visibleSlides.length ? seedFor(visibleSlides[0], 0) : 229),
   "glow: full",
+  "slideId: " + JSON.stringify(s0.id || "slide-01"),
+  "semanticLayout: " + JSON.stringify(s0.semanticLayout || "slide"),
+  "durationSeconds: " + (Number(s0.durationSeconds) || 0),
+  "impl: " + JSON.stringify(s0.implementationStatus || "implemented"),
   "---",
   "",
 ];
@@ -549,6 +586,7 @@ visibleSlides.forEach((s, idx) => {
   const content = s.content || {};
   const renderer = renderers[s.semanticLayout] || (layoutById.has(s.semanticLayout) ? renderers[layoutById.get(s.semanticLayout).semanticId] : null);
 
+  const slideId = s.id || ("slide-" + String(idx + 1).padStart(2, "0"));
   const centered = CENTERED.has(s.semanticLayout);
   const body = [];
   if (idx > 0) {
@@ -559,6 +597,11 @@ visibleSlides.forEach((s, idx) => {
     body.push("title: " + JSON.stringify(deriveTitle(s)));
     body.push("glowSeed: " + seedFor(s, idx));
     body.push("glow: " + glowFor(idx));
+    // 편집 오버레이(global-top.vue)가 읽는 슬라이드 메타 — 레이아웃·시간·자산상태 배지용.
+    body.push("slideId: " + JSON.stringify(slideId));
+    body.push("semanticLayout: " + JSON.stringify(s.semanticLayout || "slide"));
+    body.push("durationSeconds: " + (Number(s.durationSeconds) || 0));
+    body.push("impl: " + JSON.stringify(s.implementationStatus || "implemented"));
     body.push("---");
     body.push("");
   }
@@ -568,7 +611,9 @@ visibleSlides.forEach((s, idx) => {
     body.push(`<div class="absolute top-4 right-6 text-xs px-2 py-0.5 rounded-full border border-amber-400/40 bg-amber-400/10 text-amber-200">${impl.toUpperCase()}</div>`, "");
   }
 
-  const rendered = renderer ? renderer(content, s) : fallbackRender(content);
+  // 렌더러에 id 보장(deck 슬라이드에 id 가 없어도 slide-NN 폴백을 쓴다).
+  const sForRender = s.id ? s : { ...s, id: slideId };
+  const rendered = renderer ? renderer(content, sForRender) : fallbackRender(content);
   // per-slide contentScale(0.5~2, 미지정=1): 본문 블록 전체를 zoom 으로 확대/축소(프레임 여백은 고정).
   // 미지정/1 이면 래퍼 없이 그대로 — 기본 출력은 변화 0. (Notion 폴백은 글자만 calc 로 배율)
   const scaleRaw = typeof s.contentScale === "number" ? s.contentScale : 1;

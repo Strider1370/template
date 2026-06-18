@@ -30,7 +30,10 @@
 3. **렌더(자동).** `npm run presentation:slidev`(→ `presentation/slidev/slides.md`) + `npm run presentation:static`(→ `output/static/presentation.html`, 편집 오버레이 내장). **둘 다 같은 deck.json 하나로 동시 생성** — `npm run presentation:build` 한 번이면 Slidev·Notion 양쪽이 함께 나온다.
 4. **정합 검증.** `npm run presentation:validate-slides` (slides.md ↔ deck.json 슬라이드 수 일치).
 5. **Slidev 빌드·프리뷰(기본 발표 매체).** `cd presentation/slidev && npm install && npm run build`(또는 `npm run dev` 로 localhost 프리뷰 — 실제 발표는 이 화면). **이게 default.** Slidev 빌드가 막힐 때만 Notion 정적 HTML로 시연(폴백).
-6. **사람이 다듬기(보조).** 빠른 필드 지정·편집 피드백이 필요하면 Notion 정적 HTML의 편집 오버레이(`presentation/output/static/presentation.html?edit=1`)를 연다 — 번호/주소 배지·클릭복사·오버플로우경고·편집맵 내보내기. 사용자가 주소(예: `slide-04.content.callout`)로 지칭하면 deck.json의 그 필드를 고치고 3·5·7을 다시 돌린다. (발표 자체는 Slidev로 한다.)
+6. **사람이 다듬기(편집 오버레이).** Slidev·Notion **둘 다** `?edit=1`(또는 `e` 키)로 편집 오버레이가 켜진다 — 주소 규약(`id.content.slot[.index]`)을 공유한다: 번호/주소 배지·호버(크기·폰트·overflow)·클릭=주소복사·가독성/오버플로우 경고·레이아웃·시간 코너·자산상태·편집맵 내보내기.
+   - **Slidev(기본):** 프리뷰/빌드 URL 에 `?edit=1`(예: `localhost:4173/?edit=1`). 실제 발표 화면 위에서 편집 지점을 바로 짚는다. (구현: `presentation/slidev/global-top.vue`, 발표 모드(`?edit` 없음)에선 완전 비활성.)
+   - **Notion(백업):** `presentation/output/static/presentation.html?edit=1`.
+   사용자가 주소(예: `slide-04.content.callout`)로 지칭하면 deck.json의 그 필드를 고치고 3·5·7을 다시 돌린다. (발표 자체는 Slidev.)
 7. **캡처 보고 크기 맞추기(LLM 루프).** **렌더 → `npm run presentation:capture`(= Slidev 빌드·캡처가 기본, 미설치 시 Notion HTML 폴백) → 캡처(`presentation/output/captures/NN-<layout>.png`)를 *직접 보고* 슬라이드별 `contentScale`(deck.json slide 속성, 0.5~2, 미지정=1)과 내용을 조정 → 재렌더**. 1~2회 반복.
    - 원칙: **내용을 공간에 맞추지 말고(억지 채움 금지), 공간을 내용에 맞춰라** — 여백이 많으면 `contentScale`로 키우고, 빽빽하거나 오버플로우면 줄여라.
    - `contentScale`(기본 1=변화 없음): **Slidev는 본문 블록 전체를 `zoom`으로 키우고/줄인다(슬라이드 여백은 고정).** Notion 폴백은 본문 글자만 배율 조정.
