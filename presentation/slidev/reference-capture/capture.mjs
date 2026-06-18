@@ -19,6 +19,10 @@ const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, dev
 await page.goto(URL_BASE + '#/1', { waitUntil: 'networkidle' });
 await page.waitForTimeout(3000);
 await page.click('body').catch(() => {});
+// goto 다이얼로그 등 오버레이가 캡처에 끼지 않게 숨김(슬라이드 많으면 닫혀도 삐져나온다).
+await page
+  .addStyleTag({ content: '#slidev-goto-dialog,.slidev-nav,.slidev-controls,.autocomplete-list{display:none!important}' })
+  .catch(() => {});
 
 let guard = 0;
 let lastSaved = null;

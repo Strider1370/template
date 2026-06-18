@@ -31,7 +31,7 @@ glow: full
 -->
 
 ---
-layout: center
+layout: default
 title: "재난 정보는 많지만, 내게 맞는 정보는 없다"
 glowSeed: 285
 glow: left
@@ -66,7 +66,7 @@ glow: left
 -->
 
 ---
-layout: center
+layout: default
 title: "위치를 누르면 우리 동네 가이드가 즉시 생성됩니다"
 glowSeed: 286
 glow: right
@@ -134,7 +134,7 @@ glow: center
 -->
 
 ---
-layout: center
+layout: default
 title: "한계와 안전장치"
 glowSeed: 288
 glow: bottom

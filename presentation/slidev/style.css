@@ -16,6 +16,12 @@
     ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
+/* Goto(슬라이드 점프) 다이얼로그 숨김 — 슬라이드가 많으면 닫힌 상태(-top-20)에서도
+   목록이 아래로 삐져나와 캡처/익스포트에 끼어든다. 발표 덱엔 'g' 점프가 불필요. */
+#slidev-goto-dialog {
+  display: none !important;
+}
+
 /* .slidev-code {
   font-size: 1em !important;
   line-height: 1.4em !important;
