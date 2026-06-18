@@ -29,7 +29,21 @@
         "budgetMinutes": { "type": ["integer", "null"] }
       }
     },
-    "completedStages": { "type": "array" },
+    "completedStages": {
+      "type": "array",
+      "description": "완료된 단계 기록. 각 항목에 걸린 시간(actualMinutes)을 함께 남긴다.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stageNumber": { "type": "integer" },
+          "stageId": { "type": "string" },
+          "startedAt": { "type": ["string", "null"] },
+          "completedAt": { "type": ["string", "null"] },
+          "actualMinutes": { "type": ["number", "null"] },
+          "budgetMinutes": { "type": ["integer", "null"] }
+        }
+      }
+    },
     "requiredReads": { "type": "array", "items": { "type": "string" } },
     "activeAgents": { "type": "array" },
     "blockedBy": { "type": "array" },

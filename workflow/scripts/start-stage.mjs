@@ -36,6 +36,10 @@ try {
   state.current.startedAt = now();
   state.current.budgetMinutes = stage.budgetMinutes;
 
+  // 전체 해커톤 시계: 최초 단계 시작 시각을 1회 기록(이후 전체 경과/남은 시간 계산 기준).
+  state.project = state.project || {};
+  if (!state.project.startedAt) state.project.startedAt = state.current.startedAt;
+
   // requiredReads / nextGate / humanApproval 갱신
   state.requiredReads = requiredReadsForStage(stage);
   state.nextGate = gateForStage(stage);

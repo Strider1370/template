@@ -3,6 +3,8 @@
 import { execSync } from "node:child_process";
 import { readState, writeState, ROOT, getStage } from "../lib.mjs";
 import {
+  now,
+  minutesBetween,
   gateForStage,
   requiredReadsForStage,
   handoffPathFor,
@@ -36,10 +38,21 @@ try {
     console.warn(`⚠ Handoff 보고서가 없습니다: ${handoff} (권장: 단계 완료 보고서를 작성하세요)`);
   }
 
-  // completedStages 에 push (중복 방지)
+  // 걸린 시간 계산 (시작 시각 → 지금)
+  const completedAt = now();
+  const actualMinutes = minutesBetween(state.current.startedAt, completedAt);
+
+  // completedStages 에 push (중복 방지) — 걸린 시간 함께 기록
   state.completedStages = state.completedStages || [];
   if (!state.completedStages.some((s) => s && s.stageId === stage.id)) {
-    state.completedStages.push({ stageNumber: stage.number, stageId: stage.id });
+    state.completedStages.push({
+      stageNumber: stage.number,
+      stageId: stage.id,
+      startedAt: state.current.startedAt,
+      completedAt,
+      actualMinutes,
+      budgetMinutes: stage.budgetMinutes,
+    });
   }
 
   // 체크포인트 커밋 기록 (실패해도 무시)
@@ -56,6 +69,17 @@ try {
   };
 
   console.log(`\n[workflow:complete] Stage ${stage.number} (${stage.id}) 완료`);
+  if (actualMinutes != null) {
+    const over =
+      stage.budgetMinutes != null && actualMinutes > stage.budgetMinutes ? "  ⚠ 예산 초과" : "";
+    console.log(`걸린 시간 : ${actualMinutes}분 (예산 ${stage.budgetMinutes ?? "-"}분)${over}`);
+  }
+  const totalElapsed = minutesBetween(state.project?.startedAt, completedAt);
+  if (totalElapsed != null) {
+    const deadline = state.project?.deadlineMinutes ?? 240;
+    const remaining = Math.round((deadline - totalElapsed) * 10) / 10;
+    console.log(`전체 경과 : ${totalElapsed}분 / ${deadline}분  (남음 ${remaining}분)`);
+  }
   if (commit) console.log(`체크포인트 커밋 : ${commit.slice(0, 8)}`);
 
   // 마지막 단계인가?

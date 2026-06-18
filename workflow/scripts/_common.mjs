@@ -8,6 +8,15 @@ export function now() {
   return new Date().toISOString();
 }
 
+// ISO 두 시각 사이 경과(분, 소수 1자리). 입력이 비거나 유효하지 않으면 null.
+export function minutesBetween(startIso, endIso) {
+  if (!startIso || !endIso) return null;
+  const a = new Date(startIso).getTime();
+  const b = new Date(endIso).getTime();
+  if (Number.isNaN(a) || Number.isNaN(b)) return null;
+  return Math.round(((b - a) / 60000) * 10) / 10;
+}
+
 // stage 의 gate 명령 문자열("npm run gate:spec") → state.nextGate 객체로 변환.
 // report 경로는 workflow/history/stage-XX-gate.md 규약을 따른다.
 export function gateForStage(stage) {
@@ -64,7 +73,21 @@ export function printStatusSummary(state) {
   console.log(`현재 단계 : Stage ${c.stageNumber} (${c.stageId})`);
   console.log(`상태      : ${c.status}`);
   console.log(`workflowMode : ${state.workflowMode}`);
-  console.log(`남은 예산 : ${c.budgetMinutes}분  (시작: ${c.startedAt || "미시작"})`);
+  // ⏱ 시간 추적: 현재 단계 경과 / 전체 해커톤 경과 vs 마감
+  const nowIso = now();
+  const proj = state.project || {};
+  const deadline = proj.deadlineMinutes ?? 240;
+  const curElapsed = c.status === "in_progress" ? minutesBetween(c.startedAt, nowIso) : null;
+  console.log(
+    `⏱ 현재 단계 : ${curElapsed != null ? `${curElapsed}분 경과` : "미시작"} / 예산 ${c.budgetMinutes ?? "-"}분`
+  );
+  const totalElapsed = minutesBetween(proj.startedAt, nowIso);
+  if (totalElapsed != null) {
+    const remaining = Math.round((deadline - totalElapsed) * 10) / 10;
+    console.log(`⏱ 전체 경과 : ${totalElapsed}분 / ${deadline}분  (남음 ${remaining}분)`);
+  } else {
+    console.log(`⏱ 전체 경과 : 미시작  (마감 예산 ${deadline}분)`);
+  }
   line();
   const ng = state.nextGate || {};
   console.log(`다음 게이트 : ${ng.command || "(없음)"}`);
@@ -86,6 +109,21 @@ export function printStatusSummary(state) {
     `마지막 체크포인트 : ${cp.stageId ? `Stage ${cp.stageNumber} (${cp.stageId})` : "(없음)"}` +
       `${cp.commit ? ` @ ${cp.commit.slice(0, 8)}` : ""}`
   );
+  // 완료 단계별 걸린 시간 (기록된 actualMinutes)
+  const done = state.completedStages || [];
+  if (done.length) {
+    line();
+    console.log("완료 단계 시간:");
+    let sum = 0;
+    for (const s of done) {
+      const a = typeof s.actualMinutes === "number" ? s.actualMinutes : null;
+      if (a != null) sum += a;
+      const budget = s.budgetMinutes != null ? ` / 예산 ${s.budgetMinutes}분` : "";
+      const over = a != null && s.budgetMinutes != null && a > s.budgetMinutes ? "  ⚠초과" : "";
+      console.log(`  ✓ Stage ${s.stageNumber} (${s.stageId}) : ${a != null ? `${a}분` : "-"}${budget}${over}`);
+    }
+    console.log(`  합계 : ${Math.round(sum * 10) / 10}분`);
+  }
   if ((state.blockedBy || []).length) {
     line();
     console.log("blockedBy:");
