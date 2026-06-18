@@ -1,4 +1,5 @@
 <!-- Handoff 보고서. 단계 완료 시 workflow/history/stage-XX-<stage-id>.md 로 저장. (Doc3 §11) -->
+<!-- 보통 `npm run workflow:handoff` 가 이 양식을 자동으로 채운다(시간·파일·커밋·게이트). 사람은 '결정/위험' 1~2줄만 보강. -->
 # Stage XX 완료 보고 — <stage-id>
 
 ## 단계

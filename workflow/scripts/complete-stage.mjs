@@ -35,7 +35,10 @@ try {
   if (fileExists(handoff)) {
     state.lastHandoff = handoff;
   } else {
-    console.warn(`⚠ Handoff 보고서가 없습니다: ${handoff} (권장: 단계 완료 보고서를 작성하세요)`);
+    console.warn(
+      `⚠ Handoff 보고서가 없습니다: ${handoff}\n` +
+        `  → 자동 생성: npm run workflow:handoff (기계가 시간·파일·커밋·게이트 채움) 후 '결정/위험' 1~2줄만 보강.`
+    );
   }
 
   // 걸린 시간 계산 (시작 시각 → 지금)
