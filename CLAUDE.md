@@ -16,7 +16,7 @@
 4. **현재 단계 지침 파일**(`workflow/stages/NN-*.md`)을 읽는다.
 5. 지침의 "3. 반드시 읽을 파일"에 명시된 입력 + `guidance` 섹션만 읽는다. (그 외는 읽지 않는다)
 6. 필요한 **서브에이전트를 병렬** 실행한다 (작업 계약 = `workflow/templates/agent-task.yaml`).
-7. 산출물을 통합한다.
+7. 산출물을 통합한다. **병렬 탐색/리서치라면:** 각 서브에이전트는 자기 보고서 파일(읽기 쉬운 md 1개)을 남기고, 메인은 이를 통합 파일로 정리한 뒤 — **① 개별 보고서 파일들의 위치를 사용자에게 알려 직접 읽게 하고, ② 통합 요약을 세션(채팅)에서 초보자에게 설명하듯 보고한다.** (파일만 쓰고 끝내지 말 것. 사용자가 파일을 읽는 동안 세션 보고가 같이 가도록.)
 8. 지정된 **Gate를 실제로 실행**한다 (`npm run gate:<stage>`). LLM Review는 `npm run cross-review -- <대상>`.
 9. Gate 통과 시 **Handoff**(`workflow/templates/stage-report.md` → `workflow/history/stage-NN-<id>.md`)를 쓰고 `npm run workflow:complete`.
 10. Gate 실패 시 다음 단계로 가지 말고 실패 원인과 폴백을 보고한다 (`npm run workflow:fail "<사유>"`).
