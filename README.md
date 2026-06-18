@@ -7,6 +7,58 @@
 
 ---
 
+## 0. 새 환경에서 처음 세팅하기 (한 번)
+
+> **핵심:** 이 저장소는 **독립된 npm 프로젝트가 3개**다(루트 · `web/` · `presentation/slidev/`). 각각 `npm install`을 해줘야 한다. 폰트·KRDS 토큰·발표 테마는 저장소에 **이미 포함**돼 있어 따로 받을 필요 없다.
+
+### 필수 도구
+| 도구 | 버전/메모 |
+|---|---|
+| **Node.js** | `>= 18.18` (권장 20 이상). npm 동봉. `pnpm`도 가능 |
+| **Git** | 클론/커밋 |
+| **브라우저** | 발표·편집 오버레이(`?edit=1`)는 **Chrome/Edge 등 Chromium 계열** 권장 (`zoom` 사용) |
+
+### 설치 — 3곳을 각각 (네트워크: npm 레지스트리 접근 필요)
+```bash
+# 1) 루트 — 워크플로우 엔진 도구 (js-yaml 등, 가벼움)
+npm install
+npm run workflow:status        # 현재 단계 확인 → 정상 동작 검증
+
+# 2) 웹 앱 스캐폴드 (Next.js + KRDS)
+cd web && npm install
+npm run build                  # 빌드 통과 확인 (install+build 검증됨)
+cd ..
+
+# 3) 발표용 Slidev (deck 렌더·프리뷰에 필요)
+cd presentation/slidev && npm install
+npm run build                  # 슬라이드 빌드 → dist/
+cd ../..
+```
+- `presentation/slidev`의 `@slidev/theme-default`·UnoCSS·아이콘·**Pretendard 폰트(`public/fonts/`에 커밋됨)**는 install/저장소에 이미 들어온다 — 별도 폰트 다운로드 불필요.
+
+### 선택 — 발표 캡처 도구 (Stage 09·10 LLM 캡처 루프에만)
+`npm run presentation:capture`(슬라이드 PNG 자동 캡처)는 **Playwright + Chromium**이 있어야 동작한다. 사람이 직접 발표/프리뷰만 할 거면 **불필요**(없으면 안내 후 그냥 건너뜀, 오류로 막지 않음).
+```bash
+npm i -g playwright && npx playwright install chromium
+# 또는 브라우저 경로를 직접: PLAYWRIGHT_BROWSERS_PATH=<경로>
+```
+
+### 키 / 시크릿 (`.env.local`에만, 저장소에 커밋 금지)
+| 키 | 언제 필요 | 메모 |
+|---|---|---|
+| **카카오맵 JS 키** | 지도 기능 사용 시 | 도메인 등록 필요 — **대회 전 미리 발급** |
+| **공공데이터(data.go.kr) 서비스키** | 공공 API 사용 시 | 활용신청·자동승인 — 미리 신청 (`data/data-sources.md`) |
+| **LLM API 키** | 앱이 런타임에 LLM 호출 시 | 없으면 규칙기반/fixture로 폴백 설계 |
+
+### 네트워크 주의 (제한 환경)
+- 일부 환경은 `data.go.kr`·일부 CDN이 막힌다 → 그래서 **Pretendard·KRDS는 오프라인 번들**로 포함돼 있다. 데이터는 키 막힘 대비 **fixture(샘플 JSON)** 로 동작하게 설계한다.
+- 첫 `npm install`과 첫 빌드는 npm 레지스트리(및 일부 웹폰트) 접근이 필요할 수 있다 — **인터넷 되는 곳에서 미리 한 번 install** 해두면 당일 안전하다.
+
+### 클라우드/CI(이 저장소가 돌던 환경)와의 차이
+이 키트가 개발된 컨테이너에는 전역 Playwright/Chromium이 미리 깔려 있었다(`/opt/...`). **새 로컬/PC에는 없으므로** 캡처를 쓰려면 위 "선택" 단계를 직접 해야 한다. 발표 자체(`slidev` 프리뷰)는 캡처 없이 된다.
+
+---
+
 ## 1. 왜 "워크플로우 엔진"인가 (핵심 발상)
 
 4시간 동안 AI와 같이 개발하면 **길을 잃기 쉽다.** 한 번에 전부 하려다 데모도 발표도 어정쩡해지는 게 흔한 실패다. 이 키트의 해법은 단순하다:
