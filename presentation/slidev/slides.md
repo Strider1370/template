@@ -95,30 +95,30 @@ glow: right
 
 # 위치를 누르면 우리 동네 가이드가 즉시 생성됩니다
 
-<div class="mt-4 grid grid-cols-2 gap-6 items-center">
+<div mt-6 grid grid-cols-2 gap-8 items-center>
 
 <div>
 
-<div class="rounded-xl border border-dashed border-white/20 bg-white/5 backdrop-blur grid place-items-center h-[42vh] text-center">
-  <div><div class="i-carbon:image text-5xl opacity-40 mx-auto" /><div class="opacity-60 mt-2 text-sm">데모 화면</div><div class="text-xs opacity-40 mt-2 break-all">../output/captures/demo-main.png</div></div>
+<div border="2 solid white/10" bg="white/5" backdrop-blur-sm rounded-xl grid place-items-center text-center class="h-[55vh]">
+  <div><div i-carbon:image text-6xl opacity-40 mx-auto /><div opacity-60 mt-2>데모 화면</div><div text-xs opacity-40 mt-2 break-all>../output/captures/demo-main.png</div></div>
 </div>
 
 </div>
 
-<div class="grid gap-3">
+<div grid gap-3>
 
 <v-clicks>
 
-<div class="rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-left ">
-  <div class="font-medium">현재 위치 기준 위험 유형 자동 판별</div>
+<div border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-cyan-300 text-xl shrink-0 /><span font-medium text-lg>현재 위치 기준 위험 유형 자동 판별</span></div>
 </div>
 
-<div class="rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-left ">
-  <div class="font-medium">가장 가까운 대피소 3곳과 경로</div>
+<div border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-amber-300 text-xl shrink-0 /><span font-medium text-lg>가장 가까운 대피소 3곳과 경로</span></div>
 </div>
 
-<div class="rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-left ">
-  <div class="font-medium">지금 준비할 비상물품 체크리스트</div>
+<div border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-green-300 text-xl shrink-0 /><span font-medium text-lg>지금 준비할 비상물품 체크리스트</span></div>
 </div>
 
 </v-clicks>
@@ -127,7 +127,7 @@ glow: right
 
 </div>
 
-<div class="opacity-50 text-xs text-center">실제 앱 화면 캡처 (서울 관악구 시연)</div>
+<div opacity-50 text-xs>실제 앱 화면 캡처 (서울 관악구 시연)</div>
 
 <!--
 직접 보여드리겠습니다. 위치 버튼 하나만 누르면, 해당 동네에서 발생 가능성이 높은 재난 유형을 판별하고 가장 가까운 대피소 3곳과 비상물품 체크리스트를 만들어 줍니다. 라이브 데모가 막히면 이 캡처로 대체합니다.

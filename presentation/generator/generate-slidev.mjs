@@ -53,10 +53,10 @@ const EN = meta.language === "en";
 const L = EN
   ? { insight: "INSIGHT", edge: "EDGE", problem: "PROBLEM", solution: "SOLUTION",
       limits: "Limitations", guards: "Safeguards", before: "Before", after: "After",
-      result: "Result", demo: "Demo screen" }
+      result: "Result", demo: "Demo screen", flow: "How it works" }
   : { insight: "인사이트", edge: "차별점", problem: "문제", solution: "솔루션",
       limits: "한계", guards: "안전장치", before: "기존", after: "개선",
-      result: "결과", demo: "데모 화면" };
+      result: "결과", demo: "데모 화면", flow: "동작 흐름" };
 
 // ---- 작은 유틸 ----
 const asArr = (v) => (Array.isArray(v) ? v : v == null ? [] : [v]);
@@ -149,6 +149,111 @@ function titleH1(title, sub) {
   return `# ${toText(title)}${s}`;
 }
 
+// ---- BaizeAI 카드 그리드/스텝 (127·1766·1303 소스 그대로) ----
+const ACCENTS = ["cyan", "amber", "green", "sky", "purple", "rose"];
+const HUES = ["sky", "purple", "indigo", "emerald", "rose", "amber"];
+
+// 중립 카드(127): white/5 + 헤더바(white/10)+아이콘 + 본문(하위 items or desc).
+function neutralCard(card, idx) {
+  const { title, desc, icon } = itemParts(card);
+  const accent = ACCENTS[idx % ACCENTS.length];
+  const ic = icon || "i-carbon:dot-mark";
+  let body;
+  if (card && typeof card === "object" && Array.isArray(card.items)) {
+    body = card.items.map((x) => {
+      const p = itemParts(x);
+      const d = p.desc ? `<div text-xs opacity-70>${p.desc}</div>` : "";
+      return `      <div><div text-sm font-medium>${p.title}</div>${d}</div>`;
+    }).join("\n");
+  } else {
+    body = `      <div text-sm opacity-80>${desc || ""}</div>`;
+  }
+  return `  <div border="2 solid white/5" rounded-lg overflow-hidden bg="white/5" backdrop-blur-sm h-full>
+    <div flex items-center bg="white/10" backdrop-blur px-3 py-2>
+      <div ${ic} text-${accent}-300 text-xl mr-2 shrink-0 />
+      <div font-semibold text-lg>${title}</div>
+    </div>
+    <div px-4 py-3 flex flex-col gap-2>
+${body}
+    </div>
+  </div>`;
+}
+
+// 다색 카드(1766): tier/색 구분. items 를 dot 행으로.
+function coloredCard(card, idx) {
+  const { title, desc } = itemParts(card);
+  const color = HUES[idx % HUES.length];
+  const list = card && typeof card === "object" && Array.isArray(card.items) ? card.items : null;
+  const body = list
+    ? list.map((x) => `      <div flex items-center gap-2 py-1><div i-carbon:dot-mark text-${color}-300 shrink-0 /><span text-sm>${toText(x)}</span></div>`).join("\n")
+    : `      <div text-sm opacity-80>${desc || ""}</div>`;
+  return `  <div border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden h-full>
+    <div bg="${color}-800/40" px-4 py-2 flex items-center justify-center>
+      <span font-bold text-lg>${title}</span>
+    </div>
+    <div px-4 py-4 flex flex-col gap-1>
+${body}
+    </div>
+  </div>`;
+}
+
+// v-clicks 스태거 카드 그리드(블록 사이 빈 줄 필수 = BaizeAI 127 방식). h-75 고정높이로 꽉 채움.
+function cardGrid(cards, render, { cols, height = "h-75" } = {}) {
+  const list = asArr(cards);
+  const n = cols || colsFor(list.length);
+  const inner = list.map((c, i) => render(c, i)).join("\n\n");
+  return `<div mt-6 grid grid-cols-${n} gap-4 ${height}>
+
+<v-clicks>
+
+${inner}
+
+</v-clicks>
+
+</div>`;
+}
+
+// 스텝 패널(1303): 색깔 패널 + 헤더 + 스텝 행(번호 or dot).
+function stepPanel({ color, head, headIcon, steps, numbered }) {
+  const rows = asArr(steps).map((st, i) => {
+    const { title, desc } = itemParts(st);
+    const marker = numbered
+      ? `<div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="${color}-800/60" text-${color}-100 text-sm font-bold>${i + 1}</div>`
+      : `<div i-carbon:dot-mark text-${color}-300 text-xl shrink-0 />`;
+    const d = desc ? `<div text-sm opacity-70>${desc}</div>` : "";
+    return `      <div flex items-center gap-3 py-1>${marker}<div><div font-medium text-lg>${title}</div>${d}</div></div>`;
+  }).join("\n");
+  return `  <div border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden>
+    <div bg="${color}-800/40" px-5 py-3 flex items-center>
+      <div ${headIcon} text-${color}-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>${head}</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+${rows}
+    </div>
+  </div>`;
+}
+
+// 하단 결론 콜아웃 바(127): white/5 + idea 아이콘 + 문장.
+function calloutBar(icon, text) {
+  return `<div v-click mt-6 flex justify-center>
+  <div border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-6 py-3 flex items-center gap-3>
+    <div ${icon} text-yellow-300 text-2xl shrink-0 />
+    <span text-lg>${text}</span>
+  </div>
+</div>`;
+}
+
+// 데모 callout 한 줄(white/5 행).
+function calloutRow(it, idx) {
+  const { title, desc } = itemParts(it);
+  const accent = ACCENTS[idx % ACCENTS.length];
+  const d = desc ? `<div text-sm opacity-70 mt-1 pl-7>${desc}</div>` : "";
+  return `<div border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-${accent}-300 text-xl shrink-0 /><span font-medium text-lg>${title}</span></div>${d}
+</div>`;
+}
+
 // 이미지: 실파일 존재 + status:real 일 때만 렌더, 아니면 플레이스홀더 박스.
 function imageBlock(assets, label) {
   const a = assets && (assets.image || assets.main || assets.screenshot || assets.primary);
@@ -158,9 +263,10 @@ function imageBlock(assets, label) {
   if (src && status === "real" && existsSync(resolve(slidevDir, src))) {
     return `![${label}](${src}){.rounded-xl .shadow-2xl .mx-auto}`;
   }
-  const cap = src ? `<div class="text-xs opacity-40 mt-2 break-all">${src}</div>` : "";
-  return `<div class="rounded-xl border border-dashed border-white/20 bg-white/5 backdrop-blur grid place-items-center h-[42vh] text-center">
-  <div><div class="i-carbon:image text-5xl opacity-40 mx-auto" /><div class="opacity-60 mt-2 text-sm">${label}</div>${cap}</div>
+  // 실제 스크린샷이 없을 때의 자리 표시. BaizeAI 엔 데모 스크린샷 패턴이 없어 white/5 중립 패널로 일관성만 맞춘 추정 스타일.
+  const cap = src ? `<div text-xs opacity-40 mt-2 break-all>${src}</div>` : "";
+  return `<div border="2 solid white/10" bg="white/5" backdrop-blur-sm rounded-xl grid place-items-center text-center class="h-[55vh]">
+  <div><div i-carbon:image text-6xl opacity-40 mx-auto /><div opacity-60 mt-2>${label}</div>${cap}</div>
 </div>`;
 }
 
@@ -181,12 +287,14 @@ ${subtitle}
   },
 
   "problem-flow"(c) {
-    return `${header("i-carbon:warning-alt", "text-amber-300", toText(c.title) || L.problem)}
+    const panel = colorPanel({
+      color: "amber", headIcon: "i-carbon:warning-alt", head: L.problem,
+      items: c.items, itemIcon: "i-carbon:warning-alt", itemColor: "amber",
+    });
+    return `${titleH1(c.title)}
 
-<div class="mt-6 grid gap-3 max-w-3xl mx-auto w-full">
-
-${clickList(asArr(c.items), "")}
-
+<div mt-8>
+${panel}
 </div>`;
   },
 
@@ -221,53 +329,30 @@ ${right}
   },
 
   "product-overview"(c) {
-    const feats = asArr(c.features);
-    const n = colsFor(feats.length);
-    const cards = feats
-      .map((f) => {
-        const { title, desc, icon } = itemParts(f);
-        const ic = icon || "i-carbon:checkmark-outline";
-        const d = desc ? `<div class="mt-2 text-sm opacity-60">${desc}</div>` : "";
-        return `<div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 text-center">
-  <div class="${ic} text-4xl text-cyan-300 mx-auto" />
-  <div class="mt-3 font-medium">${title}</div>
-  ${d}
-</div>`;
-      })
-      .join("\n\n");
-    return `# ${toText(c.title) || L.solution}
+    return `${titleH1(toText(c.title) || L.solution)}
 
-<div class="mt-6 grid grid-cols-${n} gap-5">
-
-<v-clicks>
-
-${cards}
-
-</v-clicks>
-
-</div>`;
+${cardGrid(c.features, neutralCard)}`;
   },
 
   "demo-fullscreen"(c, s) {
-    const sub = c.subtitle ? `<div class="opacity-60 text-sm mt-3 text-center">${toText(c.subtitle)}</div>` : "";
-    return `# ${toText(c.title)}
+    const sub = c.subtitle ? `\n\n<div opacity-60 mt-3>${toText(c.subtitle)}</div>` : "";
+    return `${titleH1(c.title)}
 
-<div class="mt-4">
+<div mt-4>
 
 ${imageBlock(s.assets, L.demo)}
 
-</div>
-
-${sub}`;
+</div>${sub}`;
   },
 
   "demo-callout"(c, s) {
-    const callouts = clickList(asArr(c.callout), "");
-    const points = c.points ? `\n\n<div class="mt-4 text-sm opacity-70">\n${bullets(c.points)}\n</div>` : "";
-    const caption = c.caption ? `\n\n<div class="opacity-50 text-xs text-center">${toText(c.caption)}</div>` : "";
-    return `# ${toText(c.title)}
+    const rows = asArr(c.callout).map((it, i) => calloutRow(it, i)).join("\n\n");
+    const callouts = rows ? `<v-clicks>\n\n${rows}\n\n</v-clicks>` : "";
+    const points = c.points ? `\n\n<div mt-4 text-sm opacity-70>\n${bullets(c.points)}\n</div>` : "";
+    const caption = c.caption ? `\n\n<div opacity-50 text-xs>${toText(c.caption)}</div>` : "";
+    return `${titleH1(c.title)}
 
-<div class="mt-4 grid grid-cols-2 gap-6 items-center">
+<div mt-6 grid grid-cols-2 gap-8 items-center>
 
 <div>
 
@@ -275,7 +360,7 @@ ${imageBlock(s.assets, L.demo)}
 
 </div>
 
-<div class="grid gap-3">
+<div grid gap-3>
 
 ${callouts}
 
@@ -285,28 +370,15 @@ ${callouts}
   },
 
   architecture(c) {
-    const steps = asArr(c.steps);
-    const rows = steps
-      .map((st, i) => {
-        const { title, desc } = itemParts(st);
-        const d = desc ? `\n    <div class="text-sm opacity-70">${desc}</div>` : "";
-        return `<div v-click class="flex items-center gap-4">
-  <div class="shrink-0 w-9 h-9 grid place-items-center rounded-full border border-cyan-400/40 bg-cyan-400/10 text-cyan-300 font-bold">${i + 1}</div>
-  <div class="flex-1 rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-left">
-    <div class="font-medium">${title}</div>${d}
-  </div>
-</div>`;
-      })
-      .join("\n\n");
-    const result = c.result
-      ? `\n\n<div v-click class="mt-6 flex justify-center">${pill(`<span class="i-carbon:arrow-right text-cyan-300" /> <b>${L.result}:</b> ${toText(c.result)}`, "text-cyan-100")}</div>`
-      : "";
-    return `# ${toText(c.title)}
+    const panel = stepPanel({
+      color: "blue", head: L.flow, headIcon: "i-carbon:flow",
+      steps: c.steps, numbered: true,
+    });
+    const result = c.result ? "\n\n" + calloutBar("i-carbon:idea", `<b>${L.result}:</b> ${toText(c.result)}`) : "";
+    return `${titleH1(c.title)}
 
-<div class="mt-6 grid gap-3 max-w-3xl mx-auto w-full">
-
-${rows}
-
+<div mt-8>
+${panel}
 </div>${result}`;
   },
 
@@ -321,7 +393,7 @@ ${rows}
   </div>`;
     return `${titleH1(c.title)}
 
-<div mt-8 grid grid-cols-[1fr_auto_1fr] gap-4 items-center>
+<div mt-8 grid gap-4 items-center class="grid-cols-[1fr_auto_1fr]">
 ${before}
   <div i-carbon:arrow-right text-4xl opacity-50 mx-auto />
 ${after}
@@ -343,37 +415,20 @@ ${caption}
   },
 
   "card-grid"(c) {
-    const cards = asArr(c.cards);
-    const n = colsFor(cards.length);
-    return `# ${toText(c.title)}
+    return `${titleH1(c.title)}
 
-<div class="mt-6 grid grid-cols-${n} gap-4">
-
-${clickList(cards, "")}
-
-</div>`;
+${cardGrid(c.cards, neutralCard)}`;
   },
 
   timeline(c) {
-    const steps = asArr(c.steps);
-    const rows = steps
-      .map((st, i) => {
-        const { title, desc } = itemParts(st);
-        const d = desc ? `\n    <div class="text-sm opacity-70">${desc}</div>` : "";
-        return `<div v-click class="flex items-start gap-4">
-  <div class="shrink-0 w-8 h-8 grid place-items-center rounded-full border border-cyan-400/40 bg-cyan-400/10 text-cyan-300 text-sm font-bold">${i + 1}</div>
-  <div class="flex-1 rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-left">
-    <div class="font-medium">${title}</div>${d}
-  </div>
-</div>`;
-      })
-      .join("\n\n");
-    return `# ${toText(c.title)}
+    const panel = stepPanel({
+      color: "indigo", head: L.flow, headIcon: "i-carbon:roadmap",
+      steps: c.steps, numbered: true,
+    });
+    return `${titleH1(c.title)}
 
-<div class="mt-6 grid gap-3 max-w-3xl mx-auto w-full">
-
-${rows}
-
+<div mt-8>
+${panel}
 </div>`;
   },
 
@@ -407,30 +462,9 @@ ${guards}
   },
 
   "expansion-map"(c) {
-    const tiers = asArr(c.tiers);
-    const n = colsFor(tiers.length);
-    const cards = tiers
-      .map((t) => {
-        const { title, desc } = itemParts(t);
-        const items = t && typeof t === "object" && Array.isArray(t.items)
-          ? `\n  <div class="mt-3 space-y-1 text-sm opacity-75 text-left">\n${t.items.map((x) => `  <div>· ${toText(x)}</div>`).join("\n")}\n  </div>`
-          : desc ? `\n  <div class="mt-2 text-sm opacity-70">${desc}</div>` : "";
-        return `<div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 text-center">
-  <div class="text-cyan-300 font-bold">${title}</div>${items}
-</div>`;
-      })
-      .join("\n\n");
-    return `# ${toText(c.title)}
+    return `${titleH1(c.title)}
 
-<div class="mt-6 grid grid-cols-${n} gap-5">
-
-<v-clicks>
-
-${cards}
-
-</v-clicks>
-
-</div>`;
+${cardGrid(c.tiers, coloredCard)}`;
   },
 
   closing(c) {
