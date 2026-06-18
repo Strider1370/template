@@ -569,7 +569,12 @@ visibleSlides.forEach((s, idx) => {
   }
 
   const rendered = renderer ? renderer(content, s) : fallbackRender(content);
-  body.push(rendered, "");
+  // per-slide contentScale(0.5~2, 미지정=1): 본문 블록 전체를 zoom 으로 확대/축소(프레임 여백은 고정).
+  // 미지정/1 이면 래퍼 없이 그대로 — 기본 출력은 변화 0. (Notion 폴백은 글자만 calc 로 배율)
+  const scaleRaw = typeof s.contentScale === "number" ? s.contentScale : 1;
+  const scale = Math.min(2, Math.max(0.5, scaleRaw));
+  const scaled = scale !== 1 ? `<div style="zoom:${scale}">\n\n${rendered}\n\n</div>` : rendered;
+  body.push(scaled, "");
 
   if (s.speakerNotes) {
     body.push("<!--");

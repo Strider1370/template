@@ -17,7 +17,7 @@
 - Stage 09 발표 산출물. 없으면 시작하지 않는다.
 
 ## 6. 메인 에이전트의 역할
-- **캡처 생성: `npm run presentation:capture`** (`presentation/output/static/presentation.html` → `presentation/output/captures/NN-<layout>.png`, 1280x720). 브라우저 미설치 시 throw 없이 안내 후 종료되므로, 그 경우 안내에 따라 수동 캡처.
+- **캡처 생성: `npm run presentation:capture`** (기본 = Slidev 빌드·캡처 → `presentation/output/captures/NN-<layout>.png`; Slidev/브라우저 미가용 시 Notion 정적 HTML 폴백). throw 없이 안내 후 종료되므로, 도구 미비 시 안내에 따라 수동 캡처. **검증 대상 = 실제 발표 매체인 Slidev 화면.**
 - **LLM이 캡처를 직접 검토**: 텍스트 overflow, 깨진 자산(이미지/폰트/아이콘), 동일 레이아웃 단조 반복, 데모 화면이 너무 작지 않은지, **글자가 너무 작은지 / 여백이 과다한지**(→ Stage 09로 돌아가 해당 슬라이드 `contentScale` 조정).
 - 발표 시간(분량) 확인.
 - `presentation/output/captures/`에 캡처, `presentation/output/validation-report.md`에 결함 목록 + 통과 여부 기록.
