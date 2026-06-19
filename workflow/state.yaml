@@ -7,8 +7,8 @@ project:
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 10
-  stageId: presentation-validation
+  stageNumber: 11
+  stageId: rehearsal
   status: not_started
   startedAt: null
   budgetMinutes: 10
@@ -73,24 +73,30 @@ completedStages:
     completedAt: '2026-06-19T09:48:25.067Z'
     actualMinutes: 9.8
     budgetMinutes: 20
+  - stageNumber: 10
+    stageId: presentation-validation
+    startedAt: '2026-06-19T09:48:47.778Z'
+    completedAt: '2026-06-19T09:51:31.617Z'
+    actualMinutes: 2.7
+    budgetMinutes: 10
 requiredReads:
-  - workflow/stages/10-presentation-validation.md
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 13. 캡처 레퍼런스 활용'
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 14. Stage 10 검증 기준'
+  - workflow/stages/11-rehearsal.md
+  - 'docs/AI_Hackathon_Operating_System.md :: 8. Stage 11 Review'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 3. Stage 11'
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:presentation-visual
-  report: workflow/history/stage-10-gate.md
+  command: npm run gate:rehearsal
+  report: workflow/history/stage-11-gate.md
 humanApproval:
-  required: false
-  status: not_required
+  required: true
+  status: pending
   decisionFile: null
-lastHandoff: workflow/history/stage-09-presentation-generation.md
+lastHandoff: workflow/history/stage-10-presentation-validation.md
 lastSuccessfulCheckpoint:
-  stageNumber: 9
-  stageId: presentation-generation
-  commit: b7071c40da86eafbffbea1fa3f03c523ce8aac36
+  stageNumber: 10
+  stageId: presentation-validation
+  commit: f62189bbe7eab45ae4fab2e7b7be708602ed5819
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -98,4 +104,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T09:48:25.141Z'
+lastUpdatedAt: '2026-06-19T09:51:31.692Z'
