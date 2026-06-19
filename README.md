@@ -1,3 +1,38 @@
+# ▶ 결과물 실행하기 (work_first) — 임신·출산 지원의 시계
+
+> 임신 주차·출산예정일·거주지를 넣으면 정부 지원을 "지금 신청 → 곧 열림" 시간순으로 정렬하고
+> 놓치면 사라질 돈을 D-day로 경고하는 데모 + 발표 산출물. 아래대로 바로 실행할 수 있다.
+
+## 1) 웹 앱 (라이브 데모)
+```bash
+cd web
+npm install
+npm run dev        # → http://localhost:3000
+```
+- 흐름: 입력(주차·거주지) → "지금/곧" 시간순 카드 → 임신 주차 슬라이더를 출산 직후로 옮기면 **카드 재정렬 + 마감 손실경고 점등(Wow)** → 자유 질문으로 **AI 자격 Q&A**.
+- **API 키 없이도 핵심 기능이 동작**한다(폴백 내장). 실 API를 쓰려면 `web/.env.local`에 `NEXT_PUBLIC_KAKAO_MAP_KEY` · `KAKAO_REST_API_KEY` · `ANTHROPIC_API_KEY`.
+
+## 2) 발표 (Slidev) — 설치 없이 바로 보기
+```bash
+node dist/submission/serve-slidev.mjs    # → http://localhost:4173
+```
+- **Node만 있으면 된다**(빌드본·이미지 포함, npm 설치 불필요). 브라우저로 열고 `←/→` 이동, `F` 전체화면.
+- 슬라이드마다 글로우 배경이 움직인다. (Slidev는 웹 렌더라 `file://` 직접 열기는 안 되고 HTTP 서빙이 필요 — 이 스크립트가 그 역할.)
+- 오프라인 백업: `dist/submission/presentation.pdf` (10장, 그냥 열기).
+
+## (선택) Slidev를 소스에서 재빌드
+```bash
+cd presentation/slidev
+npm install
+npx slidev build slides.md --out ../output/slidev --base ./
+node ../serve-slidev.mjs                 # → http://localhost:4173
+```
+- ⚠️ **경로에 공백이 있으면**(예: `C:\Users\Hong Gildong\...`) Vite 빌드가 깨진다. 공백 없는 경로에서 빌드할 것 — Windows에서는 `subst X: "<repo 절대경로>"` 후 `X:\presentation\slidev`에서 빌드하고 끝나면 `subst X: /D`.
+
+> 제출 패키지 전체 구성·실행은 [`dist/submission/README.md`](dist/submission/README.md) 참고.
+
+---
+
 # 한국 공공 서비스 해커톤 스타터 키트
 
 > 4시간 AI 해커톤에서 **새 주제를 받자마자 바로 구현**하기 위한 출발점.
