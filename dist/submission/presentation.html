@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="aspect-ratio" content="16:9">
+<title>우리 가족 맞춤 정부 혜택 찾기</title>
+<style>
+/* ---- notion tokens ---- */
+/* ============================================================
+   theme/notion/tokens.css
+   Notion 디자인 토큰 — 색 / 폰트 / radius / 간격.
+
+   출처(seed): presentation/marp/themes/propca-notion-style.css 의 :root 블록.
+   원본 브랜드 언어: 12px radius, 파스텔 로테이션, navy hero, 보라(purple) 시그니처.
+   원본 라이선스: github.com/procpalee/Marp_Templates (propca-notion-style),
+                 참조한 Notion DESIGN.md 는 VoltAgent/awesome-design-md(MIT).
+   → 자세한 출처/라이선스는 presentation/sources/ASSET_LICENSES.md 참조.
+
+   ※ Slidev/정적 HTML 양쪽이 같은 변수를 참조한다(Doc2 §5.1 CSS 우선순위).
+   ============================================================ */
+:root {
+  /* ---- Brand / accent (propca) ---- */
+  --notion-purple: #5645d4;
+  --notion-purple-pressed: #4534b3;
+  --notion-purple-deep: #3a2a99;
+  --notion-pink: #ff64c8;
+  --notion-orange: #dd5b00;
+  --notion-teal: #2a9d99;
+  --notion-green: #1aae39;
+  --notion-link: #0075de;
+
+  /* ---- Dark surfaces (hero/section/end 배경) ---- */
+  --notion-navy: #0a1530;
+  --notion-navy-deep: #070f24;
+
+  /* ---- Canvas / surfaces ---- */
+  --notion-canvas: #ffffff;
+  --notion-canvas-soft: #fafaf9;
+  --notion-canvas-card: #f6f5f4;
+  --notion-hairline: #e5e3df;
+  --notion-hairline-strong: #c8c4be;
+
+  /* ---- Ink (텍스트) ---- */
+  --notion-ink: #191918;
+  --notion-ink-mute: #5a5a55;
+  --notion-ink-sub: #8b8a84;
+
+  /* ---- Pastel rotation (카드/블록) ---- */
+  --notion-pastel-peach: #ffe8d4;
+  --notion-pastel-rose: #fde0ec;
+  --notion-pastel-mint: #d9f3e1;
+  --notion-pastel-lavender: #e6e0f5;
+  --notion-pastel-sky: #dcecfa;
+  --notion-pastel-yellow: #f9e79f;
+
+  /* ---- Semantic status ---- */
+  --notion-info: #0075de;
+  --notion-success: #1aae39;
+  --notion-warning: #f59e0b;
+  --notion-danger: #e03e3e;
+
+  /* ---- Fonts ---- */
+  --notion-font-sans: 'Pretendard', 'Noto Sans KR', 'Notion Sans', 'Inter', -apple-system, sans-serif;
+  --notion-font-mono: 'Pretendard', 'Noto Sans KR', 'Inter', -apple-system, sans-serif;
+  --notion-font-serif: 'Fraunces', 'Georgia', serif;
+
+  /* ---- Radius (원본 12px 시그니처) ---- */
+  --notion-radius-sm: 4px;
+  --notion-radius: 8px;
+  --notion-radius-lg: 12px;
+  --notion-radius-pill: 999px;
+
+  /* ---- Spacing (원본 section padding 72/88 기준 스케일) ---- */
+  --notion-space-1: 6px;
+  --notion-space-2: 12px;
+  --notion-space-3: 18px;
+  --notion-space-4: 24px;
+  --notion-space-5: 36px;
+  --notion-space-6: 48px;
+  --notion-slide-pad-y: 72px;
+  --notion-slide-pad-x: 88px;
+
+  /* ---- Type scale (원본 pt 기준; 16:9 슬라이드 가독성) ---- */
+  --notion-fs-body: 25pt;
+  --notion-fs-h3: 25pt;
+  --notion-fs-h2: 30pt;
+  --notion-fs-h1: 38pt;
+  --notion-fs-hero: 63pt;
+  --notion-fs-big-number: 210pt;
+  --notion-line: 1.55;
+}
+
+/* ---- notion typography ---- */
+/* ============================================================
+   theme/notion/typography.css — 최소 스캐폴드.
+   tokens.css 의 폰트/타입스케일 변수를 참조한다.
+   출처: presentation/marp/themes/propca-notion-style.css (typography 블록).
+   ※ Stage 09 첫 실사용 때 정적 HTML/Slidev 공통으로 확장.
+   ============================================================ */
+
+
+.notion-root {
+  font-family: var(--notion-font-sans);
+  color: var(--notion-ink);
+  font-size: var(--notion-fs-body);
+  line-height: var(--notion-line);
+  font-weight: 400;
+}
+
+.notion-root h1 {
+  font-size: var(--notion-fs-h1);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--notion-ink);
+}
+.notion-root h2 {
+  font-size: var(--notion-fs-h2);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--notion-ink-mute);
+}
+.notion-root h3 {
+  font-size: var(--notion-fs-h3);
+  font-weight: 600;
+  color: var(--notion-ink);
+}
+.notion-root p,
+.notion-root li {
+  font-size: var(--notion-fs-body);
+  line-height: var(--notion-line);
+  color: var(--notion-ink-mute);
+}
+.notion-root strong { color: var(--notion-purple); font-weight: 600; }
+.notion-root a { color: var(--notion-link); text-decoration: none; }
+.notion-root code {
+  font-family: var(--notion-font-mono);
+  background: rgba(86, 69, 212, 0.1);
+  color: var(--notion-purple);
+  padding: 2px 7px;
+  border-radius: var(--notion-radius-sm);
+}
+
+/* TODO(Stage 09): blockquote / table / pre / mono label 등 propca 타이포 이식 확장. */
+
+/* ---- notion components ---- */
+/* ============================================================
+   theme/notion/components.css — 16개 레이아웃 시각 디자인.
+   정적 HTML(notion-html 렌더러)이 사용하는 레이아웃별 고유 구조 CSS.
+   tokens.css 변수(--notion-*)만 참조한다(슬라이드별 inline CSS 금지, Doc2 §5.1).
+
+   출처(porting source): presentation/marp/themes/propca-notion-style.css.
+   원본은 section.<class> 에 스타일을 걸었으나, 정적 HTML 구조는
+   <section class="slide <class>"> > <div class="notion-root slide-inner"> 이므로
+   레이아웃 컨테이너 스타일은 .slide.<class> .slide-inner 로 옮겨 적었다.
+   원본 토큰(--purple/--canvas/--ink/--accent/--fg-muted/--border/--hairline/--pastel-* 등)은
+   전부 가장 가까운 --notion-* 토큰으로 remap 했다.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   공통 헬퍼 (여러 레이아웃이 공유)
+   ------------------------------------------------------------ */
+.notion-card {
+  background: var(--notion-canvas-card);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  padding: var(--notion-space-4);
+}
+
+/* .callout — porting source: propca .callout (단일 보라 톤) */
+.callout {
+  margin: 12px 0;
+  padding: 16px 20px;
+  border-radius: var(--notion-radius);
+  border: 1px solid var(--notion-hairline);
+  border-left: 3px solid var(--notion-purple);
+  background: var(--notion-canvas-card);
+  font-size: calc(23pt * var(--slide-scale, 1));
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  color: var(--notion-ink);
+  line-height: 1.5;
+}
+
+/* .cols-2 — porting source: propca .cols-2 */
+.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--notion-space-4);
+}
+.cols-2 > * { margin: 0; min-width: 0; }
+
+/* 슬라이드 제목 공통(레이아웃 상단 full-width 제목, 상단 고정) */
+.slide .slide-title {
+  font-size: calc(var(--notion-fs-h1) * var(--slide-scale, 1));
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--notion-ink);
+  margin: 0 0 24px 0;
+}
+
+/* 본문 래퍼 공통: 제목 아래 남은 공간을 채우고 그 안에서 중앙정렬.
+   제목-앵커 레이아웃의 grid/flex 규칙은 각 .slide.X .slide-body 에 건다. */
+.slide .slide-body {
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--notion-space-3, 18px);
+  min-height: 0;
+}
+
+/* 한글 줄바꿈: 어절 단위(단어 중간 끊김 방지) — 모든 슬라이드 텍스트 공통 */
+.slide h1, .slide h2, .slide h3, .slide p, .slide li,
+.slide .slide-title, .slide blockquote, .slide .body, .slide .quote-text {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* ============================================================
+   1) hero  → .slide.cover   (← propca section.cover)
+   ============================================================ */
+.slide.cover .slide-inner {
+  background: linear-gradient(180deg, var(--notion-navy) 0%, var(--notion-navy-deep) 100%);
+  color: #ffffff;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 100px 96px;
+  gap: 0;
+}
+.slide.cover .ee-slot-eyebrow {
+  font-family: var(--notion-font-mono);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--notion-pink);
+  margin-bottom: 18px;
+}
+.slide.cover h1 {
+  color: #ffffff;
+  font-size: calc(58pt * var(--slide-scale, 1));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px;
+  line-height: 1.12;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  padding-bottom: 24px;
+  width: 100%;
+}
+.slide.cover h2 {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1));
+  font-weight: 400;
+  margin: 0 0 36px;
+  max-width: 78%;
+}
+.slide.cover .ee-slot-footnote {
+  position: absolute;
+  bottom: 56px;
+  right: 96px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  font-family: var(--notion-font-mono);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+
+/* ============================================================
+   2) problem-flow  → .slide.icon-list   (← propca section.icon-list)
+   ============================================================ */
+.slide.icon-list .slide-inner { justify-content: flex-start; }
+.slide.icon-list ul.flow-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+.slide.icon-list ul.flow-list li {
+  background: var(--notion-canvas);
+  border: 1px solid var(--notion-hairline);
+  border-radius: 10px;
+  padding: 18px 22px;
+  font-size: calc(26pt * var(--slide-scale, 1));
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--notion-ink);
+  line-height: 1.45;
+}
+.slide.icon-list ul.flow-list li .li-label {
+  flex: 0 0 auto;
+  font-family: var(--notion-font-mono);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  font-weight: 600;
+  color: var(--notion-ink);
+  background: #fbf3db;
+  padding: 2px 10px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   3) contrast  → .slide.compare   (← propca section.compare)
+   ============================================================ */
+.slide.compare .slide-inner { justify-content: flex-start; }
+.slide.compare .slide-body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 24px;
+  row-gap: 16px;
+  align-content: center;
+  align-items: stretch;
+  justify-content: stretch;
+}
+.slide.compare .slide-body > .compare-lead { grid-column: 1 / -1; }
+.slide.compare .col {
+  background: var(--notion-canvas);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  padding: 28px 28px;
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide.compare .col .col-label {
+  font-family: var(--notion-font-mono);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--notion-purple);
+  margin: 0 0 12px;
+}
+.slide.compare .col ul { margin: 0; padding-left: 22px; }
+.slide.compare .col ul li { font-size: calc(23pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0 0 8px; }
+.slide.compare .col ul li::marker { color: var(--notion-purple); }
+.slide.compare .col p { font-size: calc(23pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0; }
+.slide.compare .vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--notion-font-mono);
+  font-size: 30pt;
+  font-weight: 800;
+  color: var(--notion-purple);
+  letter-spacing: 0.05em;
+  padding: 0 8px;
+}
+
+/* ============================================================
+   4) insight-statement  → .slide.yellow-banner  (← propca section.yellow-banner)
+   ============================================================ */
+.slide.yellow-banner .slide-inner {
+  background: var(--notion-pastel-yellow);
+  color: var(--notion-ink);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 90px 120px;
+}
+.slide.yellow-banner h1 {
+  font-size: calc(59pt * var(--slide-scale, 1));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--notion-ink);
+  margin: 0 0 16px;
+  line-height: 1.1;
+}
+.slide.yellow-banner h2 {
+  font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1));
+  font-weight: 400;
+  color: rgba(25, 25, 24, 0.65);
+  margin: 0;
+}
+
+/* ============================================================
+   5) product-overview  → .slide.block-features  (← propca section.block-features)
+   ============================================================ */
+.slide.block-features .slide-inner { justify-content: flex-start; }
+.slide.block-features .blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin: 24px 0 0;
+}
+.slide.block-features .blocks > .block {
+  padding: 32px 28px;
+  background: var(--notion-canvas-card);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide.block-features .blocks > .block .ico {
+  width: 44px; height: 44px;
+  border-radius: var(--notion-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 30pt;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.slide.block-features .blocks > .block:nth-child(1) .ico { background: var(--notion-purple); }
+.slide.block-features .blocks > .block:nth-child(2) .ico { background: var(--notion-pink); }
+.slide.block-features .blocks > .block:nth-child(3) .ico { background: var(--notion-teal); }
+.slide.block-features .blocks > .block:nth-child(4) .ico { background: var(--notion-orange); }
+.slide.block-features .blocks > .block:nth-child(5) .ico { background: var(--notion-green); }
+.slide.block-features .blocks > .block h3 { font-size: calc(25pt * var(--slide-scale, 1)); margin: 0 0 6px; color: var(--notion-ink); }
+.slide.block-features .blocks > .block p { font-size: calc(20pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0; line-height: 1.5; }
+
+/* ============================================================
+   6) demo-fullscreen  → .slide.bg-full  (← propca section.bg-full)
+   ============================================================ */
+.slide.bg-full .slide-inner {
+  padding: 90px 110px;
+  color: #ffffff;
+  position: relative;
+  justify-content: center;
+  background: var(--notion-navy);
+  background-size: cover;
+  background-position: center;
+}
+.slide.bg-full .slide-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(11, 15, 25, 0.78) 0%, rgba(11, 15, 25, 0.45) 100%);
+  z-index: 0;
+}
+.slide.bg-full .slide-inner > * { position: relative; z-index: 1; }
+.slide.bg-full h1 { color: #ffffff; font-size: calc(59pt * var(--slide-scale, 1)); font-weight: 600; letter-spacing: -0.03em; margin: 0 0 16px; line-height: 1.1; }
+.slide.bg-full h2 { color: rgba(255, 255, 255, 0.85); font-size: calc(32pt * var(--slide-scale, 1)); font-weight: 500; margin: 0; }
+/* bg-full 배경 이미지는 인라인 img 대신 .slide-inner background 로 처리 → assets img 숨김 */
+.slide.bg-full .ee-assets { display: none; }
+
+/* ============================================================
+   7) demo-callout  → .slide.split  (← propca section.split)
+   ============================================================ */
+.slide.split .slide-inner { justify-content: flex-start; }
+.slide.split .slide-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 48px;
+  row-gap: 24px;
+  align-content: center;
+}
+.slide.split .col { min-width: 0; align-self: stretch; }
+.slide.split .col-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: var(--notion-canvas-card);
+  border: 1px dashed var(--notion-hairline-strong);
+  border-radius: var(--notion-radius-lg);
+  overflow: hidden;
+}
+.slide.split .col-media img {
+  width: 100%;
+  height: 100%;
+  max-height: 440px;
+  object-fit: cover;
+  border-radius: var(--notion-radius-lg);
+}
+.slide.split .col-text .callout { margin-top: 0; }
+.slide.split .col-text ul { list-style: none; padding: 0; margin: 14px 0 0; }
+.slide.split .col-text ul li {
+  font-size: calc(23pt * var(--slide-scale, 1));
+  color: var(--notion-ink);
+  padding: 8px 0 8px 26px;
+  position: relative;
+  line-height: 1.45;
+}
+.slide.split .col-text ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--notion-green);
+  font-weight: 700;
+}
+/* split 의 이미지는 .col-media 안에 직접 렌더 → 하단 .ee-assets 묶음 숨김 */
+.slide.split > .slide-inner > .ee-assets { display: none; }
+
+/* ============================================================
+   8) architecture  → .slide.steps-result  (← propca section.lecture-example .steps/.result)
+   ============================================================ */
+.slide.steps-result .slide-inner { justify-content: flex-start; }
+.slide.steps-result .steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 8px 0 22px;
+}
+.slide.steps-result .steps > div {
+  background: var(--notion-canvas-card);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.slide.steps-result .steps .num {
+  font-family: var(--notion-font-mono);
+  font-size: calc(16pt * var(--slide-scale, 1));
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--notion-orange);
+}
+.slide.steps-result .steps .body {
+  font-size: calc(27pt * var(--slide-scale, 1));
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--notion-ink);
+}
+.slide.steps-result .result {
+  background: var(--notion-navy);
+  color: #ffffff;
+  border-radius: var(--notion-radius-lg);
+  padding: 26px 30px;
+  font-size: calc(30pt * var(--slide-scale, 1));
+  font-weight: 500;
+  line-height: 1.4;
+}
+.slide.steps-result .result::before {
+  content: '결과 →';
+  display: inline-block;
+  font-family: var(--notion-font-mono);
+  font-size: 16pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+  margin-right: 14px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   9) before-after  → .slide.before-after  (← propca section.before-after)
+   ============================================================ */
+.slide.before-after .slide-inner { justify-content: flex-start; }
+.slide.before-after .ba-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  flex: 1;
+  align-items: center;
+  margin-top: 24px;
+}
+.slide.before-after .ba-col {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.slide.before-after .ba-col h3 {
+  font-size: calc(26pt * var(--slide-scale, 1));
+  color: var(--notion-ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+  font-weight: 700;
+}
+.slide.before-after .ba-col img {
+  width: 100%;
+  height: 300px;
+  max-height: 42vh;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--notion-hairline);
+  background: var(--notion-canvas-card);
+}
+.slide.before-after .ba-col .ba-caption { font-size: calc(19pt * var(--slide-scale, 1)); color: var(--notion-ink-sub); margin: 0; }
+.slide.before-after .ba-arrow {
+  font-size: 59pt;
+  color: var(--notion-purple);
+  font-weight: 800;
+  line-height: 1;
+}
+.slide.before-after > .slide-inner > .ee-assets { display: none; }
+
+/* ============================================================
+   10) big-number  → .slide.big-number  (← propca section.big-number)
+   ============================================================ */
+.slide.big-number .slide-inner {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.slide.big-number .ee-slot-label {
+  font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1));
+  color: var(--notion-ink-mute);
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.slide.big-number .ee-slot-number {
+  font-size: calc(min(var(--notion-fs-big-number), 17vw) * var(--slide-scale, 1));
+  font-family: var(--notion-font-mono);
+  font-weight: 800;
+  color: var(--notion-purple);
+  line-height: 1;
+  margin: 24px 0 16px;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.slide.big-number .ee-slot-caption {
+  font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1));
+  color: var(--notion-ink-mute);
+  max-width: 72%;
+  margin: 0 auto;
+  line-height: 1.45;
+}
+
+/* ============================================================
+   11) card-grid  → .slide.pastel-blocks  (← propca section.pastel-blocks)
+   ============================================================ */
+.slide.pastel-blocks .slide-inner { justify-content: flex-start; }
+.slide.pastel-blocks .blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 18px;
+  flex: 1;
+  margin-top: 8px;
+}
+.slide.pastel-blocks .blocks > div {
+  padding: 22px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--notion-ink);
+  min-height: 0;
+}
+.slide.pastel-blocks .blocks > div:nth-child(6n+1) { background: var(--notion-pastel-peach); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+2) { background: var(--notion-pastel-rose); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+3) { background: var(--notion-pastel-mint); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+4) { background: var(--notion-pastel-lavender); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+5) { background: var(--notion-pastel-sky); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+6) { background: var(--notion-pastel-yellow); }
+.slide.pastel-blocks .blocks h3 { font-size: calc(26pt * var(--slide-scale, 1)); margin: 0 0 6px; color: var(--notion-ink); }
+.slide.pastel-blocks .blocks p { font-size: calc(20pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); line-height: 1.45; margin: 0; }
+
+/* ============================================================
+   12) timeline  → .slide.timeline  (← propca section.timeline)
+   ============================================================ */
+.slide.timeline .slide-inner { justify-content: flex-start; }
+.slide.timeline ol {
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 0;
+  row-gap: 32px;
+  padding: 24px 0 0 0;
+  margin: 0;
+  position: relative;
+}
+.slide.timeline ol li {
+  counter-increment: step;
+  position: relative;
+  padding: 56px 16px 0 16px;
+  text-align: center;
+  font-size: calc(22pt * var(--slide-scale, 1));
+  color: var(--notion-ink-mute);
+  line-height: 1.5;
+  z-index: 1;
+}
+.slide.timeline ol li::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -1px;
+  right: -1px;
+  height: 2px;
+  background: var(--notion-hairline-strong);
+  z-index: 1;
+}
+.slide.timeline ol li:nth-child(4n+1)::after { left: 50%; }
+.slide.timeline ol li:nth-child(4n)::after { right: 50%; }
+.slide.timeline ol li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--notion-purple);
+  color: #ffffff;
+  font-family: var(--notion-font-mono);
+  font-weight: 700;
+  font-size: 20pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 0 6px var(--notion-canvas);
+}
+.slide.timeline ol li .ts-heading {
+  display: block;
+  color: var(--notion-ink);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+/* ============================================================
+   13) quote  → .slide.hero-quote  (← propca section.hero-quote)
+   ============================================================ */
+.slide.hero-quote .slide-inner {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 90px 140px;
+}
+.slide.hero-quote blockquote {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.slide.hero-quote blockquote::before {
+  content: '\201C';
+  font-family: var(--notion-font-sans);
+  font-size: 126pt;
+  color: var(--notion-purple);
+  line-height: 0.6;
+  display: block;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+.slide.hero-quote blockquote .quote-text {
+  font-size: calc(39pt * var(--slide-scale, 1));
+  font-style: normal;
+  font-weight: 500;
+  color: var(--notion-ink);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.slide.hero-quote blockquote .quote-attr {
+  font-size: calc(23pt * var(--slide-scale, 1));
+  color: var(--notion-ink-sub);
+  font-weight: 600;
+  margin-top: 24px;
+}
+
+/* ============================================================
+   14) limitation-guardrail  → .slide.limitation-guardrail
+       (← propca .cols-2 + .callout)
+   ============================================================ */
+.slide.limitation-guardrail .slide-inner { justify-content: flex-start; }
+.slide.limitation-guardrail .cols-2 { margin-top: 12px; flex: 1; align-content: center; }
+.slide.limitation-guardrail .lg-col { display: flex; flex-direction: column; justify-content: center; }
+.slide.limitation-guardrail .lg-col h3 {
+  font-family: var(--notion-font-mono);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--notion-ink-sub);
+  margin: 0 0 12px;
+}
+.slide.limitation-guardrail .lg-col.guardrails h3 { color: var(--notion-purple); }
+.slide.limitation-guardrail .callout { font-size: calc(22pt * var(--slide-scale, 1)); }
+.slide.limitation-guardrail .lg-col.limitations .callout { border-left-color: var(--notion-orange); }
+
+/* ============================================================
+   15) expansion-map  → .slide.roadmap  (← propca section.roadmap)
+   ============================================================ */
+.slide.roadmap .slide-inner { justify-content: flex-start; }
+.slide.roadmap .tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+.slide.roadmap .tier {
+  background: var(--notion-canvas);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.slide.roadmap .tier .phase-detail {
+  font-size: calc(20pt * var(--slide-scale, 1));
+  font-weight: 600;
+  color: var(--notion-purple);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.slide.roadmap .tier h3 { font-size: calc(26pt * var(--slide-scale, 1)); color: var(--notion-ink); margin: 0 0 6px; }
+.slide.roadmap .tier p { font-size: calc(17pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 6px 0 18px; }
+.slide.roadmap .tier ul { list-style: none; padding: 0; margin: 18px 0 0 0; }
+.slide.roadmap .tier ul li {
+  font-size: calc(19pt * var(--slide-scale, 1));
+  color: var(--notion-ink);
+  padding: 5px 0;
+  border-top: 1px solid var(--notion-hairline);
+}
+.slide.roadmap .tier ul li::before { content: '✓ '; color: var(--notion-green); font-weight: 600; }
+.slide.roadmap .tier.featured { border: 2px solid var(--notion-purple); }
+.slide.roadmap .tier.featured::before {
+  content: '진행 중';
+  position: absolute;
+  top: -12px; right: 16px;
+  background: var(--notion-purple);
+  color: #ffffff;
+  font-size: 16pt;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: var(--notion-radius-sm);
+}
+
+/* ============================================================
+   16) closing  → .slide.end  (← propca section.end)
+   ============================================================ */
+.slide.end .slide-inner {
+  background: linear-gradient(180deg, var(--notion-navy) 0%, var(--notion-navy-deep) 100%);
+  color: #ffffff;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 96px;
+}
+.slide.end h1 {
+  color: #ffffff;
+  font-size: calc(65pt * var(--slide-scale, 1));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 0 0 12px;
+  line-height: 1.05;
+}
+.slide.end h2 { color: rgba(255, 255, 255, 0.7); font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1)); font-weight: 400; margin: 0 0 28px; }
+.slide.end .end-cta {
+  background: var(--notion-purple);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: calc(25pt * var(--slide-scale, 1));
+  padding: 14px 28px;
+  border-radius: var(--notion-radius-pill);
+  display: inline-block;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(86, 69, 212, 0.4);
+}
+.slide.end ul.end-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.slide.end ul.end-tags li {
+  background: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+  padding: 7px 16px;
+  border-radius: var(--notion-radius-pill);
+  font-size: calc(20pt * var(--slide-scale, 1));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+.slide.end .end-contact { color: rgba(255, 255, 255, 0.55); font-size: calc(20pt * var(--slide-scale, 1)); margin: 0; }
+
+/* ---- base viewer/layout ---- */
+
+  html,body{margin:0;padding:0;background:var(--notion-navy-deep,#070f24);}
+  *{box-sizing:border-box;}
+  .deck{position:relative;}
+  .slide{
+    position:relative;display:none;width:100vw;height:100vh;
+    aspect-ratio:16/9;background:var(--notion-canvas,#fff);
+    overflow:hidden;
+  }
+  .slide.ee-active{display:block;}
+  .slide-inner{
+    height:100%;width:100%;
+    padding:var(--notion-slide-pad-y,72px) var(--notion-slide-pad-x,88px);
+    display:flex;flex-direction:column;gap:var(--notion-space-3,18px);
+    justify-content:center;
+  }
+  .slide.cover .slide-inner{background:var(--notion-navy,#0a1530);color:#fff;}
+  .slide.cover h1,.slide.cover h2{color:#fff;}
+  .slide.end .slide-inner{background:var(--notion-navy,#0a1530);color:#fff;}
+  .slide.end h1,.slide.end h2{color:#fff;}
+  .slide.big-number .slide-inner{align-items:center;text-align:center;}
+  .slide.big-number .ee-slot-number{
+    font-family:var(--notion-font-mono);font-size:calc(var(--notion-fs-big-number,200pt) * var(--slide-scale, 1));
+    font-weight:800;color:var(--notion-purple,#5645d4);line-height:1;letter-spacing:-.05em;
+  }
+  .ee-slot-eyebrow{font-family:var(--notion-font-mono);font-size:calc(13pt * var(--slide-scale, 1));
+    letter-spacing:.08em;text-transform:uppercase;color:var(--notion-purple,#5645d4);}
+  .ee-assets{display:flex;gap:var(--notion-space-3,18px);flex-wrap:wrap;margin-top:var(--notion-space-2,12px);}
+  .ee-img{max-width:48%;max-height:46vh;border-radius:var(--notion-radius-lg,12px);
+    border:1px solid var(--notion-hairline,#e5e3df);object-fit:cover;}
+  .ee-impl-badge{align-self:flex-start;font-family:var(--notion-font-mono);font-size:11pt;
+    font-weight:700;padding:3px 10px;border-radius:var(--notion-radius-pill,999px);}
+  .ee-impl-mocked{background:var(--notion-warning,#f59e0b);color:#fff;}
+  .ee-impl-fallback{background:var(--notion-orange,#dd5b00);color:#fff;}
+  ul.ee-slot{margin:0;padding-left:1.2em;}
+  /* 인쇄/스크롤 fallback */
+  @media print{ .slide{display:block !important;page-break-after:always;height:100vh;} }
+
+
+  .ee-nav{position:fixed;bottom:14px;right:16px;z-index:100;display:flex;gap:8px;
+    font-family:-apple-system,sans-serif;}
+  .ee-nav button{background:rgba(10,21,48,.8);color:#fff;border:none;border-radius:8px;
+    padding:6px 12px;font-size:14px;cursor:pointer;}
+  .ee-nav .ee-page{color:#fff;align-self:center;font-size:13px;
+    background:rgba(10,21,48,.6);padding:6px 10px;border-radius:8px;}
+
+/* ---- edit overlay ---- */
+/* ============================================================
+   theme/edit-overlay.css — 편집 오버레이 (B안 반자동 편집 도구)
+   generate-static-html.mjs 가 <style> 로 인라인한다.
+   모든 클래스는 ee- 접두사로 격리. 발표 모드(?edit 없음)에선 비활성.
+   순수 vanilla — 외부 의존 없음.
+   ============================================================ */
+
+/* 기본은 전부 숨김. body.ee-on 일 때만 노출. */
+.ee-panel,
+.ee-badge,
+.ee-addr,
+.ee-tooltip,
+.ee-toast,
+.ee-corner { display: none; }
+
+body.ee-on .ee-panel { display: block; }
+
+/* 토글 패널 (우상단) */
+.ee-panel {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 2147483000;
+  width: 230px;
+  background: #0a1530;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.35);
+  font-family: -apple-system, 'Pretendard', 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 12px 14px;
+  user-select: none;
+}
+.ee-panel h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ee-panel .ee-close {
+  cursor: pointer;
+  background: rgba(255,255,255,.12);
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 13px;
+}
+.ee-panel label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 0;
+  cursor: pointer;
+}
+.ee-panel label input { accent-color: #5645d4; }
+.ee-panel .ee-export {
+  margin-top: 8px;
+  width: 100%;
+  cursor: pointer;
+  background: #5645d4;
+  border: none;
+  color: #fff;
+  border-radius: 7px;
+  padding: 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.ee-panel .ee-hint {
+  margin-top: 8px;
+  font-size: 11px;
+  opacity: .65;
+}
+
+/* 주소/순번 배지 — 레이어별 토글로 표시 */
+body.ee-on.ee-layer-addr .ee-badge,
+body.ee-on.ee-layer-addr .ee-addr { display: block; }
+
+.ee-badge {
+  position: absolute;
+  z-index: 2147482000;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: #5645d4;
+  color: #fff;
+  font: 700 11px/18px -apple-system, sans-serif;
+  text-align: center;
+  pointer-events: none;
+  box-shadow: 0 0 0 2px #fff;
+}
+.ee-addr {
+  position: absolute;
+  z-index: 2147482000;
+  bottom: 0;
+  right: 0;
+  background: rgba(10,21,48,.82);
+  color: #fff;
+  font: 600 9px/1.2 ui-monospace, monospace;
+  padding: 1px 4px;
+  border-radius: 4px 0 0 0;
+  pointer-events: none;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 호버 아웃라인 */
+body.ee-on.ee-layer-addr [data-addr].ee-hover {
+  outline: 2px solid #5645d4 !important;
+  outline-offset: -2px;
+}
+
+/* 툴팁 */
+.ee-tooltip {
+  position: fixed;
+  z-index: 2147483600;
+  background: #0a1530;
+  color: #fff;
+  font: 600 11px/1.5 ui-monospace, monospace;
+  padding: 6px 9px;
+  border-radius: 7px;
+  pointer-events: none;
+  max-width: 320px;
+  white-space: pre-line;
+  box-shadow: 0 6px 18px rgba(0,0,0,.4);
+}
+body.ee-on .ee-tooltip.ee-show { display: block; }
+
+/* 토스트 */
+.ee-toast {
+  position: fixed;
+  z-index: 2147483600;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1aae39;
+  color: #fff;
+  font: 600 13px/1 -apple-system, sans-serif;
+  padding: 10px 16px;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.3);
+}
+body.ee-on .ee-toast.ee-show { display: block; }
+
+/* (1) 가독성·오버플로우 경고 */
+body.ee-on.ee-layer-warn .ee-overflow {
+  outline: 2px solid #e03e3e !important;
+  outline-offset: -2px;
+}
+body.ee-on.ee-layer-warn .ee-warn-mark {
+  display: block;
+  position: absolute;
+  z-index: 2147482100;
+  top: 0;
+  left: 0;
+  background: #e03e3e;
+  color: #fff;
+  font: 700 11px/1 sans-serif;
+  padding: 2px 4px;
+  border-radius: 0 0 5px 0;
+  pointer-events: none;
+}
+.ee-warn-mark { display: none; }
+
+/* (2) 레이아웃·시간 코너 배지 */
+body.ee-on.ee-layer-time .ee-corner {
+  display: block;
+  position: absolute;
+  z-index: 2147482000;
+  top: 6px;
+  left: 6px;
+  background: rgba(10,21,48,.85);
+  color: #fff;
+  font: 600 11px/1.3 ui-monospace, monospace;
+  padding: 3px 7px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+body.ee-on.ee-layer-time .ee-corner.ee-over { background: #e03e3e; }
+body.ee-on.ee-layer-time .ee-corner .ee-repeat { color: #ffb454; }
+
+/* (3) 자산 상태 */
+body.ee-on.ee-layer-asset [data-asset-status="placeholder"] {
+  outline: 2px dashed #dd5b00 !important;
+  outline-offset: -2px;
+}
+body.ee-on.ee-layer-asset .ee-asset-label {
+  display: inline-block;
+  position: absolute;
+  z-index: 2147482100;
+  background: #dd5b00;
+  color: #fff;
+  font: 700 10px/1 sans-serif;
+  padding: 3px 5px;
+  border-radius: 5px;
+  pointer-events: none;
+}
+body.ee-on.ee-layer-asset .ee-asset-label.ee-404 { background: #e03e3e; }
+.ee-asset-label { display: none; }
+
+</style>
+</head>
+<body class="notion-root">
+<div class="deck">
+<section class="slide cover" data-addr="slide-01" data-slide-id="slide-01" data-layout="hero" data-duration="20" data-impl="implemented"><div class="notion-root slide-inner"><div class="slide-body"><div class="ee-slot ee-slot-eyebrow" data-addr="slide-01.content.eyebrow">로그인 없이 30초</div><h1 data-addr="slide-01.content.title">우리 가족 맞춤 정부 혜택 찾기</h1><h2 data-addr="slide-01.content.subtitle">가족 상황을 한 줄로 말하면, 받을 수 있는 혜택과 '왜 당신 가족이 해당되는지'를 AI가 설명합니다.</h2><div class="ee-slot ee-slot-footnote" data-addr="slide-01.content.footnote">예시 데이터 기반 데모</div></div></div><div class="ee-notes" hidden data-addr="slide-01.speakerNotes">정부 혜택, 받을 수 있는데 몰라서 못 받는 분들 많습니다. 가족 상황을 한 줄로 말하면 로그인 없이 30초 만에 받을 수 있는 혜택과 '왜 당신이 해당되는지'를 AI가 설명해줍니다.</div></section>
+<section class="slide icon-list" data-addr="slide-02" data-slide-id="slide-02" data-layout="problem-flow" data-duration="35" data-impl="implemented"><div class="notion-root slide-inner"><h1 class="slide-title" data-addr="slide-02.content.title">받을 수 있는데, 몰라서 못 받습니다</h1><div class="slide-body"><ul class="flow-list"><li data-addr="slide-02.content.items.0"><span>신청주의 사각지대</span></li><li data-addr="slide-02.content.items.1"><span>로그인 장벽</span></li><li data-addr="slide-02.content.items.2"><span>자기검열</span></li></ul></div></div><div class="ee-notes" hidden data-addr="slide-02.speakerNotes">한국 복지는 신청주의입니다. 제도는 128종이나 되는데 정작 내 가족이 뭘 받는지 보기 어렵고, 로그인 장벽에서 이탈하고, '난 안 될 것 같다'며 포기합니다. 8개월 아기 키우는 박지은 씨처럼요.</div></section>
+<section class="slide yellow-banner" data-addr="slide-03" data-slide-id="slide-03" data-layout="insight-statement" data-duration="30" data-impl="implemented"><div class="notion-root slide-inner"><div class="slide-body"><h1 data-addr="slide-03.content.title">'무엇을'이 아니라 '왜 당신이'</h1><h2 data-addr="slide-03.content.subtitle">정보·목록은 이미 넘칩니다. 핵심은 '왜 당신이 해당되는가'입니다. 그리고 AI의 자리는 자격 판정이 아니라 — 막연한 말을 알아듣고 규칙의 결과를 사람 말로 풀어주는 '통역사'입니다.</h2></div></div><div class="ee-notes" hidden data-addr="slide-03.speakerNotes">정보는 넘치는데 행동으로 안 이어집니다. 복지 안내의 핵심은 무엇을 받나가 아니라 왜 당신이 해당되는가입니다. AI는 판정을 하면 거짓 안내가 나니, 통역사 역할만 맡깁니다.</div></section>
+<section class="slide steps-result" data-addr="slide-04" data-slide-id="slide-04" data-layout="architecture" data-duration="25" data-impl="implemented"><div class="notion-root slide-inner"><h1 class="slide-title" data-addr="slide-04.content.title">한 줄 입력 → 규칙 매칭 → '왜?' 증명</h1><div class="slide-body"><div class="steps"><div><div class="num">STEP 1</div><div class="body" data-addr="slide-04.content.steps.0">입력 (로그인 없음)</div></div><div><div class="num">STEP 2</div><div class="body" data-addr="slide-04.content.steps.1">AI 구조화</div></div><div><div class="num">STEP 3</div><div class="body" data-addr="slide-04.content.steps.2">규칙 엔진 매칭</div></div><div><div class="num">STEP 4</div><div class="body" data-addr="slide-04.content.steps.3">카드로 증명</div></div></div><div class="result" data-addr="slide-04.content.result">자격 판정은 규칙이, 설명은 AI가 — 거짓 안내 없음</div></div></div><div class="ee-notes" hidden data-addr="slide-04.speakerNotes">자연어 한 줄을 입력하면 AI가 구조화하고, 규칙 엔진이 결정론적으로 매칭합니다. 판정은 AI가 아니라 규칙이 합니다. 그리고 혜택마다 왜 해당되는지를 보여줍니다.</div></section>
+<section class="slide split" data-addr="slide-05" data-slide-id="slide-05" data-layout="demo-callout" data-duration="120" data-impl="implemented" style="--slide-scale:0.8"><div class="notion-root slide-inner"><h1 class="slide-title" data-addr="slide-05.content.title">로그인 없이 30초, '왜 당신인지'까지</h1><div class="slide-body"><div class="col col-media"><img class="ee-img" data-addr="slide-05.assets.image" data-asset-status="real" src="../assets/screenshots/run1-step2-results.png" alt=""></div><div class="col col-text"><div class="callout" data-addr="slide-05.content.callout.0">'이렇게 이해했어요' 칩<div class="callout-desc">영유아·서울·3명·월350·막내 8개월</div></div><div class="callout" data-addr="slide-05.content.callout.1">해당될 수 있는 혜택 5건<div class="callout-desc">'놓쳤다'가 아니라 '해당될 수 있는'</div></div><div class="callout" data-addr="slide-05.content.callout.2">카드마다 ✓근거 + '왜?' 설명<div class="callout-desc">부모급여: 막내 8개월 → 만 2세 미만 충족</div></div><ul><li data-addr="slide-05.content.points.0">로그인 화면이 한 번도 안 나옴</li><li data-addr="slide-05.content.points.1">'예시 데이터' 라벨 상시</li><li data-addr="slide-05.content.points.2">카드마다 신청 동선까지</li></ul></div></div><div class="ee-assets"><img class="ee-img" data-addr="slide-05.assets.image" data-asset-status="real" src="../assets/screenshots/run1-step2-results.png" alt=""></div></div><div class="ee-notes" hidden data-addr="slide-05.speakerNotes">지금부터 실제 화면입니다. (라이브 실패 시 단계별 스크린샷으로 동일 설명.) 박지은 씨 상황을 입력하면 — 로그인 없이 — '이렇게 이해했어요' 칩이 뜨고 혜택 5건이 나옵니다. 부모급여 카드를 보면 왜 해당되는지 체크리스트와 사람 말 설명이 즉시 뜹니다. 카드마다 신청하러 가기까지 이어집니다.</div></section>
+<section class="slide compare" data-addr="slide-06" data-slide-id="slide-06" data-layout="contrast" data-duration="30" data-impl="implemented"><div class="notion-root slide-inner"><h1 class="slide-title" data-addr="slide-06.content.title">이미 있다고요? 결정적 차이 둘</h1><div class="slide-body"><p class="compare-lead" data-addr="slide-06.content.lead">복지로·보조금24 대비</p><div class="col"><div class="col-label" data-addr="slide-06.content.leftLabel">기존 (복지로·보조금24)</div><ul><li data-addr="slide-06.content.left.0">로그인·본인인증·정보연계 동의 전제</li><li data-addr="slide-06.content.left.1">'무엇을' 목록만 제공</li></ul></div><div class="vs">VS</div><div class="col"><div class="col-label" data-addr="slide-06.content.rightLabel">우리</div><ul><li data-addr="slide-06.content.right.0">로그인 0회</li><li data-addr="slide-06.content.right.1">'왜 당신이 해당되는지'까지</li></ul></div></div></div><div class="ee-notes" hidden data-addr="slide-06.speakerNotes">복지로에 이미 있잖아요? 차이는 둘입니다. 기존은 로그인·정보연계 동의가 전제이고 목록만 줍니다. 우리는 로그인 0회로 왜 당신인지까지 보여줍니다. 미국 ACCESS NYC·영국 Turn2us에서 벤치마킹한 메커니즘입니다.</div></section>
+<section class="slide pastel-blocks" data-addr="slide-07" data-slide-id="slide-07" data-layout="card-grid" data-duration="20" data-impl="implemented"><div class="notion-root slide-inner"><h1 class="slide-title" data-addr="slide-07.content.title">마찰을 없애고, 확신을 더합니다</h1><div class="slide-body"><div class="blocks"><div></div><div></div><div></div></div></div></div><div class="ee-notes" hidden data-addr="slide-07.speakerNotes">효과는 방향성으로 말씀드립니다. 진입 마찰을 줄이고, 왜를 보여줘 포기를 줄이고, 자연어로 진입을 빠르게 합니다. 구체 수치는 데모 단계라 주장하지 않습니다.</div></section>
+<section class="slide limitation-guardrail" data-addr="slide-08" data-slide-id="slide-08" data-layout="limitation-guardrail" data-duration="20" data-impl="implemented"><div class="notion-root slide-inner"><h1 class="slide-title" data-addr="slide-08.content.title">참고용 추정 — 책임은 분명히</h1><div class="slide-body"><div class="cols-2"><div class="lg-col limitations"><h3>한계</h3><div class="callout" data-addr="slide-08.content.limitations.0">예시 데이터 8~10건</div><div class="callout" data-addr="slide-08.content.limitations.1">단순화한 자격 임계값</div></div><div class="lg-col guardrails"><h3>안전장치</h3><div class="callout" data-addr="slide-08.content.guardrails.0">자격 판정은 규칙 엔진</div><div class="callout" data-addr="slide-08.content.guardrails.1">확정은 기관 심사</div></div></div></div></div><div class="ee-notes" hidden data-addr="slide-08.speakerNotes">정직하게 말씀드립니다. 예시 데이터이고 자격은 단순화했습니다. 대신 판정은 규칙 엔진이 하고 AI는 사실을 못 만들게 막았으며, 최종 확정은 기관 심사입니다. 그래서 자격 판정을 AI에 맡기지 않았습니다.</div></section>
+<section class="slide end" data-addr="slide-09" data-slide-id="slide-09" data-layout="closing" data-duration="20" data-impl="implemented"><div class="notion-root slide-inner"><div class="slide-body"><h1 data-addr="slide-09.content.title">정부는 '받을 수 있다'고만 합니다. 우리는 '왜 당신인지'를 보여줍니다.</h1><h2 data-addr="slide-09.content.subtitle">우리 가족 맞춤 정부 혜택 찾기</h2><ul class="end-tags"><li data-addr="slide-09.content.tags.0">무로그인</li><li data-addr="slide-09.content.tags.1">근거 가시화</li><li data-addr="slide-09.content.tags.2">AI 통역사</li></ul></div></div><div class="ee-notes" hidden data-addr="slide-09.speakerNotes">정부는 받을 수 있다고만 합니다. 우리는 왜 당신인지를 보여줍니다. 감사합니다.</div></section>
+</div>
+
+<div class="ee-nav">
+  <button id="ee-prev" aria-label="이전">←</button>
+  <span class="ee-page" id="ee-page"></span>
+  <button id="ee-next" aria-label="다음">→</button>
+</div>
+
+<script>
+window.__EE_META = {"presentationSeconds":300,"totalDurationSeconds":300,"layouts":["hero","problem-flow","insight-statement","architecture","demo-callout","contrast","card-grid","limitation-guardrail","closing"]};
+</script>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var i=0; var pageEl=document.getElementById('ee-page');
+  function show(n){
+    if(n<0)n=0; if(n>slides.length-1)n=slides.length-1; i=n;
+    slides.forEach(function(s,k){s.classList.toggle('ee-active',k===i);});
+    if(pageEl)pageEl.textContent=(i+1)+' / '+slides.length;
+  }
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'){show(i+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){show(i-1);}
+  });
+  var prev=document.getElementById('ee-prev'),next=document.getElementById('ee-next');
+  if(prev)prev.addEventListener('click',function(){show(i-1);});
+  if(next)next.addEventListener('click',function(){show(i+1);});
+  show(0);
+})();
+</script>
+<!-- edit overlay -->
+<script>/* ============================================================
+   theme/edit-overlay.js — 편집 오버레이 동작 (B안)
+   generate-static-html.mjs 가 <script> 로 인라인한다.
+   ?edit=1 쿼리 또는 'e' 키로 토글. 발표 모드에선 완전 비활성.
+   순수 vanilla. getBoundingClientRect / getComputedStyle 사용.
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var BODY = "<body>"; // marker, replaced at runtime
+  var doc = document;
+  var body = doc.body;
+
+  // 누적 시간/예산은 generate-static-html 이 window.__EE_META 로 주입.
+  var META = window.__EE_META || { presentationSeconds: 0, layouts: [] };
+
+  var LAYERS = ["addr", "warn", "time", "asset"];
+  var state = { on: false, layers: { addr: true, warn: true, time: true, asset: true } };
+
+  var els = {}; // generated overlay nodes, keyed for cleanup
+
+  function isEditRequested() {
+    try {
+      var p = new URLSearchParams(location.search);
+      return p.get("edit") === "1" || p.get("edit") === "true";
+    } catch (e) { return false; }
+  }
+
+  // ---- toast ----
+  var toastEl, toastTimer;
+  function toast(msg) {
+    if (!toastEl) {
+      toastEl = doc.createElement("div");
+      toastEl.className = "ee-toast";
+      body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.classList.add("ee-show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("ee-show"); }, 1600);
+  }
+
+  function copyText(text, okMsg) {
+    var done = function () { toast(okMsg || ("복사됨: " + text)); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+  function fallbackCopy(text, cb) {
+    var ta = doc.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed"; ta.style.left = "-9999px";
+    body.appendChild(ta); ta.select();
+    try { doc.execCommand("copy"); } catch (e) {}
+    body.removeChild(ta);
+    if (cb) cb();
+  }
+
+  // ---- tooltip ----
+  var tipEl;
+  function showTip(html, x, y) {
+    if (!tipEl) {
+      tipEl = doc.createElement("div");
+      tipEl.className = "ee-tooltip";
+      body.appendChild(tipEl);
+    }
+    tipEl.textContent = html;
+    tipEl.classList.add("ee-show");
+    var tw = tipEl.offsetWidth, th = tipEl.offsetHeight;
+    var px = Math.min(x + 14, window.innerWidth - tw - 8);
+    var py = Math.max(y - th - 10, 8);
+    tipEl.style.left = px + "px";
+    tipEl.style.top = py + "px";
+  }
+  function hideTip() { if (tipEl) tipEl.classList.remove("ee-show"); }
+
+  // ---- panel ----
+  function buildPanel() {
+    var p = doc.createElement("div");
+    p.className = "ee-panel";
+    var rows = LAYERS.map(function (k) {
+      var labelText = {
+        addr: "주소/번호 배지",
+        warn: "가독성·오버플로우",
+        time: "레이아웃·시간",
+        asset: "자산 상태"
+      }[k];
+      return '<label><input type="checkbox" data-ee-layer="' + k + '" checked> ' + labelText + "</label>";
+    }).join("");
+    p.innerHTML =
+      '<h4>편집 모드 <button class="ee-close" title="닫기 (e)">닫기</button></h4>' +
+      rows +
+      '<button class="ee-export">편집맵 내보내기</button>' +
+      '<div class="ee-hint">호버=정보 · 클릭=주소복사 · e=토글</div>';
+    body.appendChild(p);
+
+    p.querySelector(".ee-close").addEventListener("click", function () { toggle(false); });
+    p.querySelector(".ee-export").addEventListener("click", exportMap);
+    p.querySelectorAll("input[data-ee-layer]").forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        state.layers[cb.getAttribute("data-ee-layer")] = cb.checked;
+        applyLayerClasses();
+      });
+    });
+    els.panel = p;
+  }
+
+  function applyLayerClasses() {
+    LAYERS.forEach(function (k) {
+      body.classList.toggle("ee-layer-" + k, state.on && state.layers[k]);
+    });
+  }
+
+  // ---- decorations: addr badges + addr labels ----
+  function getAddrEls() {
+    return Array.prototype.slice.call(doc.querySelectorAll("[data-addr]"));
+  }
+
+  function decorate() {
+    clearDecorations();
+    var addrEls = getAddrEls();
+    var n = 0;
+    addrEls.forEach(function (el) {
+      // 위치 기준 컨테이너 확보
+      var cs = getComputedStyle(el);
+      if (cs.position === "static") {
+        el.style.position = "relative";
+        el.setAttribute("data-ee-pos", "1");
+      }
+      n++;
+      var addr = el.getAttribute("data-addr");
+
+      var badge = doc.createElement("span");
+      badge.className = "ee-badge";
+      badge.textContent = n;
+      el.appendChild(badge);
+
+      var lab = doc.createElement("span");
+      lab.className = "ee-addr";
+      lab.textContent = addr;
+      el.appendChild(lab);
+
+      // (1) overflow / small font check
+      checkReadability(el);
+
+      // hover handlers
+      el.addEventListener("mouseover", onHover);
+      el.addEventListener("mouseout", onLeave);
+      el.addEventListener("click", onClick);
+    });
+
+    decorateSlides();
+    decorateAssets();
+  }
+
+  function checkReadability(el) {
+    var overflow = el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+    var cs = getComputedStyle(el);
+    var fs = parseFloat(cs.fontSize) || 16;
+    var hasText = (el.textContent || "").trim().length > 0;
+    var tooSmall = hasText && fs < 16 && !el.querySelector("[data-addr]");
+    if (overflow || tooSmall) {
+      el.classList.add("ee-overflow");
+      var m = doc.createElement("span");
+      m.className = "ee-warn-mark";
+      m.textContent = overflow ? "⚠ overflow" : "⚠ " + Math.round(fs) + "px";
+      el.appendChild(m);
+    }
+  }
+
+  // (2) slide layout/time corner badges
+  function decorateSlides() {
+    var slides = Array.prototype.slice.call(doc.querySelectorAll(".slide[data-layout]"));
+    var cumulative = 0;
+    var budget = META.presentationSeconds || 0;
+    var prevLayouts = [];
+    slides.forEach(function (s) {
+      var layout = s.getAttribute("data-layout") || "?";
+      var dur = parseInt(s.getAttribute("data-duration") || "0", 10) || 0;
+      cumulative += dur;
+      var mm = Math.floor(cumulative / 60), ss = cumulative % 60;
+      var cum = mm + ":" + (ss < 10 ? "0" + ss : ss);
+
+      prevLayouts.push(layout);
+      var repeat3 = prevLayouts.length >= 3 &&
+        prevLayouts[prevLayouts.length - 1] === layout &&
+        prevLayouts[prevLayouts.length - 2] === layout &&
+        prevLayouts[prevLayouts.length - 3] === layout;
+
+      var c = doc.createElement("div");
+      c.className = "ee-corner";
+      if (budget && cumulative > budget) c.classList.add("ee-over");
+      c.innerHTML = layout + " · " + dur + "s · " + cum +
+        (repeat3 ? ' <span class="ee-repeat">⟲3연속</span>' : "");
+      var cs = getComputedStyle(s);
+      if (cs.position === "static") { s.style.position = "relative"; s.setAttribute("data-ee-pos", "1"); }
+      s.appendChild(c);
+    });
+  }
+
+  // (3) asset status
+  function decorateAssets() {
+    var imgs = Array.prototype.slice.call(doc.querySelectorAll("[data-asset-status]"));
+    imgs.forEach(function (img) {
+      var status = img.getAttribute("data-asset-status");
+      var broken = img.tagName === "IMG" && img.complete && img.naturalWidth === 0;
+      var label = null;
+      if (broken) {
+        label = doc.createElement("span");
+        label.className = "ee-asset-label ee-404";
+        label.textContent = "404";
+      } else if (status === "placeholder") {
+        label = doc.createElement("span");
+        label.className = "ee-asset-label";
+        label.textContent = "placeholder";
+      }
+      if (label) {
+        var host = img.parentElement || body;
+        var hcs = getComputedStyle(host);
+        if (hcs.position === "static") { host.style.position = "relative"; host.setAttribute("data-ee-pos", "1"); }
+        host.appendChild(label);
+      }
+    });
+  }
+
+  function onHover(e) {
+    var el = e.currentTarget;
+    el.classList.add("ee-hover");
+    var r = el.getBoundingClientRect();
+    var cs = getComputedStyle(el);
+    var fs = Math.round(parseFloat(cs.fontSize) || 0);
+    var overflow = el.scrollHeight > el.clientHeight + 1 ? "넘침" : "정상";
+    var txt = el.getAttribute("data-addr") + "\n" +
+      Math.round(r.width) + " x " + Math.round(r.height) + " px\n" +
+      "font " + fs + "px · " + overflow;
+    showTip(txt, e.clientX, e.clientY);
+    e.stopPropagation();
+  }
+  function onLeave(e) {
+    e.currentTarget.classList.remove("ee-hover");
+    hideTip();
+  }
+  function onClick(e) {
+    var addr = e.currentTarget.getAttribute("data-addr");
+    copyText(addr, "복사됨: " + addr);
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  // (4) export edit map
+  function exportMap() {
+    var lines = getAddrEls().map(function (el) {
+      var addr = el.getAttribute("data-addr");
+      var val;
+      if (el.tagName === "IMG") {
+        val = "[img] " + (el.getAttribute("src") || "");
+      } else {
+        // strip overlay-injected text
+        var clone = el.cloneNode(true);
+        Array.prototype.forEach.call(
+          clone.querySelectorAll(".ee-badge,.ee-addr,.ee-warn-mark,.ee-corner,.ee-asset-label"),
+          function (x) { x.remove(); }
+        );
+        val = (clone.textContent || "").replace(/\s+/g, " ").trim();
+      }
+      return addr + ": " + val;
+    });
+    var text = lines.join("\n");
+    copyText(text, "편집맵 " + lines.length + "행 복사됨");
+    // try .txt download as well
+    try {
+      var blob = new Blob([text], { type: "text/plain" });
+      var a = doc.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "edit-map.txt";
+      doc.body.appendChild(a); a.click(); doc.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    } catch (e) {}
+  }
+
+  function clearDecorations() {
+    Array.prototype.forEach.call(
+      doc.querySelectorAll(".ee-badge,.ee-addr,.ee-warn-mark,.ee-corner,.ee-asset-label"),
+      function (x) { x.remove(); }
+    );
+    Array.prototype.forEach.call(doc.querySelectorAll(".ee-overflow"), function (x) {
+      x.classList.remove("ee-overflow");
+    });
+    getAddrEls().forEach(function (el) {
+      el.removeEventListener("mouseover", onHover);
+      el.removeEventListener("mouseout", onLeave);
+      el.removeEventListener("click", onClick);
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('[data-ee-pos="1"]'), function (el) {
+      el.style.position = "";
+      el.removeAttribute("data-ee-pos");
+    });
+  }
+
+  // ---- toggle ----
+  function toggle(force) {
+    state.on = typeof force === "boolean" ? force : !state.on;
+    body.classList.toggle("ee-on", state.on);
+    if (state.on) {
+      if (!els.panel) buildPanel();
+      decorate();
+      applyLayerClasses();
+    } else {
+      clearDecorations();
+      applyLayerClasses();
+      hideTip();
+    }
+  }
+
+  function init() {
+    // ensure panel exists once (hidden until ee-on); but build lazily on toggle
+    doc.addEventListener("keydown", function (e) {
+      if (e.key === "e" || e.key === "E") {
+        // ignore when typing in a field
+        var t = e.target;
+        if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA")) return;
+        toggle();
+      }
+    });
+    if (isEditRequested()) toggle(true);
+  }
+
+  if (doc.readyState === "loading") {
+    doc.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

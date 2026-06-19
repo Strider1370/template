@@ -9,8 +9,8 @@ project:
 current:
   stageNumber: 12
   stageId: package
-  status: not_started
-  startedAt: null
+  status: completed
+  startedAt: '2026-06-19T10:06:08.763Z'
   budgetMinutes: 5
 completedStages:
   - stageNumber: 0
@@ -85,6 +85,12 @@ completedStages:
     completedAt: '2026-06-19T10:05:52.315Z'
     actualMinutes: 14
     budgetMinutes: 10
+  - stageNumber: 12
+    stageId: package
+    startedAt: '2026-06-19T10:06:08.763Z'
+    completedAt: '2026-06-19T10:10:50.266Z'
+    actualMinutes: 4.7
+    budgetMinutes: 5
 requiredReads:
   - workflow/stages/12-package.md
 activeAgents: []
@@ -96,11 +102,11 @@ humanApproval:
   required: false
   status: not_required
   decisionFile: null
-lastHandoff: workflow/history/stage-11-rehearsal.md
+lastHandoff: workflow/history/stage-12-package.md
 lastSuccessfulCheckpoint:
-  stageNumber: 11
-  stageId: rehearsal
-  commit: b6407f7520120f08dd6e47f6813160492ef892ad
+  stageNumber: 12
+  stageId: package
+  commit: e79c2c7178de346514308af306f5d0f21bc88e0a
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -108,4 +114,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T10:05:52.391Z'
+lastUpdatedAt: '2026-06-19T10:10:50.341Z'
