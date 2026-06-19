@@ -1,44 +1,34 @@
 # demo/demo.scenario.yaml — 데모 시나리오 (Stage 03 산출물)
 #
-# spec.md §8(데모 시나리오)·§9(Wow Moment)와 일치해야 한다.
-# 여기에는 화면 검증용 selector/assertion까지 적는다 → Stage 07(데모 검증)에서 그대로 사용.
-# ⚠️ 개인정보: 실제 개인정보를 입력값으로 쓰지 마라. 가상 페르소나 / 익명 fixture만.
-# (템플릿이다. 아래 빈 값을 실제 내용으로 채우고, 안내 주석은 지워도 된다.)
+# spec.md §8(데모 시나리오)·§9(Wow Moment)와 일치. selector/assertion은 Stage 07에서 그대로 사용.
+# ⚠️ 개인정보: 가상 페르소나 / 익명 fixture만.
 
 scenario:
-  # 데모의 주인공(가상 페르소나)과 상황을 한 줄로.
-  persona: ""          # 예: "서울 거주 1인 가구 김민수(가상)"
-  situation: ""        # 예: "퇴근길 지진 재난문자를 받은 직후"
+  persona: "박지은(33, 가상) — 서울 거주, 8개월 아기를 키우는 외벌이 부부, 월 소득 약 350만원"
+  situation: "'우리 가족이 받을 수 있는 정부 혜택이 있을까?' 막연히 궁금하지만 알아볼 엄두가 안 나던 차"
   steps:
-    # 한 단계 = 사용자의 한 행동 + 그로 인해 화면에서 검증 가능한 변화.
     - step: 1
-      userAction: ""    # 사용자가 하는 행동 (예: "지역 선택 후 '확인' 클릭")
-      expected: ""      # 그 결과 화면에서 보여야 하는 것 (사람이 읽는 설명)
-      selector: ""      # 검증 대상 요소 (예: '[data-testid="result-card"]')
-      assertion: ""     # 통과 조건 (예: "요소가 보이고 텍스트에 '대피소'가 포함")
+      userAction: "첫 화면에서 로그인 없이 자연어로 입력: '30대 부부, 8개월 아기, 서울, 월 350만원' 후 '혜택 찾기' 클릭"
+      expected: "입력창과 찾기 버튼이 보이고, 어디에도 로그인/회원가입 화면이 없다"
+      selector: '[data-testid="nl-input"], [data-testid="find-benefits"]'
+      assertion: "nl-input과 find-benefits가 보이고, [data-testid=\"login\"]는 DOM에 존재하지 않는다"
     - step: 2
-      userAction: ""
-      expected: ""
-      selector: ""
-      assertion: ""
+      userAction: "결과를 기다린다 (AI가 입력을 구조화하고 규칙 매칭)"
+      expected: "AI가 알아들은 프로필이 구조화 칩(영유아가구·소득구간·서울)으로 표시되고, 혜택 카드들이 나타난다"
+      selector: '[data-testid="parsed-profile"], [data-testid="benefit-card"]'
+      assertion: "parsed-profile에 칩이 1개 이상, benefit-card가 1개 이상 렌더링된다"
     - step: 3
-      userAction: ""
-      expected: ""
-      selector: ""
-      assertion: ""
+      userAction: "혜택 카드를 살펴본다"
+      expected: "각 카드에 ✓충족 체크리스트 + '왜?' 배지 + 한 줄 근거 설명 + 신청 채널이 보이고, 화면에 '예시 데이터' 라벨과 면책이 있다"
+      selector: '[data-testid="eligibility-checklist"], [data-testid="why-explanation"], [data-testid="apply-cta"], [data-testid="sample-data-label"]'
+      assertion: "첫 benefit-card 안에 eligibility-checklist(✓ 항목 ≥1), why-explanation(비어있지 않음), apply-cta가 있고, sample-data-label이 화면에 보인다"
 
 wowMoment:
-  # 심사위원이 "오" 하는 그 한 장면. 화면에서 반드시 검증 가능해야 한다(spec §9와 동일).
-  description: ""        # 무엇이 보이는가 (화면상의 변화)
-  selector: ""          # 예: '[data-testid="wow-result"]'
-  assertion: ""         # 예: "요소가 화면에 보이고 강조 표시가 있다"
+  description: "자연어 한 줄 입력 직후, 로그인 화면을 한 번도 거치지 않고 혜택 카드마다 '✓ 소득 충족 / ✓ 자녀 연령 충족' 체크리스트와 '왜 당신이 해당되는지' 설명이 즉시 나타나는 순간"
+  selector: '[data-testid="benefit-card"]'
+  assertion: "benefit-card가 1개 이상 보이고, 각 카드에 eligibility-checklist의 ✓ 항목(1개 이상)과 why-explanation 텍스트(비어있지 않음)가 포함된다. 데모 전체에서 [data-testid=\"login\"]는 렌더되지 않는다."
 
-# 이 흐름이 처음부터 끝까지 한 번 돌면 성공. 측정 가능한 기준으로.
 successCriteria:
-  - ""                  # 예: "3단계까지 에러 없이 완주"
-  - ""                  # 예: "Wow Moment 요소가 화면에 렌더링됨"
-
-# 실시간/외부 의존이 실패할 때의 데모 살리기(plan §3 폴백과 일치).
-fallback:
-  trigger: ""           # 언제 폴백으로 전환하는가 (예: "API 5초 내 무응답")
-  action: ""            # 무엇으로 대체하는가 (예: "fixture JSON으로 동일 화면 렌더")
+  - "1→3단계가 로그인 화면 없이 에러 없이 완주"
+  - "benefit-card가 1개 이상 렌더링되고 각 카드에 why-explanation과 eligibility-checklist가 존재"
+  - "화면에 sample-data-label(예시 데이터)과 면책 문구가 표시됨"
