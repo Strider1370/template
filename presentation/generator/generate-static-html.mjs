@@ -83,7 +83,7 @@ function leaf(addr, value, tag, className) {
 function itemText(v, keys) {
   if (v == null) return "";
   if (typeof v === "string" || typeof v === "number") return String(v);
-  for (const k of keys || ["text", "body", "label", "heading"]) {
+  for (const k of keys || ["title", "text", "body", "label", "heading", "name"]) {
     if (v[k] != null) return String(v[k]);
   }
   return JSON.stringify(v);
@@ -208,7 +208,18 @@ const LAYOUT_RENDERERS = {
   "demo-callout"(id, c, assets) {
     const media = '<div class="col col-media">' + renderImageRaw(id, "image", assets.image, "ee-img") + "</div>";
     let text = "";
-    if (c.callout != null) text += leaf(slotAddr(id, "callout"), c.callout, "div", "callout");
+    if (Array.isArray(c.callout)) {
+      text += c.callout
+        .map((it, i) => {
+          const desc = it && typeof it === "object" && it.desc != null
+            ? '<div class="callout-desc">' + esc(it.desc) + "</div>" : "";
+          return '<div class="callout"' + addrAttr(subAddr(id, "callout", i)) + ">" +
+            esc(itemText(it)) + desc + "</div>";
+        })
+        .join("");
+    } else if (c.callout != null) {
+      text += leaf(slotAddr(id, "callout"), c.callout, "div", "callout");
+    }
     if (Array.isArray(c.points)) {
       text += "<ul>" + c.points.map((p, i) => "<li" + addrAttr(subAddr(id, "points", i)) + ">" + esc(itemText(p)) + "</li>").join("") + "</ul>";
     }

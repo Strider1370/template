@@ -34,6 +34,7 @@
     "presentation:slidev": "node presentation/generator/generate-slidev.mjs",
     "presentation:static": "node presentation/generator/generate-static-html.mjs",
     "presentation:capture": "node presentation/generator/capture.mjs",
+    "presentation:pdf": "node presentation/generator/make-pdf.mjs",
     "presentation:validate-deck": "node presentation/generator/validate-deck.mjs",
     "presentation:validate-slides": "node presentation/generator/validate-slides.mjs",
     "presentation:build": "npm run presentation:validate-deck && npm run presentation:slidev && npm run presentation:static && npm run presentation:validate-slides",

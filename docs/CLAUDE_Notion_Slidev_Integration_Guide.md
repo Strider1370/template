@@ -662,6 +662,9 @@ expansion → expansion-map
 - 단일 HTML 전달
 - 최소 기능 백업
 
+> 헤드리스/미리보기(제한) 환경에선 `slidev dev`가 클라이언트 미마운트로 검은 화면·charset 깨짐이 날 수 있다.
+> 이때는 `slidev build` 결과물(`presentation/slidev/dist`)을 `node presentation/serve-static.mjs presentation/slidev/dist 3030 spa`로 정적 서빙하면 UTF-8·다크 테마가 정상 렌더된다(캡처·발표 모두 이 경로 권장).
+
 지원 우선 semantic layout:
 
 ```text

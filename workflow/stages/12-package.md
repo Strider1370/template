@@ -53,6 +53,7 @@
 
 ## 16. 실패 시 폴백
 - PDF export 실패 시 정적 HTML + 슬라이드 캡처 PDF로 대체. 필수 항목 우선.
+- Slidev export 실패 시 `npm run presentation:capture && npm run presentation:pdf`로 캡처 기반 PDF 생성(`presentation/output/presentation.pdf`).
 
 ## 17. 다음 단계에 전달할 정보
 - 없음(최종 단계). `dist/submission/`이 제출물. push는 여기서 마지막에 한 번.

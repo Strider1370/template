@@ -33,19 +33,21 @@ const PORT = 4799;
 const pad2 = (n) => String(n).padStart(2, "0");
 const info = (msg) => console.log(BANNER + " " + msg);
 
-// 전역 playwright 를 createRequire 로 로드(package.json 의존성 추가 금지).
+// 로컬(presentation/slidev) playwright-chromium 우선 → 전역 playwright 폴백.
 function loadPlaywright() {
-  const candidates = [];
+  const candidates = [resolve(slidevDir, "node_modules")]; // 키트 로컬 설치 우선
   try {
     const root = execSync("npm root -g", { encoding: "utf8" }).trim();
     if (root) candidates.push(root);
   } catch { /* ignore */ }
-  // 일부 리눅스 CI/컨테이너의 전역 모듈 경로(있을 때만). 윈도우/맥에선 npm root -g 로 충분.
   if (process.platform === "linux") candidates.push("/opt/node22/lib/node_modules");
   for (const base of candidates) {
-    try { return createRequire(resolve(base, "_.js"))("playwright"); } catch { /* next */ }
+    for (const pkg of ["playwright", "playwright-chromium"]) {
+      try { return createRequire(resolve(base, "_.js"))(pkg); } catch { /* next */ }
+    }
   }
-  try { return createRequire(import.meta.url)("playwright"); } catch { return null; }
+  try { return createRequire(import.meta.url)("playwright"); } catch { /* next */ }
+  try { return createRequire(import.meta.url)("playwright-chromium"); } catch { return null; }
 }
 
 // deck.json 에서 보이는 슬라이드의 레이아웃 목록(dropped/blocked 제외) — 파일명용.
