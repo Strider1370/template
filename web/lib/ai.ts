@@ -82,6 +82,13 @@ export async function requestParse(text: string): Promise<Partial<Profile> | nul
   return data.profile;
 }
 
+/** 되묻기 질문 문구를 AI가 자연스럽게 다듬음. 실패/무키 시 null → 호출부가 기본 문구 사용. */
+export async function requestQuestion(baseQuestion: string): Promise<string | null> {
+  const data = await postJson<{ ok: boolean; text?: string }>('/api/ask', { baseQuestion });
+  if (data?.ok && data.text) return data.text;
+  return null;
+}
+
 /** 확정 텍스트를 자연스러운 설명으로 rewrite. 실패/검증실패 시 폴백 템플릿. */
 export async function requestExplain(result: MatchResult): Promise<Explanation> {
   const data = await postJson<{ ok: boolean; text?: string }>('/api/explain', {

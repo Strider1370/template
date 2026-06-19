@@ -5,7 +5,8 @@ import { Display, Heading, Body, Badge } from '@krds-ui/core';
 import { BenefitFinder } from '@/components/BenefitFinder';
 import { ParsedProfile } from '@/components/ParsedProfile';
 import { BenefitCard } from '@/components/BenefitCard';
-import { matchBenefits } from '@/lib/eligibility';
+import { FollowUpQuestion } from '@/components/FollowUpQuestion';
+import { matchBenefits, nextBestQuestion } from '@/lib/eligibility';
 import { fallbackExplanation, requestExplain } from '@/lib/ai';
 import type { Explanation, MatchResult, Profile } from '@/lib/types';
 
@@ -18,8 +19,10 @@ export default function Home() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
   const [searched, setSearched] = useState(false);
+  // 사용자가 "건너뛰기" 한 슬롯 — 다시 묻지 않는다.
+  const [skipped, setSkipped] = useState<string[]>([]);
 
-  function handleSubmit(p: Profile) {
+  function runMatch(p: Profile) {
     setProfile(p);
     setSearched(true);
 
@@ -35,6 +38,15 @@ export default function Home() {
       );
     });
   }
+
+  function handleSubmit(p: Profile) {
+    setSkipped([]); // 새 검색이면 건너뛴 슬롯 초기화
+    runMatch(p);
+  }
+
+  // 적응형 되묻기: 다음 질문은 규칙엔진이 고른다(LLM 아님). 건너뛴 슬롯은 제외.
+  const rawQuestion = searched && profile ? nextBestQuestion(profile) : null;
+  const followUp = rawQuestion && !skipped.includes(rawQuestion.slot as string) ? rawQuestion : null;
 
   return (
     <>
@@ -75,6 +87,15 @@ export default function Home() {
         {searched && profile && (
           <section id="results" className="mt-8 space-y-5">
             <ParsedProfile profile={profile} />
+
+            {/* 적응형 되묻기 — 규칙엔진이 고른 다음 질문 1개 (있을 때만) */}
+            {followUp && (
+              <FollowUpQuestion
+                question={followUp}
+                onAnswer={(patch) => runMatch({ ...profile, ...patch })}
+                onSkip={() => setSkipped((s) => [...s, followUp.slot as string])}
+              />
+            )}
 
             <Heading size="s" color="gray-90">
               해당될 수 있는 혜택 {cards.length}건을 찾았어요

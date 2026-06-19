@@ -36,6 +36,7 @@ export function buildContext(p: Profile): RuleContext {
 
 const childYoungerThanMonths = (months: number, ageLabel: string) => ({
   key: `막내 자녀 ${ageLabel}`,
+  slots: ['youngestChildAgeMonths'] as (keyof Profile)[],
   test: (p: Profile) =>
     p.youngestChildAgeMonths != null && p.youngestChildAgeMonths <= months,
   explain: (p: Profile) =>
@@ -46,6 +47,7 @@ const childYoungerThanMonths = (months: number, ageLabel: string) => ({
 
 const incomeAtMost = (ratioPct: number) => ({
   key: `기준중위소득 ${ratioPct}% 이하`,
+  slots: ['monthlyIncome'] as (keyof Profile)[],
   test: (_p: Profile, ctx: RuleContext) =>
     ctx.incomeRatio != null && ctx.incomeRatio <= ratioPct,
   explain: (_p: Profile, ctx: RuleContext) =>
@@ -56,6 +58,7 @@ const incomeAtMost = (ratioPct: number) => ({
 
 const ageBetween = (min: number, max: number) => ({
   key: `신청자 나이 만 ${min}~${max}세`,
+  slots: ['applicantAge'] as (keyof Profile)[],
   test: (p: Profile) =>
     p.applicantAge != null && p.applicantAge >= min && p.applicantAge <= max,
   explain: (p: Profile) =>
@@ -66,6 +69,7 @@ const ageBetween = (min: number, max: number) => ({
 
 const ageAtLeast = (min: number) => ({
   key: `신청자 만 ${min}세 이상`,
+  slots: ['applicantAge'] as (keyof Profile)[],
   test: (p: Profile) => p.applicantAge != null && p.applicantAge >= min,
   explain: (p: Profile) =>
     p.applicantAge != null
@@ -75,12 +79,14 @@ const ageAtLeast = (min: number) => ({
 
 const hasHouseholdType = (type: Profile['householdTypes'][number], label: string) => ({
   key: label,
+  slots: ['householdTypes'] as (keyof Profile)[],
   test: (p: Profile) => p.householdTypes.includes(type),
   explain: () => `${label}에 해당`,
 });
 
 const childrenAtLeast = (n: number) => ({
   key: `자녀 ${n}명 이상(다자녀)`,
+  slots: ['householdTypes'] as (keyof Profile)[],
   test: (p: Profile) => p.householdTypes.includes('multi_child'),
   explain: () => `다자녀 가구(자녀 ${n}명 이상)에 해당`,
 });

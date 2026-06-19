@@ -35,6 +35,8 @@ export interface EligibilityRule {
   test: (p: Profile, ctx: RuleContext) => boolean;
   /** 충족/미충족 시 사용자에게 보일 한 줄 (값 주입 — 사실은 여기서 확정) */
   explain: (p: Profile, ctx: RuleContext) => string;
+  /** 이 규칙이 참조하는 입력 슬롯 — 적응형 되묻기(nextBestQuestion)가 어떤 질문을 할지 판단할 때 쓴다. */
+  slots?: (keyof Profile)[];
 }
 
 /** 규칙 평가에 쓰는 보조 컨텍스트 (기준중위소득 등) */
