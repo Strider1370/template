@@ -23,6 +23,7 @@ export const HOUSEHOLD_LABELS: Record<HouseholdType, string> = {
 export interface Profile {
   householdTypes: HouseholdType[]; // 복수 가능 (예: 영유아 + 다자녀)
   region: string; // 시/도 (regions.ts 키). 빈 문자열 허용
+  district?: string; // 시/군/구 (regions.ts SIGUNGU_BY_SIDO). 선택
   monthlyIncome: number | null; // 가구 월 소득 (만원). null = 미입력
   householdSize: number; // 가구원 수
   youngestChildAgeMonths: number | null; // 막내 자녀 월령. null = 자녀 없음

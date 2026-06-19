@@ -17,7 +17,7 @@ function Chip({ children }: { children: React.ReactNode }) {
 export function ParsedProfile({ profile }: { profile: Profile }) {
   const chips: string[] = [];
   for (const t of profile.householdTypes) chips.push(HOUSEHOLD_LABELS[t]);
-  if (profile.region) chips.push(profile.region);
+  if (profile.region) chips.push(profile.district ? `${profile.region} ${profile.district}` : profile.region);
   if (profile.householdSize) chips.push(`가구원 ${profile.householdSize}명`);
   if (profile.monthlyIncome != null) chips.push(`월 ${profile.monthlyIncome}만원`);
   if (profile.youngestChildAgeMonths != null)
