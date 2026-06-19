@@ -7,11 +7,11 @@ project:
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 6
-  stageId: integration
+  stageNumber: 7
+  stageId: demo-validation
   status: not_started
   startedAt: null
-  budgetMinutes: 20
+  budgetMinutes: 15
 completedStages:
   - stageNumber: 0
     stageId: intake
@@ -49,22 +49,28 @@ completedStages:
     completedAt: '2026-06-19T09:23:25.690Z'
     actualMinutes: 14.2
     budgetMinutes: 85
+  - stageNumber: 6
+    stageId: integration
+    startedAt: '2026-06-19T09:24:11.876Z'
+    completedAt: '2026-06-19T09:27:08.316Z'
+    actualMinutes: 2.9
+    budgetMinutes: 20
 requiredReads:
-  - workflow/stages/06-integration.md
+  - workflow/stages/07-demo-validation.md
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:integration
-  report: workflow/history/stage-06-gate.md
+  command: npm run gate:demo
+  report: workflow/history/stage-07-gate.md
 humanApproval:
   required: false
   status: not_required
   decisionFile: null
-lastHandoff: workflow/history/stage-05-parallel-build.md
+lastHandoff: workflow/history/stage-06-integration.md
 lastSuccessfulCheckpoint:
-  stageNumber: 5
-  stageId: parallel-build
-  commit: 4b79efd8620f7c6dec155f798a57173ac141b18a
+  stageNumber: 6
+  stageId: integration
+  commit: b5fe55916d08a0c6467107bc84cd54015dba750d
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -72,4 +78,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T09:23:25.766Z'
+lastUpdatedAt: '2026-06-19T09:27:08.392Z'

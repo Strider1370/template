@@ -1,5 +1,5 @@
 {
-  "_comment": "Stage 06(통합) 산출물 스켈레톤. 각 기능의 실제 구현 상태를 구조화한다. Stage 08(스크립트)·09(발표)가 이 파일을 필수 입력으로 읽는다. 발표에서는 mocked/fallback을 완전 구현처럼 표현하지 않는다. 개인정보: fixture/데모 데이터는 가상 페르소나·익명만 사용.",
+  "_comment": "Stage 06(통합) 산출물. 각 기능의 실제 구현 상태. Stage 08(스크립트)·09(발표)가 필수 입력으로 읽는다. mocked/fallback을 완전 구현처럼 표현하지 않는다. 데모 데이터는 가상 페르소나·예시 fixture만.",
   "_statusEnum": {
     "implemented": "실제로 동작. 발표에서 확정적으로 시연/주장 가능.",
     "mocked": "UI/흐름은 있으나 내부는 가짜 데이터. 발표 시 mock임을 흐리지 말 것.",
@@ -10,11 +10,88 @@
   "version": 1,
   "features": [
     {
-      "id": "feature-01",
-      "name": "예시 기능 (실제 작성 시 이 항목을 교체할 것)",
+      "id": "input-form",
+      "name": "가족 상황 입력 (자연어 + 드롭다운)",
       "status": "implemented",
-      "notes": "상태 근거 한 줄. 폴백/막힌 이유 등.",
+      "notes": "BenefitFinder.tsx. 드롭다운(가구상황·지역·가구원·소득·자녀월령·나이)만으로 완결. 로그인 없음.",
       "demoPath": "demo/demo.scenario.yaml#step-1"
+    },
+    {
+      "id": "ai-parse",
+      "name": "AI 자연어 입력 구조화",
+      "status": "fallback",
+      "notes": "api/parse(Anthropic). ANTHROPIC_API_KEY 있으면 자연어→프로필. 없으면 드롭다운 입력으로 폴백(데모 기본). 데모는 폴백 경로로 시연.",
+      "demoPath": "demo/demo.scenario.yaml#step-1"
+    },
+    {
+      "id": "parsed-profile",
+      "name": "구조화 프로필 칩 표시",
+      "status": "implemented",
+      "notes": "ParsedProfile.tsx. 입력 경로·LLM 생사 무관하게 항상 렌더(Wow 불변식).",
+      "demoPath": "demo/demo.scenario.yaml#step-2"
+    },
+    {
+      "id": "eligibility-engine",
+      "name": "자격 매칭 규칙엔진 (결정론적)",
+      "status": "implemented",
+      "notes": "eligibility.ts. 자격 판정은 전적으로 여기서. LLM 미관여. 충족 조건(met) 반환.",
+      "demoPath": "demo/demo.scenario.yaml#step-2"
+    },
+    {
+      "id": "benefits-fixture",
+      "name": "혜택 데이터 (큐레이션 10건)",
+      "status": "fallback",
+      "notes": "benefits.ts. 복지로 공개 제도 근거 예시 fixture(sampleData). 자격요건은 단순화 임계값. 권위 CSV에 자격필드 없어 전수 매칭 불가 → 큐레이션. '예시 데이터' 라벨 화면 상시.",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "why-checklist",
+      "name": "왜 해당되나요 — 시각적 충족 체크리스트 + 왜? 배지",
+      "status": "implemented",
+      "notes": "BenefitCard.tsx eligibility-checklist. 규칙엔진 met[]를 ✓로 렌더. 차별점 시각화(Wow).",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "ai-explain",
+      "name": "AI 근거 설명 (rewrite) + 환각 가드",
+      "status": "fallback",
+      "notes": "api/explain + ai.ts. 키 있으면 확정 텍스트를 자연스럽게 rewrite, 새 숫자 섞이면 정확매칭 검증으로 거부→폴백. 키 없으면 사전작성 캐시/템플릿(사실 기반). 자격판정·사실생성 안 함.",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "apply-flow",
+      "name": "신청 동선 (채널·한 줄 신청법·링크)",
+      "status": "implemented",
+      "notes": "BenefitCard.tsx apply-cta. 각 혜택의 신청처·방법·복지로 등 링크.",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "honesty-guard",
+      "name": "정직성 (예시 데이터 라벨·면책·발견 프레이밍)",
+      "status": "implemented",
+      "notes": "page.tsx sample-data-label 상시 + '해당될 수 있는 N건 발견'(전수 암시 회피) + Footer 면책.",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "no-login",
+      "name": "무로그인·무저장",
+      "status": "implemented",
+      "notes": "본인인증·정보연계·서버저장 없음. 클라이언트 규칙엔진 + 무상태. login testid 미존재.",
+      "demoPath": "demo/demo.scenario.yaml#step-1"
+    },
+    {
+      "id": "map-location",
+      "name": "지도·위치 기반 기능",
+      "status": "dropped",
+      "notes": "이 주제(복지 매칭)와 무관 → 미사용. KakaoMap·shelters 자산 제외.",
+      "demoPath": null
+    },
+    {
+      "id": "realtime-gov-api",
+      "name": "실시간 공공데이터 API 연동",
+      "status": "dropped",
+      "notes": "범위 밖(spec §15). 보조금24 등 실시간 API 미연동 — 4시간·정직성 위해 fixture 채택.",
+      "demoPath": null
     }
   ]
 }
