@@ -12,6 +12,9 @@ const DEMO_TEXT = '8개월 아기 키우는 서울 강서구 사는 30대 부부
 
 const FIELD =
   'h-11 w-full rounded-krds border border-line bg-white px-3 text-body-m text-gray-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
+// 단위 토글과 함께 쓰는 좁은 숫자 입력칸 (소득·막내 나이)
+const NUMFIELD =
+  'h-11 w-24 rounded-krds border border-line bg-white px-3 text-body-m text-gray-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
 
 function numOrNull(v: string): number | null {
   const n = parseInt(v, 10);
@@ -33,7 +36,7 @@ function Seg<T extends string>({
   onChange: (v: T) => void;
 }) {
   return (
-    <span className="inline-flex overflow-hidden rounded-krds border border-line">
+    <span className="inline-flex h-11 flex-none overflow-hidden rounded-krds border border-line">
       {options.map((o, i) => {
         const on = value === o.v;
         return (
@@ -42,8 +45,8 @@ function Seg<T extends string>({
             type="button"
             onClick={() => onChange(o.v)}
             aria-pressed={on}
-            className={`px-3 py-1.5 text-label-s font-bold ${i > 0 ? 'border-l border-line' : ''} ${
-              on ? 'bg-primary text-white' : 'bg-white text-gray-60 hover:text-primary'
+            className={`min-w-[3rem] px-4 text-body-m font-bold ${i > 0 ? 'border-l border-line' : ''} ${
+              on ? 'bg-primary text-white' : 'bg-white text-gray-60 hover:bg-primary-5 hover:text-primary'
             }`}
           >
             {o.label}
@@ -240,7 +243,7 @@ export function BenefitFinder({ onSubmit }: { onSubmit: (p: Profile) => void }) 
           <Detail size="s" color="gray-70" className="mb-1 block">가구 소득 (선택 · 모르면 비움)</Detail>
           <div className="flex items-center gap-2">
             <Seg value={incomeUnit} onChange={setIncomeUnit} options={[{ v: 'month', label: '월' }, { v: 'year', label: '연' }]} />
-            <input className={FIELD} type="number" inputMode="numeric" value={income} onChange={(e) => setIncome(e.target.value)} placeholder="예: 350" />
+            <input className={NUMFIELD} type="number" inputMode="numeric" value={income} onChange={(e) => setIncome(e.target.value)} placeholder="350" />
             <span className="flex-none text-body-m text-gray-60">만원</span>
           </div>
           <Detail size="s" color="gray-50" className="mt-1 block">연봉이면 ‘연’ 선택 — 자동으로 월로 환산해 매칭</Detail>
@@ -258,7 +261,7 @@ export function BenefitFinder({ onSubmit }: { onSubmit: (p: Profile) => void }) 
             <div className="block">
               <Detail size="s" color="gray-70" className="mb-1 block">막내 나이</Detail>
               <div className="flex items-center gap-2">
-                <input className={FIELD} type="number" inputMode="numeric" value={childAge} onChange={(e) => setChildAge(e.target.value)} placeholder="예: 8" />
+                <input className={NUMFIELD} type="number" inputMode="numeric" value={childAge} onChange={(e) => setChildAge(e.target.value)} placeholder="8" />
                 <Seg value={childAgeUnit} onChange={setChildAgeUnit} options={[{ v: 'month', label: '개월' }, { v: 'year', label: '세' }]} />
               </div>
             </div>
