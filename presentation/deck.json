@@ -1,7 +1,7 @@
 {
   "version": 1,
   "meta": {
-    "title": "샘플 발표 (레이아웃 데모)",
+    "title": "우리 가족 맞춤 정부 혜택 찾기",
     "engine": "slidev",
     "fallbackEngine": "notion-static-html",
     "theme": "notion-slidev",
@@ -13,101 +13,136 @@
   "slides": [
     {
       "id": "slide-01",
-      "sceneId": "scene-01",
-      "role": "answer-first",
       "semanticLayout": "hero",
+      "durationSeconds": 20,
       "content": {
-        "eyebrow": "프로젝트 분야",
-        "title": "한 줄 결론을 여기에",
-        "subtitle": "누구에게 · 무엇을 · 어떻게 해결하는지 한 문장으로",
-        "footnote": "근거·데이터 출처를 여기에"
+        "eyebrow": "로그인 없이 30초",
+        "title": "우리 가족 맞춤 정부 혜택 찾기",
+        "subtitle": "가족 상황을 한 줄로 말하면, 받을 수 있는 혜택과 '왜 당신 가족이 해당되는지'를 AI가 설명합니다.",
+        "footnote": "예시 데이터 기반 데모"
       },
-      "speakerNotes": "발표 첫 문장입니다. 결론(결과)부터 한 문장으로 말합니다. (이 파일은 레이아웃 데모용 placeholder이며, 새 주제로 내용을 갈아끼웁니다.)",
-      "durationSeconds": 30,
-      "layoutReason": "answer-first role → hero",
-      "implementationStatus": "implemented"
+      "speakerNotes": "정부 혜택, 받을 수 있는데 몰라서 못 받는 분들 많습니다. 가족 상황을 한 줄로 말하면 로그인 없이 30초 만에 받을 수 있는 혜택과 '왜 당신이 해당되는지'를 AI가 설명해줍니다."
     },
     {
       "id": "slide-02",
-      "sceneId": "scene-02",
-      "role": "insight",
-      "semanticLayout": "contrast",
+      "semanticLayout": "problem-flow",
+      "durationSeconds": 35,
       "content": {
-        "title": "기존 방식 vs 우리 접근",
-        "leftLabel": "기존 방식",
-        "left": ["기존 한계 1", "기존 한계 2", "기존 한계 3"],
-        "rightLabel": "우리 접근",
-        "right": ["개선점 1", "개선점 2", "개선점 3"]
+        "title": "받을 수 있는데, 몰라서 못 받습니다",
+        "items": [
+          { "title": "신청주의 사각지대", "desc": "내가 찾아 신청해야 줍니다. 제도는 많은데(맞춤 안내 대상만 128종) 내 가족 맞춤 전체를 보기 어렵습니다." },
+          { "title": "로그인 장벽", "desc": "정확히 알려면 본인인증·정보연계 동의가 먼저. 가장 도움이 필요한 분이 첫 화면에서 이탈합니다." },
+          { "title": "자기검열", "desc": "'기준이 엄격해 난 안 될 것 같다'며 시도조차 안 합니다." }
+        ]
       },
-      "speakerNotes": "문제를 다르게 보는 관점을 좌우 대비로 보여줍니다.",
-      "durationSeconds": 50,
-      "layoutReason": "insight + assumption-reality 대비 → contrast",
-      "implementationStatus": "implemented"
+      "speakerNotes": "한국 복지는 신청주의입니다. 제도는 128종이나 되는데 정작 내 가족이 뭘 받는지 보기 어렵고, 로그인 장벽에서 이탈하고, '난 안 될 것 같다'며 포기합니다. 8개월 아기 키우는 박지은 씨처럼요."
     },
     {
       "id": "slide-03",
-      "sceneId": "scene-03",
-      "role": "demo",
-      "semanticLayout": "demo-callout",
+      "semanticLayout": "insight-statement",
+      "durationSeconds": 30,
       "content": {
-        "title": "핵심 데모 장면",
-        "callout": ["데모 포인트 1", "데모 포인트 2", "데모 포인트 3"],
-        "caption": "데모 화면 캡처 자리"
+        "title": "'무엇을'이 아니라 '왜 당신이'",
+        "subtitle": "정보·목록은 이미 넘칩니다. 핵심은 '왜 당신이 해당되는가'입니다. 그리고 AI의 자리는 자격 판정이 아니라 — 막연한 말을 알아듣고 규칙의 결과를 사람 말로 풀어주는 '통역사'입니다."
       },
-      "assets": {
-        "image": { "src": "../output/captures/demo-main.png", "status": "placeholder" }
-      },
-      "speakerNotes": "실제 동작을 보여주는 부분입니다. 발표 시간의 절반 이상을 여기에 씁니다.",
-      "durationSeconds": 90,
-      "layoutReason": "demo + wowMoment → demo-callout",
-      "implementationStatus": "implemented"
+      "speakerNotes": "정보는 넘치는데 행동으로 안 이어집니다. 복지 안내의 핵심은 무엇을 받나가 아니라 왜 당신이 해당되는가입니다. AI는 판정을 하면 거짓 안내가 나니, 통역사 역할만 맡깁니다."
     },
     {
       "id": "slide-04",
-      "sceneId": "scene-04",
-      "role": "impact",
-      "semanticLayout": "big-number",
+      "semanticLayout": "architecture",
+      "durationSeconds": 25,
       "content": {
-        "label": "핵심 지표",
-        "number": "00 → 00",
-        "caption": "측정 근거를 여기에 (표본·기준 명시)"
+        "title": "한 줄 입력 → 규칙 매칭 → '왜?' 증명",
+        "steps": [
+          { "title": "입력 (로그인 없음)", "desc": "자연어 한 줄 또는 드롭다운" },
+          { "title": "AI 구조화", "desc": "가구유형·소득구간·지역으로 정리" },
+          { "title": "규칙 엔진 매칭", "desc": "결정론적 — 자격 판정은 AI가 아니라 규칙이" },
+          { "title": "카드로 증명", "desc": "충족 체크리스트 + AI가 다듬은 설명 + 신청 동선" }
+        ],
+        "result": "자격 판정은 규칙이, 설명은 AI가 — 거짓 안내 없음"
       },
-      "speakerNotes": "효과를 숫자 하나로 보여줍니다. 근거를 함께 말합니다.",
-      "durationSeconds": 40,
-      "layoutReason": "impact + big-number contentType → big-number",
-      "implementationStatus": "implemented"
+      "speakerNotes": "자연어 한 줄을 입력하면 AI가 구조화하고, 규칙 엔진이 결정론적으로 매칭합니다. 판정은 AI가 아니라 규칙이 합니다. 그리고 혜택마다 왜 해당되는지를 보여줍니다."
     },
     {
       "id": "slide-05",
-      "sceneId": "scene-05",
-      "role": "limitation",
-      "semanticLayout": "limitation-guardrail",
-      "content": {
-        "title": "한계와 안전장치",
-        "limitations": ["한계 1", "한계 2 (미구현/mocked)", "한계 3"],
-        "guardrails": ["안전장치 1", "안전장치 2", "안전장치 3"]
+      "semanticLayout": "demo-callout",
+      "durationSeconds": 120,
+      "contentScale": 0.8,
+      "assets": {
+        "image": { "src": "../assets/screenshots/run1-step2-results.png", "status": "real" }
       },
-      "speakerNotes": "한계를 솔직히 말하고, 그에 대한 안전장치를 제시합니다.",
-      "durationSeconds": 50,
-      "layoutReason": "limitation role → limitation-guardrail",
-      "implementationStatus": "mocked"
+      "content": {
+        "title": "로그인 없이 30초, '왜 당신인지'까지",
+        "callout": [
+          { "title": "'이렇게 이해했어요' 칩", "desc": "영유아·서울·3명·월350·막내 8개월" },
+          { "title": "해당될 수 있는 혜택 5건", "desc": "'놓쳤다'가 아니라 '해당될 수 있는'" },
+          { "title": "카드마다 ✓근거 + '왜?' 설명", "desc": "부모급여: 막내 8개월 → 만 2세 미만 충족" }
+        ],
+        "points": ["로그인 화면이 한 번도 안 나옴", "'예시 데이터' 라벨 상시", "카드마다 신청 동선까지"]
+      },
+      "speakerNotes": "지금부터 실제 화면입니다. (라이브 실패 시 단계별 스크린샷으로 동일 설명.) 박지은 씨 상황을 입력하면 — 로그인 없이 — '이렇게 이해했어요' 칩이 뜨고 혜택 5건이 나옵니다. 부모급여 카드를 보면 왜 해당되는지 체크리스트와 사람 말 설명이 즉시 뜹니다. 카드마다 신청하러 가기까지 이어집니다."
     },
     {
       "id": "slide-06",
-      "sceneId": "scene-06",
-      "role": "closing",
-      "semanticLayout": "closing",
+      "semanticLayout": "contrast",
+      "durationSeconds": 30,
       "content": {
-        "title": "기억에 남을 마지막 문장",
-        "subtitle": "다음 단계를 여기에",
-        "cta": "데모 주소를 여기에",
-        "team": "팀 이름",
-        "contact": "연락처"
+        "title": "이미 있다고요? 결정적 차이 둘",
+        "lead": "복지로·보조금24 대비",
+        "leftLabel": "기존 (복지로·보조금24)",
+        "left": [
+          { "title": "로그인·본인인증·정보연계 동의 전제" },
+          { "title": "'무엇을' 목록만 제공" }
+        ],
+        "rightLabel": "우리",
+        "right": [
+          { "title": "로그인 0회" },
+          { "title": "'왜 당신이 해당되는지'까지" }
+        ]
       },
-      "speakerNotes": "마지막 한 문장으로 닫습니다.",
-      "durationSeconds": 40,
-      "layoutReason": "closing role → closing",
-      "implementationStatus": "implemented"
+      "speakerNotes": "복지로에 이미 있잖아요? 차이는 둘입니다. 기존은 로그인·정보연계 동의가 전제이고 목록만 줍니다. 우리는 로그인 0회로 왜 당신인지까지 보여줍니다. 미국 ACCESS NYC·영국 Turn2us에서 벤치마킹한 메커니즘입니다."
+    },
+    {
+      "id": "slide-07",
+      "semanticLayout": "card-grid",
+      "durationSeconds": 20,
+      "content": {
+        "title": "마찰을 없애고, 확신을 더합니다",
+        "cards": [
+          { "title": "진입 마찰 ↓", "desc": "로그인·정보연계 동의 제거" },
+          { "title": "포기 ↓", "desc": "'왜 해당되는지' 근거로 자기검열 완화" },
+          { "title": "진입 속도 ↑", "desc": "자연어 한 줄로 시작" }
+        ]
+      },
+      "speakerNotes": "효과는 방향성으로 말씀드립니다. 진입 마찰을 줄이고, 왜를 보여줘 포기를 줄이고, 자연어로 진입을 빠르게 합니다. 구체 수치는 데모 단계라 주장하지 않습니다."
+    },
+    {
+      "id": "slide-08",
+      "semanticLayout": "limitation-guardrail",
+      "durationSeconds": 20,
+      "content": {
+        "title": "참고용 추정 — 책임은 분명히",
+        "limitations": [
+          { "title": "예시 데이터 8~10건", "desc": "전국 전수가 아니라 대표 예시, 화면에 명시" },
+          { "title": "단순화한 자격 임계값", "desc": "복잡한 소득 환산 등은 데모용으로 단순화" }
+        ],
+        "guardrails": [
+          { "title": "자격 판정은 규칙 엔진", "desc": "AI는 사실 생성 안 함 · 환각 숫자 자동 차단" },
+          { "title": "확정은 기관 심사", "desc": "신청 전 공식 채널에서 재확인" }
+        ]
+      },
+      "speakerNotes": "정직하게 말씀드립니다. 예시 데이터이고 자격은 단순화했습니다. 대신 판정은 규칙 엔진이 하고 AI는 사실을 못 만들게 막았으며, 최종 확정은 기관 심사입니다. 그래서 자격 판정을 AI에 맡기지 않았습니다."
+    },
+    {
+      "id": "slide-09",
+      "semanticLayout": "closing",
+      "durationSeconds": 20,
+      "content": {
+        "title": "정부는 '받을 수 있다'고만 합니다. 우리는 '왜 당신인지'를 보여줍니다.",
+        "subtitle": "우리 가족 맞춤 정부 혜택 찾기",
+        "tags": ["무로그인", "근거 가시화", "AI 통역사"]
+      },
+      "speakerNotes": "정부는 받을 수 있다고만 합니다. 우리는 왜 당신인지를 보여줍니다. 감사합니다."
     }
   ]
 }

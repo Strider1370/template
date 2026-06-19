@@ -7,11 +7,11 @@ project:
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 9
-  stageId: presentation-generation
+  stageNumber: 10
+  stageId: presentation-validation
   status: not_started
   startedAt: null
-  budgetMinutes: 20
+  budgetMinutes: 10
 completedStages:
   - stageNumber: 0
     stageId: intake
@@ -67,27 +67,30 @@ completedStages:
     completedAt: '2026-06-19T09:38:11.281Z'
     actualMinutes: 4.4
     budgetMinutes: 10
+  - stageNumber: 9
+    stageId: presentation-generation
+    startedAt: '2026-06-19T09:38:35.047Z'
+    completedAt: '2026-06-19T09:48:25.067Z'
+    actualMinutes: 9.8
+    budgetMinutes: 20
 requiredReads:
-  - workflow/stages/09-presentation-generation.md
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 8. 공통 Semantic Layout'
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 9. 중간 데이터 계약'
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 10. 레이아웃 선택'
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 11. Slidev 생성 규칙'
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 12. Notion Static HTML 생성 규칙'
+  - workflow/stages/10-presentation-validation.md
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 13. 캡처 레퍼런스 활용'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 14. Stage 10 검증 기준'
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:presentation-generation
-  report: workflow/history/stage-09-gate.md
+  command: npm run gate:presentation-visual
+  report: workflow/history/stage-10-gate.md
 humanApproval:
   required: false
   status: not_required
   decisionFile: null
-lastHandoff: workflow/history/stage-08-script.md
+lastHandoff: workflow/history/stage-09-presentation-generation.md
 lastSuccessfulCheckpoint:
-  stageNumber: 8
-  stageId: script
-  commit: d7bf84951945a4e8bf52fbe1ed600b2f0088a256
+  stageNumber: 9
+  stageId: presentation-generation
+  commit: b7071c40da86eafbffbea1fa3f03c523ce8aac36
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -95,4 +98,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T09:38:11.358Z'
+lastUpdatedAt: '2026-06-19T09:48:25.141Z'
