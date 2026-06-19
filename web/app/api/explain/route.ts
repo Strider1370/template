@@ -1,11 +1,10 @@
-// web/app/api/explain/route.ts — 규칙엔진 확정 텍스트 → 자연스러운 한 줄 설명 (AI Agent 소유)
+// web/app/api/explain/route.ts — 규칙엔진 확정 텍스트 → 자연스러운 한 줄 설명 (OpenAI/ChatGPT)
 // AI는 '다듬기(rewrite)'만. 새 사실(혜택명·금액·조건) 생성 금지.
-// 출력은 화이트리스트 검증을 통과해야 ok:true. 실패 시 ok:false → 클라이언트 폴백 템플릿.
+// 출력은 화이트리스트 검증 통과해야 ok:true. 실패 시 ok:false → 클라이언트 폴백 템플릿.
 
 import { NextResponse } from 'next/server';
+import { openaiChat } from '@/lib/llm';
 import { validateExplanation } from '@/lib/ai';
-
-const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
 
 const SYSTEM = `너는 한국 복지 안내의 설명 도우미다. 아래 '확정된 사실'을 따뜻하고 이해하기 쉬운 한국어 한 문장으로 다듬어라.
 엄격한 규칙:
@@ -25,37 +24,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, reason: 'empty' });
   }
 
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) return NextResponse.json({ ok: false, reason: 'no_key' });
+  const out = await openaiChat({
+    system: SYSTEM,
+    user: `확정된 사실: ${factualBasis}`,
+    maxTokens: 150,
+  });
+  if (!out) return NextResponse.json({ ok: false, reason: 'no_key_or_error' });
 
-  // 화이트리스트 = 확정 사실 토큰
+  // 환각 가드: 새 숫자가 섞이면 거부 → 폴백
   const whitelist = [benefitName, ...met, ...(amount ? [amount] : [])];
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: 200,
-        system: SYSTEM,
-        messages: [{ role: 'user', content: `확정된 사실: ${factualBasis}` }],
-      }),
-    });
-    if (!res.ok) return NextResponse.json({ ok: false, reason: 'api_error' });
-    const data = await res.json();
-    const out: string = (data?.content?.[0]?.text ?? '').trim();
-
-    // 환각 가드: 새 숫자가 섞이면 거부 → 폴백
-    if (!validateExplanation(out, whitelist)) {
-      return NextResponse.json({ ok: false, reason: 'validation_failed' });
-    }
-    return NextResponse.json({ ok: true, text: out });
-  } catch {
-    return NextResponse.json({ ok: false, reason: 'exception' });
+  if (!validateExplanation(out, whitelist)) {
+    return NextResponse.json({ ok: false, reason: 'validation_failed' });
   }
+  return NextResponse.json({ ok: true, text: out });
 }
