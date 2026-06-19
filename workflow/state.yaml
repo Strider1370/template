@@ -7,11 +7,11 @@ project:
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 8
-  stageId: script
+  stageNumber: 9
+  stageId: presentation-generation
   status: not_started
   startedAt: null
-  budgetMinutes: 10
+  budgetMinutes: 20
 completedStages:
   - stageNumber: 0
     stageId: intake
@@ -61,25 +61,33 @@ completedStages:
     completedAt: '2026-06-19T09:33:28.100Z'
     actualMinutes: 6
     budgetMinutes: 15
+  - stageNumber: 8
+    stageId: script
+    startedAt: '2026-06-19T09:33:49.851Z'
+    completedAt: '2026-06-19T09:38:11.281Z'
+    actualMinutes: 4.4
+    budgetMinutes: 10
 requiredReads:
-  - workflow/stages/08-script.md
-  - 'docs/AI_Hackathon_Operating_System.md :: 7. Stage 08'
-  - 'docs/AI_Hackathon_Operating_System.md :: 8. Stage 08 Review'
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 3. Stage 08'
+  - workflow/stages/09-presentation-generation.md
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 8. 공통 Semantic Layout'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 9. 중간 데이터 계약'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 10. 레이아웃 선택'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 11. Slidev 생성 규칙'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 12. Notion Static HTML 생성 규칙'
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:script
-  report: workflow/history/stage-08-gate.md
+  command: npm run gate:presentation-generation
+  report: workflow/history/stage-09-gate.md
 humanApproval:
   required: false
   status: not_required
   decisionFile: null
-lastHandoff: workflow/history/stage-07-demo-validation.md
+lastHandoff: workflow/history/stage-08-script.md
 lastSuccessfulCheckpoint:
-  stageNumber: 7
-  stageId: demo-validation
-  commit: 66159a73e9bf7216e563b3a8a8465cb5e99d8455
+  stageNumber: 8
+  stageId: script
+  commit: d7bf84951945a4e8bf52fbe1ed600b2f0088a256
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -87,4 +95,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T09:33:28.178Z'
+lastUpdatedAt: '2026-06-19T09:38:11.358Z'
