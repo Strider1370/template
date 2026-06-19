@@ -50,7 +50,7 @@
 |---|---|
 | 카카오맵 JS 키 | 지도를 쓸 때. 도메인 등록까지 해야 하므로 대회 전에 미리 발급 |
 | data.go.kr 서비스키 | 공공 API를 쓸 때. 활용신청도 미리 |
-| LLM API 키 | 앱이 런타임에 LLM을 호출할 때(없으면 fixture로 대체) |
+| OpenAI API 키 (`OPENAI_API_KEY`) | 앱이 런타임에 LLM을 호출할 때. 기본 provider는 OpenAI(ChatGPT). 없으면 fixture로 폴백. `LLM_PROVIDER`로 교체 가능 |
 
 슬라이드 자동 캡처(`npm run presentation:capture`)를 쓰려면 Playwright와 Chromium이 추가로 필요합니다.
 
