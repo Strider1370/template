@@ -1,34 +1,42 @@
 workflowVersion: 1
 workflowMode: run
 project:
-  name: ''
-  topic: ''
-  startedAt: null
+  name: 우리 가족 맞춤 정부 혜택 찾기
+  topic: 가구 구성·거주 지역·소득 수준 입력 → 받을 수 있는 정부 혜택 목록 + 신청 방법 안내
+  startedAt: '2026-06-19T08:29:39.466Z'
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 0
-  stageId: intake
+  stageNumber: 1
+  stageId: parallel-research
   status: not_started
   startedAt: null
-  budgetMinutes: 5
-completedStages: []
+  budgetMinutes: 15
+completedStages:
+  - stageNumber: 0
+    stageId: intake
+    startedAt: '2026-06-19T08:29:39.466Z'
+    completedAt: '2026-06-19T08:32:35.886Z'
+    actualMinutes: 2.9
+    budgetMinutes: 5
 requiredReads:
-  - workflow/stages/00-intake.md
+  - workflow/stages/01-parallel-research.md
+  - 'docs/AI_Hackathon_Operating_System.md :: 4. Stage 01'
+  - 'docs/AI_Hackathon_Operating_System.md :: 8. Stage 01 Review'
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:intake
-  report: workflow/history/stage-00-gate.md
+  command: npm run gate:research
+  report: workflow/history/stage-01-gate.md
 humanApproval:
   required: false
   status: not_required
   decisionFile: null
-lastHandoff: null
+lastHandoff: workflow/history/stage-00-intake.md
 lastSuccessfulCheckpoint:
-  stageNumber: null
-  stageId: null
-  commit: null
+  stageNumber: 0
+  stageId: intake
+  commit: 96ab0f7a3ca20ddba6b7a18ccdac09d873bc9ca3
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -36,4 +44,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-17T06:32:30.324Z'
+lastUpdatedAt: '2026-06-19T08:32:35.990Z'
