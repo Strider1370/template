@@ -7,11 +7,11 @@ project:
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 5
-  stageId: parallel-build
-  status: in_progress
-  startedAt: '2026-06-19T09:09:11.364Z'
-  budgetMinutes: 85
+  stageNumber: 6
+  stageId: integration
+  status: not_started
+  startedAt: null
+  budgetMinutes: 20
 completedStages:
   - stageNumber: 0
     stageId: intake
@@ -43,24 +43,28 @@ completedStages:
     completedAt: '2026-06-19T09:08:45.395Z'
     actualMinutes: 5.4
     budgetMinutes: 10
+  - stageNumber: 5
+    stageId: parallel-build
+    startedAt: '2026-06-19T09:09:11.364Z'
+    completedAt: '2026-06-19T09:23:25.690Z'
+    actualMinutes: 14.2
+    budgetMinutes: 85
 requiredReads:
-  - workflow/stages/05-parallel-build.md
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 3. Stage 05'
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 15. 서브에이전트 권한'
+  - workflow/stages/06-integration.md
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:build
-  report: workflow/history/stage-05-gate.md
+  command: npm run gate:integration
+  report: workflow/history/stage-06-gate.md
 humanApproval:
   required: false
   status: not_required
   decisionFile: null
-lastHandoff: workflow/history/stage-04-implementation-plan.md
+lastHandoff: workflow/history/stage-05-parallel-build.md
 lastSuccessfulCheckpoint:
-  stageNumber: 4
-  stageId: implementation-plan
-  commit: af88b7ce9fabb323090428a506238a7683ea867a
+  stageNumber: 5
+  stageId: parallel-build
+  commit: 4b79efd8620f7c6dec155f798a57173ac141b18a
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -68,4 +72,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T09:09:11.365Z'
+lastUpdatedAt: '2026-06-19T09:23:25.766Z'

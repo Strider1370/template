@@ -30,19 +30,23 @@ export function extractNumberTokens(text: string): string[] {
   return matches.map((m) => m.replace(/\s+/g, ''));
 }
 
+const bareNumber = (t: string) => t.replace(/[^\d]/g, '');
+
 /**
- * AI 설명 검증: 출력의 모든 숫자 토큰이 화이트리스트(확정 사실)에 존재해야 통과.
- * 새 숫자/금액을 지어내면 false → 호출부가 폴백으로 대체.
+ * AI 설명 검증: 출력의 모든 숫자가 화이트리스트(확정 사실)의 숫자 집합에
+ * **정확히** 존재해야 통과. 새 숫자/금액을 지어내면 false → 호출부가 폴백으로 대체.
+ * (substring 아닌 정확 일치 — "200"이 "20"을 통과시키는 허점 방지.)
  */
 export function validateExplanation(text: string, whitelist: string[]): boolean {
   if (!text || !text.trim()) return false;
-  const haystack = whitelist.join(' ').replace(/\s+/g, '');
-  const tokens = extractNumberTokens(text);
+  if (text.length > 120) return false; // 한 문장 제약 — 환각 장문 방지
+
+  const allowed = new Set(
+    whitelist.flatMap((w) => extractNumberTokens(w).map(bareNumber)).filter(Boolean),
+  );
+  const tokens = extractNumberTokens(text).map(bareNumber).filter(Boolean);
   for (const t of tokens) {
-    const bare = t.replace(/[^\d]/g, '');
-    if (!bare) continue;
-    // 화이트리스트 어딘가에 이 숫자가 등장해야 함
-    if (!haystack.includes(bare)) return false;
+    if (!allowed.has(t)) return false; // 화이트리스트에 없는 숫자 = 환각 → 거부
   }
   return true;
 }
