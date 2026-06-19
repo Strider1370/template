@@ -1,284 +1,162 @@
 # 한국 공공 서비스 해커톤 스타터 키트
 
-> **4시간 AI 해커톤**에서 새 주제를 받자마자 "데모가 확실히 돌아가는" 결과물 + 발표까지 만들기 위한 출발점.
-> 두 가지가 한 묶음으로 들어있다 — ① AI 에이전트와 함께 일하는 **단계 기반 워크플로우 엔진**, ② 매번 새로 만들 필요 없는 **검증된 키트 자산**(Next.js+KRDS 스택, 공공데이터, 발표 생성 파이프라인).
+4시간 AI 해커톤에서 주제를 받은 즉시 "데모가 도는 결과물 + 발표"까지 만들기 위한 출발점. 구성은 두 가지다 — ① AI와 단계별로 일하는 **워크플로우 엔진**(`workflow/` + `CLAUDE.md` 라우터), ② 매번 새로 만들지 않는 **키트 자산**(Next.js+KRDS 스택, 공공데이터, 발표 생성 파이프라인).
 
 ---
 
-## 0. 새 환경에서 처음 세팅하기 (한 번)
+## 1. 세팅
 
-> **핵심:** 이 저장소는 **독립된 npm 프로젝트가 3개**다(루트 · `web/` · `presentation/slidev/`). 각각 `npm install`을 해줘야 한다. 폰트·KRDS 토큰·발표 테마는 저장소에 **이미 포함**돼 있어 따로 받을 필요 없다.
+독립된 npm 프로젝트가 3개다. 각각 설치한다. 폰트·KRDS 토큰·발표 테마는 저장소에 포함되어 추가 다운로드가 없다. 모든 스크립트는 Windows·macOS·Linux 공용이다(OS 전용 셸 구문·하드코딩 경로 없음).
 
-### 필수 도구
-| 도구 | 버전/메모 |
+**필수 도구**
+
+| 도구 | 요건 |
 |---|---|
-| **Node.js** | `>= 18.18` (권장 20 이상). npm 동봉. `pnpm`도 가능 |
-| **Git** | 클론/커밋 |
-| **브라우저** | 발표·편집 오버레이(`?edit=1`)는 **Chrome/Edge 등 Chromium 계열** 권장 (`zoom` 사용) |
+| Node.js | ≥ 18.18 (권장 20+) |
+| Git | 클론·커밋 |
+| 브라우저 | Chromium 계열(Chrome/Edge) — 발표·편집 오버레이 |
 
-### 설치 — 3곳을 각각 (네트워크: npm 레지스트리 접근 필요)
-```bash
-# 1) 루트 — 워크플로우 엔진 도구 (js-yaml 등, 가벼움)
-npm install
-npm run workflow:status        # 현재 단계 확인 → 정상 동작 검증
+**설치 (3곳)**
 
-# 2) 웹 앱 스캐폴드 (Next.js + KRDS)
-cd web && npm install
-npm run build                  # 빌드 통과 확인 (install+build 검증됨)
-cd ..
-
-# 3) 발표용 Slidev (deck 렌더·프리뷰에 필요)
-cd presentation/slidev && npm install
-npm run build                  # 슬라이드 빌드 → dist/
-cd ../..
-```
-- `presentation/slidev`의 `@slidev/theme-default`·UnoCSS·아이콘·**Pretendard 폰트(`public/fonts/`에 커밋됨)**는 install/저장소에 이미 들어온다 — 별도 폰트 다운로드 불필요.
-
-### 선택 — 발표 캡처 도구 (Stage 09·10 LLM 캡처 루프에만)
-`npm run presentation:capture`(슬라이드 PNG 자동 캡처)는 **Playwright + Chromium**이 있어야 동작한다. 사람이 직접 발표/프리뷰만 할 거면 **불필요**(없으면 안내 후 그냥 건너뜀, 오류로 막지 않음). 스크립트에 OS 종속 경로/환경변수는 없다 — 표준 설치면 그대로 된다.
-```bash
-npm i -g playwright && npx playwright install chromium
-# 브라우저를 특정 위치에 깔았다면 env 로 지정(선택):
-#   macOS/Linux : PLAYWRIGHT_BROWSERS_PATH=<경로> npm run presentation:capture
-#   Windows(PS) : $env:PLAYWRIGHT_BROWSERS_PATH="<경로>"; npm run presentation:capture
-```
-
-> **크로스플랫폼:** 모든 스크립트는 Windows·macOS·Linux 공용으로 맞춰져 있다(OS 전용 셸 구문·하드코딩 경로 없음). 윈도우에서 그대로 `npm run ...` 하면 된다.
-
-### 키 / 시크릿 (`.env.local`에만, 저장소에 커밋 금지)
-| 키 | 언제 필요 | 메모 |
+| 위치 | 명령 | 용도 |
 |---|---|---|
-| **카카오맵 JS 키** | 지도 기능 사용 시 | 도메인 등록 필요 — **대회 전 미리 발급** |
-| **공공데이터(data.go.kr) 서비스키** | 공공 API 사용 시 | 활용신청·자동승인 — 미리 신청 (`data/data-sources.md`) |
-| **LLM API 키** | 앱이 런타임에 LLM 호출 시 | 없으면 규칙기반/fixture로 폴백 설계 |
+| 루트 | `npm install` | 워크플로우 엔진 도구 |
+| `web/` | `npm install` | Next.js + KRDS 앱 |
+| `presentation/slidev/` | `npm install` | 슬라이드 렌더·프리뷰 |
 
-### 네트워크 주의 (제한 환경)
-- 일부 환경은 `data.go.kr`·일부 CDN이 막힌다 → 그래서 **Pretendard·KRDS는 오프라인 번들**로 포함돼 있다. 데이터는 키 막힘 대비 **fixture(샘플 JSON)** 로 동작하게 설계한다.
-- 첫 `npm install`과 첫 빌드는 npm 레지스트리(및 일부 웹폰트) 접근이 필요할 수 있다 — **인터넷 되는 곳에서 미리 한 번 install** 해두면 당일 안전하다.
+설치 후 `npm run workflow:status`로 현재 단계를 확인한다.
 
-### 클라우드/CI(이 저장소가 돌던 환경)와의 차이
-이 키트가 개발된 컨테이너에는 전역 Playwright/Chromium이 미리 깔려 있었다(`/opt/...`). **새 로컬/PC에는 없으므로** 캡처를 쓰려면 위 "선택" 단계를 직접 해야 한다. 발표 자체(`slidev` 프리뷰)는 캡처 없이 된다.
+**키 (`.env.local`에만, 커밋 금지)**
 
----
-
-## 1. 왜 "워크플로우 엔진"인가 (핵심 발상)
-
-4시간 동안 AI와 같이 개발하면 **길을 잃기 쉽다.** 한 번에 전부 하려다 데모도 발표도 어정쩡해지는 게 흔한 실패다. 이 키트의 해법은 단순하다:
-
-- 전 과정을 **13개 단계(Stage)로 쪼갠다.** 각 단계는 "**현재 단계 지침만 읽고 → 그 단계 작업만 하고 → Gate(검증)를 실제로 통과하고 → 다음으로**"만 진행한다. 미리 앞 단계를 당겨오지 않는다.
-- **현재 위치는 항상 `workflow/state.yaml`이 말해준다.** 사람이 기억하거나 추측할 필요가 없다. 새 세션 AI도 이 파일을 읽고 이어간다.
-- **`CLAUDE.md`가 라우터다.** AI는 작업 시작 시 이 파일을 먼저 읽고, `state.yaml`이 가리키는 현재 단계 문서로 이동한다.
-
-즉 이 저장소는 단순한 코드 모음이 아니라 **"무엇을 언제 할지 강제하는 작은 엔진"**이다. 시간이 부족하면 단계를 건너뛰는 게 아니라 **기능 범위를 줄인다** — 데모와 발표 품질은 끝까지 지킨다.
-
----
-
-## 2. 전체 그림
-
-```
-CLAUDE.md  ──(라우터: 먼저 읽음)
-   │
-   ├─▶ workflow/state.yaml   ← "지금 몇 단계 / 무슨 상태인가" (머신이 읽는 현재 위치)
-   │
-   ├─▶ workflow/stages.yaml  ← 각 단계의 지침파일·읽을 섹션·Gate 명령 매핑
-   │
-   └─▶ workflow/stages/NN-*.md  ← 현재 단계의 상세 지침(이것만 읽음)
-
-작업하며 채워지는 "계약서"(항상 최신 유지):
-  concept.md   북극성 — 한 문장 피치·Wow·마지막 문장 (Stage 02 산출물, 03·05·08의 기준선)
-  spec.md      데모 약속 — 시나리오·Wow Moment (Stage 03)
-  plan.md      구현 체크리스트 — 작업분해·폴백·파일 소유권 (Stage 04)
-  implementation/manifest.json   실제로 만든 기능(발표는 이걸 기준으로만 말함)
-  PROGRESS.md  사람용 요약 — "현재 / 다음 / 막힘"
-  workflow/history/   단계별 Handoff(세션 인수인계 기록)
-```
-
-각 문서는 **역할이 다르다(중복 금지):** `concept`=불변 방향 · `spec`=데모 약속 · `plan`=구현 체크리스트 · `manifest`=실제 만든 것. 같은 사실을 여러 파일에 늘여 쓰지 않는다.
-
----
-
-## 3. 13단계 워크플로우 (총 230분 + 버퍼 10)
-
-```
-00 intake → 01 리서치 → 02 인사이트선택·승인 → 03 spec → 04 plan
-→ 05 병렬구현 → 06 통합 → 07 데모검증 → 08 스크립트 → 09 발표생성
-→ 10 발표검증 → 11 리허설·승인 → 12 패키지
-```
-
-| # | 단계 | 하는 일 | 주요 산출물 | Gate 종류 |
-|---|---|---|---|---|
-| 00 | intake | 주제·제약 파악, 환경 점검 | state 초기화 | 체크리스트 |
-| 01 | 리서치 | **병렬 서브에이전트**로 탐색(폭=품질) | `research/` 보고서 | 체크리스트 |
-| 02 | 인사이트 선택 | 브레인스토밍 → 방향 확정 | **`concept.md`** | 체크리스트 · **🙋 사용자 승인** |
-| 03 | spec | 데모 시나리오·Wow Moment | `spec.md` | **실행(enforced)** |
-| 04 | plan | 작업분해·폴백·파일 소유권 | `plan.md` | 체크리스트 |
-| 05 | 병렬 구현 | 기능 구현(범위 맞춰 병렬) | `web/` 코드 · manifest | **실행(build)** |
-| 06 | 통합 | 합치고 깨진 곳 수정 | 통합된 앱 | 체크리스트 |
-| 07 | 데모 검증 | 데모가 실제로 도는지 확인 | 시나리오 + 스크린샷 | **실행(demo)** |
-| 08 | 스크립트 | 발표 대본·Q&A | `presentation/script.md` | 체크리스트 |
-| 09 | 발표 생성 | `deck.json` → 슬라이드 렌더 | Slidev + Notion HTML | **실행(generation)** |
-| 10 | 발표 검증 | 캡처 보고 시각 결함 점검 | 캡처 + 리포트 | **실행(visual)** |
-| 11 | 리허설 | 시간 맞춰 리허설 | 최종 점검 | 체크리스트 · **🙋 사용자 승인** |
-| 12 | 패키지 | 제출물 정리(출처·라이선스) | 제출 패키지 | 체크리스트 |
-
-- **🙋 사용자 승인 단계(02·11):** AI가 임의로 정하지 않고 **멈춰서** 사람의 승인을 받는다. 승인 전엔 확정 파일을 만들지 않는다.
-- **실행 Gate(실제 로직으로 검사):** spec · build · demo · presentation-generation · presentation-visual. 나머지는 "필수 파일 존재 + 자가점검" 체크리스트.
-- **교차검토(LLM Review):** `npm run cross-review -- <대상>` — 다른 AI 리뷰어가 산출물을 본다.
-
----
-
-## 4. 어떻게 사용하나 (실전 루프)
-
-### 시작
-```bash
-npm install                 # 루트 = 워크플로우 도구(의존성 거의 없음)
-npm run workflow:status     # 지금 몇 단계인지 요약
-```
-
-### 한 단계 도는 법 (매 단계 반복)
-1. **`CLAUDE.md` 읽기** → `state.yaml`의 `current.stageId` 확인
-2. **현재 단계 문서**(`workflow/stages/NN-*.md`)와 그 안에서 "반드시 읽을 파일"만 읽기 (그 외엔 읽지 않는다 — 컨텍스트 절약)
-3. 필요하면 **서브에이전트 병렬 실행**(작업 계약 = `workflow/templates/agent-task.yaml`)
-4. 산출물 통합 → **Gate 실제 실행**: `npm run gate:<stage>`
-5. 통과 시 **Handoff 자동 생성**: `npm run workflow:handoff` (시간·파일·커밋·게이트를 기계가 채움) → 사람은 "결정/위험" 1~2줄만 보강 → `npm run workflow:complete`
-6. 실패 시 다음으로 가지 말고 원인·폴백 보고: `npm run workflow:fail "<사유>"`
-
-### 새 세션 복원
-```bash
-npm run workflow:resume     # 현재 단계 + 다음 행동을 알려줌
-```
-이전 대화를 추측하지 말고 **`state.yaml` + 최신 Handoff**로 복원한다.
-
-### 워크플로우 명령어 한눈에
-| 명령 | 용도 |
+| 키 | 필요 시점 |
 |---|---|
-| `npm run workflow:status` | 현재 단계/상태 요약 |
-| `npm run workflow:start` | 단계 시작(상태 전환) |
-| `npm run workflow:handoff` | Handoff 자동 생성 |
-| `npm run workflow:complete` | 단계 완료 처리 |
-| `npm run workflow:approve` | 승인 단계 승인 기록 |
-| `npm run workflow:fail "<사유>"` | 단계 실패 기록 |
-| `npm run workflow:resume` | 새 세션 복원 |
-| `npm run gate:<stage>` | 해당 단계 Gate 실행 |
-| `npm run cross-review -- <대상>` | LLM 교차검토 |
+| 카카오맵 JS 키 | 지도 사용 시. 도메인 등록 필요 — 대회 전 발급 |
+| data.go.kr 서비스키 | 공공 API 사용 시. 활용신청 — 대회 전 신청 |
+| LLM API 키 | 앱이 런타임에 LLM 호출 시(없으면 fixture 폴백) |
 
-### 운영 모드 (`state.yaml.workflowMode`)
-- `run` — 해커톤 주제를 Stage 00~12로 실행 (**기본**)
-- `bootstrap` — 엔진/템플릿/단계문서 자체를 설치·수정
-- `maintenance` — 엔진 일부만 수정, 해커톤 단계 자동 진행 금지
+선택: 슬라이드 자동 캡처(`npm run presentation:capture`)는 Playwright+Chromium이 필요하다(`npm i -g playwright && npx playwright install chromium`). 없으면 오류 없이 건너뛴다. 일부 환경은 `data.go.kr`·일부 CDN이 차단되므로 데이터는 fixture 폴백을 전제한다.
 
 ---
 
-## 5. 발표 생성 파이프라인 (Stage 08~10)
+## 2. 워크플로우 개념
 
-발표는 **`presentation/deck.json` 한 파일**에서 두 엔진으로 동시에 렌더된다.
+전 과정을 13단계로 분할한다. 각 단계는 "**현재 단계 지침만 읽고 → 그 단계 작업만 하고 → Gate(검증) 통과 → 다음**"으로만 진행한다. 앞 단계를 미리 당겨오지 않는다. 현재 위치는 `workflow/state.yaml`이 기록하고, `CLAUDE.md`가 라우터로서 AI를 현재 단계 문서(`workflow/stages/NN-*.md`)로 보낸다. 시간이 부족하면 단계를 생략하지 않고 **기능 범위를 줄인다**.
 
-```
-script.md ─▶ deck.json(판단=AI가 직접 작성) ─┬─▶ Slidev  (기본 = 실제 발표 매체)
-                                              └─▶ Notion 정적 HTML (오프라인 백업)
-```
+계약 문서는 역할이 분리되어 있다(중복 금지).
 
-- **엔진:** Slidev가 **기본**(`meta.engine=slidev`), Notion 단일 HTML이 폴백. 실제 발표는 `slidev` 프리뷰(localhost)로 한다.
-- **레이아웃:** BaizeAI/talks(Apache-2.0)의 카드 언어를 이식한 **16개 semantic 레이아웃**(hero·contrast·card-grid·architecture·big-number·closing 등). AI는 `semanticLayout`을 16개 중에서만 고른다(임의 생성 금지).
-- **편집 오버레이 (사람이 손쉽게 수정):** Slidev·Notion 둘 다 URL에 **`?edit=1`**(또는 `e` 키)를 붙이면 켜진다 — 칸마다 번호·주소(`slide-04.content.callout`) 배지, 클릭=주소복사, 가독성/오버플로우 경고, 자산상태, 편집맵 내보내기. **주소 규약을 두 엔진이 공유**하므로, "그 주소 칸을 고쳐줘"라고 지목하면 `deck.json`의 그 필드만 고치고 다시 렌더한다. 발표 모드(쿼리 없음)에선 완전히 비활성.
-- **크기 조정:** 슬라이드별 `contentScale`(0.5~2)로 본문을 키우거나 줄인다(여백 많으면 키우고, 넘치면 줄인다).
+| 파일 | 내용 | 생성 |
+|---|---|---|
+| `concept.md` | 방향 — 한 문장 피치·Wow·마지막 문장 | Stage 02 |
+| `spec.md` | 데모 약속 — 시나리오·Wow Moment | Stage 03 |
+| `plan.md` | 구현 체크리스트 — 작업분해·폴백·파일 소유권 | Stage 04 |
+| `implementation/manifest.json` | 실제 만든 기능 — 발표는 이 범위만 말한다 | Stage 05 |
 
-### 발표 명령어
-| 명령 | 용도 |
+---
+
+## 3. 단계별 진행 (예시 주제 적용)
+
+가정 주제: **"동네별 폭염 행동 가이드"** (대상: 독거노인·야외근로자). 각 단계의 입력 → 작업 → 산출물은 다음과 같다.
+
+| # | 단계 | 입력 | 핵심 작업 | 산출물 | Gate |
+|---|---|---|---|---|---|
+| 00 | intake | 주제·마감·발표시간 | 주제·제약 등록, 키트 자산·네트워크 점검 | `state.yaml` 초기화 | 체크리스트 |
+| 01 | 리서치 | 주제 | 병렬 서브에이전트로 탐색 — 폭염 피해·통계 / 기존 서비스(재난문자 등) 한계 / 가용 공공데이터 | `research/*.md` + 통합 요약 | 체크리스트 |
+| 02 | 인사이트 선택 | 리서치 | 인사이트 후보 도출 → 사용자와 방향 합의 | `concept.md` (피치 = "내 위치 기준 폭염 행동을 한 화면에") | 체크리스트 · **승인** |
+| 03 | spec | concept | 데모 시나리오 확정(위치 허용 → 위험도 표시 → 행동 3단계 → 가까운 쉼터), Wow Moment 명시 | `spec.md` | **실행** |
+| 04 | plan | spec | 작업 분해(지도·위치판정·가이드생성·쉼터매칭), 폴백·파일 소유권 정의 | `plan.md` | 체크리스트 |
+| 05 | 구현 | plan | 기능 구현(독립 파일이면 병렬, 작으면 단독). 만든 것만 manifest에 기록 | `web/` 코드 · `manifest.json` | **실행(build)** |
+| 06 | 통합 | 05 산출 | 합치고 깨진 곳 수정 | 동작하는 앱 | 체크리스트 |
+| 07 | 데모 검증 | 앱 | 시나리오대로 실제 동작 확인 + 화면 캡처 | 시나리오 통과 · `output/captures/` | **실행(demo)** |
+| 08 | 스크립트 | concept·manifest·캡처 | 발표 대본(시간 배분, 데모+킥 ≥50%) + 예상 Q&A 작성 | `script.md` · `qna.md` | 체크리스트 |
+| 09 | 발표 생성 | script | `deck.json` 작성(16 레이아웃에서 선택) → Slidev·Notion 렌더 | `deck.json` · `slides.md` · `presentation.html` | **실행(generation)** |
+| 10 | 발표 검증 | 슬라이드 | 캡처 보고 overflow·작은 글씨·발표 시간 점검 → `contentScale` 조정 | 캡처 · `validation-report.md` | **실행(visual)** |
+| 11 | 리허설 | 발표물 | 시간 맞춰 리허설, 최종 점검 | 확정 발표물 | 체크리스트 · **승인** |
+| 12 | 패키지 | 전체 | 제출물 정리(출처·라이선스 기록) | 제출 패키지 | 체크리스트 |
+
+- **승인 단계(02·11):** AI가 임의로 결정하지 않고 멈춰 사용자 승인을 받는다. 승인 전에는 확정 파일을 만들지 않는다.
+- **실행 Gate(03·05·07·09·10):** 실제 로직으로 검사한다. 나머지는 필수 파일 존재 + 자가점검 체크리스트다.
+- **한 단계 도는 절차:** 지침 읽기 → (필요 시 병렬 서브에이전트) → 산출물 통합 → `npm run gate:<stage>` → `npm run workflow:handoff` → `npm run workflow:complete`. 실패 시 `npm run workflow:fail "<사유>"`. 새 세션은 `npm run workflow:resume`로 복원한다(이전 대화 추측 금지, `state.yaml` + 최신 Handoff로 복원).
+
+---
+
+## 4. 발표 생성: 순서와 이유
+
+순서는 **08 스크립트 → 09 생성 → 10 검증 → 11 리허설**이다. 각 단계가 앞 단계의 확정을 입력으로 받으므로 순서를 바꾸지 않는다.
+
+- **08 — 메시지를 먼저 확정한다.** 슬라이드보다 대본(무엇을 어떤 순서로 말할지)이 먼저다. 발표 시간의 50% 이상을 데모와 킥(핵심 한 방)에 배분한다. 슬라이드는 이 대본을 시각화한 것일 뿐이다.
+- **09 — 판단과 변환을 분리한다.** AI는 `deck.json` 한 파일만 작성한다(어떤 슬라이드에 무엇을 담을지 = 판단). 렌더는 스크립트가 자동 처리한다(변환). 같은 `deck.json`에서 두 매체가 동시에 나온다:
+  - **Slidev = 기본 발표 매체.** 라이브 렌더·글로우 배경·클릭 단계 지원. `localhost`에서 발표한다.
+  - **Notion 정적 HTML = 백업.** 단일 파일이라 네트워크 차단·오프라인에서도 연다.
+  - 한 소스에서 양쪽을 내므로 발표물을 두 번 만들지 않는다.
+- **레이아웃은 16개 semantic 중에서만 고른다**(임의 디자인 금지). 일관된 카드 언어(BaizeAI/talks 이식)로 통일된다.
+- **사람 수정은 편집 오버레이로 한다.** 발표 URL에 `?edit=1`을 붙이면 칸마다 주소(`slide-04.content.callout`)·번호 배지, 가독성·오버플로우 경고, 자산 상태가 표시된다. 주소로 칸을 지목하면 `deck.json`의 그 필드만 고쳐 다시 렌더한다. Slidev·Notion이 같은 주소 규약을 쓴다. 발표 모드(쿼리 없음)에서는 비활성이다.
+- **10 — 캡처를 보고 크기를 맞춘다.** 슬라이드 PNG를 떠서 넘침·작은 글씨·발표 시간을 점검하고 `contentScale`(0.5~2)로 조정한다. 내용을 공간에 욱여넣지 않고 공간을 내용에 맞춘다.
+
+| 명령 | 동작 |
 |---|---|
-| `npm run presentation:build` | deck 검증 → Slidev + Notion 동시 생성 → 정합 검증 (한 번에) |
-| `npm run presentation:slidev` | `deck.json` → `slidev/slides.md` |
-| `npm run presentation:static` | `deck.json` → Notion 단일 HTML |
-| `npm run presentation:capture` | 슬라이드별 PNG 캡처(기본 Slidev, 폴백 Notion) |
-| `cd presentation/slidev && npm run build` | 실제 발표용 Slidev 빌드(라이브) |
-
-> 상세는 `workflow/stages/09-*.md`·`10-*.md` 와 `docs/CLAUDE_Notion_Slidev_Integration_Guide.md`.
+| `npm run presentation:build` | deck 검증 → Slidev·Notion 동시 생성 → 정합 검증 (한 번에) |
+| `npm run presentation:capture` | 슬라이드 PNG 캡처(기본 Slidev, 폴백 Notion) |
+| `cd presentation/slidev && npm run build` | 발표용 Slidev 빌드 |
 
 ---
 
-## 6. 키트 자산 (처음부터 만들지 마라)
+## 5. 저장소 구조
+
+```
+CLAUDE.md          AI용 라우터 — 작업 시작 시 먼저 읽음
+concept/spec/plan.md, PROGRESS.md   계약서(단계 산출물)
+
+workflow/          워크플로우 엔진
+  state.yaml         현재 단계/상태(머신이 읽는 현재 위치)
+  stages.yaml        단계 ↔ 지침파일·Gate 매핑
+  stages/00..12.md   단계별 상세 지침
+  gates/             Gate 검증 스크립트 + cross-review
+  scripts/           상태 전환 도구(status/start/complete/handoff/resume/fail)
+  templates/, contracts/, history/
+
+presentation/      발표 생성
+  deck.json          발표 단일 계약(AI가 작성)
+  generator/         deck.json → Slidev/Notion 렌더러·검증·캡처
+  slidev/            Slidev 프로젝트(global-top.vue = 편집 오버레이)
+  theme/             Notion 정적 HTML 테마 + 편집 오버레이
+  output/            렌더 산출물
+
+web/                Next.js + KRDS 스캐폴드
+data/               공공데이터(경계·대피소) + data-sources.md
+design/krds/        KRDS 디자인 토큰·엠블럼
+docs/               운영 지침 문서
+examples/           참고 완성본
+implementation/     manifest.json(실제 만든 기능)
+```
+
+---
+
+## 6. 키트 자산
 
 | 묶음 | 내용 |
 |---|---|
-| **웹 스택** | `web/` — Next.js 14 + React 18 + TS + Tailwind + KRDS, 셋업 완료(`install`+`build` 통과) |
-| **공공데이터** | `data/` — 전국 시도/시군구 경계, 시도→시군구 매핑, 민방위 대피소 약 17,000곳 |
-| **디자인** | `design/krds/` — KRDS 공식 토큰(CSS/JSON/Figma) + 정부 엠블럼 |
-| **재사용 코드** | 카카오맵 컴포넌트, 위치/거리 유틸, 공공 CSV 변환 스크립트 |
-| **참고 완성본** | `examples/disaster-guide/` — 연습 결과물(재난 대비 가이드) 소스 |
-| **운영 지침** | `docs/` — 기획 품질 기준 · 발표 생성 가이드 · 엔진 구조 · 도메인 데이터 준비 가이드 |
+| 웹 스택 | `web/` — Next.js 14 + React 18 + TS + Tailwind + KRDS (`install`+`build` 통과) |
+| 공공데이터 | `data/` — 전국 시도/시군구 경계, 시도→시군구 매핑, 민방위 대피소 약 17,000곳 |
+| 디자인 | `design/krds/` — KRDS 공식 토큰(CSS/JSON/Figma) + 정부 엠블럼 |
+| 재사용 코드 | 카카오맵 컴포넌트, 위치/거리 유틸, 공공 CSV 변환 스크립트 |
+| 참고 완성본 | `examples/disaster-guide/` — 연습 결과물 소스 |
+| 운영 지침 | `docs/` — 기획 품질 기준, 발표 생성 가이드, 엔진 구조, 도메인 데이터 준비 |
 
-**무엇이 있고 어떻게 재사용하는지 → `docs/kit-assets.md`** (KRDS 함정·카카오키·`data.go.kr` 차단 대응 포함).
-
-> 주제가 공공/지역 기반이 **아니면**: `CLAUDE.md` 워크플로우 + `web/` 스캐폴드 + 발표 파이프라인만 가져가고, KRDS·공공데이터 묶음은 떼어내면 된다.
-
-### 빠른 시작 (웹)
-```bash
-cd web
-npm install
-npm run dev      # http://localhost:3000
-npm run build    # 빌드 검증
-```
+재사용 방법은 `docs/kit-assets.md` 참조(KRDS 함정·카카오키·`data.go.kr` 차단 대응 포함). 주제가 공공/지역 기반이 아니면 워크플로우 + `web/` 스캐폴드 + 발표 파이프라인만 쓰고 KRDS·공공데이터 묶음은 떼어낸다.
 
 ---
 
-## 7. 저장소 구조 (어디에 뭐가 있나)
+## 7. 운영 원칙
 
-```
-CLAUDE.md            ★ AI용 라우터 — 작업 시작 시 먼저 읽음
-README.md            이 문서(사람용 안내)
-concept.md / spec.md / plan.md / PROGRESS.md   계약서(단계 산출물, 항상 최신)
-
-workflow/            ── 워크플로우 엔진 ──
-  state.yaml         현재 단계/상태(머신이 읽는 현재 위치)
-  stages.yaml        단계↔지침파일·Gate 매핑
-  stages/00..12.md   단계별 상세 지침
-  gates/             Gate 검증 스크립트(validate-*.mjs) + cross-review
-  scripts/           상태 전환 도구(status/start/complete/handoff/resume/...)
-  templates/         작업계약·보고서·결정기록 템플릿
-  contracts/         JSON 스키마(agent-task·handoff·state·research)
-  history/           단계별 Handoff(인수인계)
-
-presentation/        ── 발표 생성 ──
-  deck.json          발표 단일 계약(AI가 작성)
-  generator/         deck.json → Slidev/Notion 렌더러 + 검증·캡처
-  slidev/            Slidev 프로젝트(global-top.vue 편집 오버레이 포함)
-  theme/             Notion 정적 HTML 테마 + 편집 오버레이
-  output/            렌더 산출물(빌드 결과)
-
-web/                 Next.js + KRDS 스캐폴드
-data/                공공데이터(경계·대피소) + data-sources.md
-design/krds/         KRDS 디자인 토큰·엠블럼
-docs/                운영 지침 문서
-examples/            참고 완성본
-implementation/      manifest.json(실제 만든 기능)
-```
+- 현재 단계 밖의 작업을 미리 하지 않는다. 전체를 한 번에 실행하려 하지 않는다.
+- Gate를 실제로 실행하지 않고 완료 처리하지 않는다. 실패를 성공으로 기록하지 않는다.
+- 승인 단계(02·11)에서 임의로 선택하지 않는다.
+- `manifest.json`에 없는 기능을 발표에 넣지 않는다. 근거 없는 수치를 만들지 않는다. mocked/fallback을 실시간처럼 표현하지 않는다.
+- 시간이 부족하면 단계를 생략하지 않고 기능 범위를 줄인다.
+- 메인 전용 파일(서브에이전트 수정 금지): `state.yaml` · `stages.yaml` · `spec.md` · `plan.md` · `PROGRESS.md` · `README.md` · 루트 `package.json` · 공통 설정/Schema.
 
 ---
 
-## 8. 꼭 지킬 운영 원칙 (함정 방지)
+## 8. 라이선스 / 출처
 
-- **현재 단계 밖의 작업을 미리 하지 마라.** 전체 워크플로우를 한 번에 실행하려 하지 마라.
-- **Gate를 실제로 실행하지 않고 완료 처리하지 마라.** 실패를 숨기거나 성공으로 기록하지 마라.
-- **사용자 승인 단계(02·11)에서 임의로 선택하지 마라.** 멈추고 물어본다.
-- **구현되지 않은 기능을 발표에 넣지 마라**(`implementation/manifest.json` 기준). 근거 없는 수치를 만들지 마라. mocked/fallback을 실시간처럼 표현하지 마라.
-- **시간 부족 시 단계를 생략하지 말고 기능 범위를 줄여라.**
-- **메인 에이전트 전용 파일**(서브에이전트 수정 금지): `workflow/state.yaml` · `workflow/stages.yaml` · `spec.md` · `plan.md` · `PROGRESS.md` · `README.md` · 루트 `package.json` · 공통 설정/Schema.
-
-### 사람과의 소통 원칙 (보고·승인 요청 시)
-결론만 던지지 말고 **무엇을·왜·어떤 선택지가 있고·트레이드오프는 무엇인지**를 초보자에게 설명하듯 풀어 쓴다. 새 제안 앞엔 배경 1~2문장을 붙여, 이전 맥락을 몰라도 이해되게 한다. (단, 기계적 실행 로그까지 장황히 늘이라는 뜻은 아니다 — **판단·결정·보고의 언어**를 쉽게.)
-
----
-
-## 9. 사전 준비 (대회 전 권장)
-
-- **카카오맵 JS 키** 발급 + 도메인 등록 (지도 쓸 경우 — 당일엔 늦다)
-- 필요할 법한 **공공데이터 미리 신청** — `data/data-sources.md` 참고 (`data.go.kr` 차단 환경 대비)
-- 복지·혜택 주제 가능성이 있으면 `docs/welfare-benefit-dataset-prep.md`의 데이터 후보·스키마 미리 확인
-- 키(`.env.local`)는 저장소에 커밋하지 않는다
-
----
-
-## 10. 라이선스 / 출처
-
-KRDS 이용약관 · `@krds-ui/core`(Apache-2.0) · 공공데이터포털 · 발표 엔진은 BaizeAI/talks(Apache-2.0) 카드 언어 이식.
-상세는 `design/krds/SOURCE.md`, `data/data-sources.md`, `presentation/sources/`.
+KRDS 이용약관 · `@krds-ui/core`(Apache-2.0) · 공공데이터포털 · 발표 엔진은 BaizeAI/talks(Apache-2.0) 카드 언어 이식. 상세는 `design/krds/SOURCE.md`, `data/data-sources.md`, `presentation/sources/`.
