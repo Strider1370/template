@@ -6,8 +6,9 @@ import { BenefitFinder } from '@/components/BenefitFinder';
 import { ParsedProfile } from '@/components/ParsedProfile';
 import { BenefitCard } from '@/components/BenefitCard';
 import { FollowUpQuestion } from '@/components/FollowUpQuestion';
+import { CandidateCatalog } from '@/components/CandidateCatalog';
 import { matchBenefits, nextBestQuestion } from '@/lib/eligibility';
-import { fallbackExplanation, requestExplain } from '@/lib/ai';
+import { fallbackExplanation, requestExplain, requestPolicies, type PoliciesResult } from '@/lib/ai';
 import type { Explanation, MatchResult, Profile } from '@/lib/types';
 
 interface Card {
@@ -21,6 +22,8 @@ export default function Home() {
   const [searched, setSearched] = useState(false);
   // 사용자가 "건너뛰기" 한 슬롯 — 다시 묻지 않는다.
   const [skipped, setSkipped] = useState<string[]>([]);
+  // ① 실시간 후보 카탈로그(보조금24)
+  const [policies, setPolicies] = useState<PoliciesResult | null>(null);
 
   function runMatch(p: Profile) {
     setProfile(p);
@@ -37,6 +40,10 @@ export default function Home() {
         prev.map((c, j) => (j === i && c.result.benefit.id === result.benefit.id ? { ...c, explanation } : c)),
       );
     });
+
+    // ① 실시간 후보 카탈로그 비차단 조회 (무키/실패 시 라우트가 샘플 폴백).
+    setPolicies(null);
+    requestPolicies(p).then((r) => setPolicies(r));
   }
 
   function handleSubmit(p: Profile) {
@@ -117,6 +124,9 @@ export default function Home() {
                 정보를 더 입력해 보세요.
               </Body>
             )}
+
+            {/* ① 실시간 후보 카탈로그 (보조금24) — 정밀 카드와 분리, '잠재 적격 후보' */}
+            <CandidateCatalog data={policies} />
           </section>
         )}
       </div>

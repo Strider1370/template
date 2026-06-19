@@ -4,6 +4,7 @@
 // 자격 판정·사실(혜택명·금액) 생성은 절대 안 한다. 키 없거나 실패하면 폴백으로 100% 동작.
 
 import type { Explanation, MatchResult, Profile } from './types';
+import type { CandidatePolicy } from './realtime';
 import explainCache from './explain-cache.json';
 
 // ── 폴백 설명 (AI 없이도 항상 동작) ──────────────────────────────
@@ -80,6 +81,18 @@ export async function requestParse(text: string): Promise<Partial<Profile> | nul
   );
   if (!data?.ok || !data.profile) return null;
   return data.profile;
+}
+
+export interface PoliciesResult {
+  source: 'live' | 'sample';
+  total: number | null;
+  candidates: CandidatePolicy[];
+  keywords?: string[];
+}
+
+/** ① 실시간 후보 카탈로그(보조금24). 무키/실패 시 라우트가 샘플로 폴백하므로 항상 결과가 옴. */
+export async function requestPolicies(profile: Profile): Promise<PoliciesResult | null> {
+  return await postJson<PoliciesResult>('/api/policies', { profile });
 }
 
 /** 되묻기 질문 문구를 AI가 자연스럽게 다듬음. 실패/무키 시 null → 호출부가 기본 문구 사용. */
