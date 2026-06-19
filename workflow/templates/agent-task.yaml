@@ -1,4 +1,8 @@
 # 서브에이전트 작업 계약 템플릿 (Doc3 §8). 전체 지침 대신 이 좁은 계약만 전달한다.
+# 실행 규약:
+# - 메인은 이 작업을 백그라운드로 띄운다(run_in_background). 메인은 대기하지 않고 사용자와 대화를 이어간다.
+# - 각 서브에이전트는 자기 보고서 파일(읽기 쉬운 md 1개)을 남긴다. 경로는 작업별로 지정한다.
+# - 메인은 모든 보고서 도착 후에만 통합한다. 통합 전 누락 여부를 점검한다.
 taskId: <예: implement-result-screen>
 stage: <stage-id>
 agentRole: <ui-agent | data-agent | ai-agent | demo-agent | presentation-agent | reviewer>
