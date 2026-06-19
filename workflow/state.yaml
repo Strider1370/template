@@ -7,8 +7,8 @@ project:
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 1
-  stageId: parallel-research
+  stageNumber: 2
+  stageId: insight-selection
   status: not_started
   startedAt: null
   budgetMinutes: 15
@@ -19,24 +19,30 @@ completedStages:
     completedAt: '2026-06-19T08:32:35.886Z'
     actualMinutes: 2.9
     budgetMinutes: 5
+  - stageNumber: 1
+    stageId: parallel-research
+    startedAt: '2026-06-19T08:33:59.087Z'
+    completedAt: '2026-06-19T08:44:22.653Z'
+    actualMinutes: 10.4
+    budgetMinutes: 15
 requiredReads:
-  - workflow/stages/01-parallel-research.md
-  - 'docs/AI_Hackathon_Operating_System.md :: 4. Stage 01'
-  - 'docs/AI_Hackathon_Operating_System.md :: 8. Stage 01 Review'
+  - workflow/stages/02-insight-selection.md
+  - 'docs/AI_Hackathon_Operating_System.md :: 5. Stage 02'
+  - 'docs/AI_Hackathon_Operating_System.md :: 8. Stage 02 Review'
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:research
-  report: workflow/history/stage-01-gate.md
+  command: npm run gate:insight
+  report: workflow/history/stage-02-gate.md
 humanApproval:
-  required: false
-  status: not_required
+  required: true
+  status: pending
   decisionFile: null
-lastHandoff: workflow/history/stage-00-intake.md
+lastHandoff: workflow/history/stage-01-parallel-research.md
 lastSuccessfulCheckpoint:
-  stageNumber: 0
-  stageId: intake
-  commit: 96ab0f7a3ca20ddba6b7a18ccdac09d873bc9ca3
+  stageNumber: 1
+  stageId: parallel-research
+  commit: 13bbc7e4eb4933263fb8d03aaaa10e00c017f352
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -44,4 +50,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T08:32:35.990Z'
+lastUpdatedAt: '2026-06-19T08:44:22.729Z'
