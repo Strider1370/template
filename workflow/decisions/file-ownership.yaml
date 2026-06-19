@@ -1,0 +1,77 @@
+# workflow/decisions/file-ownership.yaml — Stage 05 병렬 빌드 파일 소유권 계약
+# 규칙: 한 파일은 한 주체만 쓴다(write). 그 외는 읽기 전용. 교집합 0.
+
+mainOnly:        # 서브에이전트 수정 절대 금지
+  - workflow/state.yaml
+  - workflow/stages.yaml
+  - spec.md
+  - plan.md
+  - concept.md
+  - PROGRESS.md
+  - README.md
+  - package.json
+  - web/package.json          # 의존성 변경은 메인만 (새 의존성 0 원칙)
+  - web/tailwind.config.ts
+  - web/app/layout.tsx
+  - web/app/globals.css
+  - web/.env.local.example     # 키명 추가는 메인
+
+readOnlyReuse:   # 재사용 자산 — 읽기만, 새로 만들지 말 것
+  - web/components/Header.tsx
+  - web/components/Footer.tsx
+  - web/components/KakaoMap.tsx
+  - web/lib/regions.ts
+  - web/lib/shelters.ts
+  - research/verified-figures.md
+  - research/feasibility.md
+  - demo/demo.scenario.yaml
+
+agents:
+  - role: data-agent
+    taskId: build-benefits-data
+    write:
+      - web/lib/benefits.ts
+      - web/lib/timeline.ts
+      - web/public/data/benefits/      # benefits.json
+      - web/public/data/facilities/    # <시도>.json 폴백
+    read:
+      - spec.md
+      - plan.md
+      - research/verified-figures.md
+      - research/feasibility.md
+
+  - role: ui-agent
+    taskId: build-result-ui
+    write:
+      - web/app/page.tsx
+      - web/components/InputForm.tsx
+      - web/components/BenefitTimeline.tsx
+      - web/components/BenefitCard.tsx
+      - web/components/DeadlineWarning.tsx
+      - web/components/FacilityMap.tsx
+    read:
+      - spec.md
+      - plan.md
+      - demo/demo.scenario.yaml
+      - web/lib/benefits.ts            # 타입 계약(읽기)
+      - web/lib/regions.ts
+      - web/components/KakaoMap.tsx
+
+  - role: ai-agent
+    taskId: build-ai-layer
+    write:
+      - web/app/api/ask/route.ts
+      - web/app/api/places/route.ts
+      - web/lib/ai.ts
+      - web/public/data/ai-fixtures/   # qa.json
+    read:
+      - spec.md
+      - plan.md
+      - web/lib/benefits.ts            # 타입 계약(읽기)
+      - research/verified-figures.md
+
+# 충돌 검사: write 경로 교집합 없음.
+# data → web/lib/benefits.ts, web/lib/timeline.ts, web/public/data/{benefits,facilities}
+# ui   → web/app/page.tsx, web/components/{InputForm,BenefitTimeline,BenefitCard,DeadlineWarning,FacilityMap}
+# ai   → web/app/api/{ask,places}/route.ts, web/lib/ai.ts, web/public/data/ai-fixtures
+# 공유는 web/lib/benefits.ts 타입을 ui/ai가 '읽기'로만 의존(data가 소유·작성).

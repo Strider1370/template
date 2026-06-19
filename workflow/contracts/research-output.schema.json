@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "research-output.schema.json",
+  "title": "Research Sources (research/sources.json)",
+  "description": "Stage 01에서 생성. 모든 검증 가능한 주장의 출처를 구조화. Claim-Source 연결의 근거.",
+  "type": "object",
+  "required": ["sources"],
+  "properties": {
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "url", "accessedAt"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^source-[0-9]+$" },
+          "title": { "type": "string" },
+          "url": { "type": "string" },
+          "publisher": { "type": "string" },
+          "accessedAt": { "type": "string" },
+          "usedFor": { "type": "array", "items": { "type": "string" } },
+          "claim": { "type": "string" }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "선택: 문제 주장↔출처 연결",
+      "items": {
+        "type": "object",
+        "required": ["claimId", "claim", "sources"],
+        "properties": {
+          "claimId": { "type": "string" },
+          "claim": { "type": "string" },
+          "sources": { "type": "array", "items": { "type": "string" } },
+          "usedIn": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,169 @@
+# 출처 (Sources)
+
+> `research/sources.json` 자동 변환. "임신·출산 지원의 시계" 발표·데이터의 검증 출처.
+
+## 출처 목록 (50건)
+
+- **맘편한 임신 원스톱 서비스** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/portal/onestopSvc/fertility
+  - 임신단계 지원항목을 통합 제공하나 사용자가 제도 존재를 알아야 이용 가능, 시기순 정렬·자격 자동판단은 없음
+- **행복출산 원스톱 서비스** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/portal/onestopSvc/happyBirth
+  - 출생신고와 함께 부모급여·첫만남이용권·아동수당을 통합신청하나 제도 인지를 사용자에게 의존
+- **부모급여 출생 60일 이내 신청 소급 안내** — 유캔복지뉴스 _(확인 2026-06-18)_
+  - https://www.youcan.or.kr/bbs/board2/25966
+  - 부모급여·첫만남이용권은 출생 60일 이내 신청 시 출생월 소급, 초과 시 신청월부터만 지급되어 손실 발생
+- **임신·출산 진료비 지원(국민행복카드)** — 보건복지부/사회서비스 전자바우처 _(확인 2026-06-18)_
+  - http://www.voucher.go.kr/voucher/pregnancy.do
+  - 임신·출산 진료비를 일태아 100만원/다태아 140만원 바우처 지원, 분만 전 사용 필요
+- **정부24 vs 복지로 실사용 비교** — 개인 블로그(Kylestory) _(확인 2026-06-18)_
+  - https://kylestory.com/entry/%EC%A0%95%EB%B6%8024-vs-%EB%B3%B5%EC%A7%80%EB%A1%9C
+  - 정부24(행안부)와 복지로(복지부)는 부처·범위가 분리되어 사용자가 양쪽을 따로 확인해야 함
+- **임신육아종합포털 아이사랑** — 보건복지부/사회보장정보원 _(확인 2026-06-18)_
+  - https://www.childcare.go.kr/
+  - 보육 중심 별도 포털로 임신기 시기순 안내가 핵심이 아님
+- **출산장려금지원(괴산군)** — 괴산군청 _(확인 2026-06-18)_
+  - https://www.goesan.go.kr/hc/contents.do?key=552
+  - 전입자 1년까지 소급 등 지자체별 신청기간·소급 규정 상이
+- **출산장려지원(금천구)** — 금천구청 _(확인 2026-06-18)_
+  - https://www.geumcheon.go.kr/portal/contents.do?key=525
+  - 출생 1년 이내 신청 요구 등 지자체마다 신청기간 상이
+- **출산·양육 지원현황(경기도)** — 경기도청 _(확인 2026-06-18)_
+  - https://www.gg.go.kr/contents/contents.do?ciIdx=987110&menuId=266074
+  - 지자체별 출산장려금·양육비 금액·요건 상이로 거주지에 따라 받을 제도가 달라짐
+- **임신·출산 지원(보건복지부)** — 보건복지부 _(확인 2026-06-18)_
+  - https://www.mohw.go.kr/menu.es?mid=a10711020100
+  - 임신·출산 지원과 6+6 부모육아휴직제 등 제도가 있으나 입구가 분산
+- **복지로** — 보건복지부/사회보장정보원 _(확인 2026-06-18)_
+  - https://www.bokjiro.go.kr/
+  - 현금성 복지 통합 신청 포털이나 개인 타임라인 정렬 기능은 없음
+- **임신 관련 서비스 통합처리 신청(맘편한임신)** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/portal/service/serviceInfo/174100000015
+  - 맘편한임신은 정해진 묶음을 특정 시점에 통합신청, 주차별 D-day 타임라인 정렬은 아님
+- **출산 관련 서비스 통합처리 신청(행복출산)** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=17410000001
+  - 출생신고와 함께 전국공통+지자체 출산지원을 통합 신청
+- **한국사회보장정보원 '아이마중' 앱 출시** — ibabynews _(확인 2026-06-18)_
+  - https://www.ibabynews.com/news/articleView.html?idxno=118436
+  - 아이마중은 2023년 출시된 임신·출산 통합 앱
+- **아이마중 소개** — 한국사회보장정보원 _(확인 2026-06-18)_
+  - https://www.ssis.or.kr/lay1/S1T2017C2020/contents.do
+  - 아이마중은 임신주차별(3~40주)·월령별(1~36개월) 맞춤정보 제공, 단 자격 자동판단·지자체 맞춤·시기순 정렬은 명시 없음
+- **지자체 출산지원금 지역별 상이** — 모바일 생활법령(법제처) _(확인 2026-06-18)_
+  - https://m.easylaw.go.kr/MOB/CsmInfoRetrieve.laf?csmSeq=1126&ccfNo=2&cciNo=1&cnpClsNo=1
+  - 출산지원금은 지자체별 실시 여부·금액·거주기간·신청기한 상이
+- **복지로 모의계산·맞춤형급여안내** — 복지로/보건복지부 _(확인 2026-06-18)_
+  - https://www.bokjiro.go.kr/ssis-tbu/twatbz/mkclAsis/mkclPage.do
+  - 맞춤형급여안내·자격 모의계산 제공하나 임신주차 같은 시간축 정렬은 없음
+- **보건복지상담센터 129** — 보건복지상담센터 _(확인 2026-06-18)_
+  - https://www.129.go.kr/counsel/counsel01.do
+  - 전화·챗봇 상담의 pull 방식으로 자동 정렬·자격판단 결과를 즉시 주지 않음
+- **마미톡(민간 임신·육아 앱)** — 마미톡 _(확인 2026-06-18)_
+  - https://mmtalk.kr/
+  - 초음파·기록·커뮤니티·커머스 중심으로 정부지원 자격판단·신청은 핵심 아님
+- **Pro-active Family Benefits** — OECD OPSI _(확인 2026-06-18)_
+  - https://oecd-opsi.org/innovations/proactive-family-benefits/
+  - 에스토니아는 출생 등록 후 자동 자격판정으로 신청불필요(no-application) 가족급여를 능동 통지
+- **Parents no longer have to apply for family benefits** — ERR News _(확인 2026-06-18)_
+  - https://news.err.ee/991789/parents-no-longer-have-to-apply-for-family-benefits
+  - 2019년부터 에스토니아 부모는 가족급여를 신청할 필요 없이 자동 안내받음
+- **Baby Bonus Scheme | LifeSG** — LifeSG (GovTech Singapore) _(확인 2026-06-18)_
+  - https://www.life.gov.sg/family-parenting/benefits-support/baby-bonus-scheme
+  - 싱가포르 LifeSG는 Baby Bonus 단일 접점으로 라이프이벤트 흐름에 묶어 자동 지급
+- **Automated Benefits Application** — Canada Revenue Agency _(확인 2026-06-18)_
+  - https://www.canada.ca/en/revenue-agency/services/child-family-benefits/automated-benefits-application.html
+  - 캐나다 ABA는 출생 등록에 아동수당 신청을 끼워넣어 동의 1회로 자격판정·지급
+- **Food benefits — GetCalFresh** — Code for America _(확인 2026-06-18)_
+  - https://codeforamerica.org/programs/social-safety-net/food-benefits/
+  - GetCalFresh는 신청을 단축하고 핵심 마일스톤을 문자 리마인드해 이탈 방지
+- **Project Snapshot: mRelief** — Digital Government Hub _(확인 2026-06-18)_
+  - https://digitalgovernmenthub.org/publications/mrelief/
+  - mRelief는 최소 질문으로 수분 내 SNAP 자격 가능성을 사전 스크리닝
+- **Find government benefits | USAGov Benefit Finder** — USAGov _(확인 2026-06-18)_
+  - https://www.usa.gov/benefit-finder
+  - 익명 질문 답변을 1,000+ 프로그램과 대조해 맞춤 후보·신청 기관을 라우팅
+- **Check benefits and financial support you can get** — GOV.UK (GDS/DWP) _(확인 2026-06-18)_
+  - https://www.gov.uk/check-benefits-financial-support
+  - 상황 질문 기반으로 최신 법규 룰을 적용한 급여 자격 체커 제공
+- **Sure Start Maternity Grant: Overview** — GOV.UK (DWP) _(확인 2026-06-18)_
+  - https://www.gov.uk/sure-start-maternity-grant
+  - 출산예정 11주 전~출산 후 6개월의 명확한 클레임 윈도우(기한)를 1급 정보로 제시
+- **Before the birth of your baby** — Services Australia _(확인 2026-06-18)_
+  - https://www.servicesaustralia.gov.au/before-birth-your-baby?context=60001
+  - 호주는 출산 전 최대 3개월 사전 신청을 허용해 시기별 할 일을 안내
+- **임신·출산진료비지원사업** — 보건복지부 _(확인 2026-06-18)_
+  - https://www.mohw.go.kr/menu.es?mid=a10705020100
+  - 임신·출산 진료비 바우처(국민행복카드) 제도 및 신청처
+- **출산 진료비 제도** — 국민건강보험공단 _(확인 2026-06-18)_
+  - https://www.nhis.or.kr/static/html/wbma/c/wbmac0212.html
+  - 바우처 사용기한(분만예정일 2년)·신청 방식
+- **2026 부모급여·첫만남이용권·아동수당 정리** — 복지맘(블로그·2차출처) _(확인 2026-06-18)_
+  - https://welfare-mom.com/korea-child-benefit-guide-2026/
+  - 첫만남이용권 첫째200/둘째300, 부모급여 0세100·1세50, 아동수당 월10만원 (금액 재검증 필요·unverified)
+- **산모/신생아건강관리지원사업** — 사회서비스 전자바우처 _(확인 2026-06-18)_
+  - https://www.socialservice.or.kr/user/htmlEditor/view2.do?p_sn=7
+  - 산모·신생아 건강관리 지원사업 개요 및 바우처
+- **산모신생아 건강관리 서비스** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=13520000043
+  - 기준중위소득 150% 이하, 신청기간 출산예정 40일 전~출산 후 30일 (좁은 신청 창)
+- **고위험 임산부 의료비 지원** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/portal/service/serviceInfo/135200000114
+  - 소득기준 폐지(2024~), 19대 질환, 비급여·전액본인부담 90% 한도 300만원
+- **카카오 로컬 REST API 개발가이드** — Kakao Developers _(확인 2026-06-18)_
+  - https://developers.kakao.com/docs/latest/ko/local/dev-guide
+  - 키워드 장소 검색 /v2/local/search/keyword.json, KakaoAK 헤더(REST키) 필요 — JS 지도키와 별개
+- **첫째만 낳아도 2천만 원…근데 어디서 살아요?** — MBC 뉴스데스크 _(확인 2026-06-18)_
+  - https://imnews.imbc.com/replay/2025/nwdesk/article/6788149_36799.html
+  - 거주 지자체에 따라 출산지원금이 크게 달라짐(편차 극심) — 지역 스위치 데모 킥의 근거
+- **첫만남이용권 지원** — 국민행복카드 _(확인 2026-06-18)_
+  - http://www.voucher.go.kr/voucher/firstEncounter.do
+  - 첫째 200만원·둘째 이상 300만원('24.1.1 이후 출생) — 국가 지원은 전국 동일 기준
+- **맘편한 임신 원스톱 서비스(광진구 보건소)** — 광진구청 보건소 _(확인 2026-06-18)_
+  - https://www.gwangjin.go.kr/health/main/contents.do?menuNo=300317
+  - 산모·신생아 건강관리는 분만예정일 40일 전~출산 30일 후로 신청 창이 좁아 '놓침' 문제가 실재
+- **출산장려금지원(지자체)** — 복지로 _(확인 2026-06-18)_
+  - https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004486
+  - 지자체별 출산장려금 규모·조건이 천차만별 — 거주지역 입력의 가치 근거
+- **전국 출산 장려금 보기** — 육아생활(lifewithbaby) _(확인 2026-06-18)_
+  - https://lifewithbaby.co.kr/money/list
+  - 전국 지자체별 출산장려금이 지역마다 상이 — 데이터 최신성·지역 맞춤 필요성 (2차출처·재검증 권장)
+- **2026년 부모급여, 이렇게 지원합니다!** — 대한민국 정책브리핑(보건복지부) _(확인 2026-06-18)_
+  - https://www.korea.kr/multi/visualNewsView.do?newsId=148957936
+  - 부모급여 0세 월100만원·1세 월50만원, 출생일로부터 60일 이내 신청 시 출생월부터 소급지원 [1차·검증완료]
+- **부모급여(영아수당) 지원** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/portal/service/serviceInfo/135200000143
+  - 부모급여 0세 월100만원·1세 월50만원(2026) [1차·검증완료]
+- **첫만남이용권 지원** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/portal/service/serviceInfo/135200005015
+  - 첫만남이용권 첫째200·둘째이상300만원(2024.1.1 이후 출생), 사용기한 주민등록상 생년월일로부터 2년 [1차·검증완료]
+- **첫만남이용권 지원(복지서비스 상세)** — 복지로(보건복지부) _(확인 2026-06-18)_
+  - https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004656
+  - 첫만남이용권 출생60일 이내(출생일 포함) 신청 시 24개월 모두 지원 [1차·검증완료, 60일 소급 규칙 근거]
+- **아동수당 연령·금액 동시 확대…비수도권 최대 월 3만 원 추가 지원** — 대한민국 정책브리핑(보건복지부) _(확인 2026-06-18)_
+  - https://www.korea.kr/news/policyNewsView.do?newsId=148961286
+  - 아동수당 월10만원, 2026년 지급연령 9세 미만(0~107개월)으로 확대, 비수도권·인구감소지역 최대 월3만원 추가지급 [1차·정정: 기존 8세→9세]
+- **임신·출산진료비지원사업** — 보건복지부 _(확인 2026-06-18)_
+  - https://www.mohw.go.kr/menu.es?mid=a10705020100
+  - 임신출산 진료비 일태아 100만원, 다태아 140만원 기본+태아당 100만원이 되도록 추가지급, 사용기한 분만예정일로부터 2년 [1차·정정: 다태아=태아당 100만원]
+- **다둥이 임신·출산하면 태아당 진료비 100만원 준다** — 복지로(보건복지부) _(확인 2026-06-18)_
+  - https://www.bokjiro.go.kr/ssis-tbu/cms/pc/news/news/1305562_1114.html
+  - 2024년 1월부터 다태아 임신·출산 진료비를 태아당 100만원으로 지원(쌍둥이 실질 약 200만원) [1차·검증완료]
+- **산모신생아 건강관리 서비스** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=13520000043
+  - 산모·신생아 건강관리 신청 출산예정일 40일 전~출산 후 30일, 건강보험료 합산액 기준중위소득 150% 이하 [1차·검증완료]
+- **고위험 임산부 의료비 지원** — 정부24 _(확인 2026-06-18)_
+  - https://www.gov.kr/portal/service/serviceInfo/135200000114
+  - 고위험 임산부 의료비 2024년부터 소득기준 폐지, 19대 고위험 임신질환, 비급여·전액본인부담 90% 지원·1인당 300만원 한도, 분만일로부터 6개월 이내 신청 [1차·검증완료]
+
+## 핵심 주장 ↔ 출처
+
+- **problem-01**: 임신·출산 지원이 정부24·복지로·아이사랑·129·지자체로 산재돼 사용자가 입구를 여러 곳 확인해야 한다
+  - 근거: jtbd-src-05, jtbd-src-06, domestic-src-10, jtbd-src-11
+- **problem-02**: 신청 시기 창이 좁거나 소급 마감이 있어 시점을 놓치면 수십만원 단위 손실이 발생한다(부모급여·첫만남 출생 60일 이내 신청 시 출생월 소급, 초과 시 신청월부터 / 산모·신생아 40일전~30일후)
+  - 근거: verify-src-01, verify-src-04, verify-src-11
+- **problem-03**: 출산지원금 등은 지자체별 금액·요건·신청기간이 상이해 거주지에 따라 받을 제도가 달라진다
+  - 근거: domestic-src-06, jtbd-src-09, judge-src-07
+- **gap-01**: 기존 서비스는 통합신청(정부24)·주차별정보(아이마중)·자격모의계산(복지로)을 각각 제공하나, 시기순 '지금→곧' 정렬+마감 리마인드+지자체 자동매칭의 결합은 없다
+  - 근거: domestic-src-01, domestic-src-05, domestic-src-07
+- **overseas-01**: 해외 모범사례는 라이프이벤트 타임라인+기한 노출, 최소질문 자격 스크리닝, proactive 능동 안내 3가지로 수렴한다
+  - 근거: overseas-src-10, overseas-src-08, overseas-src-01

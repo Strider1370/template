@@ -1,0 +1,3670 @@
+/* @theme propca-notion-style */
+/* ============================================================
+   notion — Workspace-Friendly brand theme.
+   Designed from scratch (NOT a tech-modern derivative).
+   Source: VoltAgent/awesome-design-md (Notion DESIGN.md, MIT).
+   Brand language: 12px radius, pastel rotation, navy hero,
+   sticky-note rotated cards, yellow banner, workspace mockup.
+   ============================================================
+   ※ 출처: github.com/procpalee/Marp_Templates (propca-notion-style)
+     - 원본 ProcPA 로고 참조는 제거(아래 url(...) -> none).
+       팀/기관 로고가 필요하면 cover/header의 background url을 교체.
+     - 원저자 라이선스 미명시 → 해커톤 참고/사용. 재배포 시 출처 확인 권장.
+   ============================================================ */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+/* ---------------------------------------------------------------
+   Tokens
+   --------------------------------------------------------------- */
+:root {
+  --purple: #5645d4;
+  --purple-pressed: #4534b3;
+  --purple-deep: #3a2a99;
+  --pink: #ff64c8;
+  --orange: #dd5b00;
+  --teal: #2a9d99;
+  --green: #1aae39;
+  --link: #0075de;
+
+  --navy: #0a1530;
+  --navy-deep: #070f24;
+
+  --canvas: #ffffff;
+  --canvas-soft: #fafaf9;
+  --canvas-card: #f6f5f4;
+  --hairline: #e5e3df;
+  --hairline-strong: #c8c4be;
+
+  --ink: #191918;
+  --ink-mute: #5a5a55;
+  --ink-sub: #8b8a84;
+
+  --pastel-peach:    #ffe8d4;
+  --pastel-rose:     #fde0ec;
+  --pastel-mint:     #d9f3e1;
+  --pastel-lavender: #e6e0f5;
+  --pastel-sky:      #dcecfa;
+  --pastel-yellow:   #f9e79f;
+
+  --font-sans: 'Pretendard', 'Noto Sans KR', 'Notion Sans', 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Pretendard', 'Noto Sans KR', 'Inter', -apple-system, sans-serif;
+  --font-serif: 'Fraunces', 'Georgia', serif;
+}
+
+/* ---------------------------------------------------------------
+   Section base
+   --------------------------------------------------------------- */
+section {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  padding: 72px 88px;
+  font-size: 18pt;
+  line-height: 1.55;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+/* ---------------------------------------------------------------
+   Typography
+   --------------------------------------------------------------- */
+h1 {
+  font-size: 28pt;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 22px 0;
+  color: var(--ink);
+}
+h2 {
+  font-size: 22pt;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink-mute);
+  margin: 0 0 14px 0;
+}
+h3 {
+  font-size: 17pt;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px 0;
+}
+p, li {
+  font-size: 17pt;
+  line-height: 1.55;
+  color: var(--ink-mute);
+  margin: 0 0 10px 0;
+}
+strong { color: var(--purple); font-weight: 600; background: none; }
+em {
+  font-style: normal;
+  display: inline-block;
+  background: #fbf3db;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 0.85em;
+  padding: 1px 8px;
+  border-radius: 4px;
+  margin-right: 6px;
+}
+a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,117,222,0.3);
+}
+ul, ol { margin: 0 0 16px 0; padding-left: 24px; }
+li::marker { color: var(--purple); }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: rgba(86,69,212,0.10);
+  color: var(--purple);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+pre {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 14px 0;
+  font-size: 13pt;
+  line-height: 1.5;
+  overflow: auto;
+}
+pre code {
+  display: block;
+  background: transparent;
+  color: #24292f;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 13pt;
+}
+
+/* GitHub Light Syntax Highlighting for code blocks */
+pre .keyword, pre .token.keyword, pre .hljs-keyword { color: #cf222e; font-weight: 600; }
+pre .string, pre .token.string, pre .hljs-string { color: #0a3069; }
+pre .comment, pre .token.comment, pre .hljs-comment { color: #6e7781; font-style: italic; }
+pre .number, pre .token.number, pre .hljs-number { color: #0550ae; }
+pre .function, pre .token.function, pre .hljs-function, pre .hljs-title { color: #8250df; }
+pre .operator, pre .token.operator, pre .hljs-operator { color: #bc4c00; }
+pre .class-name, pre .token.class-name, pre .hljs-class { color: #953800; }
+pre .builtin, pre .token.builtin, pre .hljs-built_in { color: #116329; }
+pre .hljs-meta { color: #57606a; font-weight: 500; }
+pre .hljs-attr { color: #0550ae; }
+blockquote {
+  background: var(--canvas-card);
+  border-left: 3px solid var(--purple);
+  padding: 14px 22px;
+  margin: 14px 0;
+  border-radius: 4px;
+  color: var(--ink);
+  font-size: 17pt;
+  line-height: 1.55;
+}
+blockquote p { color: var(--ink); margin: 0; font-size: 17pt; line-height: 1.55; font-style: italic; }
+
+table { border-collapse: collapse; width: 100%; font-size: 15pt; margin: 14px 0 24px; }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--hairline); }
+th { background: var(--canvas-card); color: var(--ink); font-weight: 600; font-size: 13pt; }
+td { color: var(--ink-mute); }
+hr { display: none; }
+
+/* ---------------------------------------------------------------
+   Header / Footer / Pagination
+   --------------------------------------------------------------- */
+header {
+  position: absolute;
+  top: 30px;
+  left: 88px;
+  font-size: 11pt;
+  color: var(--ink-sub);
+  font-weight: 500;
+}
+footer {
+  position: absolute;
+  bottom: 30px;
+  left: 88px;
+  font-size: 11pt;
+  color: var(--ink-sub);
+}
+section::after {
+  content: attr(data-marpit-pagination);
+  position: absolute;
+  bottom: 30px;
+  right: 88px;
+  font-size: 11pt;
+  color: var(--ink-sub);
+  background: var(--canvas-card);
+  padding: 2px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+/* ===============================================================
+   Shell 3 — cover / section / end (navy-cover, purple-section, signup-end 스타일을 기본 레이아웃으로 대체)
+   =============================================================== */
+/* ─── Variant A (DEFAULT): Navy Refined ─── */
+section.cover {
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: #ffffff;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 100px 96px;
+}
+section.cover h1 {
+  color: #ffffff;
+  font-size: 60pt;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+  line-height: 1.1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  padding-bottom: 24px;
+  width: 100%;
+}
+section.cover h2 {
+  color: rgba(255,255,255,0.78);
+  font-size: 22pt;
+  font-weight: 400;
+  margin-bottom: 36px;
+  max-width: 78%;
+}
+section.cover p {
+  position: absolute;
+  bottom: 56px;
+  right: 96px;
+  color: rgba(255,255,255,0.55);
+  font-size: 13pt;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-align: right;
+}
+section.cover::after, section.cover header, section.cover footer { display: none; }
+section.cover::before {
+  /* Top-left procpa logo (white via filter for dark backgrounds) */
+  content: '';
+  position: absolute;
+  top: 56px;
+  left: 96px;
+  width: 168px;
+  height: 36px;
+  background: none /* 로고 제거 — 팀/기관 로고 경로로 교체 가능 */;
+  background-size: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+
+section.section {
+  background: var(--purple);
+  color: #ffffff;
+  justify-content: center;
+  align-items: flex-start;
+}
+section.section h1 { color: #ffffff; font-size: 96pt; font-weight: 600; letter-spacing: -0.03em; margin: 0; line-height: 1; }
+section.section h2 { color: rgba(255,255,255,0.78); font-size: 22pt; font-weight: 400; margin-top: 18px; }
+section.section::after, section.section header, section.section footer { display: none; }
+
+section.end {
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: #ffffff;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 96px;
+}
+section.end h1 {
+  color: #ffffff;
+  font-size: 62pt;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  line-height: 1.05;
+}
+section.end h2 { color: rgba(255,255,255,0.7); font-size: 22pt; font-weight: 400; margin-bottom: 36px; }
+section.end p { color: rgba(255,255,255,0.55); font-size: 14pt; }
+section.end .cta {
+  background: var(--purple);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 17pt;
+  padding: 14px 28px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 24px rgba(86,69,212,0.4);
+}
+section.end ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+section.end ul li {
+  background: rgba(255,255,255,0.10);
+  color: #ffffff;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 14pt;
+  border: 1px solid rgba(255,255,255,0.16);
+}
+section.end ul li::marker { content: ''; }
+section.end::after, section.end header, section.end footer { display: none; }
+
+/* ===============================================================
+   12 BRAND LAYOUTS
+   =============================================================== */
+
+
+
+/* 4) [removed] database-rows — 2026-05 사용자 결정으로 삭제 (일반 table + 전역 .tag 헬퍼로 대체) */
+
+
+/* 5) pastel-blocks — 6 pastel block grid */
+
+
+section.pastel-blocks .blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 18px;
+  flex: 1;
+}
+section.pastel-blocks .blocks > div {
+  padding: 22px 22px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--ink);
+  min-height: 0;
+}
+section.pastel-blocks .blocks > div:nth-child(1) { background: var(--pastel-peach); }
+section.pastel-blocks .blocks > div:nth-child(2) { background: var(--pastel-rose); }
+section.pastel-blocks .blocks > div:nth-child(3) { background: var(--pastel-mint); }
+section.pastel-blocks .blocks > div:nth-child(4) { background: var(--pastel-lavender); }
+section.pastel-blocks .blocks > div:nth-child(5) { background: var(--pastel-sky); }
+section.pastel-blocks .blocks > div:nth-child(6) { background: var(--pastel-yellow); }
+section.pastel-blocks .blocks h3 { font-size: 18pt; margin-bottom: 6px; color: var(--ink); }
+section.pastel-blocks .blocks p  { font-size: 14pt; color: var(--ink-mute); line-height: 1.45; margin: 0; }
+
+/* 6) yellow-banner — full-bleed yellow callout */
+section.yellow-banner {
+  background: var(--pastel-yellow);
+  color: var(--ink);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 90px 120px;
+}
+section.yellow-banner h1 { font-size: 56pt; font-weight: 600; letter-spacing: -0.03em; color: var(--ink); margin: 0 0 16px; line-height: 1.1; }
+section.yellow-banner h2 { font-size: 22pt; font-weight: 400; color: rgba(25,25,24,0.65); margin: 0 0 28px; }
+section.yellow-banner p  { font-size: 16pt; color: rgba(25,25,24,0.65); }
+
+/* 7) workspace-split — sidebar + content */
+
+/* 8) toggle-list — notion toggle mock
+ * 2026-06 고도화: hairline 행 → canvas-card 카드 그룹화 (definition-cards 이음 기법).
+ * heading = 카드 상단(하단 border 없음) / item = 좌우 border 연속 / 그룹 마지막 item = 하단 radius.
+ */
+section.toggle-list .toggle.heading {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  padding: 14px 18px 8px;
+  margin: 12px 0 0;
+  font-size: 17pt;
+  font-weight: 600;
+  color: var(--ink);
+}
+section.toggle-list .toggle.heading:first-child { margin-top: 0; }
+section.toggle-list .toggle.heading::before {
+  content: '▶';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin-right: 12px;
+  color: var(--purple);
+  background: rgba(86,69,212,0.10);
+  border-radius: 6px;
+  font-size: 10pt;
+  vertical-align: -4px;
+}
+section.toggle-list .toggle.heading:not(:has(+ .toggle.item)) {
+  border-bottom: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding-bottom: 14px;
+}
+section.toggle-list .toggle.item {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-top: none;
+  border-bottom: none;
+  padding: 4px 18px 4px 56px;
+  font-size: 15pt;
+  color: var(--ink-mute);
+}
+section.toggle-list .toggle.item::before {
+  content: '○';
+  margin-right: 10px;
+  color: var(--ink-sub);
+  font-size: 10pt;
+}
+section.toggle-list .toggle.item:not(:has(+ .toggle.item)) {
+  border-bottom: 1px solid var(--hairline);
+  border-radius: 0 0 10px 10px;
+  padding-bottom: 14px;
+}
+
+/* 9) block-features — icon circle + title + body */
+
+
+section.block-features .blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  flex: 1;
+}
+section.block-features .blocks > .block {
+  padding: 24px;
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+}
+section.block-features .blocks > .block .ico {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 22pt;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+section.block-features .blocks > .block:nth-child(1) .ico { background: var(--purple); }
+section.block-features .blocks > .block:nth-child(2) .ico { background: var(--pink); }
+section.block-features .blocks > .block:nth-child(3) .ico { background: var(--teal); }
+section.block-features .blocks > .block:nth-child(4) .ico { background: var(--orange); }
+section.block-features .blocks > .block:nth-child(5) .ico { background: var(--green); }
+section.block-features .blocks > .block h3 { font-size: 17pt; margin: 0 0 6px; color: var(--ink); }
+section.block-features .blocks > .block p  { font-size: 14pt; color: var(--ink-mute); margin: 0; line-height: 1.5; }
+
+
+
+/* 11) roadmap — 3 rectangular roadmap tiers */
+
+
+section.roadmap .tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  flex: 1;
+}
+section.roadmap .tier {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+}
+section.roadmap .tier h3 { font-size: 18pt; color: var(--ink); margin: 0 0 6px; }
+section.roadmap .tier .phase-detail { font-size: 14pt; font-weight: 600; color: var(--purple); letter-spacing: -0.01em; margin-bottom: 8px; line-height: 1.2; }
+section.roadmap .tier .phase-detail small { font-size: 12pt; font-weight: 400; color: var(--ink-sub); }
+section.roadmap .tier p { font-size: 11.5pt; color: var(--ink-mute); margin: 6px 0 18px; }
+section.roadmap .tier ul { list-style: none; padding: 0; margin: 18px 0 0 0; }
+section.roadmap .tier ul li { font-size: 13pt; color: var(--ink); padding: 5px 0; border-top: 1px solid var(--hairline); }
+section.roadmap .tier ul li::marker { content: ''; }
+section.roadmap .tier ul li::before { content: '✓ '; color: var(--green); font-weight: 600; }
+section.roadmap .tier.featured {
+  border: 2px solid var(--purple);
+  position: relative;
+}
+section.roadmap .tier.featured::before {
+  content: '진행 중';
+  position: absolute;
+  top: -12px; right: 16px;
+  background: var(--purple);
+  color: #ffffff;
+  font-size: 11pt;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 4px;
+}
+
+/* 12) signup-end (Shell 3의 end와 결합되어 기본 레이아웃으로 대체됨) */
+
+/* ===============================================================
+   LECTURE / PRESENTATION extensions (Pretendard-first, Notion tokens)
+   =============================================================== */
+
+section.lecture-definition,
+section.lecture-objective,
+section.lecture-example,
+section.lecture-takeaway,
+section.lecture-quiz {
+  font-family: 'Pretendard', 'Notion Sans', 'Inter', -apple-system, sans-serif;
+  background: var(--canvas);
+  color: var(--ink-mute);
+  
+  justify-content: flex-start;
+}
+
+/* L1) lecture-definition */
+
+section.lecture-definition h2 { font-size: 15pt; font-weight: 500; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-sub); margin: 0 0 32px; }
+section.lecture-definition .def-body { font-size: 26pt; font-weight: 400; line-height: 1.5; color: var(--ink-mute); border-top: 1px solid var(--hairline); padding-top: 26px; margin-bottom: 26px; }
+section.lecture-definition .def-body strong { color: var(--ink); font-weight: 700; background: linear-gradient(transparent 60%, rgba(221,91,0,0.16) 60%); padding: 0 2px; }
+section.lecture-definition .def-example { font-size: 20pt; line-height: 1.55; color: var(--ink-mute); background: var(--canvas-card); border: 1px solid var(--hairline); border-radius: 12px; padding: 22px 26px; }
+section.lecture-definition .def-example::before { content: '예시'; display: inline-block; font-family: var(--font-mono); font-size: 10pt; text-transform: uppercase; letter-spacing: 0.08em; color: var(--orange); background: rgba(221,91,0,0.10); padding: 3px 8px; border-radius: 6px; margin-right: 12px; vertical-align: middle; }
+
+/* L2) lecture-objective */
+
+section.lecture-objective h2 { font-size: 15pt; font-weight: 500; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-sub); margin: 0 0 36px; }
+/* 2026-06 고도화: hairline 행 → canvas-card 카드 스택 + orange 칩 화살표 (강의 계열 orange accent 유지) */
+section.lecture-objective ol, section.lecture-objective ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+section.lecture-objective li { font-size: 24pt; line-height: 1.4; color: var(--ink-mute); background: var(--canvas-card); border: 1px solid var(--hairline); border-radius: 12px; padding: 18px 24px 18px 86px; position: relative; margin: 0; }
+section.lecture-objective li::before { content: '→'; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; background: rgba(221,91,0,0.10); border-radius: 10px; font-family: var(--font-mono); font-size: 22pt; color: var(--orange); font-weight: 500; }
+section.lecture-objective li strong { color: var(--ink); font-weight: 700; }
+
+/* L3) lecture-example */
+
+section.lecture-example .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 22px; }
+section.lecture-example .steps > div { background: var(--canvas-card); border: 1px solid var(--hairline); border-radius: 12px; padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; }
+section.lecture-example .steps .num { font-family: var(--font-mono); font-size: 11pt; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--orange); }
+section.lecture-example .steps .body { font-size: 20pt; font-weight: 500; line-height: 1.35; color: var(--ink); }
+section.lecture-example .result { background: var(--navy); color: #ffffff; border-radius: 12px; padding: 26px 30px; font-size: 22pt; font-weight: 500; line-height: 1.4; }
+section.lecture-example .result::before { content: '결과 →'; display: inline-block; font-family: var(--font-mono); font-size: 11pt; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.55); margin-right: 14px; vertical-align: middle; }
+
+/* L4) lecture-takeaway */
+section.lecture-takeaway { justify-content: center; }
+
+section.lecture-takeaway blockquote { font-size: 38pt; font-weight: 500; line-height: 1.25; color: var(--ink); background: var(--canvas-card); border: 1px solid var(--hairline); border-left: 4px solid var(--orange); border-radius: 12px; padding: 34px 38px; margin: 0 0 22px; letter-spacing: -0.02em; }
+section.lecture-takeaway blockquote strong { color: var(--orange); font-weight: 700; }
+section.lecture-takeaway p:last-child { font-family: var(--font-mono); font-size: 12pt; color: var(--ink-sub); text-transform: uppercase; letter-spacing: 0.08em; margin: 0; }
+
+/* L5) lecture-quiz */
+
+section.lecture-quiz h2 { font-size: 14pt; font-weight: 500; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--orange); margin: 0 0 26px; }
+section.lecture-quiz .options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+section.lecture-quiz .options > div { background: var(--canvas-card); border: 1px solid var(--hairline); border-radius: 12px; padding: 18px 22px; font-size: 19pt; line-height: 1.35; color: var(--ink); display: flex; align-items: flex-start; gap: 14px; }
+section.lecture-quiz .options > div::before { content: attr(data-opt); font-family: var(--font-mono); font-size: 13pt; font-weight: 700; color: var(--orange); background: rgba(221,91,0,0.10); border-radius: 6px; padding: 4px 10px; flex-shrink: 0; letter-spacing: 0; margin-top: 1px; }
+section.lecture-quiz .hint { font-family: var(--font-mono); font-size: 11pt; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-sub); }
+section.lecture-quiz .hint strong { color: var(--orange); font-weight: 500; }
+
+/* ===============================================================
+   TECH-MODERN 23 UNIVERSAL LAYOUTS (adopted with notion tokens)
+   alias mappings + inherited layouts (cover/section/end shells use propca's own)
+   =============================================================== */
+:root {
+  /* tech-modern alias mappings */
+  --bg-base: var(--canvas-soft);
+  --bg-elevated: var(--canvas);
+  --bg-code: var(--navy);
+  --fg-default: var(--ink);
+  --fg-muted: var(--ink-mute);
+  --fg-subtle: var(--ink-sub);
+  --border: var(--hairline);
+  --accent: var(--purple);
+  --accent-secondary: var(--orange);
+  --accent-soft: rgba(86,69,212,0.08);
+  --example: var(--pink);
+  --info: #0075de;
+  --success: var(--green);
+  --warning: #f59e0b;
+  --danger: #e03e3e;
+}
+section.split-6-4 {
+  grid-template-columns: 6fr 4fr;
+}
+section.split-4-6 {
+  grid-template-columns: 4fr 6fr;
+}
+
+/* ---------- 2-column split ---------- */
+section.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 48px;
+  row-gap: 24px;
+  align-content: start;
+}
+section.split > h1,
+section.split > p:first-of-type {
+  grid-column: 1 / -1;
+}
+section.split > .col {
+  min-width: 0;
+}
+section.split img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 380px !important;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- 3-column grid ---------- */
+section.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 32px;
+  row-gap: 24px;
+  align-content: start;
+}
+section.grid-3 > h1 {
+  grid-column: 1 / -1;
+}
+section.grid-3 > .col {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  min-width: 0;
+}
+section.grid-3 > .col h3 {
+  margin-top: 0;
+}
+
+/* ---------- Timeline (horizontal steps, auto-wraps after 4 items) ---------- */
+section.timeline ol {
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 0;
+  row-gap: 32px;
+  padding: 24px 0 0 0;
+  margin: 0;
+  position: relative;
+}
+section.timeline ol::after {
+  display: none;
+}
+section.timeline ol li::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -1px;
+  right: -1px;
+  height: 2px;
+  background: var(--hairline-strong);
+  z-index: 1;
+}
+section.timeline ol li:nth-child(4n+1)::after {
+  left: 50%;
+}
+section.timeline ol li:nth-child(4n)::after {
+  right: 50%;
+}
+section.timeline ol li {
+  counter-increment: step;
+  position: relative;
+  padding: 56px 16px 0 16px;
+  text-align: center;
+  font-size: 15pt;
+  color: var(--fg-muted);
+  line-height: 1.5;
+  list-style: none;
+  z-index: 1;
+}
+section.timeline ol li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 14pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 0 6px var(--canvas);
+}
+section.timeline ol li::marker {
+  content: '';
+}
+section.timeline ol li strong {
+  display: block;
+  color: var(--fg-default);
+  margin-bottom: 4px;
+  background: none;
+  padding: 0;
+}
+
+/* ---------- Icon list (badge prominent rows) ---------- */
+section.icon-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
+}
+section.icon-list ul li {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  font-size: 18pt;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+section.icon-list ul li::marker {
+  content: '';
+}
+section.icon-list ul li em {
+  flex: 0 0 auto;
+  font-size: 13pt;
+}
+
+/* ---------- Compare (A vs B) ---------- */
+section.compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 24px;
+  row-gap: 16px;
+  align-content: start;
+  align-items: stretch;
+  justify-items: stretch;
+}
+section.compare > h1,
+section.compare > p {
+  grid-column: 1 / -1;
+}
+section.compare > .col {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  align-self: stretch;
+}
+section.compare > .vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 22pt;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  padding: 0 8px;
+}
+
+/* ---------- Full-bleed background image hero ---------- */
+section.bg-full {
+  padding: 90px 110px;
+  color: #ffffff;
+  position: relative;
+  justify-content: center;
+}
+section.bg-full::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(11, 15, 25, 0.78) 0%, rgba(11, 15, 25, 0.45) 100%);
+  z-index: 0;
+}
+section.bg-full > * {
+  position: relative;
+  z-index: 1;
+}
+section.bg-full h1 {
+  color: #ffffff;
+  font-size: 56pt;
+}
+section.bg-full h2 {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 24pt;
+  font-weight: 500;
+}
+
+/* ---------- Hero quote (full screen big blockquote) ---------- */
+section.hero-quote {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 90px 140px;
+}
+section.hero-quote blockquote {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+section.hero-quote blockquote::before {
+  content: '\201C';
+  font-family: 'Inter', serif;
+  font-size: 120pt;
+  color: var(--accent);
+  line-height: 0.6;
+  display: block;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+section.hero-quote blockquote p {
+  font-size: 30pt;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--fg-default);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+section.hero-quote blockquote p:last-child {
+  font-size: 16pt;
+  color: var(--fg-subtle);
+  font-weight: 600;
+  margin-top: 24px;
+}
+
+/* ---------- Callouts (단일 톤 통일, 2026-05) ----------
+ * propca 시그니처 톤(--purple)으로 좌측 컬러바·라벨 색상 통일.
+ * 종류 구분은 좌측 컬러바·배경 알파가 아닌 **아이콘 + 굵은 라벨**(`**참고**`, `**예시**` 등)로 표현.
+ * .danger만 예외 — 진짜 위험 신호 필요 시 좌측바를 --danger로 유지.
+ */
+.callout {
+  margin: 16px 0;
+  padding: 16px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--purple);
+  background: var(--canvas-card);
+  font-size: 16pt;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.callout strong:first-child {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 15pt;
+  margin-right: 8px;
+  color: var(--purple);
+  background: none;
+  padding: 0;
+}
+.callout p {
+  margin: 4px 0;
+  font-size: 15pt;
+  color: var(--fg-default);
+}
+.callout li {
+  font-size: 15pt;
+  color: var(--fg-muted);
+  margin-bottom: 6px;
+}
+
+/* info / example / success / warn — 모두 시그니처 보라 단일 톤 */
+.callout.info,
+.callout.example,
+.callout.success,
+.callout.warn {
+  border-left: 3px solid var(--purple);
+  background: var(--canvas-card);
+}
+.callout.info strong,
+.callout.example strong,
+.callout.success strong,
+.callout.warn strong { color: var(--purple); }
+
+/* danger도 시그니처 보라 단일 톤 — 종류 구분은 아이콘+굵은 라벨로 */
+.callout.danger {
+  border-left: 3px solid var(--purple);
+  background: var(--canvas-card);
+}
+.callout.danger strong { color: var(--purple); }
+
+:root {
+  --info: #3b82f6;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+/* ============================================================
+   COMMON INLINE HELPERS — usable inside any slide via <div class>
+   ============================================================ */
+
+/* .tag — global status badge (promoted from section.database-rows scope) */
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 12pt;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  vertical-align: middle;
+}
+.tag.green   { background: var(--pastel-mint);     color: #1f5e2c; }
+.tag.yellow  { background: var(--pastel-yellow);   color: #7a5d00; }
+.tag.purple  { background: var(--pastel-lavender); color: var(--purple-deep); }
+.tag.rose    { background: var(--pastel-rose);     color: #a32468; }
+.tag.sky     { background: var(--pastel-sky);      color: #1758a3; }
+.tag.peach   { background: var(--pastel-peach);    color: #8a4015; }
+.tag.navy    { background: var(--navy);            color: #ffffff; }
+
+/* .chip — smaller pill label */
+.chip {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: 999px;
+  font-size: 11pt;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  background: var(--canvas-card);
+  color: var(--ink-mute);
+  border: 1px solid var(--hairline);
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+  vertical-align: middle;
+}
+.chip.solid { background: var(--purple); color: #ffffff; border-color: transparent; }
+.chip.outline { background: transparent; border-color: var(--purple); color: var(--purple); }
+
+/* .kbd — keyboard key cap */
+.kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--canvas);
+  border: 1px solid var(--hairline-strong);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 8px;
+  margin: 0 2px;
+  line-height: 1.4;
+  vertical-align: 1px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* .divider — thin horizontal section break inside a slide */
+.divider {
+  display: block;
+  height: 1px;
+  background: var(--hairline);
+  margin: 18px 0;
+  border: none;
+}
+.divider.strong { background: var(--hairline-strong); height: 1px; }
+.divider.purple { background: var(--purple); opacity: 0.3; height: 2px; border-radius: 1px; }
+
+/* .note — quiet secondary memo (lighter than callout) */
+.note {
+  font-size: 14pt;
+  color: var(--ink-mute);
+  background: var(--canvas-card);
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin: 12px 0;
+  line-height: 1.5;
+}
+.note::before {
+  content: 'NOTE';
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--ink-sub);
+  letter-spacing: 0.08em;
+  margin-right: 10px;
+  vertical-align: 1px;
+}
+.note p { margin: 0; font-size: 14pt; color: var(--ink-mute); display: inline; }
+
+/* .cols-2 — inline 2-column split (does NOT require split layout) */
+.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 16px 0;
+}
+.cols-2 > * { margin: 0; }
+.cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 16px 0;
+}
+.cols-3 > * { margin: 0; }
+
+/* figure + figcaption — standardize inline image + caption */
+figure {
+  margin: 14px 0;
+  text-align: center;
+}
+figure img { max-width: 100%; border-radius: 8px; }
+figcaption {
+  font-size: 12pt;
+  color: var(--ink-sub);
+  font-family: var(--font-mono);
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Agenda (large numbered list) ----------
+ * 2026-06 고도화: 레거시 별칭 토큰(--fg-default/--border/--accent) → notion 토큰 직접 참조,
+ * hairline 행 → canvas-card 카드 + purple 칩 번호. toc(흰 카드 + 번호)보다 한 단계 무거운 위계.
+ */
+section.agenda ol {
+  list-style: none;
+  counter-reset: agenda;
+  padding: 0;
+  margin: 24px 0 0 0;
+  display: grid;
+  gap: 12px;
+}
+section.agenda ol li {
+  counter-increment: agenda;
+  padding: 18px 24px 18px 104px;
+  position: relative;
+  font-size: 22pt;
+  color: var(--ink);
+  font-weight: 500;
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  margin: 0;
+}
+section.agenda ol li::marker {
+  content: '';
+}
+section.agenda ol li::before {
+  content: counter(agenda, decimal-leading-zero);
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 64px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(86,69,212,0.08);
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 22pt;
+  font-weight: 800;
+  color: var(--purple);
+  letter-spacing: -0.02em;
+}
+
+/* ---------- End slide (Thanks / Q&A) ---------- */
+
+
+/* ============================================================
+   v2 — Extended Layouts (14 classes)
+   Categories: numbers/data · image · flow · process
+   ============================================================ */
+
+/* ---------- 1) big-number — H1 + huge digit + caption ---------- */
+section.big-number {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+section.big-number h1 {
+  font-size: 22pt;
+  color: var(--fg-muted);
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+section.big-number h2 {
+  font-size: 200pt;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin: 24px 0 16px;
+  letter-spacing: -0.05em;
+}
+section.big-number p {
+  font-size: 22pt;
+  color: var(--fg-muted);
+  max-width: 72%;
+  margin: 0 auto;
+  line-height: 1.45;
+}
+section.big-number.dark h2 {
+  color: var(--accent);
+  text-shadow: 0 0 80px var(--accent-soft);
+}
+
+/* ---------- 2) pricing-card — extension of section.cards ---------- */
+
+/* ---------- 3) chart-caption — image + key-takeaways aside ---------- */
+section.chart-caption {
+  justify-content: flex-start;
+}
+section.chart-caption .chart-wrap {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  align-items: center;
+  flex: 0 1 auto;
+  margin-top: 16px;
+  max-height: 460px;
+}
+section.chart-caption .chart-wrap img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+section.chart-caption .takeaway {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  padding: 24px 22px;
+  border-radius: 8px;
+  font-size: 17pt;
+  line-height: 1.55;
+}
+section.chart-caption .takeaway h3 {
+  font-size: 14pt;
+  color: var(--accent);
+  margin: 0 0 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+}
+section.chart-caption .takeaway ul {
+  margin: 0;
+  padding-left: 18px;
+}
+section.chart-caption .takeaway ul li {
+  margin-bottom: 8px;
+}
+
+/* ---------- 4) kpi-row — lighter than stats, 3 inline KPIs ---------- */
+section.kpi-row {
+  justify-content: flex-start;
+}
+section.kpi-row .kpi-list {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-around;
+  padding: 32px 0;
+  margin-top: 24px;
+}
+section.kpi-row .kpi {
+  flex: 1;
+  text-align: center;
+  padding: 0 24px;
+  border-right: 1px solid var(--border);
+}
+section.kpi-row .kpi:last-child {
+  border-right: none;
+}
+section.kpi-row .kpi h3 {
+  font-family: var(--font-mono);
+  font-size: 58pt;
+  color: var(--accent);
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+section.kpi-row .kpi p {
+  font-size: 16pt;
+  color: var(--fg-muted);
+  margin: 12px 0 0;
+}
+
+/* ---------- 5) two-image — 50:50 image grid ---------- */
+section.two-image {
+  justify-content: flex-start;
+}
+section.two-image .images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  flex: 1;
+  align-items: stretch;
+  margin-top: 24px;
+}
+section.two-image .images figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+section.two-image .images img {
+  width: 100%;
+  height: auto;
+  max-height: 440px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+section.two-image .images figcaption {
+  margin-top: 12px;
+  font-size: 15pt;
+  color: var(--fg-muted);
+  text-align: center;
+  line-height: 1.45;
+}
+
+/* ---------- 6) image-quote — bg-image left 50% + quote right 50% ---------- */
+section.image-quote {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: stretch;
+  position: relative;
+}
+section.image-quote h1 {
+  display: none;
+}
+section.image-quote blockquote {
+  width: 100%;
+  margin: 0;
+  padding: 60px 56px;
+  background: var(--canvas);
+  font-family: var(--font-sans);
+  font-size: 20pt;
+  line-height: 1.55;
+  color: var(--fg-default);
+  font-weight: 500;
+  font-style: normal;
+  border-left: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+section.image-quote blockquote::before {
+  content: '\201C';
+  font-family: 'Georgia', serif;
+  font-size: 110pt;
+  color: var(--accent);
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.15;
+  line-height: 1;
+}
+section.image-quote blockquote p:last-child {
+  font-size: 14pt;
+  font-style: normal;
+  color: var(--fg-muted);
+  margin-top: 20px;
+  font-family: var(--font-mono);
+}
+
+/* ---------- 7) gallery-4 — 2x2 image grid ---------- */
+section.gallery-4 {
+  justify-content: flex-start;
+}
+section.gallery-4 .gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 16px;
+  flex: 0 1 auto;
+  margin-top: 8px;
+  max-height: 380px;
+  width: 100%;
+}
+section.gallery-4 .gallery img,
+section.gallery-4 .gallery figure {
+  width: 100%;
+  margin: 0;
+}
+section.gallery-4 .gallery img {
+  height: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+section.gallery-4 .gallery figure {
+  display: flex;
+  flex-direction: column;
+}
+section.gallery-4 .gallery figcaption {
+  margin-top: 8px;
+  font-size: 13pt;
+  color: var(--fg-muted);
+  text-align: center;
+}
+
+/* ---------- 8) before-after — extends compare for image pair ---------- */
+section.before-after {
+  justify-content: flex-start;
+}
+section.before-after .ba-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  flex: 1;
+  align-items: center;
+  margin-top: 24px;
+}
+section.before-after .ba-col {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+section.before-after .ba-col h3 {
+  font-size: 18pt;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+  font-weight: 700;
+}
+section.before-after .ba-col img {
+  width: 100%;
+  max-height: 380px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+section.before-after .ba-arrow {
+  font-size: 56pt;
+  color: var(--accent);
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ---------- 9) qa — Q&A slide ---------- */
+section.qa {
+  justify-content: center;
+  align-items: center;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  color: var(--ink);
+  text-align: center;
+  position: relative;
+}
+section.qa::after {
+  content: '?';
+  position: absolute;
+  font-size: 400pt;
+  font-weight: 900;
+  color: rgba(86, 69, 212, 0.04);
+  line-height: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  font-family: var(--font-mono);
+}
+section.qa h1 {
+  font-size: 72pt;
+  font-weight: 800;
+  color: var(--purple);
+  margin: 0;
+  z-index: 1;
+  letter-spacing: -0.04em;
+}
+section.qa h2 {
+  font-size: 24pt;
+  color: var(--ink-mute);
+  font-weight: 500;
+  margin-top: 20px;
+  z-index: 1;
+}
+
+/* ---------- 10) thanks-contact — contact card variant ---------- */
+section.thanks-contact {
+  justify-content: center;
+  align-items: flex-start;
+  background: var(--canvas);
+  color: var(--ink);
+  padding: 80px 100px;
+}
+section.thanks-contact h1 {
+  color: var(--purple);
+  font-size: 42pt;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+section.thanks-contact h2 {
+  color: var(--ink-mute);
+  font-size: 20pt;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+section.thanks-contact .contact-wrapper {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  width: 100%;
+  align-items: center;
+}
+section.thanks-contact .contact-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+section.thanks-contact .contact-info ul li {
+  font-family: var(--font-sans);
+  font-size: 16pt;
+  color: var(--ink);
+  padding: 12px 20px;
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+section.thanks-contact .contact-info ul li strong {
+  color: var(--purple);
+  width: 110px;
+  font-weight: 700;
+}
+section.thanks-contact .contact-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+  width: 240px;
+  margin-left: auto;
+}
+section.thanks-contact .contact-qr img {
+  width: 180px;
+  height: 180px;
+  border-radius: 6px;
+  border: 1px solid var(--hairline-strong);
+  background: #ffffff;
+  padding: 8px;
+}
+section.thanks-contact .contact-qr .qr-label {
+  font-family: var(--font-mono);
+  font-size: 10pt;
+  color: var(--ink-sub);
+  margin-top: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ---------- 11) session-break — brief intermission ---------- */
+section.session-break {
+  background: var(--pastel-lavender);
+  color: var(--purple-deep);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+section.session-break h1 {
+  font-family: var(--font-sans);
+  font-size: 64pt;
+  font-weight: 700;
+  color: var(--purple-deep);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+section.session-break h2 {
+  font-family: var(--font-sans);
+  font-size: 18pt;
+  color: var(--ink-mute);
+  font-weight: 500;
+  margin-top: 32px;
+  letter-spacing: -0.01em;
+}
+section.session-break::before {
+  content: 'Break time';
+  display: block;
+  font-size: 28pt;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  color: var(--purple);
+  margin-bottom: 24px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- 12) vertical-timeline — ol with left rail ---------- */
+section.vertical-timeline {
+  justify-content: flex-start;
+}
+section.vertical-timeline ol {
+  list-style: none;
+  counter-reset: vt;
+  padding-left: 0;
+  margin-top: 24px;
+  position: relative;
+}
+section.vertical-timeline ol::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+  background: var(--border);
+}
+section.vertical-timeline ol li {
+  counter-increment: vt;
+  padding: 14px 0 14px 70px;
+  position: relative;
+  font-size: 17pt;
+  line-height: 1.55;
+}
+section.vertical-timeline ol li::before {
+  content: counter(vt, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 14pt;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+section.vertical-timeline ol li strong {
+  color: var(--accent);
+  font-weight: 700;
+  display: inline;
+  margin-right: 8px;
+}
+
+/* ---------- 13) [removed] flow-arrow — deprecated in v2.1 ---------- */
+
+
+/* ===============================================================
+   EXTERNAL 10 LAYOUTS (curated from claude/apple/linear/supabase/stripe/cursor)
+   Adapted to propca-notion-style tokens via alias mappings below.
+   =============================================================== */
+:root {
+  /* claude tokens */
+  --coral: var(--orange);
+  --cream: var(--canvas-soft);
+  --cream-card: var(--canvas-card);
+  --cream-strong: var(--canvas-card);
+  --ink-strong: var(--ink);
+  /* apple tokens */
+  --action: var(--purple);
+  --parchment: var(--canvas-soft);
+  /* linear tokens */
+  --violet: var(--purple);
+  --violet-hover: #6e5ce0;
+  --violet-focus: var(--purple);
+  --violet-deep: var(--purple-deep);
+  --surface-1: var(--canvas-soft);
+  --surface-2: var(--canvas-card);
+  --surface-3: #ebe9e3;
+  --surface-4: #e0ddd5;
+  --status-todo: var(--ink-sub);
+  --status-progress: var(--orange);
+  --status-review: var(--purple);
+  --status-done: var(--green);
+  --hairline-third: #cfcdc5;
+  --on-ink: #ffffff;
+  --on-dark: #ffffff;
+  --on-dark-mute: rgba(255,255,255,0.78);
+  --on-night: #ffffff;
+  --on-night-mute: rgba(255,255,255,0.7);
+  /* supabase tokens */
+  --emerald: var(--green);
+  --emerald-deep: #149830;
+  --emerald-soft: #38c172;
+  --emerald-glow: rgba(26,174,57,0.18);
+  --night: var(--navy);
+  --night-soft: #131c38;
+  --night-elev: #1a2545;
+  --hairline-cool: var(--hairline);
+  --hairline-night: #1a2545;
+  /* stripe tokens */
+  --indigo: var(--purple);
+  --indigo-deep: var(--purple-deep);
+  --indigo-soft: #7060e0;
+  --canvas-cream: var(--canvas-soft);
+}
+
+/* ---------- claude editorial-spread (long-form essay with drop cap + aside) ---------- */
+
+
+section.editorial-spread .spread {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 56px;
+  flex: 1;
+  column-gap: 56px;
+}
+section.editorial-spread .spread > .col-body p {
+  font-size: 16pt;
+  line-height: 1.7;
+  color: var(--ink);
+  margin: 0 0 14px;
+  font-family: var(--font-sans);
+}
+section.editorial-spread .spread > .col-body p:first-child::first-letter {
+  font-family: var(--font-serif);
+  font-size: 70pt;
+  float: left;
+  line-height: 0.85;
+  padding: 6px 12px 0 0;
+  color: var(--coral);
+  font-weight: 400;
+}
+section.editorial-spread .spread > .col-aside {
+  background: var(--cream-card);
+  padding: 28px 28px;
+  border-radius: 8px;
+  align-self: start;
+}
+section.editorial-spread .spread > .col-aside h3 {
+  color: var(--coral);
+  font-family: var(--font-sans);
+  font-size: 12pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+section.editorial-spread .spread > .col-aside blockquote {
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 18pt;
+  line-height: 1.45;
+  color: var(--ink-strong);
+}
+
+/* 4) pull-quote-drop — drop-cap magazine quote */
+
+/* ---------- claude numbered-toc (numbered chapter list) ---------- */
+section.numbered-toc { padding: 72px 100px; }
+section.numbered-toc h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 26pt;
+  margin-bottom: 32px;
+  color: var(--ink-mute);
+  font-weight: 400;
+}
+section.numbered-toc ol {
+  list-style: none;
+  counter-reset: toc;
+  padding: 0;
+  margin: 0;
+}
+section.numbered-toc ol li {
+  counter-increment: toc;
+  border-top: 1px solid var(--hairline);
+  padding: 22px 0 22px 90px;
+  font-size: 22pt;
+  color: var(--ink-strong);
+  position: relative;
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+section.numbered-toc ol li::marker { content: ''; }
+section.numbered-toc ol li::before {
+  content: counter(toc, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 56pt;
+  color: var(--coral);
+  font-weight: 300;
+  line-height: 1;
+}
+section.numbered-toc ol li:last-child { border-bottom: 1px solid var(--hairline); }
+
+/* 7) tri-band — three horizontal bands cream/dark/coral */
+
+/* ---------- apple oversized-quote (dramatic large quote) ---------- */
+section.oversized-quote {
+  background: var(--parchment);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 88px 140px;
+}
+section.oversized-quote h1 { display: none; }
+section.oversized-quote blockquote {
+  font-family: var(--font-display);
+  font-size: 46pt;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--ink);
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+section.oversized-quote blockquote p:last-child {
+  font-family: var(--font-text);
+  font-size: 14pt;
+  font-weight: 500;
+  color: var(--ink-sub);
+  margin-top: 28px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* 4) spec-row — 4-col utility grid with 1:1 tiles */
+
+/* 5) parchment-band — full parchment slide with single value prop */
+
+/* 5) surface-grid — 3-up surface cards (hairline only, no shadow) */
+
+/* ---------- linear milestone-timeline (vertical roadmap markers) ---------- */
+section.milestone-timeline { justify-content: flex-start; }
+section.milestone-timeline h1 { margin-bottom: 42px !important; }
+section.milestone-timeline h2 { font-family: var(--font-sans); font-size: 15pt; font-weight: 500; color: var(--ink-mute); margin-top: 0; margin-bottom: 12px !important; }
+section.milestone-timeline .timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: auto 0;
+}
+section.milestone-timeline .timeline::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 2%;
+  right: 2%;
+  height: 1px;
+  background: var(--hairline);
+}
+section.milestone-timeline .timeline > .milestone {
+  position: relative;
+  padding-top: 38px;
+  text-align: center;
+}
+section.milestone-timeline .timeline > .milestone::before {
+  content: '◆';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--ink-sub);
+  font-size: 18pt;
+  background: var(--canvas);
+  width: 28px;
+  line-height: 28px;
+}
+section.milestone-timeline .timeline > .milestone.done::before { color: var(--success); }
+section.milestone-timeline .timeline > .milestone.active::before { color: var(--violet-hover); }
+section.milestone-timeline .timeline > .milestone .date {
+  font-family: var(--font-mono);
+  font-size: 11pt;
+  color: var(--ink-sub);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+section.milestone-timeline .timeline > .milestone .title {
+  font-family: var(--font-sans);
+  font-size: 14pt;
+  color: var(--ink);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+section.milestone-timeline .timeline > .milestone .desc { font-size: 12pt; color: var(--ink-mute); line-height: 1.45; }
+
+
+/* 9) cycle-progress — circular progress + project metadata */
+
+/* ---------- supabase dashboard-stack (stacked stat panels + table) ---------- */
+
+
+section.dashboard-stack .stack {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+}
+section.dashboard-stack .stack > .panel {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+}
+section.dashboard-stack .stack > .panel .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+section.dashboard-stack .stack > .panel .head .title { font-family: var(--font-mono); font-size: 11pt; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.06em; }
+section.dashboard-stack .stack > .panel .head .delta { font-family: var(--font-mono); font-size: 11pt; color: var(--emerald-deep); font-weight: 600; }
+section.dashboard-stack .stack > .panel .figure { font-family: var(--font-mono); font-size: 36pt; font-weight: 500; color: var(--ink); letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+section.dashboard-stack .stack > .panel .chart {
+  flex: 1;
+  background:
+    linear-gradient(to top, var(--emerald-glow), transparent 80%),
+    linear-gradient(90deg, var(--hairline-cool) 1px, transparent 1px) 0 100% / 80px 100%;
+  position: relative;
+  border-bottom: 1px solid var(--hairline);
+  min-height: 0;
+}
+section.dashboard-stack .stack > .panel .chart::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--emerald);
+  clip-path: polygon(0 80%, 12% 60%, 24% 70%, 36% 40%, 48% 55%, 60% 30%, 72% 24%, 84% 18%, 100% 4%, 100% 100%, 0 100%);
+}
+section.dashboard-stack .stack > .panel.table .rows {
+  font-family: var(--font-mono);
+  font-size: 11pt;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+section.dashboard-stack .stack > .panel.table .row {
+  display: grid;
+  grid-template-columns: 1fr 100px 80px;
+  padding: 6px 0;
+  color: var(--ink);
+  border-bottom: 1px solid var(--hairline-cool);
+  align-items: center;
+}
+section.dashboard-stack .stack > .panel.table .row:last-child { border-bottom: none; }
+section.dashboard-stack .stack > .panel.table .row .ok { color: var(--emerald-deep); }
+
+/* 6) log-stream — terminal log mockup */
+
+/* ---------- supabase polished-grid (3-up icon + body cards, hairline) ---------- */
+
+
+section.polished-grid .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  flex: 1;
+}
+section.polished-grid .grid > .card {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+section.polished-grid .grid > .card .ico {
+  width: 36px; height: 36px;
+  border-radius: 4px;
+  background: var(--emerald-glow);
+  color: var(--emerald-deep);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 16pt;
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+}
+section.polished-grid .grid > .card h3 { font-family: var(--font-display); font-size: 17pt; font-weight: 500; color: var(--ink); margin: 0 0 6px; }
+section.polished-grid .grid > .card p { font-size: 14pt; color: var(--ink-mute); margin: 0; line-height: 1.5; }
+
+/* 11) green-cta — centered emerald square button */
+
+/* 7) pricing-tier — 3 tiers, middle inverted dark-navy */
+
+/* 5) agent-timeline — 5-step pastel timeline */
+
+/* ===============================================================
+   NOTION-TONE ENFORCEMENT — applied AFTER external 10 layouts
+   to override accent / radius / card background / surface to notion DNA.
+   =============================================================== */
+
+/* --- claude editorial-spread: notion-card aside instead of cream slab --- */
+section.editorial-spread {
+  background: var(--canvas);
+  font-family: var(--font-sans);
+}
+section.editorial-spread h1 { font-family: var(--font-sans); color: var(--ink); font-weight: 700; letter-spacing: -0.02em; }
+section.editorial-spread .spread > .col-body p,
+section.editorial-spread .spread > .col-body { font-family: var(--font-sans); color: var(--ink-mute); }
+section.editorial-spread .spread > .col-body p:first-child::first-letter { color: var(--purple); font-family: var(--font-serif); }
+section.editorial-spread .spread > .col-aside { background: var(--canvas-card); border: 1px solid var(--hairline); border-left: 4px solid var(--purple); border-radius: 12px; }
+section.editorial-spread .spread > .col-aside h3 { font-family: var(--font-sans); color: var(--ink); }
+section.editorial-spread .spread > .col-aside blockquote { font-family: var(--font-sans); color: var(--ink-mute); border: none; }
+
+/* --- claude numbered-toc: purple number + notion hairline --- */
+section.numbered-toc h1 { font-family: var(--font-sans); color: var(--ink); font-weight: 700; }
+section.numbered-toc ol li { font-family: var(--font-sans); color: var(--ink); border-top: 1px solid var(--hairline); }
+section.numbered-toc ol li:last-child { border-bottom: 1px solid var(--hairline); }
+section.numbered-toc ol li::before { color: var(--purple); font-family: var(--font-mono); font-weight: 600; }
+
+/* --- apple oversized-quote: notion canvas + purple drop-cap --- */
+section.oversized-quote { background: var(--canvas); }
+section.oversized-quote blockquote { font-family: var(--font-sans); color: var(--ink); font-weight: 500; }
+section.oversized-quote blockquote::before { color: var(--purple); }
+section.oversized-quote blockquote p:last-child { color: var(--ink-sub); font-family: var(--font-mono); }
+
+/* --- linear milestone-timeline: white bg + purple line + notion cards --- */
+section.milestone-timeline { background: var(--canvas); }
+section.milestone-timeline h1, section.milestone-timeline h2 { font-family: var(--font-sans); color: var(--ink); }
+section.milestone-timeline h2 { color: var(--ink-mute); font-weight: 500; }
+section.milestone-timeline .timeline::before { background: var(--hairline); }
+section.milestone-timeline .timeline > .milestone::before { color: var(--ink-sub); background: var(--canvas); }
+section.milestone-timeline .timeline > .milestone.done::before   { color: var(--green); }
+section.milestone-timeline .timeline > .milestone.active::before { color: var(--purple); }
+section.milestone-timeline .timeline > .milestone .date  { color: var(--purple); font-family: var(--font-mono); font-weight: 600; }
+section.milestone-timeline .timeline > .milestone .title { color: var(--ink); font-family: var(--font-sans); font-weight: 600; }
+section.milestone-timeline .timeline > .milestone .desc  { color: var(--ink-mute); font-family: var(--font-sans); }
+
+/* --- supabase dashboard-stack: notion cards + purple deltas --- */
+section.dashboard-stack { background: var(--canvas); }
+section.dashboard-stack h1 { font-family: var(--font-sans); color: var(--ink); font-weight: 700; }
+section.dashboard-stack .stack > .panel { background: var(--canvas-card); border: 1px solid var(--hairline); border-radius: 12px; padding: 22px 24px; }
+section.dashboard-stack .stack > .panel .head .title { color: var(--ink-mute); font-family: var(--font-mono); }
+section.dashboard-stack .stack > .panel .head .delta { color: var(--green); font-family: var(--font-mono); font-weight: 600; }
+section.dashboard-stack .stack > .panel .figure { color: var(--ink); font-family: var(--font-mono); }
+section.dashboard-stack .stack > .panel.table .row { color: var(--ink); border-bottom: 1px solid var(--hairline); }
+section.dashboard-stack .stack > .panel.table .row .ok { color: var(--green); }
+
+/* --- supabase polished-grid: notion 3-up workspace cards --- */
+section.polished-grid { background: var(--canvas); }
+section.polished-grid h1 { font-family: var(--font-sans); color: var(--ink); font-weight: 700; }
+section.polished-grid .grid > .card { background: var(--canvas-card); border: 1px solid var(--hairline); border-radius: 12px; padding: 22px 22px; }
+section.polished-grid .grid > .card .ico { color: var(--purple); }
+section.polished-grid .grid > .card h3 { color: var(--ink); font-family: var(--font-sans); font-weight: 600; }
+section.polished-grid .grid > .card p  { color: var(--ink-mute); font-family: var(--font-sans); }
+
+/* ===============================================================
+   ROUND-2 ENFORCEMENT — defeat notion-base cascade for 3 slides
+   =============================================================== */
+
+/* --- oversized-quote: notion base styles blockquote as mono. Defeat it. --- */
+section.oversized-quote blockquote {
+  font-family: var(--font-sans) !important;
+  font-size: 48pt !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.025em !important;
+  background: transparent !important;
+  border: none !important;
+  border-left: none !important;
+  color: var(--ink) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: center !important;
+  font-style: normal !important;
+}
+section.oversized-quote blockquote::before { content: none !important; }
+section.oversized-quote blockquote p {
+  margin: 0 0 28px !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+}
+/* attribution p ONLY when there are 2+ p inside blockquote — defeated when single p */
+section.oversized-quote blockquote p:nth-child(n+2) {
+  font-family: var(--font-mono) !important;
+  font-size: 13pt !important;
+  font-weight: 500 !important;
+  color: var(--ink-sub) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  margin: 24px 0 0 !important;
+}
+/* attribution paragraph immediately AFTER blockquote (markdown structure: quote + blank + attribution) */
+section.oversized-quote blockquote + p {
+  font-family: var(--font-mono) !important;
+  font-size: 13pt !important;
+  font-weight: 500 !important;
+  color: var(--ink-sub) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  text-align: center !important;
+  margin: 28px 0 0 !important;
+}
+
+
+/* ===============================================================
+   EXTERNAL 2 NEW LAYOUTS — review-pair (airbnb) + ide-section (cursor)
+   Adapted to propca-notion-style tokens.
+   =============================================================== */
+:root {
+  /* airbnb tokens */
+  --rausch: var(--purple);
+  --rausch-active: var(--purple-pressed);
+  --rausch-soft: var(--pastel-lavender);
+  --ink-body: var(--ink);
+  --border-strong: var(--hairline-strong);
+}
+
+/* ---------- airbnb review-pair (Recent reviews · 2-col cards) ---------- */
+/* 8) review-pair — 2-col review cards */
+
+
+section.review-pair .pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  flex: 1;
+  align-items: start;
+}
+section.review-pair .pair > .review {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+section.review-pair .pair > .review .author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+section.review-pair .pair > .review .author .avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--surface-strong);
+  color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16pt;
+}
+section.review-pair .pair > .review:nth-child(1) .author .avatar { background: var(--rausch); color: #ffffff; }
+section.review-pair .pair > .review:nth-child(2) .author .avatar { background: var(--luxe-purple); color: #ffffff; }
+section.review-pair .pair > .review .author .name { font-family: var(--font-display); font-size: 15pt; color: var(--ink); font-weight: 700; }
+section.review-pair .pair > .review .author .meta { font-size: 12pt; color: var(--ink-mute); }
+section.review-pair .pair > .review .stars { font-size: 13pt; color: var(--ink); letter-spacing: 0.04em; }
+section.review-pair .pair > .review .excerpt { font-size: 15pt; color: var(--ink-body); line-height: 1.5; }
+
+
+
+/* ===============================================================
+   NOTION-TONE ENFORCEMENT for review-pair + ide-section
+   =============================================================== */
+
+/* --- review-pair: purple avatar, notion 12px card, hairline --- */
+section.review-pair { background: var(--canvas); }
+section.review-pair h1 { font-family: var(--font-sans) !important; color: var(--ink) !important; font-weight: 700 !important; letter-spacing: -0.02em !important; }
+section.review-pair .review { background: var(--canvas-card) !important; border: 1px solid var(--hairline) !important; border-radius: 12px !important; padding: 24px 26px !important; }
+section.review-pair .review .avatar { background: var(--purple) !important; color: #fff !important; font-family: var(--font-sans) !important; font-weight: 700 !important; }
+section.review-pair .review .name { color: var(--ink) !important; font-family: var(--font-sans) !important; font-weight: 700 !important; }
+section.review-pair .review .meta { color: var(--ink-sub) !important; font-family: var(--font-mono) !important; font-size: 11pt !important; }
+section.review-pair .review .stars { color: var(--orange) !important; font-family: var(--font-sans) !important; letter-spacing: 0.05em !important; }
+section.review-pair .review .excerpt { color: var(--ink) !important; font-family: var(--font-sans) !important; font-style: normal !important; }
+
+
+
+/* ===============================================================
+   TOC — notion-native Table of Contents (card-grid, mono purple counter)
+   =============================================================== */
+section.toc {
+  background: var(--canvas);
+  padding: 64px 88px 120px;
+  font-family: var(--font-sans);
+  justify-content: flex-start;
+}
+section.toc h1 {
+  font-size: 36pt;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+section.toc h2 {
+  font-family: var(--font-mono);
+  font-size: 13pt;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-sub);
+  margin: 0 0 24px;
+}
+section.toc ol {
+  list-style: none;
+  counter-reset: toc-counter;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+section.toc ol li {
+  counter-increment: toc-counter;
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 16px 24px 16px 72px;
+  font-size: 18pt;
+  color: var(--ink);
+  font-weight: 600;
+  position: relative;
+  line-height: 1.4;
+}
+section.toc ol li::marker { content: ''; }
+section.toc ol li::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 18pt;
+  color: var(--purple);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+section.toc ol li strong { color: var(--ink); font-weight: 700; background: transparent; }
+section.toc ol li em { display: none !important; }
+
+/* ============================================================
+   TECH-MODERN p5/6/7 — grid-3 / cards / cards.featured
+   Adapted with notion tokens (purple accent, 12px radius, canvas-card)
+   ============================================================ */
+
+/* --- grid-3 (3-column equal columns) --- */
+section.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 32px;
+  row-gap: 24px;
+  align-content: start;
+}
+section.grid-3 > h1 {
+  grid-column: 1 / -1;
+}
+section.grid-3 > .col {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  min-width: 0;
+}
+section.grid-3 > .col h3 {
+  margin-top: 0;
+}
+
+/* --- cards (4-card grid) --- */
+section.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 24px;
+  row-gap: 16px;
+  align-content: start;
+}
+section.cards > h1,
+section.cards > p {
+  grid-column: 1 / -1;
+}
+section.cards > .card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+section.cards > .card h3 {
+  margin-top: 0;
+}
+
+/* --- cards.featured (highlighted card variant) --- */
+section.cards .card.featured {
+  border: 2px solid var(--accent);
+  transform: scale(1.04);
+  position: relative;
+  box-shadow: 0 16px 40px var(--accent-soft);
+  z-index: 1;
+}
+section.cards .card.featured::before {
+  content: 'RECOMMENDED';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #ffffff;
+  padding: 5px 16px;
+  border-radius: 999px;
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+section.cards .card.featured h3 {
+  color: var(--accent);
+}
+
+
+/* === Notion-tone enforcement for grid-3 / cards === */
+section.grid-3 { background: var(--canvas); }
+section.grid-3 h1 { font-family: var(--font-sans) !important; color: var(--ink) !important; font-weight: 700 !important; letter-spacing: -0.02em !important; margin: 0 0 32px !important; }
+section.grid-3 .col { background: var(--canvas-card) !important; border: 1px solid var(--hairline) !important; border-radius: 12px !important; padding: 28px 24px !important; box-shadow: none !important; }
+section.grid-3 .col h3 { color: var(--purple) !important; font-family: var(--font-sans) !important; font-weight: 700 !important; margin: 0 0 12px !important; font-size: 22pt !important; }
+section.grid-3 .col p { color: var(--ink-mute) !important; font-family: var(--font-sans) !important; font-size: 15pt !important; line-height: 1.5 !important; margin: 0 !important; }
+section.grid-3 .col strong { color: var(--purple) !important; background: transparent !important; }
+section.grid-3 .col em { display: inline !important; background: transparent !important; padding: 0 !important; color: inherit !important; font-style: italic !important; }
+
+/* ───── hero-quote — token re-tune for notion tone ───── */
+section.hero-quote blockquote::before { color: var(--purple) !important; opacity: 0.35; }
+section.hero-quote blockquote p { color: var(--ink) !important; }
+section.hero-quote blockquote p:last-child { color: var(--ink-sub) !important; font-weight: 500; letter-spacing: 0.04em; }
+
+section.cards { background: var(--canvas); }
+section.cards h1 { font-family: var(--font-sans) !important; color: var(--ink) !important; font-weight: 700 !important; letter-spacing: -0.02em !important; margin: 0 0 28px !important; }
+section.cards .card { background: var(--canvas-card) !important; border: 1px solid var(--hairline) !important; border-radius: 12px !important; padding: 24px 22px !important; box-shadow: none !important; }
+section.cards .card h3 { color: var(--ink) !important; font-family: var(--font-sans) !important; font-weight: 700 !important; margin: 0 0 10px !important; font-size: 17pt !important; }
+section.cards .card p { color: var(--ink-mute) !important; font-family: var(--font-sans) !important; font-size: 14pt !important; line-height: 1.5 !important; margin: 0 !important; }
+section.cards .card strong { color: var(--purple) !important; background: transparent !important; }
+section.cards .card em { display: inline !important; background: transparent !important; padding: 0 !important; color: inherit !important; font-style: italic !important; }
+section.cards .card ul { margin: 0 !important; padding-left: 18px !important; }
+section.cards .card ul li { color: var(--ink-mute) !important; font-size: 14pt !important; line-height: 1.6 !important; }
+
+/* featured card override (border focus, cream bg, black text) */
+section.cards .card.featured { position: relative !important; background: var(--canvas-card) !important; color: var(--ink) !important; border: 2px solid var(--purple) !important; box-shadow: 0 8px 24px rgba(86,69,212,0.08) !important; padding: 48px 22px 24px !important; }
+section.cards .card.featured::before { content: 'POPULAR'; position: absolute !important; top: 16px !important; left: 22px !important; display: inline-block; font-family: var(--font-sans) !important; font-size: 9pt !important; color: #ffffff !important; background: var(--purple) !important; padding: 4px 10px !important; border-radius: 4px !important; margin: 0 !important; letter-spacing: 0.10em !important; font-weight: 700 !important; }
+section.cards .card.featured h3 { color: var(--purple) !important; }
+section.cards .card.featured p, section.cards .card.featured ul li { color: var(--ink-mute) !important; }
+section.cards .card.featured strong { color: var(--purple) !important; }
+
+/* ===============================================================
+   TOC VARIANTS — Table of Contents 스타일 (toc-split)
+   =============================================================== */
+
+/* toc-split — 좌측 타이틀 + 우측 리스트 분할형 목차 */
+section.toc-split {
+  background: var(--canvas);
+  padding: 0 !important;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+}
+section.toc-split > .toc-aside {
+  background: var(--canvas-card);
+  border-right: 1px solid var(--hairline);
+  padding: 100px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+section.toc-split > .toc-aside h1 {
+  font-size: 38pt;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-top: 0;
+}
+section.toc-split > .toc-main {
+  padding: 100px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+section.toc-split ol {
+  list-style: none;
+  counter-reset: toc-counter-split;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+section.toc-split ol li {
+  counter-increment: toc-counter-split;
+  border-bottom: 1px solid var(--hairline);
+  padding: 14px 0 14px 64px;
+  font-size: 17pt;
+  color: var(--ink);
+  font-weight: 600;
+  position: relative;
+}
+section.toc-split ol li:last-child { border-bottom: none; }
+section.toc-split ol li::marker { content: ''; }
+section.toc-split ol li::before {
+  content: counter(toc-counter-split, decimal-leading-zero);
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-sans);
+  font-size: 18pt;
+  color: var(--purple);
+  font-weight: 800;
+}
+section.toc-split ol li em {
+  font-size: 12pt;
+  color: var(--ink-mute);
+  font-style: normal;
+  font-weight: 400;
+  margin-left: 12px;
+  background: transparent;
+  padding: 0;
+}
+section.toc-split ol li strong { color: var(--ink); font-weight: 700; background: transparent; }
+
+/* ===============================================================
+   LAYOUT HEADERS UNIFICATION — 모든 본문 슬라이드 제목 스타일 통일
+   =============================================================== */
+section.database-rows h1,
+section.pastel-blocks h1,
+section.workspace-split > .content h1,
+section.toggle-list h1,
+section.block-features h1,
+section.pricing-blocks h1,
+section.grid-3 h1,
+section.cards h1,
+section.kpi-row h1,
+section.timeline h1,
+section.vertical-timeline h1,
+section.lecture-definition h1,
+section.lecture-objective h1,
+section.lecture-example h1,
+section.lecture-takeaway h1,
+section.lecture-quiz h1,
+section.review-pair h1,
+section.split h1,
+section.split-6-4 h1,
+section.split-4-6 h1,
+section.editorial-spread h1,
+section.milestone-timeline h1,
+section.dashboard-stack h1,
+section.polished-grid h1,
+section.two-image h1,
+section.before-after h1,
+section.gallery-4 h1,
+section.chart-caption h1,
+section.agenda h1,
+section.compare h1,
+section.icon-list h1,
+section:not([class]) h1 {
+  font-size: 28pt !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+  margin-top: 0 !important;
+  margin-bottom: 28px !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+
+/* ======================================================================
+   NEW LAYOUTS (2026-05) — article 패턴 기반 신규 3종
+   feature-compare / step-image-guide / definition-cards
+   모두 propca 시그니처 톤(navy + purple + 무채) 유지 + 단일 톤 정책 준수
+   ====================================================================== */
+
+/* ---------- feature-compare — 2~3 항목 다중 특성 비교 ---------- */
+section.feature-compare .compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 8px;
+}
+section.feature-compare .compare-grid > * {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+section.feature-compare .compare-grid h3 {
+  background: var(--navy);
+  color: #ffffff;
+  margin: -14px -16px 10px;
+  padding: 10px 16px;
+  border-radius: 10px 10px 0 0;
+  font-size: 15pt;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+section.feature-compare .compare-grid ul,
+section.feature-compare .compare-grid ol {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+section.feature-compare .compare-grid li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 14pt;
+  line-height: 1.45;
+  color: var(--ink);
+}
+section.feature-compare .compare-grid li:last-child { border-bottom: none; }
+section.feature-compare .compare-grid strong { color: var(--ink); font-weight: 600; }
+section.feature-compare .compare-grid li:has(> :is(em, strong)) { color: var(--ink-mute); }
+
+/* ✓ / ✗ 자동 강조 — 시각 신호 (가벼운 색조) */
+section.feature-compare .compare-grid li {
+  position: relative;
+}
+
+/* ---------- step-image-guide — 튜토리얼 단계 + 이미지 슬롯 ----------
+ * padding / h1 은 기본 section 스타일 상속 (다른 슬라이드 H1 위치와 일치)
+ */
+section.step-image-guide .step-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+section.step-image-guide .step-grid > .steps ol {
+  margin: 0;
+  padding-left: 24px;
+  counter-reset: step;
+}
+section.step-image-guide .step-grid > .steps ol li {
+  font-size: 17pt;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 14px;
+  padding-left: 8px;
+}
+section.step-image-guide .step-grid > .steps ol li strong { color: var(--purple); font-weight: 700; }
+section.step-image-guide .step-grid > .img figure {
+  margin: 0;
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  overflow: hidden;
+}
+section.step-image-guide .step-grid > .img img {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+section.step-image-guide .step-grid > .img figcaption {
+  padding: 8px 14px;
+  font-size: 13pt;
+  color: var(--ink-mute);
+  border-top: 1px solid var(--hairline);
+}
+
+/* ol/img 자동 배치 fallback — .step-grid div 미사용 시 */
+section.step-image-guide > ol {
+  display: inline-block;
+  width: 48%;
+  vertical-align: top;
+  font-size: 17pt;
+  line-height: 1.55;
+}
+section.step-image-guide > p > img,
+section.step-image-guide > img {
+  width: 48%;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 2%;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+}
+
+/* ---------- definition-cards — 개념 정의 카드 그리드 ----------
+ * padding / h1 은 기본 section 스타일 상속 (다른 슬라이드 H1 위치와 일치)
+ */
+section.definition-cards .def-grid,
+section.definition-cards > div:not([class]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+section.definition-cards h3 {
+  color: var(--purple);
+  font-size: 17pt;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+section.definition-cards h3 + p,
+section.definition-cards h3 ~ p {
+  font-size: 15pt;
+  line-height: 1.5;
+  color: var(--ink-mute);
+  margin: 0 0 8px;
+}
+
+/* 자동 카드화 — H3 + 다음 p를 시각적으로 한 카드처럼 묶기
+ * h3와 p 모두 동일한 좌측 border + 좌우 border 적용으로 연속된 카드 느낌.
+ * h3는 상단·좌·우 border / p는 하단·좌·우 border (top: none) — margin-bottom: -1px로 라인 끊김 방지.
+ */
+section.definition-cards > h3 {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--purple);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 14px 18px 6px;
+  margin: 0;
+}
+section.definition-cards > h3 + p {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--purple);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 0 18px 14px;
+  margin: 0 0 16px;
+}
+
+/* ======================================================================
+   NEW LAYOUTS — 사용자 명시 4종 (2026-05)
+   compare-cards / compare-table / concept-list / concept-table
+   ====================================================================== */
+
+/* ---------- compare-cards — 2개 항목 카드 비교 (vs 뱃지) ---------- */
+section.compare-cards {
+  position: relative;
+}
+section.compare-cards .vs-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  margin-top: 8px;
+}
+section.compare-cards .vs-grid > .card {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 16px 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+section.compare-cards .vs-grid > .card h3 {
+  background: var(--navy);
+  color: #ffffff;
+  margin: -16px -20px 12px;
+  padding: 12px 20px;
+  font-size: 17pt;
+  font-weight: 700;
+  border-radius: 12px 12px 0 0;
+  letter-spacing: -0.01em;
+}
+section.compare-cards .vs-grid > .card p,
+section.compare-cards .vs-grid > .card li {
+  font-size: 15pt;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+section.compare-cards .vs-grid > .card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+section.compare-cards .vs-grid > .vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  font-family: var(--font-sans);
+  font-size: 18pt;
+  font-weight: 700;
+  color: var(--purple);
+  letter-spacing: -0.02em;
+}
+section.compare-cards .vs-grid > .vs::before {
+  content: 'VS';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--canvas-card);
+  border: 2px solid var(--purple);
+  color: var(--purple);
+}
+section.compare-cards .vs-grid > .vs > * { display: none; }
+
+/* ---------- compare-table — 2개 항목 표 비교 (행별 속성) ---------- */
+section.compare-table table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 16pt;
+  margin: 14px 0 0;
+}
+section.compare-table thead th {
+  background: var(--navy);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 16pt;
+  letter-spacing: -0.01em;
+}
+section.compare-table thead th:first-child {
+  background: var(--canvas-card);
+  color: var(--ink-mute);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13pt;
+  letter-spacing: 0.04em;
+}
+section.compare-table tbody tr:nth-child(even) td { background: var(--canvas-soft); }
+section.compare-table tbody td {
+  padding: 12px 18px;
+  font-size: 15pt;
+  line-height: 1.5;
+  color: var(--ink);
+  border-top: 1px solid var(--hairline);
+}
+section.compare-table tbody td:first-child {
+  font-weight: 600;
+  color: var(--ink-mute);
+  background: var(--canvas-card);
+  border-right: 1px solid var(--hairline);
+}
+
+/* ---------- concept-list — 좌측 큰 번호 + 우측 제목/본문 (5~10개) ---------- */
+section.concept-list ol {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  counter-reset: concept;
+}
+section.concept-list ol li {
+  counter-increment: concept;
+  position: relative;
+  padding: 12px 0 12px 72px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 16pt;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+section.concept-list ol li:last-child { border-bottom: none; }
+/* 2026-06 고도화: 텍스트 번호 → pastel-lavender 라운드 사각 배지 (행 hairline은 절제 톤 유지) */
+section.concept-list ol li::before {
+  content: counter(concept, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pastel-lavender);
+  border-radius: 10px;
+  font-size: 17pt;
+  font-weight: 700;
+  color: var(--purple-deep);
+  font-family: var(--font-sans);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+section.concept-list ol li strong {
+  display: inline-block;
+  color: var(--ink);
+  font-size: 17pt;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+/* ---------- concept-table — 행별 용어 + 정의 표 ---------- */
+section.concept-table table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 16pt;
+  margin: 14px 0 0;
+}
+section.concept-table thead { display: none; }
+section.concept-table tbody td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: top;
+  line-height: 1.5;
+}
+section.concept-table tbody td:first-child {
+  width: 30%;
+  color: var(--purple);
+  font-weight: 700;
+  font-size: 17pt;
+  white-space: nowrap;
+  padding-right: 24px;
+}
+section.concept-table tbody td:not(:first-child) {
+  color: var(--ink);
+  font-size: 15pt;
+}
+section.concept-table tbody tr:last-child td { border-bottom: none; }
+
+/* ======================================================================
+   NEW LAYOUTS — 자동 발견 6종 (2026-05)
+   comparison-3up / story-arc / example-case / pull-quote / pros-cons / checklist
+   ====================================================================== */
+
+/* ---------- comparison-3up — 3~4개 항목 매트릭스 비교 ---------- */
+section.comparison-3up .matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+section.comparison-3up .matrix > * {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+section.comparison-3up .matrix h3 {
+  background: var(--purple);
+  color: #ffffff;
+  margin: -14px -16px 10px;
+  padding: 10px 16px;
+  font-size: 15pt;
+  font-weight: 700;
+  border-radius: 10px 10px 0 0;
+}
+section.comparison-3up .matrix ul,
+section.comparison-3up .matrix ol { margin: 0; padding-left: 18px; list-style: disc; }
+section.comparison-3up .matrix li {
+  font-size: 14pt;
+  line-height: 1.45;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+/* ---------- story-arc — 개인 경험담·일화 (배경 → 사건 → 결과) ---------- */
+section.story-arc {
+  position: relative;
+}
+section.story-arc::before {
+  content: '"';
+  position: absolute;
+  top: 56px;
+  left: 64px;
+  font-family: var(--font-sans);
+  font-size: 140pt;
+  line-height: 1;
+  color: var(--purple);
+  opacity: 0.12;
+  font-weight: 700;
+}
+section.story-arc h1 {
+  margin-left: 80px;
+  position: relative;
+  z-index: 1;
+}
+section.story-arc p {
+  margin-left: 80px;
+  font-size: 17pt;
+  line-height: 1.65;
+  color: var(--ink-mute);
+  position: relative;
+  z-index: 1;
+}
+section.story-arc p:first-of-type {
+  color: var(--ink);
+  font-size: 18pt;
+  font-weight: 500;
+}
+section.story-arc p:last-of-type {
+  margin-top: 18px;
+  padding-left: 16px;
+  border-left: 3px solid var(--purple);
+  color: var(--ink);
+  font-style: italic;
+}
+
+/* ---------- example-case — 예시 시나리오 카드 ---------- */
+section.example-case::before {
+  content: 'CASE';
+  position: absolute;
+  top: 56px;
+  left: 88px;
+  font-size: 13pt;
+  font-weight: 700;
+  color: var(--purple);
+  letter-spacing: 0.16em;
+}
+section.example-case {
+  position: relative;
+  padding-top: 96px;
+}
+section.example-case h1 {
+  font-size: 26pt;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+section.example-case .case-body,
+section.example-case > p {
+  font-size: 17pt;
+  line-height: 1.6;
+  color: var(--ink-mute);
+}
+section.example-case > .case-body > p:first-child,
+section.example-case > p:nth-of-type(1) {
+  color: var(--ink);
+  font-size: 18pt;
+  font-weight: 500;
+}
+section.example-case .case-aside,
+section.example-case blockquote {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--purple);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 18px;
+  font-size: 15pt;
+  line-height: 1.5;
+  color: var(--ink);
+  font-style: normal;
+}
+
+/* ---------- pull-quote — 외부 인용 + 출처 ---------- */
+section.pull-quote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 72px 120px;
+}
+section.pull-quote blockquote {
+  font-size: 32pt;
+  line-height: 1.35;
+  color: var(--ink);
+  font-weight: 600;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0 0 24px;
+  letter-spacing: -0.01em;
+  position: relative;
+  font-style: normal;
+}
+section.pull-quote blockquote::before {
+  content: '"';
+  display: block;
+  font-size: 110pt;
+  line-height: 0.6;
+  color: var(--purple);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+section.pull-quote blockquote p {
+  font-size: 32pt;
+  font-weight: 600;
+  font-style: normal;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.35;
+}
+section.pull-quote > p,
+section.pull-quote .source {
+  font-size: 15pt;
+  color: var(--ink-sub);
+  letter-spacing: 0.02em;
+}
+section.pull-quote > p::before { content: '— '; color: var(--purple); }
+
+/* ---------- pros-cons — 장단점 2 컬럼 (좌측 ✓ / 우측 ✗) ---------- */
+section.pros-cons .pc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 8px;
+}
+section.pros-cons .pc-grid > * {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+section.pros-cons .pc-grid > .pros { border-left: 3px solid var(--success); }
+section.pros-cons .pc-grid > .cons { border-left: 3px solid var(--danger); }
+section.pros-cons .pc-grid h3 {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+section.pros-cons .pc-grid > .pros h3::before {
+  content: '✓ ';
+  color: var(--success);
+  margin-right: 4px;
+}
+section.pros-cons .pc-grid > .cons h3::before {
+  content: '✗ ';
+  color: var(--danger);
+  margin-right: 4px;
+}
+section.pros-cons .pc-grid > .pros h3 { color: var(--success); }
+section.pros-cons .pc-grid > .cons h3 { color: var(--danger); }
+section.pros-cons .pc-grid ul {
+  margin: 0;
+  padding-left: 18px;
+  list-style: none;
+}
+section.pros-cons .pc-grid li {
+  font-size: 16pt;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 22px;
+}
+section.pros-cons .pc-grid > .pros li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--success);
+  font-weight: 700;
+}
+section.pros-cons .pc-grid > .cons li::before {
+  content: '✗';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--danger);
+  font-weight: 700;
+}
+
+/* ---------- checklist — GFM 태스크 리스트 시각화 ---------- */
+section.checklist ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+section.checklist ul li {
+  font-size: 17pt;
+  line-height: 1.55;
+  color: var(--ink);
+  padding: 10px 0 10px 36px;
+  position: relative;
+  border-bottom: 1px solid var(--hairline);
+}
+section.checklist ul li:last-child { border-bottom: none; }
+section.checklist ul li::before {
+  content: '☐';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  font-size: 22pt;
+  color: var(--ink-sub);
+  line-height: 1;
+}
+/* GFM task list — Marp가 input[checked] 처리 */
+section.checklist ul li input[type='checkbox'] {
+  display: none;
+}
+section.checklist ul li input[type='checkbox'] + * { display: inline; }
+section.checklist ul li:has(input[checked])::before,
+section.checklist ul li.completed::before {
+  content: '☑';
+  color: var(--success);
+}
+section.checklist ul li:has(input[checked]),
+section.checklist ul li.completed {
+  color: var(--ink-mute);
+  text-decoration: line-through;
+}
+
+/* ======================================================================
+   COVER VARIANTS — 5종 (2026-05)
+   cover-image / cover-split / cover-minimal / cover-band / cover-photo-full
+   기본 cover의 ::before 로고 + 우하단 메타 위치 동일하게 유지
+   ====================================================================== */
+
+/* ---------- cover-image — 배경 이미지 + navy 오버레이 ---------- */
+section.cover-image {
+  background:
+    linear-gradient(180deg, rgba(10,21,48,0.72) 0%, rgba(7,15,36,0.82) 100%),
+    var(--cover-bg-image, linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%));
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 72px 96px;
+  position: relative;
+}
+section.cover-image::before {
+  content: '';
+  position: absolute;
+  top: 56px;
+  left: 96px;
+  width: 168px;
+  height: 36px;
+  background: none /* 로고 제거 — 팀/기관 로고 경로로 교체 가능 */;
+  background-size: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  z-index: 2;
+}
+section.cover-image h1 {
+  color: #ffffff;
+  font-size: 60pt;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  padding-bottom: 16px;
+  max-width: 85%;
+}
+section.cover-image h2 {
+  color: rgba(255,255,255,0.85);
+  font-size: 22pt;
+  font-weight: 400;
+  margin: 0;
+  max-width: 78%;
+}
+section.cover-image p {
+  position: absolute;
+  bottom: 56px;
+  right: 96px;
+  color: rgba(255,255,255,0.65);
+  font-size: 13pt;
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+section.cover-image header,
+section.cover-image footer,
+section.cover-image::after { display: none; }
+
+/* ---------- cover-split — 좌 50% 이미지 / 우 50% navy 텍스트 ---------- */
+section.cover-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+section.cover-split::before {
+  content: '';
+  position: absolute;
+  top: 56px;
+  right: 64px;
+  width: 168px;
+  height: 36px;
+  background: none /* 로고 제거 — 팀/기관 로고 경로로 교체 가능 */;
+  background-size: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  z-index: 3;
+}
+section.cover-split > img,
+section.cover-split > p:has(> img) > img,
+section.cover-split > p:first-child > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+section.cover-split h1,
+section.cover-split h2,
+section.cover-split > p {
+  grid-column: 2;
+  color: #ffffff;
+  padding-left: 56px;
+  padding-right: 56px;
+}
+section.cover-split h1 {
+  align-self: end;
+  font-size: 48pt;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 56px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  padding-bottom: 14px;
+}
+section.cover-split h2 {
+  align-self: start;
+  font-size: 20pt;
+  font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  margin: 16px 56px 0;
+  padding: 0;
+}
+section.cover-split > p:not(:has(img)) {
+  align-self: end;
+  margin: 0 56px 56px;
+  font-size: 13pt;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.04em;
+  padding: 0;
+}
+section.cover-split header,
+section.cover-split footer,
+section.cover-split::after { display: none; }
+
+/* ---------- cover-minimal — 흰 배경 + 거대 H1 + 좌하단 부제·메타 ---------- */
+section.cover-minimal {
+  background: var(--canvas);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 80px 96px 72px;
+  position: relative;
+}
+section.cover-minimal::before {
+  content: '';
+  position: absolute;
+  top: 56px;
+  left: 96px;
+  width: 168px;
+  height: 36px;
+  background: none /* 로고 제거 — 팀/기관 로고 경로로 교체 가능 */;
+  background-size: contain;
+  opacity: 0.92;
+}
+section.cover-minimal h1 {
+  font-size: 88pt;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0 0 24px;
+  max-width: 90%;
+}
+section.cover-minimal h2 {
+  font-size: 22pt;
+  font-weight: 400;
+  color: var(--ink-mute);
+  margin: 0 0 14px;
+  max-width: 70%;
+  letter-spacing: -0.01em;
+}
+section.cover-minimal p {
+  font-size: 13pt;
+  color: var(--ink-sub);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+section.cover-minimal header,
+section.cover-minimal footer,
+section.cover-minimal::after { display: none; }
+
+/* ---------- cover-band — 상단 8px purple 띠 + 중앙 텍스트 ---------- */
+section.cover-band {
+  background: var(--canvas);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 88px 96px;
+  position: relative;
+  border-top: 8px solid var(--purple);
+}
+section.cover-band::before {
+  content: '';
+  position: absolute;
+  top: 56px;
+  left: 96px;
+  width: 168px;
+  height: 36px;
+  background: none /* 로고 제거 — 팀/기관 로고 경로로 교체 가능 */;
+  background-size: contain;
+  opacity: 0.92;
+}
+section.cover-band h1 {
+  font-size: 56pt;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 18px;
+  max-width: 85%;
+}
+section.cover-band h1::before {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 4px;
+  background: var(--purple);
+  margin: 0 0 18px;
+}
+section.cover-band h2 {
+  font-size: 22pt;
+  font-weight: 400;
+  color: var(--ink-mute);
+  margin: 0 0 16px;
+  max-width: 78%;
+}
+section.cover-band p {
+  position: absolute;
+  bottom: 56px;
+  right: 96px;
+  font-size: 13pt;
+  color: var(--ink-sub);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+section.cover-band header,
+section.cover-band footer,
+section.cover-band::after { display: none; }
+
+/* ---------- cover-photo-full — 풀블리드 사진 + 하단 그라데이션 텍스트 ---------- */
+section.cover-photo-full {
+  padding: 0;
+  background: var(--navy);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+section.cover-photo-full::after {
+  content: none;  /* 페이지 번호 숨김 */
+}
+section.cover-photo-full > p:first-child > img,
+section.cover-photo-full > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+section.cover-photo-full::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,21,48,0) 50%, rgba(7,15,36,0.85) 95%);
+  z-index: 2;
+}
+section.cover-photo-full h1,
+section.cover-photo-full h2,
+section.cover-photo-full > p:not(:has(img)) {
+  position: relative;
+  z-index: 3;
+  color: #ffffff;
+  margin: 0 96px;
+}
+section.cover-photo-full h1 {
+  font-size: 56pt;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 14px;
+  max-width: 85%;
+}
+section.cover-photo-full h2 {
+  font-size: 22pt;
+  font-weight: 400;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 16px;
+  max-width: 70%;
+}
+section.cover-photo-full > p:not(:has(img)) {
+  margin: 0 96px 56px;
+  font-size: 13pt;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.04em;
+}
+section.cover-photo-full header,
+section.cover-photo-full footer { display: none; }
+/* ======================================================================
+   NEW LAYOUTS (2026-06) — 글 구조 갭 보강 핵심 6종
+   faq / code-focus / step-text / gallery-grid / content-sidebar / schedule
+   모두 propca 시그니처 톤(navy + purple + 무채 + 파스텔 절제) 유지.
+   padding / h1 은 기본 section 스타일 상속.
+   ====================================================================== */
+
+/* ---------- faq — Q&A 쌍 나열 (### 질문? + p/ul 답변) ----------
+ * definition-cards 자동 카드화 기법 재사용: h3 = 카드 상단 / 인접 p·ul = 카드 하단.
+ * 셸 `qa`(단일 마감 Q&A 슬라이드)와 구분 — faq는 본문용 다건 Q&A.
+ */
+section.faq > h3 {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  padding: 14px 18px 6px;
+  margin: 0;
+  font-size: 16.5pt;
+  font-weight: 700;
+  color: var(--ink);
+}
+section.faq > h3::before {
+  content: 'Q';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--purple);
+  background: rgba(86,69,212,0.10);
+  border-radius: 6px;
+  padding: 2px 9px;
+  margin-right: 10px;
+  vertical-align: 1px;
+}
+section.faq > h3 + p,
+section.faq > h3 + ul {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 0 18px 14px 54px;
+  margin: 0 0 14px;
+  font-size: 14.5pt;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+section.faq > h3 + ul { list-style: none; }
+section.faq > h3 + ul li {
+  font-size: 14.5pt;
+  color: var(--ink-mute);
+  margin: 0 0 4px;
+}
+section.faq > h3 + ul li::before {
+  content: '·';
+  color: var(--purple);
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+/* ---------- code-focus — 코드 중심 슬라이드 (fenced code 지배) ----------
+ * 기존 GitHub-light hljs 팔레트 상속. pre 확대 + 에디터 헤더 바 장식.
+ */
+section.code-focus pre {
+  flex: 1;
+  min-height: 0;
+  font-size: 14pt;
+  line-height: 1.6;
+  margin: 8px 0 0;
+  padding: 52px 28px 26px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+section.code-focus pre::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 34px;
+  background: var(--canvas-card);
+  border-bottom: 1px solid var(--hairline);
+}
+section.code-focus pre::after {
+  content: '\25CF \25CF \25CF';
+  position: absolute;
+  top: 9px;
+  left: 18px;
+  font-size: 9pt;
+  color: var(--hairline-strong);
+  letter-spacing: 2px;
+}
+section.code-focus pre code { font-size: 14pt; }
+section.code-focus > ul {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+section.code-focus > ul li {
+  font-size: 13.5pt;
+  color: var(--ink-mute);
+  margin: 0 0 4px;
+}
+section.code-focus > ul li::before {
+  content: '#';
+  font-family: var(--font-mono);
+  color: var(--purple);
+  font-weight: 700;
+  margin-right: 10px;
+}
+section.code-focus > p:last-child {
+  margin: 12px 0 0;
+  font-size: 13pt;
+  color: var(--ink-sub);
+}
+
+/* ---------- step-text — 텍스트 단계 가이드 (이미지 없는 절차 3~5단계) ----------
+ * timeline(수평 한 줄) / vertical-timeline(레일)과 달리 카드 스택 + 강한 번호 배지.
+ * DOM: ol 3~5 항목, 각 `**단계 제목** — 설명`.
+ */
+section.step-text ol {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 8px 0 0;
+  display: grid;
+  gap: 14px;
+}
+section.step-text ol li {
+  counter-increment: step;
+  position: relative;
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 18px 24px 18px 88px;
+  font-size: 15pt;
+  line-height: 1.5;
+  color: var(--ink-mute);
+  margin: 0;
+}
+section.step-text ol li::marker { content: ''; }
+section.step-text ol li::before {
+  content: counter(step);
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  background: var(--purple);
+  color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19pt;
+  font-weight: 700;
+}
+section.step-text ol li strong {
+  color: var(--ink);
+  font-size: 16.5pt;
+  font-weight: 700;
+}
+
+/* ---------- gallery-grid — 이미지 3~6장 가변 그리드 ----------
+ * gallery-4(2x2 고정)와 병존 — 가변 장수용. 이미지들을 한 단락에 연속 작성.
+ */
+section.gallery-grid p:has(img) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+  margin: 8px 0 0;
+  align-items: stretch;
+}
+section.gallery-grid p img {
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--hairline);
+}
+section.gallery-grid p:not(:has(img)) {
+  font-size: 12.5pt;
+  color: var(--ink-sub);
+  text-align: center;
+  margin: 10px 0 0;
+}
+
+/* ---------- content-sidebar — 본문 + 우측 사이드 박스 ----------
+ * DOM: # 제목 + <div class="main">본문</div> + <div class="side">### 라벨 + ul/p</div>
+ * (step-image-guide의 명시 div 관례)
+ */
+section.content-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  grid-template-rows: auto 1fr;
+  column-gap: 30px;
+  align-content: start;
+}
+section.content-sidebar h1 { grid-column: 1 / -1; }
+section.content-sidebar .main { min-width: 0; }
+section.content-sidebar .main p,
+section.content-sidebar .main li {
+  font-size: 15.5pt;
+  line-height: 1.6;
+}
+section.content-sidebar .side {
+  background: var(--canvas-card);
+  border: 1px solid var(--hairline);
+  border-top: 3px solid var(--purple);
+  border-radius: 12px;
+  padding: 20px 22px;
+  align-self: start;
+}
+section.content-sidebar .side h3 {
+  font-family: var(--font-mono);
+  font-size: 11.5pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--purple);
+  margin: 0 0 10px;
+}
+section.content-sidebar .side p,
+section.content-sidebar .side li {
+  font-size: 13.5pt;
+  line-height: 1.5;
+  color: var(--ink-mute);
+  margin: 0 0 6px;
+}
+section.content-sidebar .side ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+/* ---------- schedule — 날짜 기반 일정/마일스톤 ----------
+ * roadmap(분기/Phase 그룹), milestone-timeline(수직 마커)과 달리 구체 날짜 행 단위.
+ * 주형: 표 | 날짜 | 일정 | 비고 | / 부형: ul 각 `**날짜** — 항목`. 상태 칩은 기존 .tag 조합.
+ */
+section.schedule table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 15pt;
+  margin: 14px 0 0;
+}
+section.schedule thead th {
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 11pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-sub);
+  border-bottom: 2px solid var(--hairline-strong);
+  padding: 10px 16px;
+}
+section.schedule tbody td {
+  padding: 13px 16px;
+  font-size: 15pt;
+  color: var(--ink);
+  border-bottom: 1px solid var(--hairline);
+}
+section.schedule tbody td:first-child {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--purple);
+  white-space: nowrap;
+  width: 1%;
+  padding-right: 28px;
+}
+section.schedule tbody tr:nth-child(even) td { background: var(--canvas-soft); }
+/* ul 폴백 — `**날짜** — 항목` */
+section.schedule > ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+section.schedule > ul li {
+  position: relative;
+  border-bottom: 1px solid var(--hairline);
+  padding: 13px 0 13px 130px;
+  font-size: 15.5pt;
+  color: var(--ink);
+  margin: 0;
+}
+section.schedule > ul li:last-child { border-bottom: none; }
+section.schedule > ul li strong {
+  position: absolute;
+  left: 0;
+  top: 13px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--purple);
+}
+
+/* ======================================================================
+   TONE PRESETS (2026-06) — 발표 대상별 톤 3종. 레이아웃과 자유 조합.
+   적용: front matter `class: tone-X` + 슬라이드별 `_class: <layout> tone-X` 합성.
+   토큰 오버라이드만으로 전 레이아웃 재톤화. cover/section/end 셸의
+   --navy + procpa 로고는 3톤 공통 불변 (PROCPA 정체성 가드).
+   color-variants(§12, 브랜드 색 축 카탈로그)와 별개의 "발표 대상" 축.
+   ====================================================================== */
+
+/* tone-exec — 임원/이사회 보고: navy 계열 절제, 파스텔 저채도화 */
+section.tone-exec {
+  --purple: #22307a;
+  --purple-pressed: #1a2560;
+  --purple-deep: #131c4e;
+  --pastel-peach:    #ece9e4;
+  --pastel-rose:     #eae6e8;
+  --pastel-mint:     #e2e9e6;
+  --pastel-lavender: #e4e7f2;
+  --pastel-sky:      #e0e7f0;
+  --pastel-yellow:   #efeadb;
+}
+section.tone-exec em { background: #eef0f4; }
+section.tone-exec code { background: rgba(34,48,122,0.08); color: #22307a; }
+section.tone-exec strong { color: #22307a; }
+
+/* tone-lecture — 강의/교육: orange accent 전덱 확장 (기존 lecture-* 톤 계승) */
+section.tone-lecture {
+  --purple: #dd5b00;
+  --purple-pressed: #b84c00;
+  --purple-deep: #9a3f00;
+  --pastel-lavender: #ffe8d4;
+}
+section.tone-lecture code { background: rgba(221,91,0,0.10); color: var(--orange); }
+section.tone-lecture strong { color: var(--orange); }
+section.tone-lecture blockquote { border-left-color: var(--orange); }
+
+/* tone-seminar — 대외 세미나/컨퍼런스: purple 유지 + 파스텔 활성 */
+section.tone-seminar {
+  --canvas-card: #f7f5fc;
+  --hairline: #e2ddf0;
+}
+section.tone-seminar blockquote { border-left-color: var(--pink); }

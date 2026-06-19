@@ -1,0 +1,228 @@
+{
+  "version": "2026.06.18-1",
+  "disclaimer": "2026.6 기준, 정부 1차출처(gov.kr·bokjiro·mohw·korea.kr) 검증값. 실제 신청·자격은 공식 창구에서 최종 확인하세요. 지자체 추가지원은 거주지에 따라 상이.",
+  "benefits": [
+    {
+      "id": "first-meet-voucher",
+      "name": "첫만남이용권",
+      "category": "현금성",
+      "phase": "after_birth",
+      "window": {
+        "anchor": "birth",
+        "startOffsetDays": 0,
+        "endOffsetDays": 730,
+        "pregnancyWeekFrom": null,
+        "pregnancyWeekTo": null,
+        "deadlineOffsetDays": 60
+      },
+      "amount": {
+        "type": "voucher",
+        "value": 2000000,
+        "unit": "KRW",
+        "note": "첫째아 200만원 / 둘째아 이상 300만원 (2024.1.1 이후 출생아). 국민행복카드 바우처(포인트). 사용기한: 주민등록상 생년월일로부터 2년.",
+        "verified": true
+      },
+      "eligibility": {
+        "summary": "2024.1.1 이후 출생아 1인당 지급(국적·주민등록 출생아).",
+        "incomeLimit": null,
+        "conditions": [
+          "첫째아 200만원, 둘째아 이상 300만원",
+          "사용기한: 생년월일로부터 2년 이내(미사용 잔액 소멸)"
+        ]
+      },
+      "apply": {
+        "channels": ["정부24(행복출산 원스톱)", "복지로", "주민센터"],
+        "url": "https://www.gov.kr/portal/service/serviceInfo/135200005015",
+        "deadlineNote": "출생일로부터 60일 이내(출생일 포함) 신청 시 24개월분 모두 지원. 60일 초과 시 신청월부터만 지급되어 손실 발생."
+      },
+      "regionVaries": false,
+      "source": "verify-src-03",
+      "priorityScore": 95
+    },
+    {
+      "id": "parental-allowance",
+      "name": "부모급여",
+      "category": "현금성",
+      "phase": "infant",
+      "window": {
+        "anchor": "birth",
+        "startOffsetDays": 0,
+        "endOffsetDays": 730,
+        "pregnancyWeekFrom": null,
+        "pregnancyWeekTo": null,
+        "deadlineOffsetDays": 60
+      },
+      "amount": {
+        "type": "monthly",
+        "value": 1000000,
+        "unit": "KRW",
+        "note": "0세 월 100만원 / 1세 월 50만원 (만 2세 미만 대상, 2026년 기준). 어린이집 이용 시 보육료 차액 지급.",
+        "verified": true
+      },
+      "eligibility": {
+        "summary": "만 2세 미만(0~23개월) 아동.",
+        "incomeLimit": null,
+        "conditions": [
+          "0세 월 100만원",
+          "1세 월 50만원"
+        ]
+      },
+      "apply": {
+        "channels": ["정부24(행복출산 원스톱)", "복지로", "주민센터"],
+        "url": "https://www.gov.kr/portal/service/serviceInfo/135200000143",
+        "deadlineNote": "출생일로부터 60일 이내 신청 시 출생월부터 소급지원. 60일 초과 시 신청월부터만 지급되어 그 사이 월분 손실 발생."
+      },
+      "regionVaries": false,
+      "source": "verify-src-01",
+      "priorityScore": 92
+    },
+    {
+      "id": "postpartum-care",
+      "name": "산모·신생아 건강관리 지원",
+      "category": "서비스",
+      "phase": "near_due",
+      "window": {
+        "anchor": "due_date",
+        "startOffsetDays": -40,
+        "endOffsetDays": 30,
+        "pregnancyWeekFrom": null,
+        "pregnancyWeekTo": null,
+        "deadlineOffsetDays": null
+      },
+      "amount": {
+        "type": "voucher",
+        "value": null,
+        "unit": "KRW",
+        "note": "건강관리사 파견(산후회복·신생아 양육 지원) 바우처. 본인부담금은 소득·태아수·서비스기간에 따라 차등.",
+        "verified": true
+      },
+      "eligibility": {
+        "summary": "산모·배우자 등 해당 가구 건강보험료 본인부담금 합산액이 기준중위소득 150% 이하. 생계·의료·주거·교육급여 수급자 및 차상위계층 포함.",
+        "incomeLimit": "기준중위소득 150% 이하",
+        "conditions": [
+          "신청기간: 출산예정일 40일 전 ~ 출산일로부터 30일까지(좁은 신청 창)"
+        ]
+      },
+      "apply": {
+        "channels": ["정부24", "복지로", "보건소", "사회서비스 전자바우처"],
+        "url": "https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=13520000043",
+        "deadlineNote": "출산예정일 40일 전부터 신청 가능, 출산 후 30일까지 마감. 이 창을 놓치면 신청 불가."
+      },
+      "regionVaries": false,
+      "source": "verify-src-11",
+      "priorityScore": 88
+    },
+    {
+      "id": "high-risk-pregnancy-medical",
+      "name": "고위험 임산부 의료비 지원",
+      "category": "의료비",
+      "phase": "pregnancy",
+      "window": {
+        "anchor": "birth",
+        "startOffsetDays": null,
+        "endOffsetDays": null,
+        "pregnancyWeekFrom": null,
+        "pregnancyWeekTo": null,
+        "deadlineOffsetDays": 180
+      },
+      "amount": {
+        "type": "lump",
+        "value": 3000000,
+        "unit": "KRW",
+        "note": "전액본인부담금 및 비급여 진료비(병실입원료·환자특식 제외)의 90% 지원, 1인당 300만원 한도.",
+        "verified": true
+      },
+      "eligibility": {
+        "summary": "19대 고위험 임신질환(조기진통·중증 임신중독증·전치태반 등)으로 진단·입원치료 받은 임산부. 2024년부터 소득기준 폐지(소득 무관).",
+        "incomeLimit": null,
+        "conditions": [
+          "19대 고위험 임신질환 진단·입원치료",
+          "2024년부터 소득 무관"
+        ]
+      },
+      "apply": {
+        "channels": ["정부24", "복지로", "보건소"],
+        "url": "https://www.gov.kr/portal/service/serviceInfo/135200000114",
+        "deadlineNote": "분만일로부터 6개월 이내 신청. 이 기한을 놓치면 지원 불가."
+      },
+      "regionVaries": false,
+      "source": "verify-src-13",
+      "priorityScore": 80
+    },
+    {
+      "id": "pregnancy-medical-voucher",
+      "name": "임신·출산 진료비 바우처(국민행복카드)",
+      "category": "의료비",
+      "phase": "pregnancy",
+      "window": {
+        "anchor": "due_date",
+        "startOffsetDays": null,
+        "endOffsetDays": 730,
+        "pregnancyWeekFrom": 0,
+        "pregnancyWeekTo": 42,
+        "deadlineOffsetDays": null
+      },
+      "amount": {
+        "type": "voucher",
+        "value": 1000000,
+        "unit": "KRW",
+        "note": "일태아(단태아) 임신 1회당 100만원. 다태아는 140만원 기본 + 태아당 100만원이 되도록 추가지급(쌍둥이 실질 약 200만원, 세쌍둥이 약 300만원). 분만취약지 20만원 추가. 사용기한: 분만예정일(출산일)로부터 2년.",
+        "verified": true
+      },
+      "eligibility": {
+        "summary": "임신·출산(유산·사산 포함)이 확인된 건강보험 가입자 또는 피부양자.",
+        "incomeLimit": null,
+        "conditions": [
+          "일태아 100만원",
+          "다태아 140만원 기본 + 태아당 100만원이 되도록 추가(쌍둥이 약 200만원)",
+          "사용기한 분만예정일로부터 2년"
+        ]
+      },
+      "apply": {
+        "channels": ["국민행복카드 발급(카드사·은행)", "정부24", "보건소"],
+        "url": "https://www.gov.kr/portal/service/serviceInfo/SD0000007672",
+        "deadlineNote": "임신 확인 후 신청. 미사용 잔액은 분만예정일로부터 2년 경과 시 자동 소멸."
+      },
+      "regionVaries": false,
+      "source": "verify-src-08",
+      "priorityScore": 78
+    },
+    {
+      "id": "child-allowance",
+      "name": "아동수당",
+      "category": "현금성",
+      "phase": "infant",
+      "window": {
+        "anchor": "birth",
+        "startOffsetDays": 0,
+        "endOffsetDays": 3256,
+        "pregnancyWeekFrom": null,
+        "pregnancyWeekTo": null,
+        "deadlineOffsetDays": null
+      },
+      "amount": {
+        "type": "monthly",
+        "value": 100000,
+        "unit": "KRW",
+        "note": "월 10만원(아동 1인당). 비수도권·인구감소지역 거주 시 월 2만원 추가, 인구감소지역 지역사랑상품권 수령 시 월 1만원 추가하여 최대 월 3만원까지 추가지원.",
+        "verified": true
+      },
+      "eligibility": {
+        "summary": "2026년 기준 9세 미만(0~107개월) 아동. 매월 25일 현금 지급 원칙.",
+        "incomeLimit": null,
+        "conditions": [
+          "9세 미만(0~107개월)",
+          "비수도권·인구감소지역 거주 시 최대 월 3만원 추가"
+        ]
+      },
+      "apply": {
+        "channels": ["정부24(행복출산 원스톱)", "복지로", "주민센터"],
+        "url": "https://www.gov.kr/portal/service/serviceInfo/135200000143",
+        "deadlineNote": "출생 후 신청. 9세 미만까지 매월 지급(미신청 시 소급 제한 있으니 출생 직후 신청 권장)."
+      },
+      "regionVaries": true,
+      "source": "verify-src-06",
+      "priorityScore": 70
+    }
+  ]
+}

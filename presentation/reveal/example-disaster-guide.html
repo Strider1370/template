@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>우리 동네 맞춤 재난 대비 가이드 — 발표</title>
+
+<!--
+  index.template.html을 examples/disaster-guide 내용으로 채운 "예시 발표 덱".
+  틀이 실제로 어떻게 채워지는지 보여주는 견본. (스크린샷은 placeholder —
+  실제 발표 땐 앱 실행해 ./shots/ 에 캡처를 넣고 .shot-ph 를 <img>로 교체)
+-->
+
+<link rel="stylesheet" href="vendor/reveal/dist/reveal.css" />
+<link rel="stylesheet" href="vendor/reveal/dist/theme/white.css" id="theme" />
+<link rel="stylesheet" href="vendor/reveal/plugin/highlight/monokai.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+<style>
+  :root { --accent: #256ef4; --accent-weak: #e8f0fe; --ink: #1e2124; --muted: #58616a; }
+  .reveal { font-family: 'Pretendard GOV','Pretendard',system-ui,sans-serif; color: var(--ink); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: inherit; color: var(--ink); letter-spacing: -.02em; text-transform: none; }
+  .reveal h1 { font-size: 2.5em; } .reveal h2 { font-size: 1.6em; }
+  .reveal .eyebrow { color: var(--accent); font-weight: 700; font-size: .5em; letter-spacing: .03em; }
+  .reveal .accent { color: var(--accent); }
+  .reveal .muted { color: var(--muted); }
+  .reveal .hook { font-size: 1.1em; font-weight: 600; }
+  .reveal .kpi { font-size: 2.6em; font-weight: 800; color: var(--accent); line-height: 1; }
+  .reveal .badge { display:inline-block; background:var(--accent-weak); color:var(--accent);
+                   font-weight:700; font-size:.42em; padding:.25em .8em; border-radius:999px; margin:.1em; }
+  .reveal ul { display:inline-block; text-align:left; }
+  .reveal li { margin: .3em 0; }
+  .reveal .shot-ph { border: 2px dashed #c7ccd1; border-radius: 14px; background: #f4f6f9; color: var(--muted);
+    display: grid; place-items: center; width: 100%; aspect-ratio: 16/10; font-size: .46em; text-align:center; padding:.5em; }
+  .reveal .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .reveal .steps .cap { font-size: .4em; color: var(--muted); margin-top: .4em; }
+  .reveal .two { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+  .reveal section { text-align: left; } .reveal .center { text-align: center; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+  <!-- 1. 타이틀 + 후크 -->
+  <section class="center" data-background-color="#f4f6f9">
+    <p class="eyebrow">2026 AI 해커톤 · KRDS 기반</p>
+    <h1>우리 동네 맞춤<br/>재난 대비 가이드</h1>
+    <p class="hook">거주 지역·가족 구성만 입력하면, 우리 가족에 꼭 맞는<br/>재난 행동요령과 가까운 대피 정보를 한 화면에</p>
+    <p class="muted" style="margin-top:1em">팀 [팀명]</p>
+    <aside class="notes">훅: "재난이 닥친 순간, 검색할 여유가 있나요?" 한 문장으로 시작.</aside>
+  </section>
+
+  <!-- 2. 문제 (Before) -->
+  <section>
+    <p class="eyebrow">문제</p>
+    <h2>정보는 흩어져 있고,<br/>'평균 국민' 기준이다</h2>
+    <div class="two" style="margin-top:.5em">
+      <ul>
+        <li>행동요령은 국민재난안전포털, 대피소는 안전디딤돌,<br/>쉼터·경보는 또 다른 포털 — <strong>출처가 제각각</strong></li>
+        <li>안내가 '평균 국민' 기준이라 <strong>영유아·임산부·노인·<br/>장애인·반려동물</strong> 맞춤 정보는 직접 찾아야</li>
+        <li>정작 재난 순간엔 <strong>검색할 여유가 없다</strong></li>
+      </ul>
+      <div class="center"><div class="kpi">4곳+</div><p class="muted">행동요령·대피소·쉼터·경보가<br/>흩어진 출처 수</p></div>
+    </div>
+    <aside class="notes">관악구에서 영유아·노부모와 사는 보호자를 주인공으로. 공감 먼저.</aside>
+  </section>
+
+  <!-- 3. 솔루션 한 줄 -->
+  <section class="center">
+    <p class="eyebrow">솔루션</p>
+    <h2><span class="accent">지역 + 가족 구성</span> 두 입력만으로<br/>흩어진 재난 정보를 맞춤형 한 화면에</h2>
+    <ul style="margin-top:.5em">
+      <li><strong>재난 유형별 행동요령</strong> — 지진·호우·폭염·한파·화재·태풍, 심각도 배지와 함께</li>
+      <li><strong>우리 가족 맞춤 팁</strong> — 선택한 가족 구성별 준비물·대피법</li>
+      <li><strong>가까운 대피소</strong> — 지도 + 거리순 목록</li>
+    </ul>
+    <aside class="notes">기능 나열이 아니라 "두 입력으로 맞춤"이라는 한 문장이 핵심.</aside>
+  </section>
+
+  <!-- 4. 데모 - 메인 화면 -->
+  <section>
+    <p class="eyebrow">데모</p>
+    <h2>지역·가족 선택 → 맞춤 가이드 → 대피소</h2>
+    <div class="shot-ph" style="margin-top:.4em">스크린샷: ./shots/home.png<br/>(메인 — 지역/가족 입력 + 히어로)</div>
+    <aside class="notes">라이브 시연 우선, 이 슬라이드는 백업. 입력부터 보여준다.</aside>
+  </section>
+
+  <!-- 5. 데모 - 핵심 흐름 -->
+  <section>
+    <p class="eyebrow">데모 — 핵심 흐름</p>
+    <div class="steps" style="margin-top:.4em">
+      <div><div class="shot-ph">step1.png</div><div class="cap">① 서울 관악구 선택</div></div>
+      <div><div class="shot-ph">step2.png</div><div class="cap">② 가족 구성 '영유아·노인' 선택</div></div>
+      <div><div class="shot-ph">step3.png</div><div class="cap">③ 맞춤 행동요령 + 대피소 지도</div></div>
+    </div>
+    <aside class="notes">③에서 가족 맞춤 체크리스트가 뜨는 순간이 클라이맥스. 거기서 멈춰 강조.</aside>
+  </section>
+
+  <!-- 6. THE KICK (차별점) -->
+  <section data-auto-animate data-background-color="#0b1320">
+    <p class="eyebrow" style="color:#7aa2ff">⭐ 차별점</p>
+    <h2 data-id="kick" style="color:#fff">'평균 국민'이 아니라,<br/>우리 가족 기준</h2>
+  </section>
+  <section data-auto-animate data-background-color="#0b1320">
+    <p class="eyebrow" style="color:#7aa2ff">⭐ 차별점</p>
+    <h2 data-id="kick" style="color:#fff; font-size:1.1em">'평균 국민'이 아니라, 우리 가족 기준</h2>
+    <div class="two" style="margin-top:.4em; color:#e8ecf2">
+      <ul>
+        <li>가족 구성을 고르면 <strong style="color:#fff">준비물·대피법·복약·동반 대피</strong>가 자동 재구성</li>
+        <li>기존 포털은 단일 '평균' 안내 → 재난 약자가 스스로 번역해야 했다</li>
+      </ul>
+      <div><div class="shot-ph" style="background:#16203a;border-color:#33415c;color:#aab6cc">킥 히어로: ./shots/kick.gif<br/>(가족 칩 토글 → 안내가 바뀌는 순간)</div></div>
+    </div>
+    <p style="color:#aab6cc; font-size:.46em; margin-top:.5em">벤치마킹: 미국 <strong style="color:#fff">Ready.gov 'Make a Plan'</strong>(영유아·노인·장애인·반려동물별 가구 비상계획)을 한국 대피소 표준데이터와 결합</p>
+    <aside class="notes">가장 많은 시간. 칩을 토글하면 안내가 실시간으로 바뀌는 장면을 보여주는 게 핵심.</aside>
+  </section>
+
+  <!-- 7. 임팩트 · 공공가치 -->
+  <section>
+    <p class="eyebrow">임팩트 & 공공가치</p>
+    <h2>재난 약자의 정보 접근성을 높인다</h2>
+    <ul style="margin-top:.5em">
+      <li>영유아·임산부·노인·장애인·반려동물 — <strong>맞춤 안내로 실제 행동을 유도</strong></li>
+      <li>전국 17개 시도 <strong>민방위 대피소 표준데이터(~17,000곳)</strong> 연동</li>
+      <li>확장: 기상특보·긴급재난문자 실시간 API, 무더위/한파쉼터, 산사태 위험지구</li>
+    </ul>
+    <aside class="notes">공공 해커톤 심사 핵심 = 공공성. '재난 약자'를 전면에.</aside>
+  </section>
+
+  <!-- 8. 확장 + 팀 + 마무리 -->
+  <section class="center" data-background-color="#f4f6f9">
+    <p class="eyebrow">감사합니다</p>
+    <h1>우리 동네 맞춤<br/>재난 대비 가이드</h1>
+    <p class="hook">우리 가족 기준의 재난 대비, 한 화면에서.</p>
+    <p class="muted" style="margin-top:1em">팀 [팀명] · [GitHub/연락처]</p>
+    <aside class="notes">마무리 한 문장. "평균이 아니라 우리 가족 기준" 반복하고 끝.</aside>
+  </section>
+
+</div></div>
+
+<script src="vendor/reveal/dist/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script>
+  Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'slide', plugins: [ RevealNotes, RevealHighlight ] });
+</script>
+</body>
+</html>

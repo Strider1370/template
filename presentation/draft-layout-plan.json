@@ -1,0 +1,27 @@
+{
+  "_note": "Stage 05 Presentation Agent 초안 — 슬라이드별 레이아웃 후보(제안). 최종 deck.json/시간배분은 Stage 08~09에서 확정. semanticId는 presentation/generator/layout-registry.json 등록값만 사용.",
+  "version": 0,
+  "draft": true,
+  "deckTarget": "5min / 10 slides (9~11 flex)",
+  "slides": [
+    { "n": 1, "role": "answer-first", "layout": "hero", "message": "받을 수 있는 지원이 아니라 지금 받아야 하는 지원", "wowMoment": false },
+    { "n": 2, "role": "problem", "layout": "problem-flow", "message": "정보가 없어서가 아니라 언제 움직일지를 몰라 돈을 잃는다", "wowMoment": false },
+    { "n": 3, "role": "insight", "layout": "contrast", "comparison": "assumption-reality", "message": "정보량과 수혜는 비례하지 않는다", "wowMoment": false },
+    { "n": 4, "role": "insight", "layout": "insight-statement", "comparison": "strong-statement", "message": "타이밍 문제 — 카탈로그가 아니라 시계가 필요하다", "wowMoment": false },
+    { "n": 5, "role": "solution", "layout": "product-overview", "message": "입력 한 번 → 시간축 한 화면 (now/soon/past + 손실경고 + AI브리핑)", "wowMoment": false },
+    { "n": 6, "role": "demo", "layout": "demo-callout", "message": "입력 라이브 변경 → 타임라인 재정렬 + 손실경고 점등", "wowMoment": true, "placeholder": true },
+    { "n": 7, "role": "mechanism", "layout": "architecture", "message": "Sure Start + 호주 사전신청 + 에스토니아 + mRelief 메커니즘 이식", "wowMoment": false },
+    { "n": 8, "role": "insight", "layout": "contrast", "comparison": "assumption-reality", "message": "정부24=신청 창구 / 우리=언제·어디로 갈지 시간축 레이어", "wowMoment": false, "note": "credibility 역할 — 시간 부족 시 S6 멘트로 흡수 가능" },
+    { "n": 9, "role": "impact", "layout": "card-grid", "altLayout": "before-after", "message": "누락↓ · 결정시간↓ · 마감손실 회피 (검증수치만 단언)", "wowMoment": false },
+    { "n": 10, "role": "closing", "layout": "closing", "message": "받을 수 있는 지원이 아니라, 지금 받아야 하는 지원을 알려줍니다.", "wowMoment": false }
+  ],
+  "optionalInserts": [
+    { "afterSlide": 7, "role": "limitation", "layout": "limitation-guardrail", "when": "여유 있으면 11장으로 확장", "draft": true }
+  ],
+  "constraints": {
+    "figuresSource": "research/verified-figures.md only",
+    "demoCaptureSource": "Stage 07 Playwright 검증 통과 후 교체",
+    "noInventedLayouts": true,
+    "noUnverifiedNumbers": true
+  }
+}

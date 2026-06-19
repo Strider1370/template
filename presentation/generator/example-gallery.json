@@ -1,0 +1,390 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "레이아웃 갤러리 — 16종 시각 확인용",
+    "engine": "slidev",
+    "fallbackEngine": "notion-static-html",
+    "theme": "notion-slidev",
+    "aspectRatio": "16:9",
+    "language": "ko",
+    "presentationMinutes": 8,
+    "totalDurationSeconds": 480
+  },
+  "slides": [
+    {
+      "id": "slide-01",
+      "role": "answer-first",
+      "semanticLayout": "hero",
+      "content": {
+        "eyebrow": "공공 재난 대비",
+        "title": "우리 동네 맞춤 재난 대비 가이드",
+        "subtitle": "내 위치 기준으로, 지금 무엇을 해야 하는지 한 화면에",
+        "footnote": "행정안전부 공개데이터 기반 · 오프라인 동작"
+      },
+      "speakerNotes": "hero 레이아웃: 네이비 표지, eyebrow/title/subtitle/footnote.",
+      "durationSeconds": 30,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-02",
+      "role": "problem",
+      "semanticLayout": "problem-flow",
+      "content": {
+        "title": "재난 정보가 시민에게 닿기까지 막히는 지점",
+        "items": [
+          {
+            "label": "1단계",
+            "text": "전국 단위 일반 공지가 일괄 발송된다"
+          },
+          {
+            "label": "2단계",
+            "text": "시민은 내 동네 해당 여부를 직접 판별해야 한다"
+          },
+          {
+            "label": "3단계",
+            "text": "대피소·물품 정보를 여러 사이트에서 따로 검색한다"
+          },
+          {
+            "label": "4단계",
+            "text": "결국 행동으로 옮기지 못하고 정보가 사장된다"
+          }
+        ]
+      },
+      "speakerNotes": "problem-flow → icon-list: 흐름 항목을 라벨+텍스트 행으로.",
+      "durationSeconds": 40,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-03",
+      "role": "insight",
+      "semanticLayout": "contrast",
+      "content": {
+        "title": "정보는 충분하다 — 형태가 문제다",
+        "lead": "같은 데이터라도 전달 방식이 행동을 바꾼다",
+        "leftLabel": "기존 방식",
+        "left": [
+          "전국 단위 일반 공지",
+          "수십 페이지 PDF 매뉴얼",
+          "대피소는 직접 검색"
+        ],
+        "rightLabel": "우리 접근",
+        "right": [
+          "내 위치 기준 자동 필터링",
+          "지금 할 일 3가지로 압축",
+          "가까운 대피소 즉시 안내"
+        ]
+      },
+      "speakerNotes": "contrast → compare: 좌우 컬럼 + VS.",
+      "durationSeconds": 40,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-04",
+      "role": "insight",
+      "semanticLayout": "insight-statement",
+      "content": {
+        "title": "재난 대비는 '내 동네' 단위일 때 비로소 행동이 된다",
+        "subtitle": "추상적 안전 수칙보다 구체적 위치 기반 안내가 강하다"
+      },
+      "speakerNotes": "insight-statement → yellow-banner: 노란 배경 중앙 대형 문장.",
+      "durationSeconds": 30,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-05",
+      "role": "solution",
+      "semanticLayout": "product-overview",
+      "content": {
+        "title": "세 가지 핵심 기능",
+        "features": [
+          {
+            "icon": "📍",
+            "heading": "위치 자동 판별",
+            "body": "GPS로 현재 동네의 위험 유형을 즉시 분류한다"
+          },
+          {
+            "icon": "🏠",
+            "heading": "대피소 안내",
+            "body": "가장 가까운 대피소 3곳과 경로를 보여준다"
+          },
+          {
+            "icon": "✅",
+            "heading": "준비물 체크",
+            "body": "상황별 비상물품 체크리스트를 생성한다"
+          }
+        ]
+      },
+      "speakerNotes": "product-overview → block-features: 아이콘 블록 3개.",
+      "durationSeconds": 40,
+      "implementationStatus": "implemented",
+      "contentScale": 1.1
+    },
+    {
+      "id": "slide-06",
+      "role": "demo",
+      "semanticLayout": "demo-fullscreen",
+      "content": {
+        "title": "한 화면에서 끝나는 우리 동네 대비",
+        "subtitle": "위치 버튼 한 번이면 전체 가이드가 생성됩니다"
+      },
+      "assets": {
+        "image": {
+          "src": "../../../web/public/hero-neighborhood.png",
+          "status": "real"
+        }
+      },
+      "speakerNotes": "demo-fullscreen → bg-full: 이미지를 배경으로, 오버레이 위 텍스트.",
+      "durationSeconds": 40,
+      "implementationStatus": "mocked"
+    },
+    {
+      "id": "slide-07",
+      "role": "demo",
+      "semanticLayout": "demo-callout",
+      "content": {
+        "title": "위치를 누르면 가이드가 즉시 생성됩니다",
+        "callout": "현재 위치 기준 위험 유형을 자동 판별하고 행동 항목을 만들어 줍니다.",
+        "points": [
+          "가장 가까운 대피소 3곳과 경로",
+          "지금 준비할 비상물품 체크리스트",
+          "데이터 출처와 갱신일 명시"
+        ]
+      },
+      "assets": {
+        "image": {
+          "src": "../../../web/public/hero-neighborhood.png",
+          "status": "real"
+        }
+      },
+      "speakerNotes": "demo-callout → split: 좌 이미지 / 우 콜아웃+포인트.",
+      "durationSeconds": 50,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-08",
+      "role": "mechanism",
+      "semanticLayout": "architecture",
+      "content": {
+        "title": "동작 구조",
+        "steps": [
+          {
+            "num": "STEP 1",
+            "body": "GPS 좌표 수집"
+          },
+          {
+            "num": "STEP 2",
+            "body": "공개데이터와 매칭"
+          },
+          {
+            "num": "STEP 3",
+            "body": "행동 항목 생성"
+          }
+        ],
+        "result": "사용자는 5초 안에 자기 동네 맞춤 대비 가이드를 받는다"
+      },
+      "speakerNotes": "architecture → steps-result: 단계 카드 + 네이비 결과 바.",
+      "durationSeconds": 40,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-09",
+      "role": "impact",
+      "semanticLayout": "before-after",
+      "content": {
+        "title": "도입 전후 비교",
+        "beforeLabel": "도입 전",
+        "afterLabel": "도입 후",
+        "beforeCaption": "여러 사이트를 오가며 평균 8분",
+        "afterCaption": "한 화면에서 5초"
+      },
+      "assets": {
+        "beforeImage": {
+          "src": "../../../web/public/hero-neighborhood.png",
+          "status": "real"
+        },
+        "afterImage": {
+          "src": "../../../web/public/hero-neighborhood.png",
+          "status": "real"
+        }
+      },
+      "speakerNotes": "before-after: 좌/우 이미지 + 화살표.",
+      "durationSeconds": 40,
+      "implementationStatus": "mocked"
+    },
+    {
+      "id": "slide-10",
+      "role": "impact",
+      "semanticLayout": "big-number",
+      "content": {
+        "label": "대피소 탐색 시간",
+        "number": "5초",
+        "caption": "수동 검색 평균 8분 → 5초 (내부 시연, 표본 12회)"
+      },
+      "speakerNotes": "big-number: 거대 숫자 중앙 정렬.",
+      "durationSeconds": 30,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-11",
+      "role": "product-overview",
+      "semanticLayout": "card-grid",
+      "content": {
+        "title": "지원 재난 유형",
+        "cards": [
+          {
+            "heading": "지진",
+            "body": "진동 대피 행동 요령"
+          },
+          {
+            "heading": "호우·침수",
+            "body": "저지대 대피 경로"
+          },
+          {
+            "heading": "산불",
+            "body": "풍향 기반 대피 방향"
+          },
+          {
+            "heading": "폭염",
+            "body": "무더위 쉼터 안내"
+          },
+          {
+            "heading": "한파",
+            "body": "취약계층 보온 안내"
+          },
+          {
+            "heading": "태풍",
+            "body": "사전 점검 체크리스트"
+          }
+        ]
+      },
+      "speakerNotes": "card-grid → pastel-blocks: 파스텔 6블록.",
+      "durationSeconds": 30,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-12",
+      "role": "problem",
+      "semanticLayout": "timeline",
+      "content": {
+        "title": "재난 발생 시 권장 행동 타임라인",
+        "steps": [
+          {
+            "heading": "0분",
+            "body": "알림 수신 즉시 위치 확인"
+          },
+          {
+            "heading": "1분",
+            "body": "대피소 경로 확인"
+          },
+          {
+            "heading": "3분",
+            "body": "비상물품 챙기기"
+          },
+          {
+            "heading": "5분",
+            "body": "대피 시작"
+          }
+        ]
+      },
+      "speakerNotes": "timeline: 가로 번호 단계.",
+      "durationSeconds": 30,
+      "implementationStatus": "implemented",
+      "contentScale": 1.1
+    },
+    {
+      "id": "slide-13",
+      "role": "insight",
+      "semanticLayout": "quote",
+      "content": {
+        "quote": "재난은 평등하지 않다. 정보 격차가 피해 격차를 만든다.",
+        "attribution": "재난안전 연구 인터뷰 中"
+      },
+      "speakerNotes": "quote → hero-quote: 중앙 대형 인용.",
+      "durationSeconds": 20,
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-14",
+      "role": "limitation",
+      "semanticLayout": "limitation-guardrail",
+      "content": {
+        "title": "한계와 안전장치",
+        "limitations": [
+          "대피소 데이터는 공개 갱신 주기에 의존",
+          "실시간 재난 경보 연동은 미구현",
+          "위치 권한 거부 시 수동 지역 선택 필요"
+        ],
+        "guardrails": [
+          "데이터 출처·갱신일 화면에 명시",
+          "오프라인 캐시로 통신 두절에도 동작",
+          "추정치는 '내부 측정' 라벨로 구분 표기"
+        ]
+      },
+      "speakerNotes": "limitation-guardrail: 좌 한계 / 우 안전장치, 각 항목 callout.",
+      "durationSeconds": 40,
+      "implementationStatus": "mocked"
+    },
+    {
+      "id": "slide-15",
+      "role": "expansion",
+      "semanticLayout": "expansion-map",
+      "content": {
+        "title": "확장 로드맵",
+        "tiers": [
+          {
+            "phase": "Phase 1",
+            "heading": "수도권 시범",
+            "body": "서울·경기 우선 적용",
+            "items": [
+              "대피소 데이터 연동",
+              "오프라인 캐시"
+            ],
+            "featured": true
+          },
+          {
+            "phase": "Phase 2",
+            "heading": "전국 확대",
+            "body": "광역시·도 커버리지",
+            "items": [
+              "전국 대피소",
+              "다국어 지원"
+            ]
+          },
+          {
+            "phase": "Phase 3",
+            "heading": "실시간 연동",
+            "body": "경보 시스템 통합",
+            "items": [
+              "실시간 경보",
+              "푸시 알림"
+            ]
+          }
+        ]
+      },
+      "speakerNotes": "expansion-map → roadmap: 3 tier, 첫 tier featured.",
+      "durationSeconds": 40,
+      "implementationStatus": "implemented",
+      "contentScale": 1.1
+    },
+    {
+      "id": "slide-16",
+      "role": "closing",
+      "semanticLayout": "closing",
+      "content": {
+        "title": "동네 단위로, 모두가 대비된 도시",
+        "subtitle": "다음 단계: 실시간 경보 연동과 전국 대피소 커버리지",
+        "cta": "데모 체험: localhost:5173",
+        "tags": [
+          "#재난대비",
+          "#공공데이터",
+          "#오프라인",
+          "#위치기반"
+        ],
+        "contact": "팀 동네방재 · junn1370@gmail.com"
+      },
+      "speakerNotes": "closing → end: 네이비 마감, CTA + 태그 + 연락처.",
+      "durationSeconds": 30,
+      "implementationStatus": "implemented"
+    }
+  ]
+}

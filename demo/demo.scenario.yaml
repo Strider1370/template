@@ -1,0 +1,44 @@
+# demo/demo.scenario.yaml — 데모 시나리오 (Stage 03 산출물)
+#
+# spec.md §8(데모 시나리오)·§9(Wow Moment)와 일치. selector/assertion은 Stage 07에서 그대로 사용.
+# ⚠️ 개인정보 금지: 가상 페르소나 / 익명 fixture만.
+
+scenario:
+  persona: "박지은(가상, 32세, 서울 거주, 첫 임신, 맞벌이)"
+  situation: "임신 28주차, 출산이 다가오는데 무엇을 언제 신청해야 할지 몰라 불안한 상황"
+  steps:
+    - step: 1
+      userAction: "랜딩에서 출산예정일(또는 임신 주차)과 거주지(서울 ○○구)를 입력하고 '내 지원금 보기' 클릭"
+      expected: "결과 화면으로 전환되고, 상단에 시간축 배지('임신 28주 · D-84')가 보인다"
+      selector: '[data-testid="timeline-badge"]'
+      assertion: "요소가 보이고 텍스트에 '임신' 과 'D-' 가 포함된다"
+    - step: 2
+      userAction: "결과 화면을 본다(스크롤)"
+      expected: "'지금 받을 수 있어요' 카드 그룹과 '곧 받게 돼요' 카드 그룹이 시간순으로 펼쳐진다"
+      selector: '[data-testid="benefits-now"]'
+      assertion: "'지금' 그룹이 보이고 카드(.benefit-card)가 1개 이상 렌더링된다"
+    - step: 3
+      userAction: "임신 주차 슬라이더를 '출산 직후'로 라이브로 당긴다"
+      expected: "카드가 눈앞에서 재정렬되고, 첫만남이용권·부모급여 카드에 마감 손실 경고가 빨갛게 점등한다"
+      selector: '[data-testid="deadline-warning"]'
+      assertion: "변경 후 '지금' 그룹 카드 구성이 바뀌고, deadline-warning이 visible이며 텍스트에 'D-' 와 '소멸'(또는 '마감')이 포함된다"
+    - step: 4
+      userAction: "자유 질문 입력: '쌍둥이인데 고위험이고 3개월 전 이사 왔어요' (AI 본질 장면 — cut 금지)"
+      expected: "AI가 데이터셋에 있는 제도(다태아 진료비=태아당 100만원·고위험 임산부 의료비 등)만 근거로 추려 한국어로 답한다. 키 없으면 사전 생성 Q&A fixture로 동일 장면 보장."
+      selector: '[data-testid="ai-answer"]'
+      assertion: "응답 요소가 보이고 텍스트에 데이터셋 제도명 중 1개 이상이 포함된다(데이터셋 밖 수치 생성 없음). 키 유무와 무관하게 항상 렌더링."
+
+wowMoment:
+  description: "임신 주차/거주지 입력값을 라이브로 바꾸는 순간, 지원 카드가 시간순으로 재정렬되고 각 카드의 D-day가 갱신되며 마감 임박 제도에 손실 경고 배지가 빨갛게 점등한다."
+  selector: '[data-testid="deadline-warning"]'
+  assertion: "입력 변경 후 [data-testid=\"benefits-now\"] 카드 구성이 바뀌고, [data-testid=\"deadline-warning\"]이 화면에 보이며 텍스트에 'D-' 와 '소멸'(또는 '마감')을 포함한다"
+
+successCriteria:
+  - "1~3단계를 에러 없이 완주(입력 → 시간축 정렬 → 라이브 재정렬)"
+  - "Wow Moment 요소(deadline-warning)가 입력 변경 시 화면에 렌더링·점등됨"
+  - "카카오/Claude 키가 모두 없어도 1~3단계가 고정데이터+규칙으로 동작"
+  - "step4 AI 본질 장면은 키 없어도 사전 생성 Q&A fixture로 항상 표시(cut 금지)"
+
+fallback:
+  trigger: "카카오 REST 키 없음/실패, 또는 Claude API(ANTHROPIC_API_KEY) 없음/5초 무응답"
+  action: "시설 목록은 고정 facilities JSON + 지도 fallback으로, AI 브리핑/Q&A는 규칙 기반 템플릿 + 사전 생성 Q&A fixture로 대체(동일 화면 유지, 데모 무중단)"

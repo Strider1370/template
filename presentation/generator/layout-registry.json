@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "description": "Doc2 §8 공통 semantic layout 16개. AI는 먼저 semanticId를 고르고, 렌더러가 엔진별 실제 layout으로 매핑한다. 등록되지 않은 layout은 임의 생성 금지(Doc2 §17 #2). slidev 값은 기존 slidev 템플릿/내장 layout, notion-html 값은 propca 테마(marp/themes/propca-notion-style.css)의 검증된 section 클래스를 가리킨다.",
+  "layouts": [
+    {
+      "semanticId": "hero",
+      "renderers": { "slidev": "cover", "notion-html": "cover" },
+      "slots": ["eyebrow", "title", "subtitle", "footnote"]
+    },
+    {
+      "semanticId": "problem-flow",
+      "renderers": { "slidev": "default", "notion-html": "icon-list" },
+      "slots": ["title", "items"]
+    },
+    {
+      "semanticId": "contrast",
+      "renderers": { "slidev": "two-cols", "notion-html": "compare" },
+      "slots": ["title", "lead", "leftLabel", "left", "rightLabel", "right"]
+    },
+    {
+      "semanticId": "insight-statement",
+      "renderers": { "slidev": "statement", "notion-html": "yellow-banner" },
+      "slots": ["title", "subtitle"]
+    },
+    {
+      "semanticId": "product-overview",
+      "renderers": { "slidev": "default", "notion-html": "block-features" },
+      "slots": ["title", "features"]
+    },
+    {
+      "semanticId": "demo-fullscreen",
+      "renderers": { "slidev": "image", "notion-html": "bg-full" },
+      "slots": ["title", "subtitle"]
+    },
+    {
+      "semanticId": "demo-callout",
+      "renderers": { "slidev": "image-right", "notion-html": "split" },
+      "slots": ["title", "callout", "points"]
+    },
+    {
+      "semanticId": "architecture",
+      "renderers": { "slidev": "default", "notion-html": "steps-result" },
+      "slots": ["title", "steps", "result"]
+    },
+    {
+      "semanticId": "before-after",
+      "renderers": { "slidev": "two-cols", "notion-html": "before-after" },
+      "slots": ["title", "beforeLabel", "afterLabel", "beforeCaption", "afterCaption"]
+    },
+    {
+      "semanticId": "big-number",
+      "renderers": { "slidev": "center", "notion-html": "big-number" },
+      "slots": ["label", "number", "caption"]
+    },
+    {
+      "semanticId": "card-grid",
+      "renderers": { "slidev": "default", "notion-html": "pastel-blocks" },
+      "slots": ["title", "cards"]
+    },
+    {
+      "semanticId": "timeline",
+      "renderers": { "slidev": "default", "notion-html": "timeline" },
+      "slots": ["title", "steps"]
+    },
+    {
+      "semanticId": "quote",
+      "renderers": { "slidev": "quote", "notion-html": "hero-quote" },
+      "slots": ["quote", "attribution"]
+    },
+    {
+      "semanticId": "limitation-guardrail",
+      "renderers": { "slidev": "default", "notion-html": "limitation-guardrail" },
+      "slots": ["title", "limitations", "guardrails"]
+    },
+    {
+      "semanticId": "expansion-map",
+      "renderers": { "slidev": "default", "notion-html": "roadmap" },
+      "slots": ["title", "tiers"]
+    },
+    {
+      "semanticId": "closing",
+      "renderers": { "slidev": "end", "notion-html": "end" },
+      "slots": ["title", "subtitle", "cta", "tags", "contact"]
+    }
+  ],
+  "selectionRules": {
+    "description": "Doc2 §10 규칙 기반 role→semanticLayout 매핑. 위에서 아래로 첫 일치 적용. condition은 scene 필드(role, wowMoment, comparison, contentType)를 평가. 동률/모호 시 select-layouts.mjs가 메시지 길이·숫자 존재·이미지 존재·직전 레이아웃 반복 회피로 보조 결정한다.",
+    "rules": [
+      { "when": { "role": "answer-first" }, "layout": "hero" },
+      { "when": { "role": "closing" }, "layout": "closing" },
+      { "when": { "role": "demo", "wowMoment": true }, "layout": "demo-callout" },
+      { "when": { "role": "demo" }, "layout": "demo-fullscreen" },
+      { "when": { "role": "mechanism" }, "layout": "architecture" },
+      { "when": { "role": "insight", "comparison": "assumption-reality" }, "layout": "contrast" },
+      { "when": { "role": "insight", "comparison": "strong-statement" }, "layout": "insight-statement" },
+      { "when": { "role": "insight" }, "layout": "insight-statement" },
+      { "when": { "role": "impact", "comparison": "process" }, "layout": "before-after" },
+      { "when": { "role": "impact", "contentType": "big-number" }, "layout": "big-number" },
+      { "when": { "role": "impact" }, "layout": "big-number" },
+      { "when": { "role": "limitation" }, "layout": "limitation-guardrail" },
+      { "when": { "role": "expansion" }, "layout": "expansion-map" },
+      { "when": { "role": "problem" }, "layout": "problem-flow" },
+      { "when": { "role": "solution" }, "layout": "product-overview" },
+      { "when": { "role": "product-overview" }, "layout": "product-overview" }
+    ],
+    "fallbackLayout": "card-grid"
+  }
+}

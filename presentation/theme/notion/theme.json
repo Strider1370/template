@@ -1,0 +1,53 @@
+{
+  "$comment": "tokens.css 의 Notion 디자인 토큰을 JSON 으로도 제공. 출처: presentation/marp/themes/propca-notion-style.css. 생성기/검증기가 색·간격을 프로그램적으로 참조할 때 사용.",
+  "name": "notion-slidev",
+  "source": "presentation/marp/themes/propca-notion-style.css (propca-notion-style)",
+  "color": {
+    "purple": "#5645d4",
+    "purplePressed": "#4534b3",
+    "purpleDeep": "#3a2a99",
+    "pink": "#ff64c8",
+    "orange": "#dd5b00",
+    "teal": "#2a9d99",
+    "green": "#1aae39",
+    "link": "#0075de",
+    "navy": "#0a1530",
+    "navyDeep": "#070f24",
+    "canvas": "#ffffff",
+    "canvasSoft": "#fafaf9",
+    "canvasCard": "#f6f5f4",
+    "hairline": "#e5e3df",
+    "hairlineStrong": "#c8c4be",
+    "ink": "#191918",
+    "inkMute": "#5a5a55",
+    "inkSub": "#8b8a84",
+    "pastel": {
+      "peach": "#ffe8d4",
+      "rose": "#fde0ec",
+      "mint": "#d9f3e1",
+      "lavender": "#e6e0f5",
+      "sky": "#dcecfa",
+      "yellow": "#f9e79f"
+    },
+    "status": {
+      "info": "#0075de",
+      "success": "#1aae39",
+      "warning": "#f59e0b",
+      "danger": "#e03e3e"
+    }
+  },
+  "font": {
+    "sans": "'Pretendard', 'Noto Sans KR', 'Notion Sans', 'Inter', -apple-system, sans-serif",
+    "mono": "'Pretendard', 'Noto Sans KR', 'Inter', -apple-system, sans-serif",
+    "serif": "'Fraunces', 'Georgia', serif"
+  },
+  "radius": { "sm": "4px", "base": "8px", "lg": "12px", "pill": "999px" },
+  "spacing": {
+    "1": "6px", "2": "12px", "3": "18px", "4": "24px", "5": "36px", "6": "48px",
+    "slidePadY": "72px", "slidePadX": "88px"
+  },
+  "typeScale": {
+    "body": "17pt", "h3": "17pt", "h2": "22pt", "h1": "28pt",
+    "hero": "60pt", "bigNumber": "200pt", "line": 1.55
+  }
+}

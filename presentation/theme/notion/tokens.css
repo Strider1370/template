@@ -1,0 +1,83 @@
+/* ============================================================
+   theme/notion/tokens.css
+   Notion 디자인 토큰 — 색 / 폰트 / radius / 간격.
+
+   출처(seed): presentation/marp/themes/propca-notion-style.css 의 :root 블록.
+   원본 브랜드 언어: 12px radius, 파스텔 로테이션, navy hero, 보라(purple) 시그니처.
+   원본 라이선스: github.com/procpalee/Marp_Templates (propca-notion-style),
+                 참조한 Notion DESIGN.md 는 VoltAgent/awesome-design-md(MIT).
+   → 자세한 출처/라이선스는 presentation/sources/ASSET_LICENSES.md 참조.
+
+   ※ Slidev/정적 HTML 양쪽이 같은 변수를 참조한다(Doc2 §5.1 CSS 우선순위).
+   ============================================================ */
+:root {
+  /* ---- Brand / accent (propca) ---- */
+  --notion-purple: #5645d4;
+  --notion-purple-pressed: #4534b3;
+  --notion-purple-deep: #3a2a99;
+  --notion-pink: #ff64c8;
+  --notion-orange: #dd5b00;
+  --notion-teal: #2a9d99;
+  --notion-green: #1aae39;
+  --notion-link: #0075de;
+
+  /* ---- Dark surfaces (hero/section/end 배경) ---- */
+  --notion-navy: #0a1530;
+  --notion-navy-deep: #070f24;
+
+  /* ---- Canvas / surfaces ---- */
+  --notion-canvas: #ffffff;
+  --notion-canvas-soft: #fafaf9;
+  --notion-canvas-card: #f6f5f4;
+  --notion-hairline: #e5e3df;
+  --notion-hairline-strong: #c8c4be;
+
+  /* ---- Ink (텍스트) ---- */
+  --notion-ink: #191918;
+  --notion-ink-mute: #5a5a55;
+  --notion-ink-sub: #8b8a84;
+
+  /* ---- Pastel rotation (카드/블록) ---- */
+  --notion-pastel-peach: #ffe8d4;
+  --notion-pastel-rose: #fde0ec;
+  --notion-pastel-mint: #d9f3e1;
+  --notion-pastel-lavender: #e6e0f5;
+  --notion-pastel-sky: #dcecfa;
+  --notion-pastel-yellow: #f9e79f;
+
+  /* ---- Semantic status ---- */
+  --notion-info: #0075de;
+  --notion-success: #1aae39;
+  --notion-warning: #f59e0b;
+  --notion-danger: #e03e3e;
+
+  /* ---- Fonts ---- */
+  --notion-font-sans: 'Pretendard', 'Noto Sans KR', 'Notion Sans', 'Inter', -apple-system, sans-serif;
+  --notion-font-mono: 'Pretendard', 'Noto Sans KR', 'Inter', -apple-system, sans-serif;
+  --notion-font-serif: 'Fraunces', 'Georgia', serif;
+
+  /* ---- Radius (원본 12px 시그니처) ---- */
+  --notion-radius-sm: 4px;
+  --notion-radius: 8px;
+  --notion-radius-lg: 12px;
+  --notion-radius-pill: 999px;
+
+  /* ---- Spacing (원본 section padding 72/88 기준 스케일) ---- */
+  --notion-space-1: 6px;
+  --notion-space-2: 12px;
+  --notion-space-3: 18px;
+  --notion-space-4: 24px;
+  --notion-space-5: 36px;
+  --notion-space-6: 48px;
+  --notion-slide-pad-y: 72px;
+  --notion-slide-pad-x: 88px;
+
+  /* ---- Type scale (원본 pt 기준; 16:9 슬라이드 가독성) ---- */
+  --notion-fs-body: 25pt;
+  --notion-fs-h3: 25pt;
+  --notion-fs-h2: 30pt;
+  --notion-fs-h1: 38pt;
+  --notion-fs-hero: 63pt;
+  --notion-fs-big-number: 210pt;
+  --notion-line: 1.55;
+}

@@ -1,0 +1,214 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "임신·출산 지원의 시계",
+    "engine": "slidev",
+    "fallbackEngine": "notion-static-html",
+    "theme": "notion-slidev",
+    "aspectRatio": "16:9",
+    "language": "ko",
+    "presentationMinutes": 5,
+    "totalDurationSeconds": 290
+  },
+  "slides": [
+    {
+      "id": "slide-01",
+      "sceneId": "scene-01",
+      "role": "answer-first",
+      "semanticLayout": "hero",
+      "content": {
+        "eyebrow": "임산부·신생아 원스톱 지원",
+        "title": "임신·출산 지원의 시계",
+        "subtitle": "지금 받아야 하는 지원을, 시간순으로",
+        "footnote": "정부 1차출처 검증 데이터 · 키 없이도 동작"
+      },
+      "speakerNotes": "여러분, 첫 아이 가진 임산부가 제일 많이 듣는 말이 뭔지 아세요? '그거 기한 지나셨어요.' 지원이 없어서가 아니라, 언제 신청할지를 몰라서 놓치는 겁니다. 저희는 주차·예정일·사는 동네만 넣으면 지금 받을 것부터 순서대로 보여주고, 놓치면 사라질 돈을 D-day로 알려줍니다.",
+      "durationSeconds": 20,
+      "layoutReason": "answer-first role → hero",
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-02",
+      "sceneId": "scene-02",
+      "role": "problem",
+      "semanticLayout": "problem-flow",
+      "content": {
+        "title": "지원이 없어서가 아니라, '언제'를 몰라서 놓친다",
+        "items": [
+          "정보는 정부24·복지로·아이사랑에 이미 넘친다",
+          "부모급여·첫만남이용권은 출생 60일 안에 신청해야 출생월부터 소급",
+          "산모·신생아 건강관리는 출산예정 40일 전~출산 30일 후, 좁은 신청 창",
+          "며칠을 놓치면 수십만 원이 그대로 사라진다"
+        ]
+      },
+      "speakerNotes": "실제로요. 부모급여랑 첫만남이용권은 출생 60일 안에 신청 안 하면 소급분이 날아가요. 산모·신생아 건강관리는 출산 40일 전부터 30일 후까지, 딱 그 사이에만 됩니다. 정보가 없어서가 아니에요. 정부24, 복지로, 아이사랑, 정보는 넘쳐요. 근데 내가 지금 뭘 해야 하는지는 아무도 안 알려줍니다.",
+      "durationSeconds": 30,
+      "layoutReason": "problem role → problem-flow",
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-03",
+      "sceneId": "scene-03",
+      "role": "insight",
+      "semanticLayout": "contrast",
+      "content": {
+        "title": "정보 부족 문제가 아니라, 타이밍 문제다",
+        "lead": "정부24는 신청 창구, 우리는 시간축 내비게이션",
+        "leftLabel": "정부24 = 신청 창구",
+        "left": [
+          "무엇을 신청할지는 사용자가 알아야 함",
+          "임신용·출산용으로 분절",
+          "시간 순서·마감 개념이 없음"
+        ],
+        "rightLabel": "우리 = 시간축 내비게이션",
+        "right": [
+          "'지금 신청 → 곧 열림' 시간순 정렬",
+          "마감 임박은 D-day 손실 경고",
+          "거주지 자동 매칭"
+        ]
+      },
+      "speakerNotes": "그래서 문제를 다시 봤습니다. 이건 정보의 문제가 아니라 타이밍의 문제다. 정부24가 신청 창구라면, 저희는 언제 어디로 가야 하는지 알려주는 내비게이션입니다.",
+      "durationSeconds": 35,
+      "layoutReason": "insight + assumption-reality 대비 → contrast",
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-04",
+      "sceneId": "scene-04",
+      "role": "solution",
+      "semanticLayout": "product-overview",
+      "content": {
+        "title": "세 가지만 넣으면 됩니다",
+        "features": [
+          "임신 주차 또는 출산예정일",
+          "거주지 (시도·시군구)",
+          "→ 받을 수 있는 지원이 시간순으로 정렬되고, 마감이 임박한 건 손실로 경고"
+        ]
+      },
+      "speakerNotes": "주차, 예정일, 사는 동네. 이 세 가지만 넣으면 끝이에요. 지금 받을 수 있는 것부터 순서대로 뜨고, 마감이 코앞인 건 빨간 불로 경고합니다.",
+      "durationSeconds": 20,
+      "layoutReason": "solution role → product-overview",
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-05",
+      "sceneId": "scene-05",
+      "role": "demo",
+      "semanticLayout": "demo-callout",
+      "content": {
+        "title": "입력하면 '지금 받을 수 있는 지원'이 뜬다",
+        "callout": [
+          "임신 28주 · 서울 강동구 입력",
+          "임신·출산 진료비 바우처가 '지금 받을 수 있어요'에 노출",
+          "시간축 배지로 현재 시점(D-84) 표시"
+        ],
+        "caption": "실제 앱 캡처 — 임신 28주 시점"
+      },
+      "assets": {
+        "image": { "src": "../output/captures/demo-initial.png", "status": "real" }
+      },
+      "speakerNotes": "자, 직접 보시죠. 임신 28주, 서울 강동구 넣었습니다. 지금 신청할 수 있는 게 바로 뜨죠.",
+      "durationSeconds": 25,
+      "layoutReason": "demo role → demo-callout",
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-06",
+      "sceneId": "scene-06",
+      "role": "demo",
+      "semanticLayout": "demo-fullscreen",
+      "content": {
+        "title": "출산 직후로 옮기면 — 눈앞에서 재정렬되고 경고가 켜진다",
+        "subtitle": "'지금 받을 수 있어요' 2건 → 5건 · 빨간 경고: 지나면 200만원이 사라진다"
+      },
+      "assets": {
+        "image": { "src": "../output/captures/demo-wow.png", "status": "real" }
+      },
+      "speakerNotes": "자, 출산이 코앞이라고 해볼게요. 주차를 쭉 당기면 — 보세요, 카드가 확 바뀌죠? 첫만남, 부모급여가 '지금 신청하세요'로 올라오고, 여기 빨간 불, 지금 안 하면 200만원 날아갑니다. 받을 혜택을 나열하는 게 아니라, 안 움직이면 잃는 돈을 콕 집어주는 거예요. 라이브가 막히면 이 캡처랑 demo.webm으로 대체합니다.",
+      "durationSeconds": 60,
+      "layoutReason": "demo + wowMoment, 앱 캡처 가독성 위해 demo-fullscreen(큰 이미지)으로 — Wow는 화면이 주인공",
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-07",
+      "sceneId": "scene-07",
+      "role": "demo",
+      "semanticLayout": "demo-callout",
+      "content": {
+        "title": "복잡한 상황은 AI가 데이터 안에서만 답한다",
+        "callout": [
+          "'쌍둥이인데 고위험이고 3개월 전 이사 왔어요'",
+          "다태아 진료비 = 태아당 100만원(쌍둥이 ≈ 200만원)",
+          "고위험 임산부 의료비 = 소득 무관 300만원 한도"
+        ],
+        "caption": "검증된 제도 데이터 기반 · 데이터셋 밖 수치는 만들지 않음"
+      },
+      "assets": {
+        "image": { "src": "../output/captures/demo-ai.png", "status": "real" }
+      },
+      "speakerNotes": "좀 복잡한 경우는요? 제가 직접 물어봤어요. 쌍둥이인데 고위험이고 3개월 전에 이사 왔다. AI가 검증된 제도 데이터 안에서만 답합니다. 쌍둥이면 진료비가 태아당 100만원씩 약 200만원, 고위험은 소득 상관없이 300만원까지. 데이터에 없는 건 지어내지 않아요.",
+      "durationSeconds": 45,
+      "layoutReason": "demo role(AI 본질 장면) → demo-callout",
+      "implementationStatus": "fallback"
+    },
+    {
+      "id": "slide-08",
+      "sceneId": "scene-08",
+      "role": "mechanism",
+      "semanticLayout": "architecture",
+      "content": {
+        "title": "검증된 해외 메커니즘을 한국 제도에 이식",
+        "steps": [
+          "영국 Sure Start — 신청 기한을 1급 정보로 노출",
+          "호주 Services Australia — 출산 전 사전신청(시간축 분리)",
+          "에스토니아 — 출생 시 능동(proactive) 안내"
+        ],
+        "result": "기능을 베낀 게 아니라 '원리'를 이식 — 시간축 + 마감 손실 경고"
+      },
+      "speakerNotes": "이 방식, 저희가 처음 만든 게 아닙니다. 영국, 호주, 에스토니아가 이미 검증한 방식이에요. 기능을 베낀 게 아니라, 그 원리를 한국 제도에 맞게 가져왔습니다.",
+      "durationSeconds": 20,
+      "layoutReason": "mechanism role → architecture",
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-09",
+      "sceneId": "scene-09",
+      "role": "limitation",
+      "semanticLayout": "limitation-guardrail",
+      "content": {
+        "title": "정직한 한계와 안전장치",
+        "limitations": [
+          "AI 실시간 LLM은 키 연동 시 활성(현재 검증 답변 폴백)",
+          "가까운 시설 지도는 키 없어 고정 목록 폴백",
+          "데모 범위 = 절벽 제도 4건 + 보조 2건"
+        ],
+        "guardrails": [
+          "모든 수치 정부 1차출처 검증 · 기준일 표기",
+          "자격 안내까지 — 실제 신청은 공식 창구 링크",
+          "데이터셋 밖은 '모른다'로 답(환각 차단)"
+        ]
+      },
+      "speakerNotes": "한계도 솔직히 말씀드릴게요. AI 실시간 호출이랑 지도는 키 연동 전이라 지금은 폴백으로 돕니다. 대신 화면 숫자는 전부 정부 공식 자료로 확인했고, 신청은 공식 창구로 연결하고, 데이터에 없으면 모른다고 답합니다.",
+      "durationSeconds": 30,
+      "layoutReason": "limitation role → limitation-guardrail",
+      "implementationStatus": "implemented"
+    },
+    {
+      "id": "slide-10",
+      "sceneId": "scene-10",
+      "role": "closing",
+      "semanticLayout": "closing",
+      "content": {
+        "title": "받을 수 있는 지원이 아니라, 지금 받아야 하는 지원을 알려줍니다",
+        "subtitle": "다음 단계: 실 API 연동 · 지자체 데이터 확장",
+        "cta": "데모 체험: localhost:3000",
+        "tags": ["임산부·신생아", "시간축 내비게이션", "KRDS"],
+        "contact": "junn1370@gmail.com"
+      },
+      "speakerNotes": "정리합니다. 받을 수 있는 지원이 아니라, 지금 받아야 하는 지원을 알려줍니다. 감사합니다.",
+      "durationSeconds": 15,
+      "layoutReason": "closing role → closing (concept.md 마지막 문장)",
+      "implementationStatus": "implemented"
+    }
+  ]
+}

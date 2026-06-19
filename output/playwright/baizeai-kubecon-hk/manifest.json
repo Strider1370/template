@@ -1,0 +1,152 @@
+{
+  "url": "https://baizeai.github.io/talks/2025-06-11-kubecon-hk/#/1",
+  "capturedAt": "2026-06-18T16:09:49.189Z",
+  "count": 29,
+  "slides": [
+    {
+      "file": "01-Taming-Dependency-Chaos-for-LLM-in-K8S.png",
+      "title": "Taming Dependency Chaos for LLM in K8S",
+      "index": 1
+    },
+    {
+      "file": "02.png",
+      "title": null,
+      "index": 2
+    },
+    {
+      "file": "03-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 3
+    },
+    {
+      "file": "04-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 4
+    },
+    {
+      "file": "05-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 5
+    },
+    {
+      "file": "06-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 6
+    },
+    {
+      "file": "07-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 7
+    },
+    {
+      "file": "08-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 8
+    },
+    {
+      "file": "09-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 9
+    },
+    {
+      "file": "10-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 10
+    },
+    {
+      "file": "11-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 11
+    },
+    {
+      "file": "12-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 12
+    },
+    {
+      "file": "13-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 13
+    },
+    {
+      "file": "14-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 14
+    },
+    {
+      "file": "15-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 15
+    },
+    {
+      "file": "16-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 16
+    },
+    {
+      "file": "17-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 17
+    },
+    {
+      "file": "18-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 18
+    },
+    {
+      "file": "19-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 19
+    },
+    {
+      "file": "20-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 20
+    },
+    {
+      "file": "21-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 21
+    },
+    {
+      "file": "22-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 22
+    },
+    {
+      "file": "23-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 23
+    },
+    {
+      "file": "24-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 24
+    },
+    {
+      "file": "25-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 25
+    },
+    {
+      "file": "26-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 26
+    },
+    {
+      "file": "27-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 27
+    },
+    {
+      "file": "28-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 28
+    },
+    {
+      "file": "29-Challenges-Across-LLM-Lifecycle.png",
+      "title": "Challenges Across LLM Lifecycle",
+      "index": 29
+    }
+  ]
+}

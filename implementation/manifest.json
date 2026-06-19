@@ -1,0 +1,68 @@
+{
+  "_comment": "Stage 06(통합) 산출물. 각 기능의 실제 구현 상태. Stage 08(스크립트)·09(발표)가 필수 입력으로 읽음. mocked/fallback을 완전 구현처럼 표현 금지. 데모 데이터는 가상 페르소나·익명만.",
+  "_statusEnum": {
+    "implemented": "실제로 동작. 발표에서 확정적으로 시연/주장 가능.",
+    "mocked": "UI/흐름은 있으나 내부는 가짜 데이터.",
+    "fallback": "실시간/외부 연동 대신 정적 백업으로 동작. 폴백임을 명시.",
+    "dropped": "범위에서 제외.",
+    "blocked": "외부 의존(키·차단 등)으로 막힘."
+  },
+  "version": 1,
+  "verifiedInBrowser": "2026-06-18, dev preview(키 없음). 입력→타임라인→Wow(재정렬+손실경고)→AI 본질 장면 end-to-end 확인.",
+  "specDifferences": [
+    "결과가 버튼 클릭 없이도 즉시 렌더됨(submitted 기본 true). demo step1의 '내 지원금 보기' 버튼은 존재·동작하나 결과는 라이브로도 표시 — 데모상 무해(오히려 즉답).",
+    "AI 실시간 LLM 경로와 카카오 실시간 시설 검색은 API 키 미설정으로 라이브 미검증 → 정적/규칙 폴백으로 동작(검증됨).",
+    "deadlineDday: 출산 전에는 출생기준 소급마감 카운트다운을 표시하지 않도록 정리(null)."
+  ],
+  "features": [
+    {
+      "id": "feature-01",
+      "name": "상황 입력 폼 (임신 주차 슬라이더 / 출산예정일 + 거주지 시도·시군구)",
+      "status": "implemented",
+      "notes": "regions.ts 재사용. 슬라이더·날짜·지역 셀렉터 동작. testid: weeks-slider, region-sido, region-sigungu.",
+      "demoPath": "demo/demo.scenario.yaml#step-1"
+    },
+    {
+      "id": "feature-02",
+      "name": "시간축 정규화 + 제도 정렬(지금/곧/지남) + D-day 계산",
+      "status": "implemented",
+      "notes": "lib/timeline.ts, lib/benefits.ts 순수함수(statusOf·deadlineDday·sortBenefits). 키 없이 클라이언트에서 동작. tsc 0.",
+      "demoPath": "demo/demo.scenario.yaml#step-2"
+    },
+    {
+      "id": "feature-03",
+      "name": "정부 지원 제도 고정 데이터셋 6건(검증값)",
+      "status": "implemented",
+      "notes": "benefits.json. 모든 수치 research/verified-figures.md(정부 1차출처) 일치. 정정 2건 반영(아동수당 9세 미만·비수도권 월3만원 / 다태아 진료비 태아당 100만원). 의도된 고정 JSON(혼합 전략).",
+      "demoPath": "demo/demo.scenario.yaml#step-2"
+    },
+    {
+      "id": "feature-04",
+      "name": "Wow — 입력 라이브 변경 시 타임라인 재정렬 + 마감 손실경고 점등",
+      "status": "implemented",
+      "notes": "브라우저 검증: 슬라이더 출산직후 이동 시 '지금' 카드 재정렬(2→5건), deadline-warning 점등(2~3건 — 절벽 보유 제도/시점 따라 변동, 'D-53 지나면 200만원 소멸 위험' 등). testid: deadline-warning. Stage 07 Playwright assertion은 개수 비단언(visible + 'D-'·'소멸/마감' 포함, spec §9).",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "feature-05",
+      "name": "AI 자격 Q&A / 개인화 브리핑 (본질 장면)",
+      "status": "fallback",
+      "notes": "LLM 경로(서버 /api/ask, Anthropic fetch, 제도 JSON 주입+환각차단 프롬프트) 구현됨. ANTHROPIC_API_KEY 미설정으로 라이브 LLM 미검증 → qa.json fixture + 규칙 브리핑 폴백으로 동작(브라우저 검증: 교차케이스 질문에 다태아 태아당100·고위험 90%/300만원 응답, 데이터셋 밖 수치 0). 키 넣으면 implemented 승격.",
+      "demoPath": "demo/demo.scenario.yaml#step-4"
+    },
+    {
+      "id": "feature-06",
+      "name": "가까운 시설 지도 (보건소·육아종합지원센터·산후조리원)",
+      "status": "fallback",
+      "notes": "곁가지(최저순위). 카카오 JS키·REST키 미설정 → 고정 facilities JSON 목록 + KakaoMap 기존 fallback. 라이브 카카오 검색 미검증. 발표에서 '실데이터 연동'으로 단언 금지.",
+      "demoPath": "demo/demo.scenario.yaml#step-5"
+    },
+    {
+      "id": "feature-07",
+      "name": "발표 초안 (Presentation draft-outline)",
+      "status": "implemented",
+      "notes": "presentation/draft-outline.md(10장 윤곽)+draft-layout-plan.json. 데모 장면은 placeholder(미구현 단언 없음). Stage 08~09에서 확정.",
+      "demoPath": "(앱 외 산출물)"
+    }
+  ]
+}

@@ -1,0 +1,737 @@
+/* ============================================================
+   theme/notion/components.css — 16개 레이아웃 시각 디자인.
+   정적 HTML(notion-html 렌더러)이 사용하는 레이아웃별 고유 구조 CSS.
+   tokens.css 변수(--notion-*)만 참조한다(슬라이드별 inline CSS 금지, Doc2 §5.1).
+
+   출처(porting source): presentation/marp/themes/propca-notion-style.css.
+   원본은 section.<class> 에 스타일을 걸었으나, 정적 HTML 구조는
+   <section class="slide <class>"> > <div class="notion-root slide-inner"> 이므로
+   레이아웃 컨테이너 스타일은 .slide.<class> .slide-inner 로 옮겨 적었다.
+   원본 토큰(--purple/--canvas/--ink/--accent/--fg-muted/--border/--hairline/--pastel-* 등)은
+   전부 가장 가까운 --notion-* 토큰으로 remap 했다.
+   ============================================================ */
+@import url('./tokens.css');
+
+/* ------------------------------------------------------------
+   공통 헬퍼 (여러 레이아웃이 공유)
+   ------------------------------------------------------------ */
+.notion-card {
+  background: var(--notion-canvas-card);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  padding: var(--notion-space-4);
+}
+
+/* .callout — porting source: propca .callout (단일 보라 톤) */
+.callout {
+  margin: 12px 0;
+  padding: 16px 20px;
+  border-radius: var(--notion-radius);
+  border: 1px solid var(--notion-hairline);
+  border-left: 3px solid var(--notion-purple);
+  background: var(--notion-canvas-card);
+  font-size: calc(23pt * var(--slide-scale, 1));
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  color: var(--notion-ink);
+  line-height: 1.5;
+}
+
+/* .cols-2 — porting source: propca .cols-2 */
+.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--notion-space-4);
+}
+.cols-2 > * { margin: 0; min-width: 0; }
+
+/* 슬라이드 제목 공통(레이아웃 상단 full-width 제목, 상단 고정) */
+.slide .slide-title {
+  font-size: calc(var(--notion-fs-h1) * var(--slide-scale, 1));
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--notion-ink);
+  margin: 0 0 24px 0;
+}
+
+/* 본문 래퍼 공통: 제목 아래 남은 공간을 채우고 그 안에서 중앙정렬.
+   제목-앵커 레이아웃의 grid/flex 규칙은 각 .slide.X .slide-body 에 건다. */
+.slide .slide-body {
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--notion-space-3, 18px);
+  min-height: 0;
+}
+
+/* 한글 줄바꿈: 어절 단위(단어 중간 끊김 방지) — 모든 슬라이드 텍스트 공통 */
+.slide h1, .slide h2, .slide h3, .slide p, .slide li,
+.slide .slide-title, .slide blockquote, .slide .body, .slide .quote-text {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* ============================================================
+   1) hero  → .slide.cover   (← propca section.cover)
+   ============================================================ */
+.slide.cover .slide-inner {
+  background: linear-gradient(180deg, var(--notion-navy) 0%, var(--notion-navy-deep) 100%);
+  color: #ffffff;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 100px 96px;
+  gap: 0;
+}
+.slide.cover .ee-slot-eyebrow {
+  font-family: var(--notion-font-mono);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--notion-pink);
+  margin-bottom: 18px;
+}
+.slide.cover h1 {
+  color: #ffffff;
+  font-size: calc(58pt * var(--slide-scale, 1));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px;
+  line-height: 1.12;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  padding-bottom: 24px;
+  width: 100%;
+}
+.slide.cover h2 {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1));
+  font-weight: 400;
+  margin: 0 0 36px;
+  max-width: 78%;
+}
+.slide.cover .ee-slot-footnote {
+  position: absolute;
+  bottom: 56px;
+  right: 96px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  font-family: var(--notion-font-mono);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+
+/* ============================================================
+   2) problem-flow  → .slide.icon-list   (← propca section.icon-list)
+   ============================================================ */
+.slide.icon-list .slide-inner { justify-content: flex-start; }
+.slide.icon-list ul.flow-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+.slide.icon-list ul.flow-list li {
+  background: var(--notion-canvas);
+  border: 1px solid var(--notion-hairline);
+  border-radius: 10px;
+  padding: 18px 22px;
+  font-size: calc(26pt * var(--slide-scale, 1));
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--notion-ink);
+  line-height: 1.45;
+}
+.slide.icon-list ul.flow-list li .li-label {
+  flex: 0 0 auto;
+  font-family: var(--notion-font-mono);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  font-weight: 600;
+  color: var(--notion-ink);
+  background: #fbf3db;
+  padding: 2px 10px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   3) contrast  → .slide.compare   (← propca section.compare)
+   ============================================================ */
+.slide.compare .slide-inner { justify-content: flex-start; }
+.slide.compare .slide-body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 24px;
+  row-gap: 16px;
+  align-content: center;
+  align-items: stretch;
+  justify-content: stretch;
+}
+.slide.compare .slide-body > .compare-lead { grid-column: 1 / -1; }
+.slide.compare .col {
+  background: var(--notion-canvas);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  padding: 28px 28px;
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide.compare .col .col-label {
+  font-family: var(--notion-font-mono);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--notion-purple);
+  margin: 0 0 12px;
+}
+.slide.compare .col ul { margin: 0; padding-left: 22px; }
+.slide.compare .col ul li { font-size: calc(23pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0 0 8px; }
+.slide.compare .col ul li::marker { color: var(--notion-purple); }
+.slide.compare .col p { font-size: calc(23pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0; }
+.slide.compare .vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--notion-font-mono);
+  font-size: 30pt;
+  font-weight: 800;
+  color: var(--notion-purple);
+  letter-spacing: 0.05em;
+  padding: 0 8px;
+}
+
+/* ============================================================
+   4) insight-statement  → .slide.yellow-banner  (← propca section.yellow-banner)
+   ============================================================ */
+.slide.yellow-banner .slide-inner {
+  background: var(--notion-pastel-yellow);
+  color: var(--notion-ink);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 90px 120px;
+}
+.slide.yellow-banner h1 {
+  font-size: calc(59pt * var(--slide-scale, 1));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--notion-ink);
+  margin: 0 0 16px;
+  line-height: 1.1;
+}
+.slide.yellow-banner h2 {
+  font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1));
+  font-weight: 400;
+  color: rgba(25, 25, 24, 0.65);
+  margin: 0;
+}
+
+/* ============================================================
+   5) product-overview  → .slide.block-features  (← propca section.block-features)
+   ============================================================ */
+.slide.block-features .slide-inner { justify-content: flex-start; }
+.slide.block-features .blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin: 24px 0 0;
+}
+.slide.block-features .blocks > .block {
+  padding: 32px 28px;
+  background: var(--notion-canvas-card);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide.block-features .blocks > .block .ico {
+  width: 44px; height: 44px;
+  border-radius: var(--notion-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 30pt;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.slide.block-features .blocks > .block:nth-child(1) .ico { background: var(--notion-purple); }
+.slide.block-features .blocks > .block:nth-child(2) .ico { background: var(--notion-pink); }
+.slide.block-features .blocks > .block:nth-child(3) .ico { background: var(--notion-teal); }
+.slide.block-features .blocks > .block:nth-child(4) .ico { background: var(--notion-orange); }
+.slide.block-features .blocks > .block:nth-child(5) .ico { background: var(--notion-green); }
+.slide.block-features .blocks > .block h3 { font-size: calc(25pt * var(--slide-scale, 1)); margin: 0 0 6px; color: var(--notion-ink); }
+.slide.block-features .blocks > .block p { font-size: calc(20pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 0; line-height: 1.5; }
+
+/* ============================================================
+   6) demo-fullscreen  → .slide.bg-full  (← propca section.bg-full)
+   ============================================================ */
+.slide.bg-full .slide-inner {
+  padding: 90px 110px;
+  color: #ffffff;
+  position: relative;
+  justify-content: center;
+  background: var(--notion-navy);
+  background-size: cover;
+  background-position: center;
+}
+.slide.bg-full .slide-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(11, 15, 25, 0.78) 0%, rgba(11, 15, 25, 0.45) 100%);
+  z-index: 0;
+}
+.slide.bg-full .slide-inner > * { position: relative; z-index: 1; }
+.slide.bg-full h1 { color: #ffffff; font-size: calc(59pt * var(--slide-scale, 1)); font-weight: 600; letter-spacing: -0.03em; margin: 0 0 16px; line-height: 1.1; }
+.slide.bg-full h2 { color: rgba(255, 255, 255, 0.85); font-size: calc(32pt * var(--slide-scale, 1)); font-weight: 500; margin: 0; }
+/* bg-full 배경 이미지는 인라인 img 대신 .slide-inner background 로 처리 → assets img 숨김 */
+.slide.bg-full .ee-assets { display: none; }
+
+/* ============================================================
+   7) demo-callout  → .slide.split  (← propca section.split)
+   ============================================================ */
+.slide.split .slide-inner { justify-content: flex-start; }
+.slide.split .slide-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 48px;
+  row-gap: 24px;
+  align-content: center;
+}
+.slide.split .col { min-width: 0; align-self: stretch; }
+.slide.split .col-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: var(--notion-canvas-card);
+  border: 1px dashed var(--notion-hairline-strong);
+  border-radius: var(--notion-radius-lg);
+  overflow: hidden;
+}
+.slide.split .col-media img {
+  width: 100%;
+  height: 100%;
+  max-height: 440px;
+  object-fit: cover;
+  border-radius: var(--notion-radius-lg);
+}
+.slide.split .col-text .callout { margin-top: 0; }
+.slide.split .col-text ul { list-style: none; padding: 0; margin: 14px 0 0; }
+.slide.split .col-text ul li {
+  font-size: calc(23pt * var(--slide-scale, 1));
+  color: var(--notion-ink);
+  padding: 8px 0 8px 26px;
+  position: relative;
+  line-height: 1.45;
+}
+.slide.split .col-text ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--notion-green);
+  font-weight: 700;
+}
+/* split 의 이미지는 .col-media 안에 직접 렌더 → 하단 .ee-assets 묶음 숨김 */
+.slide.split > .slide-inner > .ee-assets { display: none; }
+
+/* ============================================================
+   8) architecture  → .slide.steps-result  (← propca section.lecture-example .steps/.result)
+   ============================================================ */
+.slide.steps-result .slide-inner { justify-content: flex-start; }
+.slide.steps-result .steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 8px 0 22px;
+}
+.slide.steps-result .steps > div {
+  background: var(--notion-canvas-card);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius-lg);
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.slide.steps-result .steps .num {
+  font-family: var(--notion-font-mono);
+  font-size: calc(16pt * var(--slide-scale, 1));
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--notion-orange);
+}
+.slide.steps-result .steps .body {
+  font-size: calc(27pt * var(--slide-scale, 1));
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--notion-ink);
+}
+.slide.steps-result .result {
+  background: var(--notion-navy);
+  color: #ffffff;
+  border-radius: var(--notion-radius-lg);
+  padding: 26px 30px;
+  font-size: calc(30pt * var(--slide-scale, 1));
+  font-weight: 500;
+  line-height: 1.4;
+}
+.slide.steps-result .result::before {
+  content: '결과 →';
+  display: inline-block;
+  font-family: var(--notion-font-mono);
+  font-size: 16pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.55);
+  margin-right: 14px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   9) before-after  → .slide.before-after  (← propca section.before-after)
+   ============================================================ */
+.slide.before-after .slide-inner { justify-content: flex-start; }
+.slide.before-after .ba-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  flex: 1;
+  align-items: center;
+  margin-top: 24px;
+}
+.slide.before-after .ba-col {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.slide.before-after .ba-col h3 {
+  font-size: calc(26pt * var(--slide-scale, 1));
+  color: var(--notion-ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+  font-weight: 700;
+}
+.slide.before-after .ba-col img {
+  width: 100%;
+  height: 300px;
+  max-height: 42vh;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--notion-hairline);
+  background: var(--notion-canvas-card);
+}
+.slide.before-after .ba-col .ba-caption { font-size: calc(19pt * var(--slide-scale, 1)); color: var(--notion-ink-sub); margin: 0; }
+.slide.before-after .ba-arrow {
+  font-size: 59pt;
+  color: var(--notion-purple);
+  font-weight: 800;
+  line-height: 1;
+}
+.slide.before-after > .slide-inner > .ee-assets { display: none; }
+
+/* ============================================================
+   10) big-number  → .slide.big-number  (← propca section.big-number)
+   ============================================================ */
+.slide.big-number .slide-inner {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.slide.big-number .ee-slot-label {
+  font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1));
+  color: var(--notion-ink-mute);
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.slide.big-number .ee-slot-number {
+  font-size: calc(min(var(--notion-fs-big-number), 17vw) * var(--slide-scale, 1));
+  font-family: var(--notion-font-mono);
+  font-weight: 800;
+  color: var(--notion-purple);
+  line-height: 1;
+  margin: 24px 0 16px;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.slide.big-number .ee-slot-caption {
+  font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1));
+  color: var(--notion-ink-mute);
+  max-width: 72%;
+  margin: 0 auto;
+  line-height: 1.45;
+}
+
+/* ============================================================
+   11) card-grid  → .slide.pastel-blocks  (← propca section.pastel-blocks)
+   ============================================================ */
+.slide.pastel-blocks .slide-inner { justify-content: flex-start; }
+.slide.pastel-blocks .blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 18px;
+  flex: 1;
+  margin-top: 8px;
+}
+.slide.pastel-blocks .blocks > div {
+  padding: 22px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--notion-ink);
+  min-height: 0;
+}
+.slide.pastel-blocks .blocks > div:nth-child(6n+1) { background: var(--notion-pastel-peach); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+2) { background: var(--notion-pastel-rose); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+3) { background: var(--notion-pastel-mint); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+4) { background: var(--notion-pastel-lavender); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+5) { background: var(--notion-pastel-sky); }
+.slide.pastel-blocks .blocks > div:nth-child(6n+6) { background: var(--notion-pastel-yellow); }
+.slide.pastel-blocks .blocks h3 { font-size: calc(26pt * var(--slide-scale, 1)); margin: 0 0 6px; color: var(--notion-ink); }
+.slide.pastel-blocks .blocks p { font-size: calc(20pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); line-height: 1.45; margin: 0; }
+
+/* ============================================================
+   12) timeline  → .slide.timeline  (← propca section.timeline)
+   ============================================================ */
+.slide.timeline .slide-inner { justify-content: flex-start; }
+.slide.timeline ol {
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 0;
+  row-gap: 32px;
+  padding: 24px 0 0 0;
+  margin: 0;
+  position: relative;
+}
+.slide.timeline ol li {
+  counter-increment: step;
+  position: relative;
+  padding: 56px 16px 0 16px;
+  text-align: center;
+  font-size: calc(22pt * var(--slide-scale, 1));
+  color: var(--notion-ink-mute);
+  line-height: 1.5;
+  z-index: 1;
+}
+.slide.timeline ol li::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -1px;
+  right: -1px;
+  height: 2px;
+  background: var(--notion-hairline-strong);
+  z-index: 1;
+}
+.slide.timeline ol li:nth-child(4n+1)::after { left: 50%; }
+.slide.timeline ol li:nth-child(4n)::after { right: 50%; }
+.slide.timeline ol li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--notion-purple);
+  color: #ffffff;
+  font-family: var(--notion-font-mono);
+  font-weight: 700;
+  font-size: 20pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 0 6px var(--notion-canvas);
+}
+.slide.timeline ol li .ts-heading {
+  display: block;
+  color: var(--notion-ink);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+/* ============================================================
+   13) quote  → .slide.hero-quote  (← propca section.hero-quote)
+   ============================================================ */
+.slide.hero-quote .slide-inner {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 90px 140px;
+}
+.slide.hero-quote blockquote {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.slide.hero-quote blockquote::before {
+  content: '\201C';
+  font-family: var(--notion-font-sans);
+  font-size: 126pt;
+  color: var(--notion-purple);
+  line-height: 0.6;
+  display: block;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+.slide.hero-quote blockquote .quote-text {
+  font-size: calc(39pt * var(--slide-scale, 1));
+  font-style: normal;
+  font-weight: 500;
+  color: var(--notion-ink);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.slide.hero-quote blockquote .quote-attr {
+  font-size: calc(23pt * var(--slide-scale, 1));
+  color: var(--notion-ink-sub);
+  font-weight: 600;
+  margin-top: 24px;
+}
+
+/* ============================================================
+   14) limitation-guardrail  → .slide.limitation-guardrail
+       (← propca .cols-2 + .callout)
+   ============================================================ */
+.slide.limitation-guardrail .slide-inner { justify-content: flex-start; }
+.slide.limitation-guardrail .cols-2 { margin-top: 12px; flex: 1; align-content: center; }
+.slide.limitation-guardrail .lg-col { display: flex; flex-direction: column; justify-content: center; }
+.slide.limitation-guardrail .lg-col h3 {
+  font-family: var(--notion-font-mono);
+  font-size: calc(19pt * var(--slide-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--notion-ink-sub);
+  margin: 0 0 12px;
+}
+.slide.limitation-guardrail .lg-col.guardrails h3 { color: var(--notion-purple); }
+.slide.limitation-guardrail .callout { font-size: calc(22pt * var(--slide-scale, 1)); }
+.slide.limitation-guardrail .lg-col.limitations .callout { border-left-color: var(--notion-orange); }
+
+/* ============================================================
+   15) expansion-map  → .slide.roadmap  (← propca section.roadmap)
+   ============================================================ */
+.slide.roadmap .slide-inner { justify-content: flex-start; }
+.slide.roadmap .tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+.slide.roadmap .tier {
+  background: var(--notion-canvas);
+  border: 1px solid var(--notion-hairline);
+  border-radius: var(--notion-radius);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.slide.roadmap .tier .phase-detail {
+  font-size: calc(20pt * var(--slide-scale, 1));
+  font-weight: 600;
+  color: var(--notion-purple);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.slide.roadmap .tier h3 { font-size: calc(26pt * var(--slide-scale, 1)); color: var(--notion-ink); margin: 0 0 6px; }
+.slide.roadmap .tier p { font-size: calc(17pt * var(--slide-scale, 1)); color: var(--notion-ink-mute); margin: 6px 0 18px; }
+.slide.roadmap .tier ul { list-style: none; padding: 0; margin: 18px 0 0 0; }
+.slide.roadmap .tier ul li {
+  font-size: calc(19pt * var(--slide-scale, 1));
+  color: var(--notion-ink);
+  padding: 5px 0;
+  border-top: 1px solid var(--notion-hairline);
+}
+.slide.roadmap .tier ul li::before { content: '✓ '; color: var(--notion-green); font-weight: 600; }
+.slide.roadmap .tier.featured { border: 2px solid var(--notion-purple); }
+.slide.roadmap .tier.featured::before {
+  content: '진행 중';
+  position: absolute;
+  top: -12px; right: 16px;
+  background: var(--notion-purple);
+  color: #ffffff;
+  font-size: 16pt;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: var(--notion-radius-sm);
+}
+
+/* ============================================================
+   16) closing  → .slide.end  (← propca section.end)
+   ============================================================ */
+.slide.end .slide-inner {
+  background: linear-gradient(180deg, var(--notion-navy) 0%, var(--notion-navy-deep) 100%);
+  color: #ffffff;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 96px;
+}
+.slide.end h1 {
+  color: #ffffff;
+  font-size: calc(65pt * var(--slide-scale, 1));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 0 0 12px;
+  line-height: 1.05;
+}
+.slide.end h2 { color: rgba(255, 255, 255, 0.7); font-size: calc(var(--notion-fs-h2) * var(--slide-scale, 1)); font-weight: 400; margin: 0 0 28px; }
+.slide.end .end-cta {
+  background: var(--notion-purple);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: calc(25pt * var(--slide-scale, 1));
+  padding: 14px 28px;
+  border-radius: var(--notion-radius-pill);
+  display: inline-block;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(86, 69, 212, 0.4);
+}
+.slide.end ul.end-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.slide.end ul.end-tags li {
+  background: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+  padding: 7px 16px;
+  border-radius: var(--notion-radius-pill);
+  font-size: calc(20pt * var(--slide-scale, 1));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+.slide.end .end-contact { color: rgba(255, 255, 255, 0.55); font-size: calc(20pt * var(--slide-scale, 1)); margin: 0; }

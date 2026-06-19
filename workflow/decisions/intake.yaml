@@ -1,0 +1,49 @@
+# workflow/decisions/intake.yaml — Stage 00 Intake 산출물
+# 이후 모든 단계(01 리서치 ~ )의 기준점. 메인 에이전트 전용.
+
+topic: >-
+  임산부·신생아 원스톱 지원. 임신 주차·출산 예정일과 거주 지역을 입력하면
+  시기별(임신 초·중·후기 → 출산 → 영아기) 정부 지원을 "지금 받을 수 있는 것 → 곧 받을 것"
+  순서로 자동 정렬해 안내하는 서비스.
+
+constraints:
+  - 4시간(240분) AI 해커톤. 목표는 "데모가 확실히 돌아가는" 결과물.
+  - 데이터 전략 = 혼합. 지원 제도 목록은 조사·검증한 고정 데이터셋(JSON)으로 시연 안정성 확보,
+    1~2개 핵심 항목만 실 공공 API로 'Wow' 연출(가능할 때만, 안 되면 고정값 폴백).
+  - 이 환경에서 data.go.kr·safetydata.go.kr 는 403 차단 → 새 공공데이터는 사람이 직접 다운로드 필요.
+  - 카카오맵 JS 키 미설정 시 지도는 fallback으로 동작(앱은 정상 구동).
+
+presentationMinutes: 5
+implementationMinutes: 240   # + 버퍼 10분
+
+techStack:
+  required:
+    - Next.js 14 (App Router) · React 18 · TypeScript   # web/ 키트 스캐폴드
+    - Tailwind 3 + "@krds-ui/core" (KRDS 정부 디자인)
+  optional:
+    - 카카오맵 JS SDK (위치 기반 시설 안내용, 키 있을 때)
+  banned: []
+
+mandatory:
+  - 공공데이터 의무 사용: 없음(사용자 확인). 단 주제 특성상 정부 지원 제도 데이터가 핵심 콘텐츠.
+
+usableAssets:
+  - "web/ — 검증된 Next.js+KRDS 스캐폴드(install+build 통과). init 생략하고 이걸로 시작."
+  - "web/lib/regions.ts — 전국 시도→시군구. '거주 지역' 입력 셀렉터에 그대로 사용(핵심 재사용)."
+  - "web/lib/shelters.ts — Haversine 거리계산·정렬·필터. 위치 기반 시설(보건소·육아종합지원센터 등) 정렬에 재사용."
+  - "web/components/KakaoMap.tsx — SDK 로드·클러스터·키없을때 fallback. 가까운 지원 시설 지도에 사용."
+  - "data/boundaries/ — 전국 시도/시군구 경계 GeoJSON·TopoJSON. 지역 시각화에 사용 가능."
+  - "design/krds/ + web/public/gov/ — KRDS 토큰·정부 엠블럼. 정부 서비스 신뢰 룩."
+  - "web/scripts/build-shelters.mjs — CP949 CSV→정제 JSON 패턴. 당일 받은 공공 CSV(예: 보건소 목록) 가공에 재사용."
+  - "data/data-sources.md — 공공데이터 신청/다운로드 경로."
+  - "examples/disaster-guide/ — 연습 완성본. 코드 패턴 참고."
+  - "presentation/ — Slidev primary + Notion 정적 HTML 백업 파이프라인(deck.json 1개로 동시 생성)."
+  - "(미사용) web/public/data/shelters/civildefense/*.json — 민방위 대피소 데이터. 본 주제와 무관, 직접 사용 안 함."
+  - "(신규 제작 필요) 정부 지원 제도 데이터셋 — 키트에 기존 자산 없음. 시기별 임신·출산·영아 지원 제도(자격·금액·신청처·마감)를 조사해 고정 JSON으로 제작. Stage 01 리서치의 1순위 산출물."
+
+notes:
+  - 시기별 정렬이 핵심 로직 → '오늘 날짜 vs 출산예정일'로 임신 주차/영아 개월 수를 계산해 제도를 타임라인에 매핑.
+  - "AI 레버리지(차별점): (a) 자격 요건 자연어 질의응답('내 상황이면 뭘 받아요?') (b) 복잡한 제도를 개인 상황 맞춤 평이체로 요약 (c) 서류·신청 절차 안내 생성. → 규칙 엔진(타임라인 정렬) 위에 AI가 '이해·개인화' 레이어를 얹는 구조. Stage 02/03에서 확정."
+  - Wow Moment 후보: 입력 한 번으로 "지금 신청 가능한 지원 N건 + 마감 임박" 타임라인이 즉시 펼쳐지고, 각 제도를 내 상황 기준으로 AI가 한 줄 요약해 주는 순간.
+  - "실 API 후보(혼합 전략의 실데이터 1~2건): 카카오 로컬 키워드 검색으로 '가까운 보건소·육아종합지원센터·산후조리원' 실시간 조회(카카오키 사용, data.go.kr 403 무관). 폴백 = 고정 시설 목록. Stage 01에서 확정."
+  - 시간 부족 시 단계 생략 금지, 기능 범위 축소(예: 실 API 항목 1개로 줄이거나 고정값 폴백).

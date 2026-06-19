@@ -1,0 +1,13 @@
+{
+  "name": "deck-marp",
+  "private": true,
+  "scripts": {
+    "build": "marp slides.md --theme themes/propca-notion-style.css --html --allow-local-files -o output/index.html",
+    "pdf": "marp slides.md --theme themes/propca-notion-style.css --html --allow-local-files --pdf -o output/index.pdf",
+    "pptx": "marp slides.md --theme themes/propca-notion-style.css --html --allow-local-files --pptx -o output/index.pptx",
+    "watch": "marp slides.md --theme themes/propca-notion-style.css --html --allow-local-files -o output/index.html -w --preview"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4.1.2"
+  }
+}
