@@ -1,5 +1,51 @@
 # 한국 공공 서비스 해커톤 스타터 키트
 
+> 📦 **이번 결과물: "우리 가족 맞춤 정부 혜택 찾기"** — 가족 상황을 입력하면 로그인 없이 받을 수 있는 정부 혜택과 "왜 당신이 해당되는지"를 AI가 설명하는 웹앱. 최종 제출물은 [`dist/submission/`](dist/submission/)에 모여 있습니다.
+
+## 🎯 결과물 확인 방법 (다른 사람용)
+
+설치가 안 돼 있으면 먼저: `npm install && npm --prefix web install && npm --prefix presentation/slidev install`
+
+**① 웹앱 (실제 데모)**
+```bash
+cd web
+npm run dev          # → http://localhost:3000
+```
+- 입력 예시: "영유아 가구" 선택 + 지역 `서울` + 월 소득 `350` + 막내 자녀 월령 `8` → **혜택 찾기** (또는 입력창의 "예시로 채우기")
+- 혜택 카드마다 "왜 해당되나요? ✓" 근거와 신청 동선이 뜹니다. 로그인 화면은 없습니다.
+- AI(자연어 입력·자연스러운 설명)는 선택: `web/.env.local`에 `ANTHROPIC_API_KEY` 설정 시 활성화. **없어도 폴백으로 완전히 동작.**
+
+**② 발표 슬라이드 — Slidev (기본 매체, 다크 테마)**
+```bash
+cd presentation/slidev && npm run build      # 슬라이드 빌드(→ dist/)
+# 루트로 돌아와 정적 서빙(UTF-8):
+node presentation/serve-static.mjs presentation/slidev/dist 3030 spa   # → http://localhost:3030/
+```
+> 헤드리스/미리보기 환경에선 `slidev dev`가 불안정할 수 있어 **빌드 + 정적 서빙**을 권장합니다. `presentation.pdf`(9장)도 [`dist/submission/`](dist/submission/)에 있습니다.
+
+**③ 발표 슬라이드 — Notion 정적 HTML (오프라인 백업)**
+- 위치: `presentation/output/static/presentation.html` (또는 제출본 [`dist/submission/presentation.html`](dist/submission/presentation.html))
+- 인터넷 없이 브라우저로 바로 열어 ←/→ 로 이동. (URL로 보려면 `node presentation/serve-static.mjs presentation/output 3033` → http://localhost:3033/static/presentation.html)
+
+**그 외 산출물:** [`spec.md`](spec.md) · [`concept.md`](concept.md) · [`presentation/qna.md`](presentation/qna.md) · [`sources.md`](sources.md)(출처 20건) · 데모 스크린샷 `presentation/assets/screenshots/`
+
+## ⏱️ 제작 시간 기록 (이번 실행, 시작 2026-06-19T08:29:39Z)
+
+| 단계 | 실제 | 예산 | | 단계 | 실제 | 예산 |
+|---|---|---|---|---|---|---|
+| 00 intake | 2.9분 | 5 | | 07 데모검증 | 6.0분 | 15 |
+| 01 리서치 | 10.4분 | 15 | | 08 스크립트 | 4.4분 | 10 |
+| 02 인사이트·승인 | 11.7분 | 15 | | 09 발표생성 | 9.8분 | 20 |
+| 03 spec | 5.1분 | 10 | | 10 발표검증 | 2.7분 | 10 |
+| 04 구현계획 | 5.4분 | 10 | | 11 리허설·승인 | 14.0분 | 10 |
+| 05 병렬구현 | 14.2분 | 85 | | 12 패키지 | 4.7분 | 5 |
+| 06 통합 | 2.9분 | 20 | | | | |
+
+- **단계 합계(00~12): 약 94.2분** / 전체 벽시계(시작~완주): **101.2분** (단계 사이 처리·디버그 포함).
+- **마감 예산 240분의 절반 이하(101분)**에서 13단계 완주. 가장 오래 걸린 구간: 05 구현(14.2분), 11 리허설(14분, Slidev 렌더 디버그 포함).
+
+---
+
 4시간 AI 해커톤에서 주제를 받자마자 "돌아가는 데모 + 발표"까지 만들기 위한 출발점입니다.
 
 크게 두 가지로 이루어져 있습니다.
@@ -311,23 +357,3 @@ implementation/     manifest.json(실제 만든 기능)
 KRDS 이용약관 · `@krds-ui/core`(Apache-2.0) · 공공데이터포털을 따릅니다. 발표 엔진은 BaizeAI/talks(Apache-2.0)의 카드 디자인을 이식했습니다.
 
 자세한 출처는 `design/krds/SOURCE.md`, `data/data-sources.md`, `presentation/sources/`에 있습니다.
-
----
-
-## 9. 제작 기록 (이번 실행 — "우리 가족 맞춤 정부 혜택 찾기")
-
-이 엔진으로 실제 1회 완주한 기록입니다. (시작 2026-06-19T08:29:39Z)
-
-| 단계 | 실제 | 예산 | | 단계 | 실제 | 예산 |
-|---|---|---|---|---|---|---|
-| 00 intake | 2.9분 | 5 | | 07 데모검증 | 6.0분 | 15 |
-| 01 리서치 | 10.4분 | 15 | | 08 스크립트 | 4.4분 | 10 |
-| 02 인사이트·승인 | 11.7분 | 15 | | 09 발표생성 | 9.8분 | 20 |
-| 03 spec | 5.1분 | 10 | | 10 발표검증 | 2.7분 | 10 |
-| 04 구현계획 | 5.4분 | 10 | | 11 리허설·승인 | 14.0분 | 10 |
-| 05 병렬구현 | 14.2분 | 85 | | 12 패키지 | 4.7분 | 5 |
-| 06 통합 | 2.9분 | 20 | | | | |
-
-- **단계 합계(00~12): 약 94.2분** / 전체 벽시계(시작~완주): **101.2분** (단계 사이 처리·디버그 포함).
-- **마감 예산 240분의 절반 이하(101분)**에서 13단계 완주. 데모 앱·발표자료(Slidev+Notion HTML)·PDF·Q&A·출처까지 `dist/submission/`에 패키징.
-- 가장 오래 걸린 구간: 05 구현(14.2분), 11 리허설(14분, Slidev 렌더 디버그 포함).
