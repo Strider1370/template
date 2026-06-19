@@ -7,7 +7,7 @@ highlighter: shiki
 css: unocss
 colorSchema: dark
 transition: fade-out
-title: "우리 동네 맞춤 재난 대비 가이드"
+title: "샘플 발표 (레이아웃 데모)"
 lang: ko
 lineNumbers: false
 mdc: true
@@ -21,22 +21,22 @@ impl: "implemented"
 ---
 <div class="flex flex-col items-center justify-center text-center">
 
-<div class="text-cyan-300 tracking-widest text-sm font-semibold uppercase opacity-90" data-addr="slide-01.content.eyebrow">공공 재난 대비</div>
+<div class="text-cyan-300 tracking-widest text-sm font-semibold uppercase opacity-90" data-addr="slide-01.content.eyebrow">프로젝트 분야</div>
 
-<h1 data-addr="slide-01.content.title">우리 동네 맞춤 재난 대비 가이드</h1>
+<h1 data-addr="slide-01.content.title">한 줄 결론을 여기에</h1>
 
-<div class="mt-4 max-w-3xl opacity-80 text-lg" data-addr="slide-01.content.subtitle">내 위치 기준으로, 지금 무엇을 해야 하는지 한 화면에</div>
+<div class="mt-4 max-w-3xl opacity-80 text-lg" data-addr="slide-01.content.subtitle">누구에게 · 무엇을 · 어떻게 해결하는지 한 문장으로</div>
 </div>
 
-<div v-click class="mt-8" data-addr="slide-01.content.footnote"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80">행정안전부 공개데이터 기반 · 오프라인 동작</div></div>
+<div v-click class="mt-8" data-addr="slide-01.content.footnote"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80">근거·데이터 출처를 여기에</div></div>
 
 <!--
-안녕하세요. 저희는 동네 단위로 개인화된 재난 대비 가이드를 만들었습니다. 핵심은 '내 위치 기준으로 지금 당장 할 일'을 한 화면에 보여주는 것입니다.
+발표 첫 문장입니다. 결론(결과)부터 한 문장으로 말합니다. (이 파일은 레이아웃 데모용 placeholder이며, 새 주제로 내용을 갈아끼웁니다.)
 -->
 
 ---
 class: px-14 py-10
-title: "재난 정보는 많지만, 내게 맞는 정보는 없다"
+title: "기존 방식 vs 우리 접근"
 glowSeed: 285
 glow: left
 slideId: "slide-02"
@@ -45,7 +45,7 @@ durationSeconds: 50
 impl: "implemented"
 ---
 
-<h1 data-addr="slide-02.content.title">재난 정보는 많지만, 내게 맞는 정보는 없다</h1>
+<h1 data-addr="slide-02.content.title">기존 방식 vs 우리 접근</h1>
 
 <div mt-8 grid grid-cols-2 gap-6 items-start>
   <div data-addr="slide-02.content.left" border="2 solid red-800" bg="red-800/20" rounded-lg overflow-hidden>
@@ -56,15 +56,15 @@ impl: "implemented"
     <div px-5 py-4 flex flex-col gap-1>
       <div flex items-center gap-2 py-1 data-addr="slide-02.content.left.0">
         <div i-carbon:close text-red-300 text-xl shrink-0 />
-        <span text-lg>전국 단위 일반 공지</span>
+        <span text-lg>기존 한계 1</span>
       </div>
       <div flex items-center gap-2 py-1 data-addr="slide-02.content.left.1">
         <div i-carbon:close text-red-300 text-xl shrink-0 />
-        <span text-lg>수십 페이지 PDF 매뉴얼</span>
+        <span text-lg>기존 한계 2</span>
       </div>
       <div flex items-center gap-2 py-1 data-addr="slide-02.content.left.2">
         <div i-carbon:close text-red-300 text-xl shrink-0 />
-        <span text-lg>내 동네 대피소는 직접 검색</span>
+        <span text-lg>기존 한계 3</span>
       </div>
     </div>
   </div>
@@ -76,27 +76,27 @@ impl: "implemented"
     <div px-5 py-4 flex flex-col gap-1>
       <div flex items-center gap-2 py-1 data-addr="slide-02.content.right.0">
         <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>내 위치 기준 자동 필터링</span>
+        <span text-lg>개선점 1</span>
       </div>
       <div flex items-center gap-2 py-1 data-addr="slide-02.content.right.1">
         <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>지금 할 일 3가지로 압축</span>
+        <span text-lg>개선점 2</span>
       </div>
       <div flex items-center gap-2 py-1 data-addr="slide-02.content.right.2">
         <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>가까운 대피소 즉시 안내</span>
+        <span text-lg>개선점 3</span>
       </div>
     </div>
   </div>
 </div>
 
 <!--
-재난 정보 자체는 충분히 공개돼 있습니다. 문제는 '내게 맞는 형태'가 아니라는 점입니다. 왼쪽이 기존 방식, 오른쪽이 저희가 제안하는 방식입니다.
+문제를 다르게 보는 관점을 좌우 대비로 보여줍니다.
 -->
 
 ---
 class: px-14 py-10
-title: "위치를 누르면 우리 동네 가이드가 즉시 생성됩니다"
+title: "핵심 데모 장면"
 glowSeed: 286
 glow: right
 slideId: "slide-03"
@@ -105,7 +105,7 @@ durationSeconds: 90
 impl: "implemented"
 ---
 
-<h1 data-addr="slide-03.content.title">위치를 누르면 우리 동네 가이드가 즉시 생성됩니다</h1>
+<h1 data-addr="slide-03.content.title">핵심 데모 장면</h1>
 
 <div mt-6 grid grid-cols-2 gap-8 items-center>
 
@@ -122,15 +122,15 @@ impl: "implemented"
 <v-clicks>
 
 <div data-addr="slide-03.content.callout.0" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
-<div flex items-center gap-2><div i-carbon:checkmark text-cyan-300 text-xl shrink-0 /><span font-medium text-lg>현재 위치 기준 위험 유형 자동 판별</span></div>
+<div flex items-center gap-2><div i-carbon:checkmark text-cyan-300 text-xl shrink-0 /><span font-medium text-lg>데모 포인트 1</span></div>
 </div>
 
 <div data-addr="slide-03.content.callout.1" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
-<div flex items-center gap-2><div i-carbon:checkmark text-amber-300 text-xl shrink-0 /><span font-medium text-lg>가장 가까운 대피소 3곳과 경로</span></div>
+<div flex items-center gap-2><div i-carbon:checkmark text-amber-300 text-xl shrink-0 /><span font-medium text-lg>데모 포인트 2</span></div>
 </div>
 
 <div data-addr="slide-03.content.callout.2" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
-<div flex items-center gap-2><div i-carbon:checkmark text-green-300 text-xl shrink-0 /><span font-medium text-lg>지금 준비할 비상물품 체크리스트</span></div>
+<div flex items-center gap-2><div i-carbon:checkmark text-green-300 text-xl shrink-0 /><span font-medium text-lg>데모 포인트 3</span></div>
 </div>
 
 </v-clicks>
@@ -139,15 +139,15 @@ impl: "implemented"
 
 </div>
 
-<div opacity-50 text-xs data-addr="slide-03.content.caption">실제 앱 화면 캡처 (서울 관악구 시연)</div>
+<div opacity-50 text-xs data-addr="slide-03.content.caption">데모 화면 캡처 자리</div>
 
 <!--
-직접 보여드리겠습니다. 위치 버튼 하나만 누르면, 해당 동네에서 발생 가능성이 높은 재난 유형을 판별하고 가장 가까운 대피소 3곳과 비상물품 체크리스트를 만들어 줍니다. 라이브 데모가 막히면 이 캡처로 대체합니다.
+실제 동작을 보여주는 부분입니다. 발표 시간의 절반 이상을 여기에 씁니다.
 -->
 
 ---
 layout: center
-title: "대피소 탐색에 걸리던 시간"
+title: "핵심 지표"
 glowSeed: 287
 glow: center
 slideId: "slide-04"
@@ -158,16 +158,16 @@ impl: "implemented"
 
 <div class="text-center">
 
-<div class="opacity-70 tracking-wide" data-addr="slide-04.content.label">대피소 탐색에 걸리던 시간</div>
+<div class="opacity-70 tracking-wide" data-addr="slide-04.content.label">핵심 지표</div>
 
-<div v-click class="my-3 text-7xl font-extrabold text-cyan-300 leading-none" data-addr="slide-04.content.number">8분 → 5초</div>
+<div v-click class="my-3 text-7xl font-extrabold text-cyan-300 leading-none" data-addr="slide-04.content.number">00 → 00</div>
 
-<div class="mt-4 opacity-55 text-sm max-w-xl mx-auto" data-addr="slide-04.content.caption">수동 검색 평균 대비 (내부 시연 측정, 표본 12회)</div>
+<div class="mt-4 opacity-55 text-sm max-w-xl mx-auto" data-addr="slide-04.content.caption">측정 근거를 여기에 (표본·기준 명시)</div>
 
 </div>
 
 <!--
-효과는 명확합니다. 사람이 직접 검색하면 평균 8분 정도 걸리던 대피소 탐색이, 위치 기반 자동화로 5초 수준으로 줄었습니다. 내부 시연 측정값이며 표본은 12회입니다.
+효과를 숫자 하나로 보여줍니다. 근거를 함께 말합니다.
 -->
 
 ---
@@ -194,15 +194,15 @@ impl: "mocked"
     <div px-5 py-4 flex flex-col gap-1>
       <div flex items-center gap-2 py-1 data-addr="slide-05.content.limitations.0">
         <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
-        <span text-lg>대피소 데이터는 공개 갱신 주기에 의존</span>
+        <span text-lg>한계 1</span>
       </div>
       <div flex items-center gap-2 py-1 data-addr="slide-05.content.limitations.1">
         <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
-        <span text-lg>실시간 재난 경보 연동은 미구현(mocked)</span>
+        <span text-lg>한계 2 (미구현/mocked)</span>
       </div>
       <div flex items-center gap-2 py-1 data-addr="slide-05.content.limitations.2">
         <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
-        <span text-lg>위치 권한 거부 시 수동 지역 선택 필요</span>
+        <span text-lg>한계 3</span>
       </div>
     </div>
   </div>
@@ -214,27 +214,27 @@ impl: "mocked"
     <div px-5 py-4 flex flex-col gap-1>
       <div flex items-center gap-2 py-1 data-addr="slide-05.content.guardrails.0">
         <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>데이터 출처·갱신일 화면에 명시</span>
+        <span text-lg>안전장치 1</span>
       </div>
       <div flex items-center gap-2 py-1 data-addr="slide-05.content.guardrails.1">
         <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>오프라인 캐시로 통신 두절에도 동작</span>
+        <span text-lg>안전장치 2</span>
       </div>
       <div flex items-center gap-2 py-1 data-addr="slide-05.content.guardrails.2">
         <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>추정치는 '내부 측정' 라벨로 구분 표기</span>
+        <span text-lg>안전장치 3</span>
       </div>
     </div>
   </div>
 </div>
 
 <!--
-한계도 분명히 말씀드립니다. 실시간 경보 연동은 아직 목업 단계입니다. 대신 출처와 갱신일을 명시하고, 오프라인 캐시로 통신이 끊겨도 동작하도록 안전장치를 뒀습니다.
+한계를 솔직히 말하고, 그에 대한 안전장치를 제시합니다.
 -->
 
 ---
 layout: center
-title: "동네 단위로, 모두가 대비된 도시"
+title: "기억에 남을 마지막 문장"
 glowSeed: 289
 glow: top
 slideId: "slide-06"
@@ -245,16 +245,16 @@ impl: "implemented"
 
 <div class="text-center">
 
-<h1 data-addr="slide-06.content.title">동네 단위로, 모두가 대비된 도시</h1>
+<h1 data-addr="slide-06.content.title">기억에 남을 마지막 문장</h1>
 
-<div class="opacity-70 mt-3 max-w-2xl mx-auto" data-addr="slide-06.content.subtitle">다음 단계: 실시간 경보 연동과 전국 대피소 커버리지</div>
+<div class="opacity-70 mt-3 max-w-2xl mx-auto" data-addr="slide-06.content.subtitle">다음 단계를 여기에</div>
 
 </div>
 
-<div v-click class="mt-8" data-addr="slide-06.content.cta"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-cyan-100"><span class="i-carbon:play" /> 데모 체험: localhost:5173</div></div>
+<div v-click class="mt-8" data-addr="slide-06.content.cta"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-cyan-100"><span class="i-carbon:play" /> 데모 주소를 여기에</div></div>
 
-<div class="mt-8" data-addr="slide-06.content.contact"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80"><span class="i-carbon:logo-github" /> 팀 동네방재 · junn1370@gmail.com</div></div>
+<div class="mt-8" data-addr="slide-06.content.contact"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80"><span class="i-carbon:logo-github" /> 팀 이름 · 연락처</div></div>
 
 <!--
-정리하겠습니다. 저희 목표는 동네 단위로 모두가 대비된 도시입니다. 다음 단계로 실시간 경보 연동과 전국 대피소 커버리지를 계획하고 있습니다. 감사합니다.
+마지막 한 문장으로 닫습니다.
 -->

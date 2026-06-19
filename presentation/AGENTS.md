@@ -157,7 +157,7 @@ presentation/
 1. `reveal/index.template.html` → `index.html` 복사
 2. `[대괄호]` placeholder 채우고, 스크린샷을 `reveal/shots/`에 넣어 `.shot-ph`를 `<img>`로 교체
 3. `index.html` 더블클릭(브라우저). 조작: `←/→/Space` · `S` 노트 · `F` 전체화면
-- 채워진 예시: `reveal/example-disaster-guide.html`, 상세: `reveal/README.md`
+- 상세: `reveal/README.md`
 
 ### ② marp/ 쓰는 법
 ```bash

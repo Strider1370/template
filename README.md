@@ -252,7 +252,6 @@ data/               공공데이터(경계·대피소) + data-sources.md
 design/krds/        KRDS 디자인 토큰·엠블럼
 docs/               운영 지침 문서 + images/
 research/           Stage 01 리서치 보고서
-examples/           참고 완성본
 implementation/     manifest.json(실제 만든 기능)
 ```
 
@@ -266,7 +265,6 @@ implementation/     manifest.json(실제 만든 기능)
 | 공공데이터 | `data/` — 전국 시도/시군구 경계, 시도→시군구 매핑, 민방위 대피소 약 17,000곳 |
 | 디자인 | `design/krds/` — KRDS 공식 토큰(CSS/JSON/Figma) + 정부 엠블럼 |
 | 재사용 코드 | 카카오맵 컴포넌트, 위치/거리 유틸, 공공 CSV 변환 스크립트 |
-| 참고 완성본 | `examples/disaster-guide/` — 연습 결과물 소스 |
 | 운영 지침 | `docs/` — 기획 품질 기준, 발표 생성 가이드, 엔진 구조, 도메인 데이터 준비 |
 
 재사용 방법은 `docs/kit-assets.md`에 정리되어 있습니다(KRDS 함정, 카카오 키, `data.go.kr` 차단 대응 포함).

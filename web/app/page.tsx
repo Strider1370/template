@@ -9,7 +9,6 @@ import { SIGUNGU_BY_SIDO } from '@/lib/regions';
 // 이 파일을 새 주제의 메인 화면으로 교체하세요.
 // 아래 지역 선택 데모는 (1) 스택이 실제로 동작함을 보여주고
 // (2) regions.ts 재사용 패턴의 출발점입니다. 필요 없으면 지우세요.
-// 재난 가이드 완성본은 examples/disaster-guide/ 참고.
 // ─────────────────────────────────────────────────────────────
 
 const SIDO = Object.keys(SIGUNGU_BY_SIDO);

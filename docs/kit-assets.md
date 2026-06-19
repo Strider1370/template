@@ -29,7 +29,6 @@ npm run lint
 │   ├── boundaries/            # 전국 시도/시군구 경계 GeoJSON·TopoJSON (확보됨)
 │   └── data-sources.md        # 공공데이터 신청 경로 + 정적/실시간 전략
 ├── design/krds/               # KRDS 토큰 원본(CSS/JSON/Figma) + SOURCE.md
-├── examples/disaster-guide/   # 연습 완성본(재난 가이드) 참고 소스
 └── web/                       # 작업할 Next.js 앱 (깨끗한 스켈레톤)
     ├── app/                   # layout.tsx, page.tsx(스켈레톤), globals.css
     ├── components/            # Header/Footer(범용) · KakaoMap(재사용)
@@ -53,7 +52,6 @@ npm run lint
 | 데이터 가공 패턴 | `web/scripts/build-shelters.mjs` (CP949 CSV→정제 JSON) | 당일 받은 공공 CSV 가공에 |
 | KRDS 디자인 | `design/krds/` (토큰), `web/public/gov/` (정부 엠블럼) | 정부 서비스 룩에 |
 | 공공데이터 신청 경로 | `data/data-sources.md` | 당일 데이터 다운로드/신청 |
-| 참고 완성본 | `examples/disaster-guide/` | 코드 패턴 참고 |
 
 사용 디테일:
 - 시도 목록 = `Object.keys(SIGUNGU_BY_SIDO)` (`web/lib/regions.ts`).

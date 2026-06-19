@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Masthead } from '@krds-ui/core';
 
 // 범용 헤더 스켈레톤 — 새 주제에 맞게 서비스명/메뉴만 교체하면 됩니다.
-// (정부 식별 Masthead + 엠블럼 + GNB) 재난 가이드 버전은 examples/disaster-guide/components/Header.tsx 참고.
+// (정부 식별 Masthead + 엠블럼 + GNB).
 
 const SERVICE_NAME = '공공 서비스 스타터'; // TODO: 새 주제 서비스명으로 교체
 const GNB_ITEMS = [
