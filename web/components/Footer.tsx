@@ -15,11 +15,11 @@ export function Footer() {
           unoptimized
         />
         <Label size="m" color="gray-90" className="mt-4 block">
-          공공 서비스 스타터
+          우리 가족 맞춤 정부 혜택 찾기
         </Label>
         <Detail size="s" color="gray-50" className="mt-4 block">
-          KRDS(대한민국 디지털정부 디자인시스템) 기반 해커톤 프로토타입입니다.
-          데이터 출처는 사용한 공공데이터에 맞게 표기하세요.
+          해커톤 프로토타입(KRDS 기반)입니다. 혜택 정보는 복지로 등 공개 제도를 바탕으로 한 예시
+          데이터이며, 결과는 참고용 추정입니다. 실제 자격·지급은 해당 기관 심사로 확정됩니다.
         </Detail>
       </div>
     </footer>

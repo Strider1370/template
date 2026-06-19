@@ -3,10 +3,10 @@ import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
-// TODO: 새 주제에 맞게 title/description 교체
 export const metadata: Metadata = {
-  title: '공공 서비스 스타터 (KRDS)',
-  description: '한국 공공 서비스용 해커톤 스타터 키트. 새 주제를 여기에 구현하세요.',
+  title: '우리 가족 맞춤 정부 혜택 찾기',
+  description:
+    '가족 상황을 한 줄로 입력하면, 로그인 없이 받을 수 있는 정부 혜택과 "왜 당신이 해당되는지"를 함께 안내합니다. (예시 데이터 기반 데모)',
 };
 
 export default function RootLayout({

@@ -4,11 +4,10 @@ import { Masthead } from '@krds-ui/core';
 // 범용 헤더 스켈레톤 — 새 주제에 맞게 서비스명/메뉴만 교체하면 됩니다.
 // (정부 식별 Masthead + 엠블럼 + GNB).
 
-const SERVICE_NAME = '공공 서비스 스타터'; // TODO: 새 주제 서비스명으로 교체
+const SERVICE_NAME = '우리 가족 맞춤 정부 혜택 찾기';
 const GNB_ITEMS = [
-  { label: '메뉴 1', href: '#section-1' },
-  { label: '메뉴 2', href: '#section-2' },
-  { label: '메뉴 3', href: '#section-3' },
+  { label: '혜택 찾기', href: '/' },
+  { label: '결과 보기', href: '#results' },
 ];
 
 export function Header() {
@@ -30,7 +29,7 @@ export function Header() {
           />
           <span className="min-w-0">
             <span className="block text-label-s text-gray-60 md:text-label-m">
-              부처/기관명
+              정부 혜택 안내 (예시 데모)
             </span>
             <span className="block truncate text-title-m font-bold text-gray-90 md:text-heading-s">
               {SERVICE_NAME}

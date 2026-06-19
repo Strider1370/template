@@ -9,8 +9,8 @@ project:
 current:
   stageNumber: 5
   stageId: parallel-build
-  status: not_started
-  startedAt: null
+  status: in_progress
+  startedAt: '2026-06-19T09:09:11.364Z'
   budgetMinutes: 85
 completedStages:
   - stageNumber: 0
@@ -68,4 +68,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T09:08:45.490Z'
+lastUpdatedAt: '2026-06-19T09:09:11.365Z'
