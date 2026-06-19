@@ -7,11 +7,11 @@ project:
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 7
-  stageId: demo-validation
+  stageNumber: 8
+  stageId: script
   status: not_started
   startedAt: null
-  budgetMinutes: 15
+  budgetMinutes: 10
 completedStages:
   - stageNumber: 0
     stageId: intake
@@ -55,22 +55,31 @@ completedStages:
     completedAt: '2026-06-19T09:27:08.316Z'
     actualMinutes: 2.9
     budgetMinutes: 20
+  - stageNumber: 7
+    stageId: demo-validation
+    startedAt: '2026-06-19T09:27:26.441Z'
+    completedAt: '2026-06-19T09:33:28.100Z'
+    actualMinutes: 6
+    budgetMinutes: 15
 requiredReads:
-  - workflow/stages/07-demo-validation.md
+  - workflow/stages/08-script.md
+  - 'docs/AI_Hackathon_Operating_System.md :: 7. Stage 08'
+  - 'docs/AI_Hackathon_Operating_System.md :: 8. Stage 08 Review'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 3. Stage 08'
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:demo
-  report: workflow/history/stage-07-gate.md
+  command: npm run gate:script
+  report: workflow/history/stage-08-gate.md
 humanApproval:
   required: false
   status: not_required
   decisionFile: null
-lastHandoff: workflow/history/stage-06-integration.md
+lastHandoff: workflow/history/stage-07-demo-validation.md
 lastSuccessfulCheckpoint:
-  stageNumber: 6
-  stageId: integration
-  commit: b5fe55916d08a0c6467107bc84cd54015dba750d
+  stageNumber: 7
+  stageId: demo-validation
+  commit: 66159a73e9bf7216e563b3a8a8465cb5e99d8455
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -78,4 +87,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-19T09:27:08.392Z'
+lastUpdatedAt: '2026-06-19T09:33:28.178Z'
