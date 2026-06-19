@@ -1,12 +1,10 @@
-// workflow/scripts/complete-stage.mjs — 현재 단계 완료 → 다음 단계로 이동.
+// workflow/scripts/complete-stage.mjs — 현재 단계 마감 → awaiting_direction 에서 멈춤(자동 전환 안 함).
 // 사용: node workflow/scripts/complete-stage.mjs
 import { execSync } from "node:child_process";
 import { readState, writeState, ROOT, getStage } from "../lib.mjs";
 import {
   now,
   minutesBetween,
-  gateForStage,
-  requiredReadsForStage,
   handoffPathFor,
   fileExists,
   currentStage,
