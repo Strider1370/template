@@ -94,32 +94,18 @@ try {
     process.exit(0);
   }
 
-  // 다음 단계로 이동
-  const nxt = getStage(stage.number + 1);
-
-  state.current.stageNumber = nxt.number;
-  state.current.stageId = nxt.id;
-  state.current.status = "not_started";
-  state.current.startedAt = null;
-  state.current.budgetMinutes = nxt.budgetMinutes;
-
-  state.requiredReads = requiredReadsForStage(nxt);
-  state.nextGate = gateForStage(nxt);
-  state.humanApproval = {
-    required: !!nxt.humanApproval,
-    status: nxt.humanApproval ? "pending" : "not_required",
-    decisionFile: null,
-  };
-
+  // 자동 전환하지 않는다. awaiting_direction 으로 멈추고 사용자 확인을 기다린다.
+  state.current.status = "awaiting_direction";
   writeState(state);
 
-  console.log(`\n다음 단계 : Stage ${nxt.number} (${nxt.id}) — ${nxt.budgetMinutes}분`);
-  console.log("먼저 읽어라:");
-  for (const r of state.requiredReads) console.log(`  - ${r}`);
-  console.log("\n시작하려면 : node workflow/scripts/start-stage.mjs");
-  if (nxt.humanApproval) {
-    console.log("\n⚠ 다음 단계는 사용자 승인이 필요합니다. 게이트 통과 후 approve-stage 로 승인받으세요.");
-  }
+  const nxt = getStage(stage.number + 1);
+  console.log(`\n[workflow:complete] Stage ${stage.number} (${stage.id}) 마감 — 다음 단계로 자동 전환하지 않습니다.`);
+  console.log("상태 : awaiting_direction (사용자 방향 결정 대기)");
+  console.log("\n반드시 사용자에게 다음을 확인하세요:");
+  console.log("  ① 이 단계 결과 요약");
+  console.log(`  ② 다음 단계 미리보기 : Stage ${nxt.number} (${nxt.id}) — ${nxt.budgetMinutes}분`);
+  console.log("  ③ '그대로 진행' vs '수정 후 진행'");
+  console.log("\n사용자가 진행을 택하면 : node workflow/scripts/next-stage.mjs");
   console.log("");
 } catch (err) {
   console.error("complete-stage 실패:", err.message);

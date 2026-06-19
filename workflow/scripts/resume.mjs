@@ -29,6 +29,9 @@ try {
     console.log(`  ${step++}. status=gate_failed — 문제를 고친 뒤 게이트 재실행: ${ng.command}`);
   } else if (c.status === "awaiting_approval") {
     console.log(`  ${step++}. status=awaiting_approval — 사용자 승인 후 approve-stage 실행.`);
+  } else if (c.status === "awaiting_direction") {
+    console.log(`  ${step++}. status=awaiting_direction — 단계는 마감됨. 사용자에게 진행/수정을 확인한 뒤`);
+    console.log(`     다음 단계로 전환: node workflow/scripts/next-stage.mjs (확인 전 실행 금지).`);
   } else {
     console.log(`  ${step++}. 단계 시작: node workflow/scripts/start-stage.mjs`);
   }

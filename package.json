@@ -8,6 +8,7 @@
     "workflow:status": "node workflow/scripts/status.mjs",
     "workflow:start": "node workflow/scripts/start-stage.mjs",
     "workflow:complete": "node workflow/scripts/complete-stage.mjs",
+    "workflow:next": "node workflow/scripts/next-stage.mjs",
     "workflow:handoff": "node workflow/scripts/handoff.mjs",
     "workflow:resume": "node workflow/scripts/resume.mjs",
     "workflow:approve": "node workflow/scripts/approve-stage.mjs",

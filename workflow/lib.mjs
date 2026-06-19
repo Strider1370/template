@@ -10,7 +10,8 @@ export const STATE_PATH = join(ROOT, "workflow/state.yaml");
 export const STAGES_PATH = join(ROOT, "workflow/stages.yaml");
 
 export const VALID_STATUS = [
-  "not_started", "in_progress", "blocked", "awaiting_approval", "gate_failed", "completed",
+  "not_started", "in_progress", "blocked", "awaiting_approval",
+  "awaiting_direction", "gate_failed", "completed",
 ];
 
 export function readState() {

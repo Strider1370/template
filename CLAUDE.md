@@ -18,7 +18,7 @@
 6. 필요한 **서브에이전트를 병렬** 실행한다 (작업 계약 = `workflow/templates/agent-task.yaml`).
 7. 산출물을 통합한다. **병렬 탐색/리서치라면:** 각 서브에이전트는 자기 보고서 파일(읽기 쉬운 md 1개)을 남기고, 메인은 이를 통합 파일로 정리한 뒤 — **① 개별 보고서 파일들의 위치를 사용자에게 알려 직접 읽게 하고, ② 통합 요약을 세션(채팅)에서 초보자에게 설명하듯 보고한다.** (파일만 쓰고 끝내지 말 것. 사용자가 파일을 읽는 동안 세션 보고가 같이 가도록.)
 8. 지정된 **Gate를 실제로 실행**한다 (`npm run gate:<stage>`). LLM Review는 `npm run cross-review -- <대상>`.
-9. Gate 통과 시 **Handoff 자동 생성**(`npm run workflow:handoff` — 기계가 시간·파일·커밋·게이트 채움) 후 **'완료 내용 다듬기 + 결정/위험' 1~2줄만 보강**하고 `npm run workflow:complete`. (산문으로 길게 쓰지 마라.)
+9. Gate 통과 시 **Handoff 자동 생성**(`npm run workflow:handoff`) 후 '완료 내용 다듬기 + 결정/위험' 1~2줄만 보강하고 `npm run workflow:complete`. **complete는 자동으로 다음 단계로 넘어가지 않고 `awaiting_direction`에서 멈춘다.** 이때 반드시 사용자에게 ① 이 단계 결과 요약 ② 다음 단계 미리보기 ③ '그대로 진행 vs 수정 후 진행'을 묻는다. 사용자가 진행을 택하기 전에는 `npm run workflow:next`를 실행하지 않는다. (02·11 승인 단계와 별개로 **모든** 단계 경계에 적용.)
 10. Gate 실패 시 다음 단계로 가지 말고 실패 원인과 폴백을 보고한다 (`npm run workflow:fail "<사유>"`).
 
 새 세션 복원: **`npm run workflow:resume`** → 현재 단계와 다음 행동을 알려준다. 이전 대화를 추측하지 말고 `state.yaml` + 최신 Handoff로 복원한다.
