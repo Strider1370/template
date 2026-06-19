@@ -1,0 +1,77 @@
+# workflow/decisions/file-ownership.yaml — Stage 05 병렬 빌드 파일 소유권 (충돌 0)
+# 한 파일은 한 주체만 write. 메인 전용은 서브에이전트 수정 금지.
+
+mainOnly:
+  - workflow/state.yaml
+  - workflow/stages.yaml
+  - spec.md
+  - plan.md
+  - concept.md
+  - PROGRESS.md
+  - README.md
+  - package.json
+  - web/package.json
+  - web/app/layout.tsx
+  - web/app/globals.css
+  - web/tailwind.config.ts
+
+agents:
+  - role: data-agent
+    write:
+      - web/lib/types.ts
+      - web/lib/benefits.ts
+      - web/lib/eligibility.ts
+    read:
+      - spec.md
+      - plan.md
+      - concept.md
+      - research/feasibility.md
+    doNotWrite:
+      - (mainOnly 전체)
+      - web/app/page.tsx
+      - web/components/
+      - web/app/api/
+
+  - role: ui-agent
+    write:
+      - web/app/page.tsx
+      - web/components/BenefitFinder.tsx
+      - web/components/ParsedProfile.tsx
+      - web/components/BenefitCard.tsx
+    read:
+      - spec.md
+      - plan.md
+      - demo/demo.scenario.yaml
+      - web/lib/types.ts
+      - web/lib/regions.ts
+    doNotWrite:
+      - (mainOnly 전체)
+      - web/lib/benefits.ts
+      - web/lib/eligibility.ts
+      - web/app/api/
+
+  - role: ai-agent
+    write:
+      - web/app/api/parse/route.ts
+      - web/app/api/explain/route.ts
+      - web/lib/ai.ts
+      - web/lib/explain-cache.json
+      - web/.env.local.example
+    read:
+      - spec.md
+      - plan.md
+      - web/lib/types.ts
+      - web/lib/benefits.ts
+    doNotWrite:
+      - (mainOnly 전체)
+      - web/app/page.tsx
+      - web/components/
+      - web/lib/eligibility.ts
+
+# 충돌 검사: data/ui/ai 의 write 경로 교집합 = ∅.
+# 의존: web/lib/types.ts 는 data-agent 단독 소유 → 코어(WP1) 완성 후 ui/ai 병렬 시작.
+# 미사용(건드리지 않음): web/components/KakaoMap.tsx, web/lib/shelters.ts, web/public/data/shelters/
+notUsed:
+  - web/components/KakaoMap.tsx
+  - web/lib/shelters.ts
+  - web/public/data/shelters/
