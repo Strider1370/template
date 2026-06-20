@@ -52,7 +52,9 @@ npm run lint
 | 데이터 가공 패턴 | `web/scripts/build-shelters.mjs` (CP949 CSV→정제 JSON) | 당일 받은 공공 CSV 가공에 |
 | KRDS 디자인 | `design/krds/` (토큰), `web/public/gov/` (정부 엠블럼) | 정부 서비스 룩에 |
 | 공공데이터 신청 경로 | `data/data-sources.md` | 당일 데이터 다운로드/신청 |
-| 상단 배너 자동 생성 | `scripts/generate-banner.mjs` (주제→공공기관 사진풍 배너) | 홈 hero 배너를 주제에 맞게 |
+| LLM 호출 헬퍼 | `web/lib/llm.ts`(`openaiChat`) + `web/app/api/llm/route.ts` | 앱에서 LLM 쓸 때(키 없으면 폴백) — 새로 만들지 마라 |
+| 상단 배너 자동 생성 | `scripts/generate-banner.mjs` (주제→공공기관 사진풍 배너) | 홈 hero 배너를 주제에 맞게 (Stage 05·06) |
+| 복지 도메인팩 예시 | `web/app/examples/welfare/` + 복지 lib/컴포넌트/`/api/{parse,explain,ask,policies}` | 복지 주제면 매칭·되묻기 패턴 참고(다른 주제면 삭제) |
 
 사용 디테일:
 - 시도 목록 = `Object.keys(SIGUNGU_BY_SIDO)` (`web/lib/regions.ts`).

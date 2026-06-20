@@ -22,6 +22,7 @@
 - `npm run web:build` 통과 확인.
 - spec과 실제 구현의 차이를 기록.
 - `implementation/manifest.json`에 각 기능 상태를 기록: `implemented | mocked | fallback | dropped | blocked`.
+- **룩 마감 점검**: 스캐폴드 정체성 교체 완료 + 주제 맞춤 상단 배너(`npm run generate-banner -- --topic "<주제>"`) 적용 여부 확인 — 데모 캡처(Stage 07) 전에 배너가 있어야 한다.
 - 작동 상태가 되면 체크포인트 커밋.
 
 ## 7. 병렬 서브에이전트 구성

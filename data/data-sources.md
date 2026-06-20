@@ -25,6 +25,11 @@
 - 정밀 자격기준은 대부분 *산문*이라 자동 전수 판정 불가 → 큐레이션 fixture(`data/welfare/curated-benefits.example.json`)를 병행한다.
 - 진짜 개인 맞춤 자격 판정(보조금24 맞춤안내)은 행정정보 연계라 외부 API로 안 온다 — 데모는 "잠재 적격 후보"까지만 정직하게 표현한다.
 
+**준비된 스크립트·스냅샷 (키 있으면 전수 적재):**
+- 전수 덤프: `node data/scripts/dump-gov24.mjs`(보조금24 JSON) · `node data/scripts/dump-welfare.mjs`(중앙부처·지자체 XML) → `data/snapshots/*.json`. 상세 `data/scripts/README.md`.
+- 앱 연결: `web/app/api/policies/route.ts`가 키 있으면 라이브, 없거나 실패 시 `data/snapshots/gov24-services.json` 키워드 필터(전수 ~10,957건)로 폴백한다.
+- 큐레이션 양식: `data/welfare/curated-benefits.example.json`(정밀 매칭용 빈 양식 — 대표 혜택 8~15개를 손으로 규칙화).
+
 ## ✅ 이미 받아둔 데이터 (인증 불필요, GitHub 미러)
 
 `data/boundaries/` — 출처: southkorea/southkorea-maps (kostat 2018)
