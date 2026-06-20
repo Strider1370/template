@@ -21,6 +21,7 @@
 - `spec.md`를 아래 16헤딩 **정확히 그대로** 작성한다.
 - `demo/demo.scenario.yaml`을 작성한다(스텝별 화면·selector·assertion 계획 포함).
 - "4시간 현실성" 헤딩에서 범위가 과한지 판정하고, 과하면 범위 밖으로 옮긴다.
+- **데모 형태 결정(모바일 여부)**: 여기서 **위치·알림 등 모바일 기능을 데모에 넣을지 결정·명시**하고, 데모 시나리오(§8)·Wow Moment(§9)에 반영한다(반응형은 기본 전제 — 결정 사항 아님). 깊이(APK 빌드 vs 미러링 시연)는 Stage 04 plan에서 정한다. 상세 `docs/mobile-webview-target.md`.
 
 spec.md 16헤딩(정확히):
 `## 1. Answer First` · `## 2. Problem` · `## 3. 최종 Insight` · `## 4. JTBD` · `## 5. AI Leverage` · `## 6. Differentiation` · `## 7. Solution` · `## 8. 데모 시나리오` · `## 9. Wow Moment` · `## 10. Impact` · `## 11. Credibility` · `## 12. Limitation` · `## 13. Guardrail` · `## 14. Closing Message` · `## 15. 범위 밖` · `## 16. 4시간 현실성`
