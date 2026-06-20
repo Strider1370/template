@@ -52,10 +52,19 @@ npm run lint
 | 데이터 가공 패턴 | `web/scripts/build-shelters.mjs` (CP949 CSV→정제 JSON) | 당일 받은 공공 CSV 가공에 |
 | KRDS 디자인 | `design/krds/` (토큰), `web/public/gov/` (정부 엠블럼) | 정부 서비스 룩에 |
 | 공공데이터 신청 경로 | `data/data-sources.md` | 당일 데이터 다운로드/신청 |
+| 상단 배너 자동 생성 | `scripts/generate-banner.mjs` (주제→공공기관 사진풍 배너) | 홈 hero 배너를 주제에 맞게 |
 
 사용 디테일:
 - 시도 목록 = `Object.keys(SIGUNGU_BY_SIDO)` (`web/lib/regions.ts`).
 - `shelters.ts`의 거리계산은 Haversine — 위치 기반 정렬에 범용.
+
+### 상단 배너 자동 생성 (주제 맞춤)
+홈(`web/app/page.tsx`) hero 배경은 `web/public/hero-banner.png` 다(기본 = 범용 청사 사진). 주제가 정해지면 자동 교체:
+```
+npm run generate-banner -- --topic "동네별 폭염 행동 가이드"
+# 주제 생략 시 workflow/state.yaml 의 project.topic 자동 사용
+```
+흐름: 주제 → (LLM이 공공기관 히어로 장면으로 한 문장 확장) → 고정 공공기관 사진 스타일 래퍼 → **gpt-image-2**(없으면 gpt-image-1 폴백)로 1536×512 생성 → `web/public/hero-banner.png` 저장. **`OPENAI_API_KEY` 없으면 건너뛰고 기본 배너 유지**(앱 안 깨짐). 실측 근거: 대표 공공기관 메인은 "큰 실제 사진 + 텍스트"가 가장 흔하다(국민연금·건보·코레일·서울시).
 
 > ⚠️ 주제가 공공/지역 기반이 **아니면** KRDS·공공데이터 자산은 짐이 된다. `web/` 스캐폴드와 워크플로우만 쓰고 나머지는 떼어내라.
 > ⚠️ **데이터 입수는 환경에 따라**(포기·날조 금지): **막힌 환경(이 클라우드)** 은 `data.go.kr` 403 차단 → 헛시도 말고 사람이 미리 받아둔 파일 사용(없으면 사용자에게 요청). **열린 환경(로컬/허용 정책)** 은 직접 다운로드 *시도*(로그인/키 필요 시 브라우저 폴백). **권위 단일 소스 1개 우선**, 못 받으면 "샘플" 명시. 상세 → `data/data-sources.md`.

@@ -43,7 +43,8 @@
     "web:build": "npm --prefix web run build",
     "web:check-identity": "node web/scripts/check-identity.mjs",
     "web:lint": "npm --prefix web run lint",
-    "web:dev": "npm --prefix web run dev"
+    "web:dev": "npm --prefix web run dev",
+    "generate-banner": "node scripts/generate-banner.mjs"
   },
   "engines": {
     "node": ">=18.18"

@@ -36,7 +36,8 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero (배경 배너 이미지 + 왼쪽 스크림으로 텍스트 가독성 확보) */}
+      {/* Hero (배경 배너 + 왼쪽 스크림). 배너는 주제 맞춤 자동 생성:
+          npm run generate-banner -- --topic "<주제>"  (없으면 기본 청사 사진) */}
       <section className="relative overflow-hidden bg-primary-5">
         <Image
           src="/hero-banner.png"
