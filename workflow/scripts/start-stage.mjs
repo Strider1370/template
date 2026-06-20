@@ -22,6 +22,14 @@ try {
       process.exit(1);
     }
   } else {
+    if (state.current.status === "awaiting_direction") {
+      console.error(
+        `\n[workflow:start] 거부 — 현재 단계는 마감됨(awaiting_direction).\n` +
+          `먼저 사용자 확인 후 다음 단계로 전환하세요: node workflow/scripts/next-stage.mjs\n` +
+          `(정말 특정 단계를 다시 시작하려면 명시적으로 번호/ID를 주세요: start-stage.mjs <stage>)`
+      );
+      process.exit(1);
+    }
     stage = currentStage(state);
     if (!stage) {
       console.error("current 단계를 stages.yaml 에서 찾지 못했습니다.");
