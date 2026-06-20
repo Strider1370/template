@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import { Display, Heading, Title, Body, Detail, Badge } from '@krds-ui/core';
 import { SIGUNGU_BY_SIDO } from '@/lib/regions';
 
@@ -35,9 +36,19 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="bg-primary-5">
-        <div className="mx-auto max-w-container px-4 py-12 md:py-16">
+      {/* Hero (배경 배너 이미지 + 왼쪽 스크림으로 텍스트 가독성 확보) */}
+      <section className="relative overflow-hidden bg-primary-5">
+        <Image
+          src="/hero-banner.png"
+          alt=""
+          aria-hidden
+          fill
+          priority
+          unoptimized
+          className="object-cover object-[50%_35%]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-5 via-primary-5/85 to-primary-5/20" />
+        <div className="relative mx-auto max-w-container px-4 py-12 md:py-16">
           <Badge label="KRDS 스타터 키트" variant="primary" size="small" />
           <Display
             size="s"
