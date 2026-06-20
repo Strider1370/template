@@ -12,9 +12,9 @@ const DEMO_TEXT = '8개월 아기 키우는 서울 강서구 사는 30대 부부
 
 const FIELD =
   'h-11 w-full rounded-krds border border-line bg-white px-3 text-body-m text-gray-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
-// 단위 토글과 함께 쓰는 좁은 숫자 입력칸 (소득·막내 나이)
+// 단위 토글·단위 라벨과 함께 쓰는 숫자 입력칸 — 남은 칸 폭을 채워 다른 칸과 정렬(일관성)
 const NUMFIELD =
-  'h-11 w-24 rounded-krds border border-line bg-white px-3 text-body-m text-gray-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
+  'h-11 min-w-0 flex-1 rounded-krds border border-line bg-white px-3 text-body-m text-gray-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
 
 function numOrNull(v: string): number | null {
   const n = parseInt(v, 10);
@@ -248,6 +248,13 @@ export function BenefitFinder({ onSubmit }: { onSubmit: (p: Profile) => void }) 
           </div>
           <Detail size="s" color="gray-50" className="mt-1 block">연봉이면 ‘연’ 선택 — 자동으로 월로 환산해 매칭</Detail>
         </div>
+        <div className="block">
+          <Detail size="s" color="gray-70" className="mb-1 block">신청자 나이 (선택 · 청년·노년 혜택)</Detail>
+          <div className="flex items-center gap-2">
+            <input className={NUMFIELD} type="number" inputMode="numeric" value={age} onChange={(e) => setAge(e.target.value)} placeholder="33" />
+            <span className="flex-none text-body-m text-gray-60">세</span>
+          </div>
+        </div>
       </div>
 
       {/* 자녀 — 조건부 (있음일 때만 나이/수 노출) */}
@@ -275,14 +282,6 @@ export function BenefitFinder({ onSubmit }: { onSubmit: (p: Profile) => void }) 
           </div>
         )}
       </div>
-
-      <label className="mt-4 block max-w-xs">
-        <Detail size="s" color="gray-70" className="mb-1 block">신청자 나이 (선택 · 청년·노년 혜택 판단용)</Detail>
-        <div className="flex items-center gap-2">
-          <input className={FIELD} type="number" inputMode="numeric" value={age} onChange={(e) => setAge(e.target.value)} placeholder="예: 33" />
-          <span className="flex-none text-body-m text-gray-60">세</span>
-        </div>
-      </label>
 
       <button
         type="button"
