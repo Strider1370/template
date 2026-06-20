@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Display, Heading, Body, Badge } from '@krds-ui/core';
 import { BenefitFinder } from '@/components/BenefitFinder';
 import { ParsedProfile } from '@/components/ParsedProfile';
@@ -60,6 +61,19 @@ export default function Home() {
       <div style={{ background: '#FEF3C7', color: '#92400E', padding: '8px 16px', fontSize: 14, textAlign: 'center' }}>
         ⚠ 복지 주제 <strong>예시</strong>입니다 — 다른 주제로 시작하려면 <code>web/app/examples/</code>와 복지 전용 lib/컴포넌트/라우트를 삭제하세요. 기본 홈(<code>/</code>)은 그대로 둡니다.
       </div>
+      {/* 상단 배너 이미지 (gpt-image-1 생성, scripts/generate-banner.mjs) */}
+      <div className="relative h-40 w-full overflow-hidden md:h-56">
+        <Image
+          src="/welfare-banner.png"
+          alt=""
+          aria-hidden
+          fill
+          priority
+          unoptimized
+          className="object-cover object-center"
+        />
+      </div>
+
       {/* Hero */}
       <section className="bg-primary-5">
         <div className="mx-auto max-w-container px-4 py-10 md:py-14">
