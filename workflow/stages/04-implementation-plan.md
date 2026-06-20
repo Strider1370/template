@@ -23,6 +23,7 @@ spec를 작업으로 분해하고, 병렬 빌드를 위한 파일 소유권·서
 - 각 빌드 에이전트의 Agent Task 계약 초안 작성(`agent-task.yaml` 형식).
 - 재사용 자산 매핑(`web/` 스캐폴드, `regions.ts`, `shelters.ts`, `KakaoMap.tsx`, 대피소 JSON). 같은 걸 새로 만들지 않게 명시.
 - 사용자 사전준비 안내: 카카오맵 키·공공데이터(`data/data-sources.md` 기준, data.go.kr/safetydata.go.kr는 403 차단 → 사람이 직접 다운로드).
+- **모바일/APK 계획**: 모바일 반응형은 기본 작업으로 잡고, (모바일 주제면) 위치·알림을 작업에 포함한다. **APK 패키징(Capacitor)은 리스크 큰 작업**으로 보고 **반드시 폴백(미러링/프레임)** 을 함께 계획한다(환경·시간·기기검증 변수). 상세 `docs/mobile-webview-target.md`.
 
 ## 7. 병렬 서브에이전트 구성
 - 없음(계획 집약). 교차검토는 Gate에서.

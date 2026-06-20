@@ -29,6 +29,11 @@
 - **실행 게이트(실로직): spec · build · demo · presentation-generation · presentation-visual.** 나머지는 체크리스트(필수파일 존재 + 자가점검).
 - **교차검토(LLM Review)**: `cross-review` = Codex 플러그인 가능하면 사용 → 불가하면 별도 클로드 리뷰어 서브에이전트로 폴백.
 
+## 산출물 형태 (고정 제약)
+- **기본 산출물은 웹앱. 모바일 반응형 레이아웃은 모든 주제에서 필수**로 디자인한다(폰 폭에서 안 깨지게).
+- 모바일성이 핵심인 주제면 **위치(`navigator.geolocation`)·알림**을 추가한다(필수 아님 — 주제가 쓰면).
+- 최종 패키징은 **웹앱을 WebView로 감싼 안드로이드 APK**(Capacitor, 네이티브 위치·알림)를 목표로 한다. **단, 빌드 환경·시간·검증(AI는 기기 화면을 직접 못 봄)이 안 되면 폰 미러링/폰프레임 데모로 폴백**한다 — APK 실패가 데모를 죽이지 않게. 방법·함정 → `docs/mobile-webview-target.md`.
+
 ## 운영 모드 (`state.yaml.workflowMode`)
 - `run` — 해커톤 주제를 Stage 00~12로 실행 (기본).
 - `bootstrap` — 엔진/템플릿/단계문서 자체를 설치·수정.

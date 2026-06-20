@@ -23,6 +23,7 @@
 - spec과 실제 구현의 차이를 기록.
 - `implementation/manifest.json`에 각 기능 상태를 기록: `implemented | mocked | fallback | dropped | blocked`.
 - **룩 마감 점검**: 스캐폴드 정체성 교체 완료 + 주제 맞춤 상단 배너(`npm run generate-banner -- --topic "<주제>"`) 적용 여부 확인 — 데모 캡처(Stage 07) 전에 배너가 있어야 한다.
+- **(모바일 주제) APK 패키징**: 통합 웹앱을 Capacitor로 안드로이드 APK로 감싼다 — 플러그인(geolocation·local-notifications) + 매니페스트 권한 + `assembleDebug`. 상세·함정 `docs/mobile-webview-target.md`. **환경(Android SDK/JDK) 없거나 시간 부족·기기검증 불가면 건너뛰고 폰 미러링/프레임 데모로 폴백**(APK 실패가 데모를 죽이지 않게).
 - 작동 상태가 되면 체크포인트 커밋.
 
 ## 7. 병렬 서브에이전트 구성
