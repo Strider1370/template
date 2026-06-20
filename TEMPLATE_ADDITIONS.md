@@ -68,18 +68,84 @@ export async function openaiChat(opts: {
 
 ---
 
-## A. 보조금24 카탈로그 스냅샷 ★1순위 (당일 키 승인 대기 제거)
+## A. 복지·혜택 데이터 전수 스냅샷 ★1순위 (당일 키 승인 대기 제거)
 
-- **무엇:** 보조금24(행안부) 공공서비스(혜택) 정보 — **약 10,957건**(중앙+지자체). 필드: 서비스명·목적요약·서비스분야·**지원대상·선정기준**(산문)·신청방법·소관기관·상세조회URL·서비스ID.
-- **검증된 엔드포인트(odcloud, JSON):**
-  - 목록: `GET https://api.odcloud.kr/api/gov24/v3/serviceList?page=1&perPage=N&serviceKey=KEY`
-  - **부분검색 작동:** `cond[지원대상::LIKE]=청년` (URL 인코딩). `cond[서비스분야::EQ]=보육·교육`도 됨.
-  - 자동승인이라 **활용신청 즉시 사용 가능**(이번에 확인). data.go.kr 15113968.
-- **왜 박제:** data.go.kr 활용신청은 데이터셋에 따라 **승인 1~2일**. 스냅샷이 있으면 **무키/승인 전에도 실데이터 데모**가 돌고, 키 있으면 라이브 최신화.
-- **방법:**
-  1. 덤프 스크립트 `data/scripts/dump-gov24.mjs`: 키로 perPage=1000씩 페이징해 전체를 `data/gov24-services.json`(또는 분할)으로 저장.
-  2. 클라이언트(`/api/policies`)는 **키 있으면 라이브 LIKE 검색 → 없거나 실패면 스냅샷에서 키워드 필터**. (work-after `web/lib/realtime.ts` + `web/app/api/policies/route.ts` 패턴 재사용)
-- **지금 만들 수 있음:** 작동 키가 살아있을 때 덤프 떠두면 키 만료·회수와 무관하게 영구 자산.
+> **TODO — 이 작업은 다른 세션에서 실행한다(아래 스크립트대로). 실행하려면 data.go.kr 키 필요(.env.local `DATA_GO_KR_KEY`). 한 번 떠서 `data/`에 커밋하면 그 뒤로는 키·API 없이 동작.**
+
+### 승인 상태 (확인일 2026-06-19 — 셋 다 활용신청 승인 완료)
+| 데이터셋 | ID | 엔드포인트 | 형식 | 전체건수 | 상태 |
+|---|---|---|---|---|---|
+| 보조금24 공공서비스(혜택) | 15113968 | `https://api.odcloud.kr/api/gov24/v3/serviceList` | JSON | 10,957 | ✅ 승인 |
+| 중앙부처복지서비스 | 15090532 | `https://apis.data.go.kr/B554287/NationalWelfareInformationsV001/NationalWelfarelistV001` | XML | 452 | ✅ 승인 |
+| 지자체복지서비스 | 15108347 | `https://apis.data.go.kr/B554287/LocalGovernmentWelfareInformations/LcgvWelfarelist` | XML | 4,569 | ✅ 승인 |
+- 합계 ≈ 15,978건. 필드: 서비스명·목적요약·서비스분야·**지원대상·선정기준**(산문)·신청방법·소관기관·상세링크 등.
+- **왜 박제:** data.go.kr 활용신청은 데이터셋에 따라 승인 1~2일. 스냅샷이 있으면 무키/승인 전에도 실데이터 데모가 돌고, 키 있으면 라이브 최신화.
+
+### 옵션 1 — 목록만 (★추천, 빠름 ~1–2분, 호출 ~30회)
+서비스명·요약·분야·소관·지원대상(요약)·상세링크. 후보 카탈로그·검색엔 충분.
+
+**1-a. 보조금24 (JSON)** — `data/scripts/dump-gov24.mjs`:
+```js
+// node data/scripts/dump-gov24.mjs  (env: DATA_GO_KR_KEY)
+import { writeFileSync } from 'node:fs';
+const KEY = process.env.DATA_GO_KR_KEY;
+const BASE = 'https://api.odcloud.kr/api/gov24/v3/serviceList';
+const all = [];
+for (let page = 1; ; page++) {
+  const r = await fetch(`${BASE}?page=${page}&perPage=1000&serviceKey=${KEY}`);
+  const j = await r.json();
+  all.push(...(j.data || []));
+  if (!j.data?.length || all.length >= (j.totalCount ?? 0)) break;
+}
+writeFileSync('data/gov24-services.json', JSON.stringify(all));
+console.log('보조금24', all.length, '건 저장');
+```
+
+**1-b. 중앙부처·지자체복지 (XML → JSON)** — `data/scripts/dump-welfare.mjs`:
+```js
+// node data/scripts/dump-welfare.mjs  (env: DATA_GO_KR_KEY)
+import { writeFileSync } from 'node:fs';
+const KEY = process.env.DATA_GO_KR_KEY; // URL 인코딩 키 그대로 사용
+const pick = (xml, tag) => { const m = xml.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`)); return m ? m[1] : ''; };
+async function dump(name, base, out) {
+  const all = [];
+  for (let pageNo = 1; ; pageNo++) {
+    const r = await fetch(`${base}?serviceKey=${KEY}&callTp=L&pageNo=${pageNo}&numOfRows=500&srchKeyCode=001`);
+    const xml = await r.text();
+    const items = xml.match(/<servList>[\s\S]*?<\/servList>/g) || [];
+    for (const it of items) all.push({
+      servId: pick(it, 'servId'), servNm: pick(it, 'servNm'),
+      servDgst: pick(it, 'servDgst'), jurMnofNm: pick(it, 'jurMnofNm'),
+      jurOrgNm: pick(it, 'jurOrgNm'), ctpvNm: pick(it, 'ctpvNm'), sgguNm: pick(it, 'sgguNm'),
+      servDtlLink: pick(it, 'servDtlLink'), aplyMtdNm: pick(it, 'aplyMtdNm'),
+      lifeArray: pick(it, 'lifeArray'), trgterIndvdlArray: pick(it, 'trgterIndvdlArray'),
+      intrsThemaArray: pick(it, 'intrsThemaArray'),
+    });
+    const total = Number(pick(xml, 'totalCount')) || 0;
+    if (!items.length || all.length >= total) break;
+  }
+  writeFileSync(out, JSON.stringify(all));
+  console.log(name, all.length, '건 →', out);
+}
+await dump('중앙부처복지', 'https://apis.data.go.kr/B554287/NationalWelfareInformationsV001/NationalWelfarelistV001', 'data/welfare-central.json');
+await dump('지자체복지', 'https://apis.data.go.kr/B554287/LocalGovernmentWelfareInformations/LcgvWelfarelist', 'data/welfare-local.json');
+```
+> 주의: XML 필드명(servNm/servDgst/jurMnofNm 등)은 응답 확인 후 보정. 산문 필드에 `<![CDATA[]]>`·개행 있을 수 있으니 정제. 보조금24 odcloud는 일일 호출 한도 가능 → 페이징만 하면 한도 내.
+
+### 옵션 2 — 목록 + 상세 (완전판, 느림 ~10분+, 5,000+ 호출) — *기록만, 미실행*
+선정기준·지원내용 산문 전체까지. **상세는 건당 1호출**(목록의 servId/서비스ID로):
+- 보조금24 상세: `https://api.odcloud.kr/api/gov24/v3/serviceDetail?cond[서비스ID::EQ]=<id>&serviceKey=KEY` (+ `supportConditions`로 지원조건).
+- 중앙부처: `.../NationalWelfaredetailedV001?serviceKey=KEY&callTp=D&servId=<id>` (XML).
+- 지자체: `.../LcgvWelfaredetailed?serviceKey=KEY&callTp=D&servId=<id>` (XML).
+- 실행 시 **rate limit·일일한도 주의**(배치·지연 넣기), 실패 건 재시도. 목록 스냅샷에 `detail` 필드 병합 저장.
+
+### 클라이언트 폴백 연결
+- `/api/policies`: **키 있으면 라이브 LIKE 검색 → 없거나 실패면 `data/*.json` 스냅샷에서 키워드 필터**(JS 메모리, 1만여 건 즉시). work-after `web/lib/realtime.ts` + `web/app/api/policies/route.ts` 패턴 재사용.
+- 스냅샷은 정적이라 **검색을 서버가 안 해줌 → JS에서 `지원대상/서비스명/요약`에 keyword.includes** 필터.
+
+### 정적 vs 실시간 (박제 가능 여부)
+- ✅ 박제 OK: 혜택 목록·지역·시설 등 **카탈로그/정적**. 몇 주 내 안 변함 → 해커톤 데모에 충분.
+- ❌ 박제 무의미: 미세먼지·교통·재난문자 등 **실시간** → 항상 라이브 호출. 그래서 "키 있으면 라이브, 없으면 스냅샷" 폴백 구조.
 
 ---
 
