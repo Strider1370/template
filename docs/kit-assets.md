@@ -54,7 +54,7 @@ npm run lint
 | 공공데이터 신청 경로 | `data/data-sources.md` | 당일 데이터 다운로드/신청 |
 | LLM 호출 헬퍼 | `web/lib/llm.ts`(`openaiChat`) + `web/app/api/llm/route.ts` | 앱에서 LLM 쓸 때(키 없으면 폴백) — 새로 만들지 마라 |
 | 상단 배너 자동 생성 | `scripts/generate-banner.mjs` (주제→공공기관 사진풍 배너) | 홈 hero 배너를 주제에 맞게 (Stage 05·06) |
-| 복지 도메인팩 예시 | `web/app/examples/welfare/` + 복지 lib/컴포넌트/`/api/{parse,explain,ask,policies}` | 복지 주제면 매칭·되묻기 패턴 참고(다른 주제면 삭제) |
+| 공통 입력/지도 블록 | `web/components/blocks/UserInfoForm.tsx`·`MapPanel.tsx` | 지역·사용자정보·지도 — 필요할 때만 import(레이아웃 종속 X) |
 
 사용 디테일:
 - 시도 목록 = `Object.keys(SIGUNGU_BY_SIDO)` (`web/lib/regions.ts`).
