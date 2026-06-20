@@ -36,13 +36,18 @@ export function profileKeywords(profile: Profile): string[] {
   if (!kw.includes('영유아') && profile.youngestChildAgeMonths != null && profile.youngestChildAgeMonths <= 71) {
     kw.push('영유아');
   }
+  // 나이 기반 보강 (가구유형 칩이 없어도 생애주기 후보를 띄운다)
+  if (profile.applicantAge != null) {
+    if (profile.applicantAge >= 19 && profile.applicantAge <= 34 && !kw.includes('청년')) kw.push('청년');
+    if (profile.applicantAge >= 65 && !kw.includes('노인')) kw.push('노인');
+  }
   // 소득이 낮으면 '저소득'
   if (profile.monthlyIncome != null) {
     const median = 471; // 3인 가구 근사 (참고용)
     if (profile.monthlyIncome <= median * 0.6) kw.push('저소득');
   }
-  // 아무 단서도 없으면 폭넓게
-  if (kw.length === 0) kw.push('가구');
+  // 아무 단서도 없으면 '근로'(일하는 일반 가구에 그나마 관련) — '가구'는 너무 포괄적이라 노이즈
+  if (kw.length === 0) kw.push('근로');
   return [...new Set(kw)].slice(0, 3);
 }
 

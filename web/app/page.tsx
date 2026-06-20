@@ -105,7 +105,9 @@ export default function Home() {
             )}
 
             <Heading size="s" color="gray-90">
-              해당될 수 있는 혜택 {cards.length}건을 찾았어요
+              {cards.length > 0
+                ? `해당될 수 있는 혜택 ${cards.length}건을 찾았어요`
+                : '딱 맞는 예시 혜택은 없었어요'}
             </Heading>
 
             {cards.length > 0 ? (
@@ -120,8 +122,10 @@ export default function Home() {
               </div>
             ) : (
               <Body size="m" color="gray-60">
-                입력하신 조건으로는 예시 혜택 중 해당되는 항목을 찾지 못했어요. 가구 상황·소득·자녀
-                정보를 더 입력해 보세요.
+                정밀 매칭하는 <strong>예시 혜택(10건)</strong> 중엔 딱 맞는 게 없었어요. 단, 이건
+                전체가 아니에요 — 아래 <strong>보조금24 실시간 후보</strong>를 확인하거나, 가구 상황·소득·자녀
+                정보를 더 입력해 보세요. (소득이 기준보다 높거나, 자녀·노년 등 특정 대상이 아니면 현금성 혜택은
+                적을 수 있어요.)
               </Body>
             )}
 
