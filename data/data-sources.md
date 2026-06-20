@@ -8,6 +8,23 @@
 > - **열린 환경(로컬/허용된 네트워크 정책)**: 직접 다운로드를 **시도하라.** 단 `fileData.do`는 로그인/회원가입, `openapi.do`는 키 신청이 필요할 수 있어 자동화가 막히면 브라우저 다운로드로 폴백.
 > - **금지**: 데이터를 못 받았다고 수치를 *지어내지* 마라. 받은 1차 데이터만 쓰고, 못 받았으면 화면·발표에 "샘플/예시"로 명시하라.
 
+## 검증된 작동 엔드포인트 (실측, 2026-06-19 확인)
+
+> 대회 전날 5분에 미리 활용신청하세요. 승인은 데이터셋에 따라 즉시~1·2일.
+
+| 데이터셋 | ID | 엔드포인트 | 형식 | 승인 | 전체건수 | 비고 |
+|---|---|---|---|---|---|---|
+| 보조금24 공공서비스(혜택) | 15113968 | `https://api.odcloud.kr/api/gov24/v3/serviceList` | JSON | 자동(즉시) | 10,957 | LIKE/EQ 필터, 상세는 `gov24/v3/serviceDetail` |
+| 중앙부처복지서비스 | 15090532 | `https://apis.data.go.kr/B554287/NationalWelfareInformationsV001/NationalWelfarelistV001` | XML | 활용신청 필요(미승인 시 Forbidden) | 452 | 대분류 코드 필터 |
+| 지자체복지서비스 | 15108347 | `https://apis.data.go.kr/B554287/LocalGovernmentWelfareInformations/LcgvWelfarelist` | XML | 활용신청 필요 | 4,569 | 지역 필터 |
+| 복지로 복지서비스정보 | 15083323 | data.go.kr fileData | CSV | 로그인 다운로드 | - | 자격요건 필드 없음(명칭·링크만) |
+
+합계 ≈ 15,978건. 키는 `web/.env.local`의 `DATA_GO_KR_KEY`(URL Decoding 키)로 둔다 — 커밋 금지.
+
+**교훈(실측):**
+- 정밀 자격기준은 대부분 *산문*이라 자동 전수 판정 불가 → 큐레이션 fixture(`data/welfare/curated-benefits.example.json`)를 병행한다.
+- 진짜 개인 맞춤 자격 판정(보조금24 맞춤안내)은 행정정보 연계라 외부 API로 안 온다 — 데모는 "잠재 적격 후보"까지만 정직하게 표현한다.
+
 ## ✅ 이미 받아둔 데이터 (인증 불필요, GitHub 미러)
 
 `data/boundaries/` — 출처: southkorea/southkorea-maps (kostat 2018)
