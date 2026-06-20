@@ -41,12 +41,16 @@ async function main() {
   }
   const perPage = 1000;
   let page = 1;
+  let total = null;
   const all = [];
   while (true) {
     const body = await fetchPage(key, page, perPage);
     const rows = body.data ?? body.items ?? [];
+    if (total === null) {
+      total = body.totalCount ?? body.matchCount ?? null;
+      if (total === null) throw new Error('totalCount 없음 — 응답 명세 확인 필요(전수 적재 보장 불가)');
+    }
     all.push(...rows);
-    const total = body.totalCount ?? body.matchCount ?? all.length;
     console.log(`page ${page}: +${rows.length} (누적 ${all.length} / 총 ${total})`);
     if (rows.length === 0 || all.length >= total) break;
     page++;
