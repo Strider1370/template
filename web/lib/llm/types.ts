@@ -1,6 +1,6 @@
 // LLM provider 추상화 — OpenAI 기본, fixture 폴백. provider 교체 가능.
 export type LlmMessage = {
-  role: "system" | "user" | "assistant";
+  role: 'system' | 'user' | 'assistant';
   content: string;
 };
 
