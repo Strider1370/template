@@ -29,6 +29,7 @@
 - 전수 덤프: `node data/scripts/dump-gov24.mjs`(보조금24 JSON) · `node data/scripts/dump-welfare.mjs`(중앙부처·지자체 XML) → `data/snapshots/*.json`. 상세 `data/scripts/README.md`.
 - 앱 연결: `web/app/api/policies/route.ts`가 키 있으면 라이브, 없거나 실패 시 `data/snapshots/gov24-services.json` 키워드 필터(전수 ~10,957건)로 폴백한다.
 - 큐레이션 양식: `data/welfare/curated-benefits.example.json`(정밀 매칭용 빈 양식 — 대표 혜택 8~15개를 손으로 규칙화).
+- **복지·혜택 주제면** 상세(표준 스키마 `Benefit`/`EvidenceStat`/`Facility` · `SOURCE_LOG` · 데이터 우선순위)는 `docs/welfare-benefit-dataset-prep.md` 참조.
 
 ## ✅ 이미 받아둔 데이터 (인증 불필요, GitHub 미러)
 
