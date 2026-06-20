@@ -45,7 +45,7 @@ export default function Home() {
           fill
           priority
           unoptimized
-          className="object-cover object-[50%_35%]"
+          className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary-5 via-primary-5/85 to-primary-5/20" />
         <div className="relative mx-auto max-w-container px-4 py-12 md:py-16">
