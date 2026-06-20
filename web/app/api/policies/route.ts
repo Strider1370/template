@@ -4,8 +4,12 @@
 // DATA_GO_KR_KEY 없거나 실패(미승인 Forbidden 등) 시 SAMPLE_CATALOG 폴백.
 
 import { NextResponse } from 'next/server';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { profileKeywords, SAMPLE_CATALOG, type CandidatePolicy } from '@/lib/realtime';
 import type { Profile } from '@/lib/types';
+
+export const runtime = 'nodejs';
 
 const BASE = 'https://api.odcloud.kr/api/gov24/v3/serviceList';
 
@@ -54,6 +58,49 @@ function mapItem(d: any): CandidatePolicy {
   };
 }
 
+// 커밋된 보조금24 전수 스냅샷(약 10,957건)을 한 번만 읽어 메모이즈. 16MB를 매 요청마다 읽지 않는다.
+let _snapshot: any[] | null | undefined; // undefined=미시도, null=불가
+function loadSnapshot(): any[] | null {
+  if (_snapshot !== undefined) return _snapshot;
+  const candidates = [
+    join(process.cwd(), '..', 'data', 'snapshots', 'gov24-services.json'),
+    join(process.cwd(), 'data', 'snapshots', 'gov24-services.json'),
+  ];
+  for (const p of candidates) {
+    try {
+      const arr = JSON.parse(readFileSync(p, 'utf8'));
+      if (Array.isArray(arr) && arr.length) {
+        _snapshot = arr;
+        return _snapshot;
+      }
+    } catch {
+      /* try next */
+    }
+  }
+  _snapshot = null;
+  return _snapshot;
+}
+
+// 스냅샷 폴백: 프로필 키워드로 산문 3필드 substring 매칭 → mapItem 재사용 → source 'snapshot'.
+function snapshotResponse(profile: Profile, reason: string) {
+  const rows = loadSnapshot();
+  if (!rows) return sampleResponse(reason); // 스냅샷 없으면 최종 폴백
+  const keywords = profileKeywords(profile);
+  const seen = new Set<string>();
+  const candidates: CandidatePolicy[] = [];
+  for (const d of rows) {
+    const hay = `${d['지원대상'] ?? ''} ${d['서비스명'] ?? ''} ${d['서비스목적요약'] ?? ''}`;
+    if (!keywords.some((kw) => hay.includes(kw))) continue;
+    const c = { ...mapItem(d), source: 'snapshot' as const };
+    if (!c.name || seen.has(c.id)) continue;
+    seen.add(c.id);
+    candidates.push(c);
+    if (candidates.length >= 12) break;
+  }
+  if (candidates.length === 0) return sampleResponse(reason);
+  return NextResponse.json({ source: 'snapshot' as const, reason, total: candidates.length, keywords, candidates });
+}
+
 export async function POST(req: Request) {
   let profile: Profile;
   try {
@@ -63,13 +110,13 @@ export async function POST(req: Request) {
   }
 
   const key = process.env.DATA_GO_KR_KEY;
-  if (!key) return sampleResponse('no_key');
+  if (!key) return snapshotResponse(profile, 'no_key');
 
   const keywords = profileKeywords(profile);
   const results = await Promise.all(keywords.map((kw) => fetchByKeyword(key, kw)));
   const ok = results.filter(Boolean) as { items: any[]; total: number }[];
 
-  if (ok.length === 0) return sampleResponse('api_unavailable'); // 전부 실패(미승인 Forbidden 등)
+  if (ok.length === 0) return snapshotResponse(profile, 'api_unavailable'); // 전부 실패(미승인 Forbidden 등)
 
   // 병합 + 서비스ID 중복 제거
   const seen = new Set<string>();

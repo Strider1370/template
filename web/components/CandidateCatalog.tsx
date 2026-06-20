@@ -22,6 +22,7 @@ function Chip({ children, tone = 'gray' }: { children: React.ReactNode; tone?: '
 export function CandidateCatalog({ data }: { data: PoliciesResult | null }) {
   if (!data || data.candidates.length === 0) return null;
   const live = data.source === 'live';
+  const snapshot = data.source === 'snapshot';
 
   return (
     <section className="mt-8 rounded-krds-lg border border-gray-10 bg-gray-5 p-5">
@@ -29,7 +30,9 @@ export function CandidateCatalog({ data }: { data: PoliciesResult | null }) {
         <Title size="s" color="gray-90">
           더 찾아보기 — 잠재 적격 후보
         </Title>
-        <Chip tone={live ? 'primary' : 'gray'}>{live ? '실시간 · 보조금24' : '샘플(미연동)'}</Chip>
+        <Chip tone={live ? 'primary' : 'gray'}>
+          {live ? '실시간 · 보조금24' : snapshot ? '전수 캐시 · 보조금24 스냅샷' : '샘플(미연동)'}
+        </Chip>
       </div>
       <Body size="s" color="gray-60" className="mt-1">
         {live ? (
@@ -37,6 +40,12 @@ export function CandidateCatalog({ data }: { data: PoliciesResult | null }) {
             보조금24 카탈로그{data.total ? ` 약 ${data.total.toLocaleString()}건` : ''} 중 입력 조건과 관련된
             혜택을 추렸어요. <strong>정밀 자격 판정이 아니라 후보</strong>이며, 선정기준은 각 링크에서
             확인하세요.
+          </>
+        ) : snapshot ? (
+          <>
+            실시간 API 대신 <strong>보조금24 전수 스냅샷(캐시)</strong>에서 입력 조건과 관련된 혜택을 추렸어요.
+            실데이터지만 캐시 시점 기준이며, <strong>정밀 자격 판정이 아니라 후보</strong>예요. 선정기준은 각
+            링크에서 확인하세요.
           </>
         ) : (
           <>

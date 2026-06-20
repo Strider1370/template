@@ -15,7 +15,7 @@ export interface CandidatePolicy {
   target: string; // 지원대상(산문, 축약)
   applyMethod: string; // 신청방법
   link: string; // 상세조회URL
-  source: 'live' | 'sample';
+  source: 'live' | 'snapshot' | 'sample';
 }
 
 /** 프로필 → 보조금24 '지원대상' LIKE 검색 키워드 (최대 3개). */

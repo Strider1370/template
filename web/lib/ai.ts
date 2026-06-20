@@ -84,7 +84,7 @@ export async function requestParse(text: string): Promise<Partial<Profile> | nul
 }
 
 export interface PoliciesResult {
-  source: 'live' | 'sample';
+  source: 'live' | 'snapshot' | 'sample';
   total: number | null;
   candidates: CandidatePolicy[];
   keywords?: string[];
