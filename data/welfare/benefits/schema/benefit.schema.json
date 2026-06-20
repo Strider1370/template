@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Benefit",
+  "type": "object",
+  "required": ["id", "title", "provider", "sourceName", "sourceUrl", "asOf"],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "provider": { "type": "string" },
+    "category": { "type": "string" },
+    "targetText": { "type": "string" },
+    "targetTags": { "type": "array", "items": { "type": "string" } },
+    "regionTags": { "type": "array", "items": { "type": "string" } },
+    "lifeEventTags": { "type": "array", "items": { "type": "string" } },
+    "eligibilityText": { "type": "string" },
+    "supportText": { "type": "string" },
+    "applicationText": { "type": "string" },
+    "deadlineText": { "type": "string" },
+    "onlineUrl": { "type": "string" },
+    "contactText": { "type": "string" },
+    "sourceName": { "type": "string" },
+    "sourceUrl": { "type": "string" },
+    "license": { "type": "string" },
+    "asOf": { "type": "string" }
+  }
+}

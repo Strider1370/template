@@ -53,3 +53,7 @@ presentation/slidev/dist/
 presentation/slidev/dist-presets/
 # 발표 생성 런타임 산출물 (deck.json/slides.md 는 Stage 09 실행 시 생성)
 presentation/output/
+
+# 복지 혜택 전수 데이터 (재생성 가능, 용량 큼 — 로컬만)
+data/welfare/benefits/raw/
+data/welfare/benefits/normalized/benefits.full.json
