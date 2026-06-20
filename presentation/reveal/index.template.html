@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>[서비스명] — 발표</title>
+
+<!--
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │ 해커톤 발표 덱 (reveal.js 기반 · 오프라인 동작 · 리서치 기반 8슬라이드)    │
+  │                                                                          │
+  │ ■ 왜 reveal.js: 빌드 없음 + dist를 레포에 벤더링해 인터넷 없이도 시연 안정.│
+  │   (slidev/marp 대비 4h 해커톤 + 현장 시연에 가장 안전 — 리서치 결론)      │
+  │                                                                          │
+  │ ■ 사용법:                                                                │
+  │   1. 이 파일을 index.html 로 복사                                          │
+  │   2. [대괄호] placeholder를 실제 내용으로 교체                             │
+  │   3. 스크린샷/GIF를 ./shots/ 에 넣고, .shot-ph div를 <img>로 교체          │
+  │   4. 브라우저로 index.html 열기 · S=발표자노트 · F=전체화면 · ESC=개요     │
+  │                                                                          │
+  │ ■ 구조(5분/8장): 후크→문제(Before)→솔루션→데모(2분+)→킥→임팩트→확장+팀    │
+  │   원칙: 슬라이드 제목=한 문장 주장 · 장당 메시지 1개 · 데모/킥에 시간 몰빵  │
+  │        · 라이브 데모는 GIF 백업 필수 · 폰트 크게.                          │
+  │  더 좋은 테마가 있으면 theme 링크만 교체(black/white 외 reveal 테마 자유). │
+  └────────────────────────────────────────────────────────────────────────┘
+-->
+
+<link rel="stylesheet" href="vendor/reveal/dist/reveal.css" />
+<link rel="stylesheet" href="vendor/reveal/dist/theme/white.css" id="theme" />
+<link rel="stylesheet" href="vendor/reveal/plugin/highlight/monokai.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+<style>
+  /* ===== 테마 오버레이 (여기만 바꾸면 분위기 교체) ===== */
+  :root { --accent: #256ef4; --accent-weak: #e8f0fe; --ink: #1e2124; --muted: #58616a; }
+  .reveal { font-family: 'Pretendard GOV','Pretendard',system-ui,sans-serif; color: var(--ink); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: inherit; color: var(--ink); letter-spacing: -.02em; text-transform: none; }
+  .reveal h1 { font-size: 2.5em; } .reveal h2 { font-size: 1.7em; }
+  .reveal .eyebrow { color: var(--accent); font-weight: 700; font-size: .5em; letter-spacing: .03em; }
+  .reveal .accent { color: var(--accent); }
+  .reveal .muted { color: var(--muted); }
+  .reveal .hook { font-size: 1.15em; font-weight: 600; }
+  .reveal .kpi { font-size: 2.8em; font-weight: 800; color: var(--accent); line-height: 1; }
+  .reveal .badge { display:inline-block; background:var(--accent-weak); color:var(--accent);
+                   font-weight:700; font-size:.45em; padding:.25em .8em; border-radius:999px; }
+  .reveal ul { display:inline-block; text-align:left; }
+  .reveal li { margin: .35em 0; }
+
+  /* 스크린샷 슬롯 — 실제 <img>로 교체. (미교체 시에도 의도적으로 보이게) */
+  .reveal .shot-ph {
+    border: 2px dashed #c7ccd1; border-radius: 14px; background: #f4f6f9; color: var(--muted);
+    display: grid; place-items: center; width: 100%; aspect-ratio: 16/10; font-size: .5em;
+  }
+  .reveal .shot { width: 100%; border-radius: 14px; border: 1px solid #d2d7dc; display:block; }
+  .reveal .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .reveal .steps .cap { font-size: .42em; color: var(--muted); margin-top: .4em; }
+  .reveal .two { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+  .reveal section { text-align: left; }
+  .reveal .center { text-align: center; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+  <!-- 1. 타이틀 + 후크 (0:00–0:20) -->
+  <section class="center" data-background-color="#f4f6f9">
+    <p class="eyebrow">2026 AI 해커톤</p>
+    <h1>[서비스명]</h1>
+    <p class="hook">[한 줄 가치 제안 — 누구를 위해 / 무엇을 / 어떻게]</p>
+    <p class="muted" style="margin-top:1em">[팀명] · [팀원]</p>
+    <aside class="notes">첫 15초 훅. 충격적 통계나 질문으로 시작. 제품명+한 문장 가치제안만.</aside>
+  </section>
+
+  <!-- 2. 문제 (Before) (0:20–1:00) -->
+  <section>
+    <p class="eyebrow">문제</p>
+    <h2>[페르소나]는 [상황]에서<br/>[무엇이] 불편하다</h2>
+    <div class="two" style="margin-top:.6em">
+      <p class="hook">"[사용자 1인칭 한 마디 — 진짜 불편]"</p>
+      <div class="center"><div class="kpi">[숫자]</div><p class="muted">[그 숫자의 의미 — 문제 규모]</p></div>
+    </div>
+    <aside class="notes">스토리로 공감. 숫자 1개로 규모 입증. 기존 솔루션의 한계도 한 줄.</aside>
+  </section>
+
+  <!-- 3. 솔루션 한 줄 (1:00–1:20) -->
+  <section class="center">
+    <p class="eyebrow">솔루션</p>
+    <h2>[서비스명]은 <span class="accent">[핵심 동작]</span>으로<br/>이 문제를 해결합니다</h2>
+    <ul style="margin-top:.6em">
+      <li><strong>[기능 1]</strong> — [설명]</li>
+      <li><strong>[기능 2]</strong> — [설명]</li>
+    </ul>
+    <aside class="notes">딱 한 문장. 기능 나열 말고 "어떻게 해결하는지".</aside>
+  </section>
+
+  <!-- 4. 데모 인트로 / 메인 화면 (1:20–2:20) -->
+  <section>
+    <p class="eyebrow">데모</p>
+    <h2>[지역/입력 선택] → [핵심 동작] → [결과]</h2>
+    <!-- ↓ shots/home.png 넣고 아래 div를 <img class="shot" src="shots/home.png" alt=""> 로 교체 -->
+    <div class="shot-ph" style="margin-top:.4em">스크린샷: ./shots/home.png</div>
+    <aside class="notes">라이브 시연이 베스트. 이 슬라이드는 백업. 로딩 대기 멘트 미리 준비.</aside>
+  </section>
+
+  <!-- 5. 데모 단계 (2:20–3:30) -->
+  <section>
+    <p class="eyebrow">데모 — 핵심 흐름</p>
+    <div class="steps" style="margin-top:.4em">
+      <div><div class="shot-ph">step1.png</div><div class="cap">① [1단계 설명]</div></div>
+      <div><div class="shot-ph">step2.png</div><div class="cap">② [2단계 설명]</div></div>
+      <div><div class="shot-ph">step3.png</div><div class="cap">③ [3단계 — 킥 결과]</div></div>
+    </div>
+    <aside class="notes">spec.md 데모 시나리오 그대로. 매끄러운 순간을 클라이맥스로.</aside>
+  </section>
+
+  <!-- 6. THE KICK (차별점) — auto-animate로 강조 (3:30–4:10) -->
+  <section data-auto-animate data-background-color="#0b1320">
+    <p class="eyebrow" style="color:#7aa2ff">⭐ 차별점</p>
+    <h2 data-id="kick" style="color:#fff">[킥 한 줄]</h2>
+  </section>
+  <section data-auto-animate data-background-color="#0b1320">
+    <p class="eyebrow" style="color:#7aa2ff">⭐ 차별점</p>
+    <h2 data-id="kick" style="color:#fff; font-size:1.2em">[킥 한 줄]</h2>
+    <div class="two" style="margin-top:.5em; color:#e8ecf2">
+      <p class="hook">[킥이 주는 가치 1~2줄]</p>
+      <div><div class="shot-ph" style="background:#16203a;border-color:#33415c;color:#aab6cc">킥 히어로: ./shots/kick.gif</div></div>
+    </div>
+    <p style="color:#aab6cc; font-size:.5em; margin-top:.6em">벤치마킹: <strong style="color:#fff">[해외 사례]</strong>의 [메커니즘]을 한국 [맥락/데이터]에 이식</p>
+    <aside class="notes">가장 많은 시간·에너지. "왜 이게 다른가" 한 방. 해외 사례 이식 서사.</aside>
+  </section>
+
+  <!-- 7. 임팩트 · 공공가치 (4:10–4:40) -->
+  <section>
+    <p class="eyebrow">임팩트 & 공공가치</p>
+    <h2>[핵심 임팩트 한 줄]</h2>
+    <ul style="margin-top:.5em">
+      <li>[행정 효율 / 시민 편익]</li>
+      <li>[실데이터·실서비스 연동 확장 가능성]</li>
+      <li>[다른 지역/분야로 확장]</li>
+    </ul>
+    <aside class="notes">공공 해커톤 = 공공성·사업성이 심사 핵심. 차별점을 그 기준에 맞춰 프레이밍.</aside>
+  </section>
+
+  <!-- 8. 확장 + 팀 + 마무리 (4:40–5:00) -->
+  <section class="center" data-background-color="#f4f6f9">
+    <p class="eyebrow">감사합니다</p>
+    <h1>[서비스명]</h1>
+    <p class="hook">[한 줄 가치 제안 반복]</p>
+    <p class="muted" style="margin-top:1em">[팀명] · [GitHub/연락처]</p>
+    <aside class="notes">마무리 한 문장 + CTA. 시간 엄수.</aside>
+  </section>
+
+</div></div>
+
+<script src="vendor/reveal/dist/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    plugins: [ RevealNotes, RevealHighlight ],
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+# Stage 04 — 파일 소유권 (Stage 05 빌드 충돌 0)
+# 실행모드: 메인 단독 권장(단일 페이지 앱). 분리 시에도 아래 레인은 경로 무충돌.
+
+mode: main-solo-recommended
+
+lanes:
+  - id: build           # 앱 코드 (메인 또는 build-agent)
+    owner: main
+    write:
+      - web/app/**          # page.tsx, api/llm/route.ts
+      - web/components/**    # GuideCard.tsx, SourceBadge.tsx
+      - web/lib/llm.ts       # T4 비전 확장
+      - web/public/**        # PWA manifest, 아이콘
+    doNotWrite:
+      - data/sources/**      # data 레인 소유
+      - spec.md
+      - plan.md
+      - concept.md
+      - workflow/**
+
+  - id: data            # 출처 fixture 코퍼스 (무충돌 — 코드 안 건드림)
+    owner: main-or-data-agent
+    write:
+      - data/sources/**      # jipgeup-myeongryeong.json, jeonipsingo.json
+    doNotWrite:
+      - web/**
+      - spec.md
+      - plan.md
+      - concept.md
+      - workflow/**
+
+# 메인 전용(누구도 서브가 수정 금지): workflow/state.yaml, workflow/stages.yaml,
+# spec.md, plan.md, concept.md, PROGRESS.md, README.md, 루트 package.json.
+mainOnly:
+  - workflow/state.yaml
+  - workflow/stages.yaml
+  - spec.md
+  - plan.md
+  - concept.md
+  - PROGRESS.md
+  - README.md
+  - package.json
+
+conflictCheck: "build 레인 web/** 과 data 레인 data/sources/** 는 경로 교집합 없음 → 충돌 0."

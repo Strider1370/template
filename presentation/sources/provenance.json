@@ -1,0 +1,43 @@
+{
+  "$comment": "자산 출처/라이선스 기계 판독 메타(스켈레톤). Doc2 §19.2. 사람용 설명은 ASSET_LICENSES.md. 당일 자산을 추가할 때 assets 배열에 항목을 더한다.",
+  "version": 1,
+  "themes": [
+    {
+      "id": "propca-notion-style",
+      "type": "theme",
+      "origin": "github.com/procpalee/Marp_Templates",
+      "license": "unspecified",
+      "usage": "hackathon-reference",
+      "derivedInto": "presentation/theme/notion/tokens.css",
+      "notes": "토큰만 추출. 재배포 시 출처 확인 권장."
+    },
+    {
+      "id": "notion-design-md",
+      "type": "design-reference",
+      "origin": "VoltAgent/awesome-design-md",
+      "license": "MIT",
+      "usage": "design-principles-reference"
+    }
+  ],
+  "fonts": [
+    { "id": "pretendard", "license": "OFL-1.1", "origin": "orioncactus/pretendard", "bundled": true, "bundledAt": "presentation/slidev/public/fonts/PretendardVariable.woff2", "note": "Slidev 엔진은 로컬 woff2 번들(오프라인). Notion 정적 HTML 은 폰트명만(설치 시 적용)." },
+    { "id": "noto-sans-kr", "license": "OFL-1.1", "origin": "google-fonts", "bundled": false },
+    { "id": "inter", "license": "OFL-1.1", "origin": "google-fonts", "bundled": false },
+    { "id": "fraunces", "license": "OFL-1.1", "origin": "google-fonts", "bundled": false }
+  ],
+  "icons": [
+    { "id": "carbon", "license": "Apache-2.0", "origin": "@iconify-json/carbon" },
+    { "id": "ph", "license": "MIT", "origin": "@iconify-json/ph" },
+    { "id": "twemoji", "license": "CC-BY-4.0", "origin": "@iconify-json/twemoji", "attributionRequired": true }
+  ],
+  "referenceCaptures": [
+    {
+      "id": "baizeai-kubecon",
+      "license": "Apache-2.0",
+      "origin": "presentation/slidev/reference-capture/RECIPE.md",
+      "usage": "visual-benchmark-only",
+      "embedInFinalDeck": false
+    }
+  ],
+  "assets": []
+}

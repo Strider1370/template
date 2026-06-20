@@ -1,0 +1,77 @@
+workflowVersion: 1
+workflowMode: run
+project:
+  name: 민원·행정정보 접근성 서비스
+  topic: 민원·행정정보 접근성을 높이는 챗봇 또는 검색 서비스
+  startedAt: '2026-06-20T10:36:27.992Z'
+  deadlineMinutes: 240
+  presentationMinutes: 5
+current:
+  stageNumber: 5
+  stageId: parallel-build
+  status: awaiting_direction
+  startedAt: '2026-06-20T12:25:34.011Z'
+  budgetMinutes: 85
+completedStages:
+  - stageNumber: 0
+    stageId: intake
+    startedAt: '2026-06-20T10:36:27.992Z'
+    completedAt: '2026-06-20T10:42:19.916Z'
+    actualMinutes: 5.9
+    budgetMinutes: 5
+  - stageNumber: 1
+    stageId: parallel-research
+    startedAt: '2026-06-20T10:58:30.840Z'
+    completedAt: '2026-06-20T11:09:42.339Z'
+    actualMinutes: 11.2
+    budgetMinutes: 15
+  - stageNumber: 2
+    stageId: insight-selection
+    startedAt: '2026-06-20T11:47:40.530Z'
+    completedAt: '2026-06-20T11:59:32.044Z'
+    actualMinutes: 11.9
+    budgetMinutes: 15
+  - stageNumber: 3
+    stageId: spec
+    startedAt: '2026-06-20T12:03:36.901Z'
+    completedAt: '2026-06-20T12:10:41.929Z'
+    actualMinutes: 7.1
+    budgetMinutes: 10
+  - stageNumber: 4
+    stageId: implementation-plan
+    startedAt: '2026-06-20T12:13:07.105Z'
+    completedAt: '2026-06-20T12:18:16.363Z'
+    actualMinutes: 5.2
+    budgetMinutes: 10
+  - stageNumber: 5
+    stageId: parallel-build
+    startedAt: '2026-06-20T12:25:34.011Z'
+    completedAt: '2026-06-20T12:42:30.995Z'
+    actualMinutes: 16.9
+    budgetMinutes: 85
+requiredReads:
+  - workflow/stages/05-parallel-build.md
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 3. Stage 05'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 15. 서브에이전트 권한'
+activeAgents: []
+blockedBy: []
+nextGate:
+  command: npm run gate:build
+  report: workflow/history/stage-05-gate.md
+humanApproval:
+  required: false
+  status: not_required
+  decisionFile: null
+lastHandoff: workflow/history/stage-05-parallel-build.md
+lastSuccessfulCheckpoint:
+  stageNumber: 5
+  stageId: parallel-build
+  commit: null
+contextPolicy:
+  maxPrimaryFiles: 5
+  useHandoffBeforeHistory: true
+  doNotRead:
+    - unrelated stage reports
+    - full chat history
+    - raw research not referenced by current task
+lastUpdatedAt: '2026-06-20T12:42:31.032Z'

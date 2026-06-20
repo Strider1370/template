@@ -1,0 +1,771 @@
+{
+  "_comment": "Stage 01에서 생성. 모든 검증 가능한 주장의 출처를 구조화한다(research-output.schema.json 준수). 근거 없는 수치/최신 사실 금지.",
+  "_sourceFormat": {
+    "id": "source-<번호>  (필수, 예: source-01)",
+    "title": "출처 제목 (필수)",
+    "url": "URL (필수)",
+    "publisher": "발행처/기관 (선택)",
+    "accessedAt": "확인 시점, 예: 2026-06-17 (필수)",
+    "usedFor": [
+      "이 출처를 어디에 썼는지 문자열 배열 (선택)"
+    ],
+    "claim": "이 출처가 뒷받침하는 주장 한 줄 (선택)"
+  },
+  "_claimFormat": {
+    "claimId": "예: problem-01",
+    "claim": "검증 대상 주장 한 줄",
+    "sources": [
+      "source-03"
+    ],
+    "usedIn": [
+      "spec.problem",
+      "slide-02"
+    ]
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "title": "정부24 서비스 소개 (민원 안내·신청·열람)",
+      "url": "https://www.gov.kr/",
+      "publisher": "행정안전부 (정부24)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "JTBD-1",
+        "가설①",
+        "Current Alternative"
+      ],
+      "claim": "정부24는 여러 기관의 민원을 한 곳에서 24시간 안내·신청·발급·열람할 수 있는 정부 대표 포털이다. 단 '어느 기관 소관인지'부터 모르는 진입 문제는 별개로 남는다.",
+      "_track": "jtbd"
+    },
+    {
+      "id": "S2",
+      "title": "정부민원포털 정부24 서비스 현황 (지표)",
+      "url": "https://www.index.go.kr/unity/potal/main/EachDtlPageDetail.do?idx_cd=1026",
+      "publisher": "e-나라지표 (통계청/관계부처)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "JTBD-1",
+        "세그먼트 규모 정황"
+      ],
+      "claim": "정부24의 서비스 제공 현황을 보여주는 공식 지표 페이지. (구체 수치는 본 리서치에서 인용하지 않음 — 필요 시 Stage 03에서 직접 확인 후 사용.)",
+      "_track": "jtbd"
+    },
+    {
+      "id": "S3",
+      "title": "필수 개선 행정용어 100개 선정 (보도자료)",
+      "url": "https://www.korean.go.kr/front/board/boardStandardView.do?board_id=6&b_seq=674&mn_id=19",
+      "publisher": "국립국어원",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "가설②",
+        "JTBD-2",
+        "JTBD-3",
+        "C(쉬운 말) 근거"
+      ],
+      "claim": "국립국어원이 외국어·한자어 등 어려운 행정용어 중 개선 필요성이 높은 100개를 선정·홍보. 정부 스스로 '행정용어가 어렵다'를 공식 문제로 인정.",
+      "_track": "jtbd"
+    },
+    {
+      "id": "S4",
+      "title": "쉽고 바른 공공언어 사용을 위한 공문서 용어 개선 추진계획 / 공공언어 개선 정책효과 조사",
+      "url": "https://kplain.kr/_UploadData/bod/ce2f40373b5849f1995357b8f6eceb4dBoard_filekor5.pdf",
+      "publisher": "한국공공언어연구원 / 국립국어원·정부혁신조직실 관련 자료",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "가설②",
+        "Failure Cost(시간비용)"
+      ],
+      "claim": "어려운 행정용어로 국민이 추가 지출하는 시간비용이 연간 약 118.3억 원, 국민 약 7%가 글 읽기·쓰기에 어려움(공공문서에서 더 심함)이라는 조사 결과가 보고됨. (검색 요약 기반 수치 — Stage 03에서 원문 페이지 직접 재확인 후 발표 인용 권장.)",
+      "_track": "jtbd"
+    },
+    {
+      "id": "S5",
+      "title": "한국어 잘 모르는 외국인도 언어장벽 없이 민원신청 / 외국인 다국어 민원상담 (20개 언어)",
+      "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=114869",
+      "publisher": "행정안전부 (보도자료)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "JTBD-3",
+        "Current Alternative",
+        "문제 실재성"
+      ],
+      "claim": "외국인 주민이 행정 용어를 몰라 민원·서류 발급에 어려움을 겪으며, 정부가 20개 언어 다국어 민원상담·통역 서비스로 대응 중. 기존 대안(전화 상담)은 존재하나 시간·대기 제약이 따름.",
+      "_track": "jtbd"
+    },
+    {
+      "id": "S6",
+      "title": "음식점 창업 — 영업신고 및 영업허가 / 업종별 인허가 안내",
+      "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=839&ccfNo=5&cciNo=1&cnpClsNo=1",
+      "publisher": "법제처 (찾기쉬운 생활법령정보)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "JTBD-4",
+        "보조 세그먼트"
+      ],
+      "claim": "업종별로 영업신고·영업허가 등 인허가 절차·구비서류·관할이 달라, 창업 소상공인이 절차의 복잡성과 정보 접근 어려움을 겪는다. 정부도 인허가 비용 지원사업을 운영.",
+      "_track": "jtbd"
+    },
+    {
+      "id": "gov24-ai-etnews",
+      "title": "[AI 정부시대 개막] 정부24부터 민원 플랫폼까지…AI로 대국민 서비스 혁신",
+      "url": "https://www.etnews.com/20251217000077",
+      "publisher": "전자신문",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1",
+        "section3-⑤",
+        "section5-타이밍"
+      ],
+      "claim": "정부24에 일상어 질문 대응 AI 행정도우미 챗봇·'정부24+ 지능검색' 도입. AI 정부24는 2026 1분기 시범·4분기 정식 예정. 음성·영상 대화 지원.",
+      "_track": "domestic"
+    },
+    {
+      "id": "mois-internal-ai",
+      "title": "민간 최신 AI, 행정망에서 보안 걱정 없이 활용해 'AI 행정시대' 활짝 연다 (보도자료)",
+      "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=121943",
+      "publisher": "행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1"
+      ],
+      "claim": "정부 행정망 내 민간 AI 챗 서비스 활용 추진 — 공공 AI 민원 서비스 확대 정책 배경.",
+      "_track": "domestic"
+    },
+    {
+      "id": "gukmin-bisuh-namu",
+      "title": "국민비서 (구삐)",
+      "url": "https://namu.wiki/w/%EA%B5%AD%EB%AF%BC%EB%B9%84%EC%84%9C",
+      "publisher": "나무위키",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1",
+        "section2"
+      ],
+      "claim": "국민비서는 2021.03 시작된 전자정부 알림·상담 서비스. 구삐는 마스코트. 알림을 은행앱·네이버·카카오·토스·PASS로 수신.",
+      "_track": "domestic"
+    },
+    {
+      "id": "gukmin-bisuh-3o3",
+      "title": "'국민비서 구삐' 알림, 상담 서비스 총정리",
+      "url": "https://help.3o3.co.kr/hc/ko/articles/41283601160345",
+      "publisher": "삼쩜삼 고객센터",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1"
+      ],
+      "claim": "국민비서는 상담+알림 서비스로 구성, 문자·앱·이메일 등 다채널 수신, 카테고리 선택 가능.",
+      "_track": "domestic"
+    },
+    {
+      "id": "bokjiro-blog-membership",
+      "title": "[복지로 Talk1] 맞춤형급여안내(복지멤버십)",
+      "url": "https://blog.bokjiro.go.kr/1418",
+      "publisher": "복지로 공식 블로그 (보건복지부)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1",
+        "section3-③"
+      ],
+      "claim": "복지멤버십은 연령·가구구성·경제상황 기준으로 받을 수 있는 복지서비스를 맞춤 안내하는 제도.",
+      "_track": "domestic"
+    },
+    {
+      "id": "bokji-membership-etnews",
+      "title": "몰라서 놓치는 복지 없도록…복지멤버십, 개인 맞춤형 플랫폼으로 우뚝",
+      "url": "https://www.etnews.com/20251222000300",
+      "publisher": "전자신문",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1",
+        "section5"
+      ],
+      "claim": "2025.12 복지멤버십 안내 대상 사업이 129종→163종(지자체 34종 추가)으로 확대. 맞춤 추천(A) 이미 강력.",
+      "_track": "domestic"
+    },
+    {
+      "id": "bojo24-appstore",
+      "title": "보조금24 - 정부 지원금 찾기",
+      "url": "https://apps.apple.com/us/app/id6451440101",
+      "publisher": "행정안전부 / App Store",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1",
+        "section2"
+      ],
+      "claim": "보조금24는 행안부 공공서비스 API로 중앙·지자체·공공기관 지원금을 통합 조회. 카카오 지갑·토스 연동.",
+      "_track": "domestic"
+    },
+    {
+      "id": "bojo24-finez",
+      "title": "나의 숨은정부지원금 찾기 (+토스 보조금24)",
+      "url": "https://pn.finez.co.kr/2354",
+      "publisher": "금융지원센터(블로그)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section2",
+        "section3-④"
+      ],
+      "claim": "토스는 행안부 데이터로 숨은 지원금 조회 제공. 단 조회된 지원금은 자동 입금이 아니며 '신청하기'로 외부 관공서 사이트 연결 필요(조회→신청 점프).",
+      "note": "민간 블로그 — 핵심 사실(토스 연동·조회/신청 분리)은 보조금24 공식 안내와 일치하여 신뢰. 수치 인용 없음.",
+      "_track": "domestic"
+    },
+    {
+      "id": "seoul-dasan-mediahub",
+      "title": "AI시대 성큼, '120다산콜'도 똑똑하게 진화 중! 보이는 ARS·챗봇 편리",
+      "url": "https://mediahub.seoul.go.kr/archives/2011661",
+      "publisher": "서울특별시 내 손안에 서울",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1"
+      ],
+      "claim": "서울톡 챗봇 2019 도입, 보이는 ARS(2023)·카카오 실시간 상담(2024) 추가. 앱 설치 없이 카카오 채널로 이용. 생애주기별 복지·민원 신청·예약 제공.",
+      "_track": "domestic"
+    },
+    {
+      "id": "dasan-foundation",
+      "title": "서울특별시 120다산콜재단",
+      "url": "https://120dasan.or.kr/",
+      "publisher": "서울특별시 120다산콜재단",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1"
+      ],
+      "claim": "120다산콜은 전화·문자·챗봇·앱으로 민원 상담. 수어(2008~)·외국어(2010~) 상담 등 취약계층 맞춤 상담 운영.",
+      "_track": "domestic"
+    },
+    {
+      "id": "moj-public-language-pdf",
+      "title": "쉽고 바른 공공언어 사용을 위한 공문서 용어 개선·정착 추진계획",
+      "url": "https://dams.pa.go.kr/dams/DOCUMENT/2023/11/30/DOC/SRC/0A04202311301611096041877011783.pdf",
+      "publisher": "정부혁신조직실 정보공개정책과",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1",
+        "section3-②",
+        "section5-4"
+      ],
+      "claim": "정부가 행정기관 어려운 용어 개선·점검·교육 추진. '알기 쉬운 법령' 사업으로 다수 법령 정비(C 방향의 정부판이 이미 존재, 단 문서 단위).",
+      "_track": "domestic"
+    },
+    {
+      "id": "kihasa-elderly-digital",
+      "title": "노년기 정보 활용 현황 및 디지털 소외 해소 방안 모색 (연구보고서 2020-46)",
+      "url": "https://repository.kihasa.re.kr/bitstream/201002/37360/1/연구보고서%202020-46.pdf",
+      "publisher": "한국보건사회연구원",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section3-⑥",
+        "section4"
+      ],
+      "claim": "고령층은 4대 정보취약계층 중 디지털정보화 수준 최저 — 본인인증·앱 진입장벽이 행정 접근성의 구조적 제약.",
+      "note": "검색 스니펫 기반. 4대 취약계층(장애인·저소득층·농어민·고령층) 분류 및 고령층 최저 수준은 통설과 일치. 구체 수치는 인용하지 않음.",
+      "_track": "domestic"
+    },
+    {
+      "id": "govuk-content-design",
+      "title": "Content design: writing for GOV.UK",
+      "url": "https://www.gov.uk/guidance/content-design/writing-for-gov-uk",
+      "publisher": "GOV.UK / GDS",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-1",
+        "K1"
+      ],
+      "claim": "Plain English 강제; 높은 문해력 사용자도 plain English 선호(빨리 이해).",
+      "_track": "overseas"
+    },
+    {
+      "id": "govuk-stepbystep-pattern",
+      "title": "Step by step navigation pattern",
+      "url": "https://design-system.service.gov.uk/patterns/step-by-step-navigation",
+      "publisher": "GOV.UK Design System",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-1",
+        "K3"
+      ],
+      "claim": "복잡한 일을 끝에서 끝까지 논리적 단계로 분해, 단계마다 콘텐츠 링크.",
+      "_track": "overseas"
+    },
+    {
+      "id": "opsi-govuk-stepbystep",
+      "title": "GOV.UK step-by-step navigation",
+      "url": "https://oecd-opsi.org/innovations/gov-uk-step-by-step-navigation/",
+      "publisher": "OECD-OPSI",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-1",
+        "case-7",
+        "K3"
+      ],
+      "claim": "40개 이상 step-by-step 여정 운영.",
+      "_track": "overseas"
+    },
+    {
+      "id": "govuk-tell-us-once",
+      "title": "What to do after someone dies: Tell Us Once",
+      "url": "https://www.gov.uk/after-a-death/organisations-you-need-to-contact-and-tell-us-once",
+      "publisher": "GOV.UK",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-7",
+        "K5"
+      ],
+      "claim": "사망 1회 신고로 HMRC·DWP·여권청·DVLA·지방의회·연금에 자동 전파.",
+      "_track": "overseas"
+    },
+    {
+      "id": "govuk-accessibility",
+      "title": "How we made GOV.UK more accessible",
+      "url": "https://accessibility.blog.gov.uk/2020/12/17/how-we-made-gov-uk-more-accessible/",
+      "publisher": "GOV.UK Accessibility blog",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-1"
+      ],
+      "claim": "400% 확대 시 비파괴, 키보드/음성 네비, 색·대비 사용자 조정.",
+      "_track": "overseas"
+    },
+    {
+      "id": "burokratt-osor",
+      "title": "Digital public services based on open source: case study on Bürokratt",
+      "url": "https://interoperable-europe.ec.europa.eu/collection/open-source-observatory-osor/document/digital-public-services-based-open-source-case-study-burokratt",
+      "publisher": "EU Interoperable Europe (OSOR)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-2",
+        "K4"
+      ],
+      "claim": "상호운용 솔루션 네트워크로 단일 플랫폼에서 공공 절차 수행, 2020 시작·2022 첫 버전.",
+      "_track": "overseas"
+    },
+    {
+      "id": "burokratt-ria",
+      "title": "Bürokratt | RIA",
+      "url": "https://www.ria.ee/en/state-information-system/personal-services/burokratt",
+      "publisher": "RIA (Estonia)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-2",
+        "K4",
+        "K7"
+      ],
+      "claim": "일상 에스토니아어 이해, 24/7, 정보 안내 후 필요 시 상담원 연결.",
+      "_track": "overseas"
+    },
+    {
+      "id": "burokratt-govinsider",
+      "title": "Estonia eyes cross-border interoperability for Bürokratt",
+      "url": "https://govinsider.asia/intl-en/article/estonia-eyes-cross-border-interoperability-for-burokratt-its-siri-of-public-services",
+      "publisher": "GovInsider",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-2"
+      ],
+      "claim": "2026~ 개인화 AI 에이전트·에스토니아 특화 LLM·국경 간 상호운용 확장.",
+      "_track": "overseas"
+    },
+    {
+      "id": "getcalfresh-success",
+      "title": "Simplifying California's Online Application for Food Benefits",
+      "url": "https://codeforamerica.org/success-stories/simplifying-californias-online-application-for-food-benefits/",
+      "publisher": "Code for America",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-3",
+        "K1",
+        "K2"
+      ],
+      "claim": "신청 시간 10분 미만으로 단축; 시민이 이해하는 방식으로 소득 질문(시급).",
+      "_track": "overseas"
+    },
+    {
+      "id": "getcalfresh-eligibility",
+      "title": "Overcoming Barriers: Setting Expectations for CalFresh Eligibility",
+      "url": "https://codeforamerica.org/news/overcoming-barriers-setting-expectations-for-calfresh-eligibility/",
+      "publisher": "Code for America",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-3"
+      ],
+      "claim": "고객 데이터로 개인화된 yes/no 자격 사전판정 질문 생성.",
+      "_track": "overseas"
+    },
+    {
+      "id": "getcalfresh-statewide",
+      "title": "California Launches GetCalFresh in all 58 Counties",
+      "url": "https://codeforamerica.org/news/california-launches-code-for-americas-getcalfresh-in-all-58-counties/",
+      "publisher": "Code for America",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-3"
+      ],
+      "claim": "전 카운티 확대; SNAP 참여율 2014년 66%→2022년 81%.",
+      "_track": "overseas"
+    },
+    {
+      "id": "askjamie-govtech",
+      "title": "Get to know the GovTech team behind Ask Jamie",
+      "url": "https://www.tech.gov.sg/technews/govtech-team-behind-ask-jamie-government-chatbot/",
+      "publisher": "GovTech Singapore",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-4",
+        "K7"
+      ],
+      "claim": "문의 절반이 일반 문의; 70+ 기관 적용; 도메인별 학습; 음성 응대.",
+      "_track": "overseas"
+    },
+    {
+      "id": "vica-govinsider",
+      "title": "Inside GovTech's refresh of government chatbots (VICA)",
+      "url": "https://govinsider.asia/intl-en/article/is-it-time-to-say-goodbye-to-ask-jamie-inside-govtechs-refresh-of-government-chatbots",
+      "publisher": "GovInsider",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-4"
+      ],
+      "claim": "2023년까지 모든 챗봇을 LLM 엔진(VICA)으로 전환 목표.",
+      "_track": "overseas"
+    },
+    {
+      "id": "askjamie-covid-fail",
+      "title": "Singapore's Ask Jamie AI chatbots may need fine tuning",
+      "url": "https://techwireasia.com/2021/10/singapores-ask-jamie-ai-chatbots-may-need-some-fine-tuning/",
+      "publisher": "Tech Wire Asia",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-4",
+        "K7"
+      ],
+      "claim": "COVID 오답으로 MOH가 일시 중단 — 도메인 밖 질문 위험.",
+      "_track": "overseas"
+    },
+    {
+      "id": "albert-economie",
+      "title": "Say hello to Albert! The new AI in French public services",
+      "url": "https://blog.economie-numerique.net/2024/05/06/say-hello-to-albert-the-new-ai-in-french-public-service/",
+      "publisher": "Blog Economie Numerique",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-5",
+        "K6"
+      ],
+      "claim": "2024-04-24 출시; 상담원 보조; 출처·검증가능 콘텐츠·행정 톤 강제.",
+      "_track": "overseas"
+    },
+    {
+      "id": "albert-dinum",
+      "title": "IA : connaissez-vous Albert ?",
+      "url": "https://www.info.gouv.fr/actualite/ia-connaissez-vous-albert",
+      "publisher": "info.gouv.fr (DINUM/Etalab)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-5",
+        "K6"
+      ],
+      "claim": "France Services 상담원에게 답변 후보+출처+유용한 링크/실무 시트 제시; Llama 3.1·Mistral 기반 주권 AI.",
+      "_track": "overseas"
+    },
+    {
+      "id": "albert-discontinue",
+      "title": "De chatbot experimental a socle interministeriel — le parcours d'Albert",
+      "url": "https://acteurspublics.fr/articles/de-chatbot-experimental-a-socle-interministeriel-pour-lia-de-letat-le-parcours-dalbert-ia/",
+      "publisher": "Acteurs Publics",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-5"
+      ],
+      "claim": "France Services 적용 중단/축소 보도 (partially unverified — 설계 원칙은 유효).",
+      "_track": "overseas"
+    },
+    {
+      "id": "nyc-mycity-markup",
+      "title": "NYC's AI Chatbot Tells Businesses to Break the Law",
+      "url": "https://themarkup.org/news/2024/03/29/nycs-ai-chatbot-tells-businesses-to-break-the-law",
+      "publisher": "The Markup",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-6",
+        "K6",
+        "K7"
+      ],
+      "claim": "환각이 위법 조언으로(팁 갈취·해고·현금거부 가능이라 오답).",
+      "_track": "overseas"
+    },
+    {
+      "id": "nyc-mycity-shrm",
+      "title": "NYC AI Chatbot Gives Faulty Legal Advice, Prompting Review",
+      "url": "https://www.shrm.org/topics-tools/employment-law-compliance/nyc-ai-chatbot-faulty-legal-advice",
+      "publisher": "SHRM",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-6",
+        "K7"
+      ],
+      "claim": "면책 문구 있었으나 부정확 답변; 검토 착수.",
+      "_track": "overseas"
+    },
+    {
+      "id": "nyc-mycity-launch",
+      "title": "Mayor Adams Releases First-of-Its-Kind Plan for Responsible AI Use",
+      "url": "https://home4.nyc.gov/office-of-the-mayor/news/777-23/mayor-adams-releases-first-of-its-kind-plan-responsible-artificial-intelligence-use-nyc",
+      "publisher": "NYC Office of the Mayor",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "case-6"
+      ],
+      "claim": "2023-10 MyCity 챗봇 출시(Azure AI, SBS 정보 기반).",
+      "_track": "overseas"
+    },
+    {
+      "id": "d-gov24-openapi",
+      "title": "공공서비스 활용 Open API | 정부24",
+      "url": "https://www.gov.kr/openapi",
+      "publisher": "행정안전부/정부24",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "data-candidates",
+        "gov24 API는 통계연보·보조금24 중심, 민원 절차 정형 API 부재 확인"
+      ],
+      "claim": "정부24 공식 오픈 API는 통계연보(민원서비스 사무 종류 등) 및 보조금24 공공서비스 정보가 중심이며, 민원별 구비서류·처리기간을 담은 정형 절차 API는 제공되지 않는다.",
+      "_track": "feasibility"
+    },
+    {
+      "id": "d-minwon-standard",
+      "title": "민원의 처리 절차 / 민원처리기준표 (민원 처리에 관한 법률 §36)",
+      "url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=94&ccfNo=3&cciNo=2&cnpClsNo=1&menuType=qna",
+      "publisher": "법제처/행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "B-track-data",
+        "절차·구비서류·처리기간 권위 원천 식별"
+      ],
+      "claim": "행정안전부는 민원사항의 처리기관·처리기간·구비서류·처리절차·신청방법을 종합한 '민원처리기준표'를 관보 고시·인터넷 게시하도록 법정 의무화되어 있어, B(절차 안내)의 권위 출처이나 정형 데이터셋이 아닌 고시 형태다.",
+      "_track": "feasibility"
+    },
+    {
+      "id": "d-std-terms",
+      "title": "행정안전부_공공데이터 공통표준용어_20251101",
+      "url": "https://www.data.go.kr/data/15156379/fileData.do",
+      "publisher": "행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "C-track-data",
+        "쉬운 말 번역용 용어사전 씨앗"
+      ],
+      "claim": "공공데이터 공통표준용어는 회원가입 없이 파일(CSV) 다운로드가 가능한 행정안전부 데이터셋으로, C(쉬운 말 번역형)의 용어 풀이 사전 모집단으로 사용 가능하다.",
+      "_track": "feasibility"
+    },
+    {
+      "id": "d-term-policy",
+      "title": "어려운 행정용어, 이해하기 쉬운 순화어로 대변신 (보도자료)",
+      "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=28495",
+      "publisher": "행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "C-track-rationale",
+        "행정용어 난해성=실제 정책 문제임 근거"
+      ],
+      "claim": "정부가 어려운 행정용어를 순화어로 개선하는 정책을 공식 추진 중으로, C(쉬운 말 번역)는 가공의 문제가 아니라 정부가 인정한 실제 접근성 문제를 정조준한다.",
+      "_track": "feasibility"
+    },
+    {
+      "id": "d-gov24-benefit-api",
+      "title": "행정안전부_대한민국 공공서비스(혜택) 정보",
+      "url": "https://www.data.go.kr/data/15113968/openapi.do",
+      "publisher": "행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "B-track-population",
+        "검색·매칭 전수 모집단(~10,957)"
+      ],
+      "claim": "보조금24 공공서비스 정보 API(ID 15113968, odcloud)는 자동승인·즉시 발급으로 약 10,957건 전수 적재가 가능해 B의 검색·매칭 모집단으로 적합하다(절차 정밀 필드는 부족 → fixture 병행).",
+      "_track": "feasibility"
+    },
+    {
+      "id": "d-kit-datasources",
+      "title": "data/data-sources.md (키트 실측 엔드포인트, 2026-06-19)",
+      "url": "unverified-local-file",
+      "publisher": "키트 내부 문서",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "data-acquisition-strategy",
+        "엔드포인트·승인·전수건수·환경별 입수 전략"
+      ],
+      "claim": "키트 문서는 2026-06-19 실측으로 보조금24(15113968, 자동승인 10,957)·중앙부처복지(15090532, 활용신청 452)·지자체복지(15108347, 4,569)·복지로(15083323) 엔드포인트와 '막힌 환경 403 → 사전 확보' 전략, '정밀 자격기준은 산문이라 자동 판정 불가 → 큐레이션 fixture 병행' 교훈을 명시한다.",
+      "_track": "feasibility"
+    },
+    {
+      "id": "src-mois-aigov-2025",
+      "title": "민간 최신 AI, 행정망에서 보안 걱정 없이 활용해 'AI 행정시대' 활짝 연다 (보도자료)",
+      "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=121943",
+      "publisher": "행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "의심①: 정부 AI 행정 서비스 추진 맥락",
+        "흔한 기능: GPT 래퍼 의심 배경"
+      ],
+      "claim": "정부가 민간 AI를 행정망에 도입해 'AI 행정시대'를 추진 중 — 행정 AI가 이미 정부 의제임.",
+      "_track": "judge-review"
+    },
+    {
+      "id": "src-econovill-gubbi-2025",
+      "title": "카카오 AI 국민비서, 음성 지원·원스톱 예약으로 공공서비스 문턱 낮춘다",
+      "url": "https://www.econovill.com/news/articleView.html?idxno=740036",
+      "publisher": "이코노믹리뷰",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "의심①: 국민비서 구삐의 기능 범위(실행 도구) 확인",
+        "차별화 포지셔닝"
+      ],
+      "claim": "국민비서 구삐는 카톡 대화형으로 '등본 발급·시설 예약' 등 이미 정해진 작업의 실행을 빠르게 해주는 에이전트다(= 실행 단계 도구).",
+      "_track": "judge-review"
+    },
+    {
+      "id": "src-newsworks-agent-2025",
+      "title": "챗봇에게 \"등본 뽑아줘\"…네이버·카카오, 공공서비스 AI 에이전트 시대 열었다",
+      "url": "https://www.newsworks.co.kr/news/articleView.html?idxno=833545",
+      "publisher": "뉴스웍스",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "의심①: 기존 AI 에이전트가 '용어 아는 사용자의 실행'에 최적화됨을 뒷받침"
+      ],
+      "claim": "기존 공공 AI 에이전트는 '등본 뽑아줘'처럼 사용자가 이미 할 일을 아는 전제에서 실행을 대행한다 — first-time/용어 모르는 사용자 진입점은 비어 있음.",
+      "_track": "judge-review"
+    },
+    {
+      "id": "src-mois-misissue",
+      "title": "정부24 민원발급 서비스 오류발급 및 후속조치 (보도자료)",
+      "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=109049",
+      "publisher": "행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "의심②: 공식 행정 시스템도 오류 발생 전례 — '틀림 위험을 다루는 성숙도'가 평가 신호임을 뒷받침"
+      ],
+      "claim": "정부24에서 민원서류 오류발급 사고가 발생해 행안부가 후속조치 보도자료를 냄 — 공식 시스템조차 틀릴 수 있으므로 '신뢰·출처·오류 처리'가 핵심 차별 축임.",
+      "_track": "judge-review"
+    },
+    {
+      "id": "c1-jipgeup-easylaw",
+      "title": "지급명령 < 나홀로 민사소송",
+      "url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?csmSeq=568&ccfNo=3&cciNo=3&cnpClsNo=2&menuType=onhunqna",
+      "publisher": "법제처 찾기쉬운 생활법령정보",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1"
+      ],
+      "claim": "지급명령을 송달받은 날부터 2주 내 이의신청을 하지 않으면 지급명령이 확정되어 확정판결과 동일한 효력을 가진다.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c1-ihaeng-moel",
+      "title": "소액사건의 이행권고결정제도 해설",
+      "url": "https://www.moel.go.kr/local/seoulgangnam/common/downloadFile.do?file_seq=21171036138&bbs_seq=86336&bbs_id=LOCAL5",
+      "publisher": "고용노동부(자료)",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1"
+      ],
+      "claim": "이행권고결정도 이의기간 내 이의신청이 없으면 확정되어 확정판결과 동일한 효력을 가진다.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c1-toadtown",
+      "title": "이미 확정된 지급명령에 대한 대처방법",
+      "url": "https://www.toadtown.net/news/articleView.html?idxno=5312",
+      "publisher": "두꺼비마을신문",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section1"
+      ],
+      "claim": "갑자기 날아온 지급명령을 '내가 잘못했겠지' 또는 '바빠서' 방치하면 돌이킬 수 없는 상황에 빠질 수 있어 기한 내 이의신청·우편물 확인이 필요하다.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c2-mois-jargon",
+      "title": "어려운 공문서 용어, 국민이 바꾸어 간다 (보도자료)",
+      "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=65967",
+      "publisher": "행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section2"
+      ],
+      "claim": "정부가 어려운 공문서 용어를 국민 참여로 개선하는 사업을 운영 — 행정용어 난해성을 공식 문제로 인정.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c2-dspress",
+      "title": "알아듣기 어려운 행정용어, 누구를 위한 말인가",
+      "url": "https://www.dspress.org/news/articleView.html?idxno=5158",
+      "publisher": "덕성여대신문",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section2"
+      ],
+      "claim": "어려운 한자어 정책 설명으로 정작 적용 대상 국민이 이해 못 하며, 문체부는 '정책 재홍보로 많은 사회적 비용 발생'이라 진단.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c2-korean-pdf",
+      "title": "어려운 공공용어, 이렇게 쓰면 쉬워요",
+      "url": "https://korean.go.kr/common/download.do?file_path=recent&c_file_name=712df20a-be0f-4714-a875-5c8bbef727f3_1.pdf",
+      "publisher": "국립국어원",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section2"
+      ],
+      "claim": "국민 대상 공문서(보도자료·법령·민원서류 양식)의 어려운 용어를 쉬운 말로 바꾸는 기준·예시 제공.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c2-songdal",
+      "title": "송달 / 행정절차법 제15조",
+      "url": "https://casenote.kr/%EB%B2%95%EB%A0%B9/%ED%96%89%EC%A0%95%EC%A0%88%EC%B0%A8%EB%B2%95/%EC%A0%9C15%EC%A1%B0",
+      "publisher": "CaseNote / 국가법령정보",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section2"
+      ],
+      "claim": "'송달'은 서류 내용을 알리는 통지행위로 효력 발생 시점이 법으로 정해져 있어, 의미를 모르면 기한 계산을 놓칠 수 있다.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c3-incheon-foreigner",
+      "title": "인천 외국인 근로자 '언어 장벽, 큰 불편'",
+      "url": "https://www.kyeonggi.com/article/20230918580241",
+      "publisher": "경기일보",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section3"
+      ],
+      "claim": "외국인 근로자가 병원 병명·설명을 못 알아듣고, 서류 발급하러 행정복지센터에 가도 '행정 단어'를 이해 못 해 어려움을 겪는다는 구체 사례.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c3-mois-foreign",
+      "title": "한국어 잘 모르는 외국인도 언어장벽 없이 민원신청 (20개 언어)",
+      "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=114869",
+      "publisher": "행정안전부",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section3"
+      ],
+      "claim": "정부가 외국인 대상 20개 언어 다국어 민원상담을 운영 — 행정 언어장벽이 실재 문제임을 방증하나 전화·시간 제약이 남음.",
+      "_track": "c-received-document-cases"
+    },
+    {
+      "id": "c4-kihasa-elderly",
+      "title": "노년기 정보 활용 현황 및 디지털 소외 해소 방안 (2020-46)",
+      "url": "https://repository.kihasa.re.kr/handle/201002/37360",
+      "publisher": "한국보건사회연구원",
+      "accessedAt": "2026-06-20",
+      "usedFor": [
+        "section4"
+      ],
+      "claim": "고령층은 4대 정보취약계층 중 디지털정보화 수준이 가장 낮아 문해+디지털 이중 장벽을 겪는다(수치 인용 안 함).",
+      "_track": "c-received-document-cases"
+    }
+  ],
+  "claims": []
+}

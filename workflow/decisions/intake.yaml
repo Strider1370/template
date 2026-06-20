@@ -1,0 +1,63 @@
+# Stage 00 — Intake (주제 접수)
+# 이후 모든 단계의 기준점. Stage 01 리서치의 입력이자 Stage 04 계획의 자산 판단 근거.
+
+topic: "민원·행정정보 접근성을 높이는 챗봇 또는 검색 서비스"
+
+constraints:
+  - "4시간(240분) 내 데모가 확실히 돌아가는 결과물"
+  - "기본 산출물은 웹앱, 모바일 반응형 레이아웃 필수"
+  - "발표/시연은 배포된 웹 URL 기본 (PWA로 '앱처럼' 충족 가능, 네이티브 빌드 없음)"
+  - "특별한 대회 필수조건 없음 — 자유 주제, 데모 동작이 최우선"
+
+presentationMinutes: 5
+implementationMinutes: 240
+
+techStack:
+  decision: "키트 기본 그대로 (사용자 확인)"
+  stack:
+    - "Next.js 14 (App Router) · React 18 · TypeScript · Tailwind 3"
+    - "@krds-ui/core (정부 디자인 시스템)"
+    - "LLM 호출 헬퍼 web/lib/llm.ts + web/app/api/llm/route.ts (챗봇 두뇌, 키 없으면 폴백)"
+
+mandatory:
+  publicData: false      # 공공데이터 의무 사용 아님 (단, 신뢰도 위해 권위 데이터셋 1개 권장)
+  deployUrl: false       # 필수 아님 — 단 제출/시연 기본은 배포 URL 권장
+  aiUsage: false         # 의무 아님 — 단 주제 특성상 LLM이 사실상 핵심
+  notes: "특별한 필수조건 없음. 위 항목은 대회 강제 아님, 품질·시연 안정성 차원의 권장."
+
+usableAssets:
+  # 이 주제(공공/행정 기반)에 직접 맞물리는 자산
+  high:
+    - "web/ 스캐폴드 (Next.js+KRDS, install+build 검증됨) — init 생략하고 이걸로 시작"
+    - "design/krds/ + web/public/gov/ (정부 엠블럼) — 공공 서비스 룩"
+    - "web/lib/llm.ts + web/app/api/llm/route.ts — 챗봇/검색 두뇌 (새로 만들지 말 것)"
+    - "scripts/generate-banner.mjs — 주제 맞춤 히어로 배너 (Stage 05·06)"
+  maybe:
+    - "web/lib/regions.ts (전국 시도→시군구) — 관할 기관/지역 필터에 쓸 수 있음 (B 절차 안내형과 잘 맞음)"
+    - "web/scripts/build-shelters.mjs — 당일 받은 공공 CSV→정제 JSON 변환 패턴 (행정 데이터 가공 시)"
+  out:
+    - "web/components/KakaoMap.tsx, web/public/data/shelters/* (대피소) — 이 주제 핵심 아님. '가까운 관할 기관 지도'가 필요해지면만 재검토"
+
+notes:
+  # Stage 00 가벼운 초기 발산 — 방향 확정 아님 (Stage 02에서 정식 발산·수렴·승인)
+  initialAngles:
+    - "A. 맞춤 추천형: 내 상황 입력 → 받을 수 있는 행정 서비스/지원금 추천. Wow 크나 데이터 매칭 품질이 관건."
+    - "B. 절차 안내형: '이 민원 어디서·어떻게·뭘 들고 신청?' 절차·필요서류·관할기관 안내. 데모 안정적, 지역 데이터와 잘 맞음."
+    - "C. 쉬운 말 번역형: 어려운 공문을 쉬운 말로 풀어주고 '뭘 해야 하나' 정리. 타깃 선명, 구현 가장 가벼움."
+  directionFocus: "B(절차 안내형) · C(쉬운 말 번역형) 위주로 시작 (사용자 결정). A(맞춤 추천형)는 보조로만 — 확정은 Stage 02."
+  userFirstFeeling: "처음엔 B에 끌렸고, 문제 정의 후 B+C로 좁힘."
+  # 사용자가 직접 말한 문제 정의 (Stage 01 리서치가 출처와 함께 검증할 가설)
+  userProblemFraming:
+    - "처음 해보는 일이 많아 절차 자체가 낯설다 (first-time 사용자가 다수)."
+    - "법·제도 기반이라 용어·맥락이 익숙하지 않다."
+    - "검색은 하지만 블로그 등 정보가 너무 많아 '어떤 게 맞는지' 신뢰·최신성 판단이 안 된다."
+  # Stage 01에서 검증할 구조적 원인 가설 (7)
+  rootCauseHypotheses:
+    - "① 정보 파편화 — 기관별 사이트가 따로라 '어디 소관'인지부터 모름"
+    - "② 용어·문서 난해 — 법령 한자어·공문체"
+    - "③ 대상 판단 복잡 — 자격 조건이 복합적이라 '몰라서 못 받음'"
+    - "④ 절차 불투명 — 서류·제출처·소요기간·다음 단계가 한눈에 안 보임"
+    - "⑤ 검색 미스매치 — 시민 언어 vs 행정 언어, 결과는 법령/PDF뿐"
+    - "⑥ 디지털 격차 — 본인인증·앱 등 진입장벽, 모바일 미흡"
+    - "⑦ 최신성·신뢰 — 제도가 자주 바뀌고 비공식 정보는 부정확/철 지남"
+  # 방향이 정조준하는 원인: B→①④⑤  C→②⑥  (둘 다 ⑦ 신뢰 문제와 직결 = '뭐가 맞는지')

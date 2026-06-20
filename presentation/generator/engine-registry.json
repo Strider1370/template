@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "description": "발표 생성 엔진 우선순위. Doc2 §2. Claude는 임의로 reveal/marp를 기본 엔진으로 선택하지 않는다(Doc2 §17 #13).",
+  "primary": "slidev",
+  "fallback": "notion-static-html",
+  "engines": {
+    "slidev": {
+      "role": "primary",
+      "kind": "slidev",
+      "renderer": "generate-slidev.mjs",
+      "output": "presentation/output/slidev/",
+      "entry": "presentation/slidev/slides.md",
+      "source": "presentation/slidev/",
+      "rendererKey": "slidev",
+      "notes": "기본 엔진. deck.json → slidev/slides.md → slidev build. (생성기가 slidev 프로젝트 안에 직접 출력)"
+    },
+    "notion-static-html": {
+      "role": "fallback",
+      "kind": "static-html",
+      "renderer": "generate-static-html.mjs",
+      "output": "presentation/output/static/presentation.html",
+      "rendererKey": "notion-html",
+      "theme": "presentation/theme/notion/",
+      "notes": "Slidev build 실패/오프라인 대비 단일 HTML 백업. 동일 deck.json 사용(Doc2 §12)."
+    },
+    "reveal": {
+      "role": "alternative",
+      "kind": "reveal",
+      "auto": false,
+      "source": "presentation/reveal/",
+      "notes": "수동 대체용. 자동 생성 기본 경로 아님(Doc2 §2.4)."
+    },
+    "marp": {
+      "role": "alternative",
+      "kind": "marp",
+      "auto": false,
+      "source": "presentation/marp/",
+      "notes": "수동 대체용. propca-notion-style 테마 원본 보유처. 자동 생성 기본 경로 아님(Doc2 §2.4)."
+    }
+  }
+}
