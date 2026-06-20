@@ -10,7 +10,7 @@
 ## 3. 이번 단계에서 반드시 읽을 파일
 - `workflow/state.yaml` (현재 상태)
 - `CLAUDE.md` (공통 운영 규칙)
-- `docs/kit-assets.md` (있으면 — 레포 자산 목록). 없으면 `web/lib/regions.ts`, `web/lib/shelters.ts`, `web/components/KakaoMap.tsx`, `web/public/data/`, `data/boundaries/`, `data/data-sources.md`의 존재만 확인.
+- `docs/kit-assets.md` (있으면 — 레포 자산 목록) + **`data/INDEX.md`(키 없이 바로 쓰는 번들 데이터 목록 — 주제와 매칭해 "쓸 수 있는 데이터"로 표시)**. 없으면 `web/lib/regions.ts`, `web/lib/shelters.ts`, `web/components/KakaoMap.tsx`, `web/public/data/`, `data/boundaries/`, `data/data-sources.md`의 존재만 확인.
 - guidance: 없음 (stages.yaml.guidance == []).
 
 ## 4. 이번 단계에서 읽지 않아도 되는 파일
