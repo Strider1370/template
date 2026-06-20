@@ -54,5 +54,5 @@ presentation/slidev/dist-presets/
 # 발표 생성 런타임 산출물 (deck.json/slides.md 는 Stage 09 실행 시 생성)
 presentation/output/
 
-# 공공데이터 전수 스냅샷 (재생성 가능, 용량 큼 — 로컬만; 무키 데모로 커밋하려면 이 줄을 지운다)
-data/snapshots/
+# 공공데이터 전수 스냅샷: data/snapshots/ 는 무키 데모를 위해 저장소에 커밋한다(gov24 10,957 + 복지 5,021건).
+# 재생성은 data/scripts/dump-*.mjs (DATA_GO_KR_KEY 필요).
