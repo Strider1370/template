@@ -1,26 +1,26 @@
 import { NextResponse } from 'next/server';
-import { getLlmProvider, type LlmMessage } from '@/lib/llm';
+import { openaiChat } from '@/lib/llm';
 
 export const runtime = 'nodejs';
 
-// 서버사이드에서만 LLM 키 사용. 클라이언트는 이 라우트로만 호출한다.
+// 서버사이드 전용. system/user 한 쌍을 받는 얇은 라우트. 키 없으면 폴백(text:null).
 export async function POST(req: Request) {
-  let body: { messages?: LlmMessage[] };
+  let body: { system?: string; user?: string; json?: boolean };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: 'invalid JSON' }, { status: 400 });
   }
-  const messages = body.messages;
-  if (!Array.isArray(messages) || messages.length === 0) {
-    return NextResponse.json({ error: 'messages[] required' }, { status: 400 });
+  if (!body.user) {
+    return NextResponse.json({ error: 'user required' }, { status: 400 });
   }
-  const provider = getLlmProvider();
-  try {
-    const result = await provider.complete(messages);
-    return NextResponse.json(result);
-  } catch (err) {
-    console.error('llm complete failed', err);
-    return NextResponse.json({ error: 'llm provider failed' }, { status: 502 });
+  const text = await openaiChat({
+    system: body.system ?? '',
+    user: body.user,
+    json: body.json,
+  });
+  if (text == null) {
+    return NextResponse.json({ text: null, provider: 'fallback' });
   }
+  return NextResponse.json({ text, provider: 'openai' });
 }
