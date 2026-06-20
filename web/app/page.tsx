@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Display, Title, Heading, Body, Badge } from '@krds-ui/core';
+import { Display, Heading, Body, Badge } from '@krds-ui/core';
 import { UserInfoForm } from '@/components/blocks/UserInfoForm';
 import { MapPanel } from '@/components/blocks/MapPanel';
 
@@ -14,14 +14,6 @@ import { MapPanel } from '@/components/blocks/MapPanel';
 //   - 지도   : `@/components/blocks/MapPanel` (POI·center 를 주제 데이터로 연결)
 //   - 그 외  : `@/components/KakaoMap`, `@/lib/regions`, `@/lib/shelters` 등
 // ─────────────────────────────────────────────────────────────
-
-const NEXT_STEPS = [
-  ['spec.md', '데모 시나리오부터 작성 — "최종 데모에서 정확히 무엇을 보여줄지"'],
-  ['plan.md', '작업 분해 + 기능별 폴백(안 되면 하드코딩) 정의'],
-  ['이 화면 새로 짜기', 'app/page.tsx 를 주제에 맞게 재구성 (필요한 블록만 import) · Header/Footer · layout.tsx metadata'],
-  ['데이터 연결', 'data/ 자산 + public/data/ + 당일 받은 공공데이터'],
-  ['PROGRESS.md', '단계마다 현재 상태/막힌 부분 갱신 (세션 인수인계)'],
-];
 
 export default function Home() {
   return (
@@ -60,25 +52,6 @@ export default function Home() {
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
           <UserInfoForm />
           <MapPanel />
-        </div>
-      </section>
-
-      {/* 다음 단계 안내 */}
-      <section id="section-2" className="mx-auto max-w-container px-4 pb-16">
-        <div className="rounded-krds-lg border border-gray-10 bg-gray-5 p-6 md:p-8">
-          <Title size="m" color="gray-90">다음 단계 (CLAUDE.md 워크플로우)</Title>
-          <ol className="mt-4 space-y-3">
-            {NEXT_STEPS.map(([k, v], i) => (
-              <li key={k} className="flex items-start gap-3">
-                <span className="mt-0.5 grid h-6 w-6 flex-none place-items-center rounded-full bg-primary text-label-s font-bold text-white">
-                  {i + 1}
-                </span>
-                <Body size="m" color="gray-80">
-                  <strong className="text-gray-90">{k}</strong> — {v}
-                </Body>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
     </>
