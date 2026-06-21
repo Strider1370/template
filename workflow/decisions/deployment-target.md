@@ -4,7 +4,7 @@
 > Stage 00(intake.yaml에 반영)·05(구현)·09(시연 매체)·12(패키지/배포)에서 이 문서를 기준으로 한다.
 
 ## 결정
-- **배포**: Vercel/Netlify 아님. **사용자 보유 AWS 클라우드 서버에 https로 직접 배포.**
+- **배포**: **사용자 보유 AWS 클라우드 서버에 https로 직접 배포.** (외부 호스팅 안 씀)
 - **기본 산출물**: **네이티브 안드로이드 APK** (Capacitor WebView 래퍼, `server.url = 배포 https URL`).
 - **폴백**: **PWA** — APK 세팅/빌드가 막힐 때만. (키트 PWA 자산 이미 존재: `web/app/manifest.ts`·아이콘)
 
@@ -12,7 +12,7 @@
 사용자가 운영 중인 AWS 서버가 있어 자체 호스팅 선호. "진짜 앱처럼" 보이기 위해 APK를 기본으로.
 → https 배포가 전제되면 APK도 견고해진다(위치 secure context 자동·USB/터널 의존 제거 — 레시피 §6).
 
-## AWS https 배포에 필요한 것 (Vercel과 다른 점)
+## AWS https 배포에 필요한 것
 > 이 앱은 `/api/*`가 있어 **정적 export 불가** → Node 런타임에서 `next start`가 돌아야 한다.
 - [ ] **도메인 + DNS** A레코드 → 서버 공인 IP (Route53 또는 임의 DNS)
 - [ ] **TLS 인증서** — nginx + Let's Encrypt(certbot) 또는 ALB+ACM. (APK·위치·카카오 모두 https 필수)

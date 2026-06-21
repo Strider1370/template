@@ -32,7 +32,7 @@
 ## 산출물 형태 (고정 제약)
 - **기본 산출물은 웹앱. 모바일 반응형 레이아웃은 모든 주제에서 필수**로 디자인한다(폰 폭에서 안 깨지게).
 - 모바일성이 핵심인 주제면 **위치(`navigator.geolocation`)·알림**을 추가한다(필수 아님 — 주제가 쓰면).
-- **제출/시연 기본(사용자 결정 — `workflow/decisions/deployment-target.md`)**: **자체 AWS 서버 https 배포(`https://projectamo.co.kr`) + 네이티브 APK가 기본.** APK는 서버에서 빌드, USB+scrcpy 미러링 시연(무선 폴백). **PWA는 APK 안 될 때 폴백.** Vercel 등 외부 호스팅은 쓰지 않는다.
+- **제출/시연 기본(사용자 결정 — `workflow/decisions/deployment-target.md`)**: **자체 AWS 서버 https 배포(`https://projectamo.co.kr`) + 네이티브 APK가 기본.** APK는 서버에서 빌드, USB+scrcpy 미러링 시연(무선 폴백). **PWA는 APK 안 될 때 폴백.** 외부 호스팅은 쓰지 않는다(자체 서버 운영).
 - **전체 절차·명령 → `docs/deploy-runbook.md`(C절 대회 당일).** APK 빌드 함정·재빌드 규칙 → `docs/android-apk-recipe.md`. 모바일 개요 → `docs/mobile-webview-target.md`.
 
 ## 운영 모드 (`state.yaml.workflowMode`)
