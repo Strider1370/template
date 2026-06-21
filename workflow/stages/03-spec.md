@@ -23,6 +23,7 @@
 - **화면 입출력 명시**: Solution(§7)에 **보여주는 페이지의 입력 요소(필드·컨트롤)와 출력 요소(결과 표시)를 구체적으로 나열**한다(추상 흐름 X). 데모 시나리오(§8)·Wow Moment(§9)와 일치. (가이드 `docs/AI_Hackathon_Operating_System.md §6.6`)
 - "4시간 현실성" 헤딩에서 범위가 과한지 판정하고, 과하면 범위 밖으로 옮긴다.
 - **데모 형태 결정(모바일 여부)**: 여기서 **위치·알림 등 모바일 기능을 데모에 넣을지 결정·명시**하고, 데모 시나리오(§8)·Wow Moment(§9)에 반영한다(반응형은 기본 전제). **배포·시연 형태는 이미 결정됨 = 자체 AWS https 배포 + 네이티브 APK 미러링이 기본**(`workflow/decisions/deployment-target.md`, 절차 `docs/deploy-runbook.md`). 구현 작업화는 Stage 04 plan.
+- **(조건부) 음성/실시간 대화 입력 결정**: 말로 양식 채우기·어르신 자연어 입력·단계별 자격대화 등 **음성 입력을 데모에 넣을지** 여기서 정한다. **넣기로 하면 spec(§7 입출력)에 음성 흐름을 명시하고 → Stage 04·05에서 `docs/voice-realtime-notes.md`를 참조·적용**(모델 `gpt-realtime-2` low·WebRTC·semantic VAD·APK 마이크 권한·판정은 코드). 안 쓰면 이 문서는 건너뛴다.
 
 spec.md 16헤딩(정확히):
 `## 1. Answer First` · `## 2. Problem` · `## 3. 최종 Insight` · `## 4. JTBD` · `## 5. AI Leverage` · `## 6. Differentiation` · `## 7. Solution` · `## 8. 데모 시나리오` · `## 9. Wow Moment` · `## 10. Impact` · `## 11. Credibility` · `## 12. Limitation` · `## 13. Guardrail` · `## 14. Closing Message` · `## 15. 범위 밖` · `## 16. 4시간 현실성`
