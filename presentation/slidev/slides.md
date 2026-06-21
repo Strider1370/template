@@ -41,7 +41,7 @@ glowSeed: 285
 glow: left
 slideId: "slide-02"
 semanticLayout: "problem-flow"
-durationSeconds: 35
+durationSeconds: 30
 impl: "implemented"
 ---
 
@@ -85,7 +85,7 @@ glowSeed: 286
 glow: right
 slideId: "slide-03"
 semanticLayout: "contrast"
-durationSeconds: 35
+durationSeconds: 32
 impl: "implemented"
 ---
 
@@ -126,22 +126,22 @@ impl: "implemented"
 
 ---
 class: px-14 py-10
-title: "받은 문서 → 첫 걸음 (라이브 데모)"
+title: "받은 문서 → 첫 걸음 (폰 앱 라이브)"
 glowSeed: 287
 glow: center
 slideId: "slide-04"
 semanticLayout: "demo-callout"
-durationSeconds: 130
+durationSeconds: 123
 impl: "implemented"
 ---
 
-<h1 data-addr="slide-04.content.title">받은 문서 → 첫 걸음 (라이브 데모)</h1>
+<h1 data-addr="slide-04.content.title">받은 문서 → 첫 걸음 (폰 앱 라이브)</h1>
 
 <div mt-6 grid grid-cols-2 gap-8 items-center>
 
 <div>
 
-<img src="/assets/wow-guide-card.png" alt="데모 화면" class="rounded-xl shadow-2xl mx-auto" data-addr="slide-04.assets.image" data-asset-status="real">
+<img src="/assets/wow-guide-card.png" alt="데모 화면" class="rounded-xl shadow-2xl mx-auto max-h-[48vh] w-auto object-contain" data-addr="slide-04.assets.image" data-asset-status="real">
 
 </div>
 
@@ -150,7 +150,7 @@ impl: "implemented"
 <v-clicks>
 
 <div data-addr="slide-04.content.callout.0" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
-<div flex items-center gap-2><div i-carbon:checkmark text-cyan-300 text-xl shrink-0 /><span font-medium text-lg>무서운 한자어 문서가 3초 만에 [뜻·기한·첫걸음·관할·출처] 카드로 바뀝니다.</span></div>
+<div flex items-center gap-2><div i-carbon:checkmark text-cyan-300 text-xl shrink-0 /><span font-medium text-lg>폰 앱에서 사진을 찍어 올리면 — 3초 만에 [뜻·기한·첫걸음·관할·출처] 카드로.</span></div>
 </div>
 
 </v-clicks>
@@ -160,14 +160,13 @@ impl: "implemented"
 </div>
 
 <div mt-4 text-sm opacity-70 data-addr="slide-04.content.points">
-- 기한 '2주(14일) 이내' · 첫 걸음 '그 법원에 이의신청서 제출'
-- 각 안내에 출처 배지 — 법제처·법원의 진짜 공식 링크 (AI가 지어낸 게 아니라 검증된 출처에서만 인용)
-- 근거 없으면 '공식 확인 필요'라고 솔직히 말한다
-- 즉석에서 미리 안 짜둔 입력(건강보험 체납)도 같은 엔진이 처리 — 대본이 아니다
+- 기한 '2주 이내' · 첫 걸음 '그 법원에 이의신청서 제출'
+- 각 안내에 출처 배지 — 법제처·법원 진짜 공식 링크 (AI 환각 아님, 검증된 출처만)
+- 즉석 입력(건강보험 체납)도 같은 엔진 — 대본 아님
 </div>
 
 <!--
-말로 설명하는 대신 직접 보여드립니다. 지급명령을 붙여넣고 분석 → 카드. 핵심은 출처 배지(진짜 공식 링크)입니다. 즉석 입력으로 대본이 아님을 보입니다. 라이브가 흔들리면 이 캡처(run1-03-wow.png)로 진행.
+말로 설명하는 대신 폰 앱에서 직접 보여드립니다. 지급명령을 찍어 올리거나 붙여넣고 분석 → 카드. 핵심은 출처 배지(진짜 공식 링크)입니다. 즉석 입력으로 대본이 아님을 보입니다. 라이브가 흔들리면 이 캡처(run1-03-wow.png)로 진행.
 -->
 
 ---
@@ -197,9 +196,60 @@ impl: "implemented"
 
 ---
 class: px-14 py-10
+title: "웹이 아니라, 폰에 설치되는 앱"
+glowSeed: 292
+glow: top
+slideId: "slide-09"
+semanticLayout: "demo-callout"
+durationSeconds: 18
+impl: "implemented"
+---
+
+<h1 data-addr="slide-09.content.title">웹이 아니라, 폰에 설치되는 앱</h1>
+
+<div mt-6 grid grid-cols-2 gap-8 items-center>
+
+<div>
+
+<img src="/assets/app-home.png" alt="데모 화면" class="rounded-xl shadow-2xl mx-auto max-h-[48vh] w-auto object-contain" data-addr="slide-09.assets.image" data-asset-status="real">
+
+</div>
+
+<div grid gap-3>
+
+<v-clicks>
+
+<div data-addr="slide-09.content.callout.0" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-cyan-300 text-xl shrink-0 /><span font-medium text-lg>PWA 계획을 넘어 — 실제 네이티브 APK로 동작 (시연용 빌드)</span></div>
+</div>
+
+<div data-addr="slide-09.content.callout.1" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-amber-300 text-xl shrink-0 /><span font-medium text-lg>사진 찍어 올리면 분석 → 결과 알림</span></div>
+</div>
+
+<div data-addr="slide-09.content.callout.2" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-green-300 text-xl shrink-0 /><span font-medium text-lg>위치는 관할(주소·사건) 기준 — 맞는 곳만</span></div>
+</div>
+
+<div data-addr="slide-09.content.callout.3" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-sky-300 text-xl shrink-0 /><span font-medium text-lg>입력 우선 모바일 UI · 한 손 사용</span></div>
+</div>
+
+</v-clicks>
+
+</div>
+
+</div>
+
+<!--
+그리고 이건 웹페이지가 아니라 폰에 설치되는 네이티브 앱입니다(시연용 디버그 빌드). 사진 입력·결과 알림·관할 기준 위치까지 — 모바일 온램프 컨셉을 실제 앱으로 구현했습니다.
+-->
+
+---
+class: px-14 py-10
 title: "똑똑함이 아니라 정직함"
 glowSeed: 289
-glow: top
+glow: full
 slideId: "slide-06"
 semanticLayout: "architecture"
 durationSeconds: 25
@@ -217,7 +267,7 @@ impl: "implemented"
     <div px-5 py-4 flex flex-col gap-1>
       <div flex items-center gap-3 py-1 data-addr="slide-06.content.steps.0"><div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="blue-800/60" text-blue-100 text-sm font-bold>1</div><div><div font-medium text-lg>멀티모달 AI가 받은 임의 문서를 해독</div></div></div>
       <div flex items-center gap-3 py-1 data-addr="slide-06.content.steps.1"><div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="blue-800/60" text-blue-100 text-sm font-bold>2</div><div><div font-medium text-lg>시민의 말을 행정 개념으로 옮김 (검색·규칙 불가)</div></div></div>
-      <div flex items-center gap-3 py-1 data-addr="slide-06.content.steps.2"><div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="blue-800/60" text-blue-100 text-sm font-bold>3</div><div><div font-medium text-lg>답은 검증된 공식 출처 안에서만 인용 (화이트리스트)</div></div></div>
+      <div flex items-center gap-3 py-1 data-addr="slide-06.content.steps.2"><div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="blue-800/60" text-blue-100 text-sm font-bold>3</div><div><div font-medium text-lg>답은 검증된 출처에서만 인용, 처리처·관할은 결정적 규칙으로 보정 (환각·오분류 차단)</div></div></div>
     </div>
   </div>
 </div>
@@ -230,17 +280,17 @@ impl: "implemented"
 </div>
 
 <!--
-AI가 꼭 필요한 두 가지 — 임의 문서 해독, 시민 언어 변환. 단 출처는 검증된 코퍼스 안에서만 인용해 환각을 구조적으로 막습니다.
+AI가 꼭 필요한 두 가지 — 임의 문서 해독, 시민 언어 변환. 단 출처는 검증된 코퍼스 안에서만 인용하고, 처리 채널·관할 기관은 결정적 규칙으로 보정해(예: 자동차세→시군구청+위택스) AI가 틀려도 엉뚱한 안내를 구조적으로 막습니다.
 -->
 
 ---
 class: px-14 py-10
 title: "정직한 범위"
 glowSeed: 290
-glow: full
+glow: left
 slideId: "slide-07"
 semanticLayout: "limitation-guardrail"
-durationSeconds: 25
+durationSeconds: 22
 impl: "implemented"
 ---
 
@@ -289,7 +339,7 @@ impl: "implemented"
 layout: center
 title: "정부24는 '신청 버튼'을 줍니다."
 glowSeed: 291
-glow: left
+glow: right
 slideId: "slide-08"
 semanticLayout: "closing"
 durationSeconds: 10
@@ -308,7 +358,7 @@ impl: "implemented"
 
 <div class="mt-4 flex flex-wrap gap-2 justify-center" data-addr="slide-08.content.tags"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-xs opacity-75">쉬운 말</div><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-xs opacity-75">당장 첫 걸음</div><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-xs opacity-75">공식 출처</div></div>
 
-<div class="mt-8" data-addr="slide-08.content.contact"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80"><span class="i-carbon:logo-github" /> 데모: 지급명령·전입신고·지원금 + 즉석 입력</div></div>
+<div class="mt-8" data-addr="slide-08.content.contact"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80"><span class="i-carbon:logo-github" /> 데모: 지급명령·전입신고·자동차세 + 폰 네이티브 앱 + 즉석 입력</div></div>
 
 <!--
 오프닝과 수렴하는 마지막 문장입니다(concept.md 그대로).

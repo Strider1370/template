@@ -52,6 +52,13 @@
       "demoPath": "web/components/NearbyOffices.tsx"
     },
     {
+      "id": "domain-routing",
+      "name": "대분류 결정적 라우팅 (매칭 안전망)",
+      "status": "implemented",
+      "notes": "web/lib/domains.ts — 입력+AI출력 키워드로 대분류 매핑 → 관청 분류·처리 공식 URL을 결정적으로 주입(AI 오분류 교정: 자동차세→시군구청+위택스). 사안별 locationMode(관할고정 vs 어디서나)로 위치 안내 분기 — 관할 고정·온라인 처리는 최근접 지도 숨김(concept '관할은 주소·사건 기준' 준수). 공식 URL 9개 실접속 검증. 라이브 검증.",
+      "demoPath": "web/lib/domains.ts"
+    },
+    {
       "id": "vision-photo",
       "name": "사진 입력(멀티모달 비전)",
       "status": "implemented",
@@ -88,17 +95,17 @@
     },
     {
       "id": "native-apk",
-      "name": "네이티브 APK",
-      "status": "dropped",
-      "notes": "계획대로 스킵(배포 URL+PWA로 충족).",
-      "demoPath": null
+      "name": "네이티브 APK (Capacitor)",
+      "status": "implemented",
+      "notes": "Capacitor 래핑(web/android)으로 디버그 APK 빌드·실기기 설치·시연 완료. 위치(@capacitor/geolocation)·알림(@capacitor/local-notifications) 네이티브 플러그인 포함. 현재 server.url=라이브 서버(USB adb reverse 터널) — 배포 https로 바꾸면 케이블 없이 독립 동작. 빌드 절차·함정: docs/android-apk-build.md.",
+      "demoPath": "web/android"
     },
     {
       "id": "notifications",
-      "name": "알림/푸시",
-      "status": "dropped",
-      "notes": "spec 범위 밖.",
-      "demoPath": null
+      "name": "로컬 알림 (분석 완료)",
+      "status": "implemented",
+      "notes": "@capacitor/local-notifications — 네이티브 앱에서 '분석하기' 결과가 나오면 로컬 알림. 웹/PWA는 no-op. 원격 푸시(FCM)는 아님(서버 불필요한 로컬 알림).",
+      "demoPath": "web/app/page.tsx"
     }
   ]
 }

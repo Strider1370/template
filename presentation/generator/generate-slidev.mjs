@@ -294,7 +294,8 @@ function imageBlock(assets, label, addr) {
   else if (a && typeof a === "object") { src = a.src; status = a.status || "real"; }
   const placed = status === "real" ? placeAsset(src) : null;
   if (placed) {
-    return `<img src="${placed}" alt="${label}" class="rounded-xl shadow-2xl mx-auto"${da(addr)} data-asset-status="real">`;
+    // max-h + object-contain: 세로(폰) 캡처가 슬롯을 넘쳐 본문을 밀어내지 않게. 가로 이미지엔 영향 없음.
+    return `<img src="${placed}" alt="${label}" class="rounded-xl shadow-2xl mx-auto max-h-[48vh] w-auto object-contain"${da(addr)} data-asset-status="real">`;
   }
   // 실제 스크린샷이 없을 때의 자리 표시. BaizeAI 엔 데모 스크린샷 패턴이 없어 white/5 중립 패널로 일관성만 맞춘 추정 스타일.
   const cap = src ? `<div text-xs opacity-40 mt-2 break-all>${src}</div>` : "";
