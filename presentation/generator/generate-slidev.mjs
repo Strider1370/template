@@ -24,9 +24,9 @@
  *  - 모든 슬라이드에 nav 표시용 title: 부여(없으면 "undefined" 로 떠서).
  *  - 입력(deck.json) 없으면 안내 후 exit 0 (throw 금지).
  */
-import { readFileSync, existsSync, writeFileSync } from "node:fs";
+import { readFileSync, existsSync, writeFileSync, copyFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { dirname, resolve, basename } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const presentationRoot = resolve(__dirname, "..");
@@ -34,6 +34,29 @@ const slidevDir = resolve(presentationRoot, "slidev");
 const deckPath = resolve(presentationRoot, "deck.json");
 const registryPath = resolve(__dirname, "layout-registry.json");
 const outPath = resolve(slidevDir, "slides.md");
+const repoRoot = resolve(presentationRoot, "..");
+
+// 자산 자동 배치: deck 의 src 를 여러 후보 위치에서 찾아 slidev/public/assets/ 로 복사하고
+// 런타임 경로("/assets/<파일명>")를 돌려준다. → deck 에 경로 한 줄만 적으면 어디 있든 임베드된다.
+// 후보: slidev/ · presentation/ · 레포 루트(예: "demo/run1-03-wow.png"). 못 찾으면 null(플레이스홀더).
+function placeAsset(src) {
+  if (!src) return null;
+  for (const base of [slidevDir, presentationRoot, repoRoot]) {
+    const abs = resolve(base, src);
+    if (existsSync(abs)) {
+      const name = basename(src);
+      const destDir = resolve(slidevDir, "public", "assets");
+      try {
+        mkdirSync(destDir, { recursive: true });
+        copyFileSync(abs, resolve(destDir, name));
+        return "/assets/" + name;
+      } catch {
+        return null;
+      }
+    }
+  }
+  return null;
+}
 
 const BANNER = "[generate-slidev]";
 
@@ -269,8 +292,9 @@ function imageBlock(assets, label, addr) {
   let src = null, status = "real";
   if (typeof a === "string") src = a;
   else if (a && typeof a === "object") { src = a.src; status = a.status || "real"; }
-  if (src && status === "real" && existsSync(resolve(slidevDir, src))) {
-    return `<img src="${src}" alt="${label}" class="rounded-xl shadow-2xl mx-auto"${da(addr)} data-asset-status="real">`;
+  const placed = status === "real" ? placeAsset(src) : null;
+  if (placed) {
+    return `<img src="${placed}" alt="${label}" class="rounded-xl shadow-2xl mx-auto"${da(addr)} data-asset-status="real">`;
   }
   // 실제 스크린샷이 없을 때의 자리 표시. BaizeAI 엔 데모 스크린샷 패턴이 없어 white/5 중립 패널로 일관성만 맞춘 추정 스타일.
   const cap = src ? `<div text-xs opacity-40 mt-2 break-all>${src}</div>` : "";

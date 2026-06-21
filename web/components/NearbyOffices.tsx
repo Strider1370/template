@@ -71,6 +71,12 @@ export function NearbyOffices({ officeCategory }: { officeCategory: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, places, selected]);
 
+  // 분석 결과가 뜨면(=이 컴포넌트 마운트) 현재 위치 검색을 자동 실행한다.
+  useEffect(() => {
+    useMyLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function renderMap(kakao: any, center: { lat: number; lng: number }, list: Place[], showHere: boolean) {
     if (!mapRef.current) return;
     mapRef.current.innerHTML = ''; // 이전 지도/오버레이(라벨) 잔존 제거 후 새로 그린다.
@@ -151,7 +157,7 @@ export function NearbyOffices({ officeCategory }: { officeCategory: string }) {
       const options: Record<string, unknown> = { size: 5 };
       if (opts.coord) {
         options.location = new kakao.maps.LatLng(opts.coord.lat, opts.coord.lng);
-        options.radius = 5000;
+        options.radius = 20000; // 카카오 최대 20km (군 단위는 관청이 멀어 5km로는 0건)
         options.sort = 'distance';
       }
       // 후보 키워드를 순서대로 시도 → 첫 결과가 나오면 채택(시군구청→구청→시청→군청 식).
@@ -160,6 +166,14 @@ export function NearbyOffices({ officeCategory }: { officeCategory: string }) {
         const q = opts.region ? `${opts.region} ${kw}` : kw;
         data = await runSearch(kakao, places, q, options);
         if (data.length) break;
+      }
+      // 좌표 검색인데 20km 내 0건이면 → 반경 제거하고 전국에서 가장 가까운 관청(농촌 거리 대응).
+      if (!data.length && opts.coord) {
+        delete options.radius;
+        for (const kw of candidates) {
+          data = await runSearch(kakao, places, kw, options);
+          if (data.length) break;
+        }
       }
       if (!data.length) {
         setStatus('error');
@@ -187,11 +201,21 @@ export function NearbyOffices({ officeCategory }: { officeCategory: string }) {
   }
 
   function useMyLocation() {
+    setStatus('loading');
+    // 네이티브 앱(Capacitor)에서는 navigator.geolocation 이 http(비보안 출처)라 막힌다.
+    // → Capacitor Geolocation 플러그인(네이티브 위치)으로 우회. 웹/PWA 는 기존 navigator 그대로.
+    const cap = (window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor;
+    if (cap?.isNativePlatform?.()) {
+      import('@capacitor/geolocation')
+        .then(({ Geolocation }) => Geolocation.getCurrentPosition({ enableHighAccuracy: true, timeout: 8000 }))
+        .then((pos) => search({ coord: { lat: pos.coords.latitude, lng: pos.coords.longitude } }))
+        .catch(() => setStatus('denied'));
+      return;
+    }
     if (!navigator.geolocation) {
       setStatus('denied');
       return;
     }
-    setStatus('loading');
     navigator.geolocation.getCurrentPosition(
       (pos) => search({ coord: { lat: pos.coords.latitude, lng: pos.coords.longitude } }),
       () => setStatus('denied'),

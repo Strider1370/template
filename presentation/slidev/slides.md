@@ -7,7 +7,7 @@ highlighter: shiki
 css: unocss
 colorSchema: dark
 transition: fade-out
-title: "샘플 발표 (레이아웃 데모)"
+title: "첫걸음 — 어려운 행정, 쉬운 첫 걸음"
 lang: ko
 lineNumbers: false
 mdc: true
@@ -16,104 +16,132 @@ glowSeed: 284
 glow: full
 slideId: "slide-01"
 semanticLayout: "hero"
-durationSeconds: 30
+durationSeconds: 25
 impl: "implemented"
 ---
 <div class="flex flex-col items-center justify-center text-center">
 
-<div class="text-cyan-300 tracking-widest text-sm font-semibold uppercase opacity-90" data-addr="slide-01.content.eyebrow">프로젝트 분야</div>
+<div class="text-cyan-300 tracking-widest text-sm font-semibold uppercase opacity-90" data-addr="slide-01.content.eyebrow">행정 안내 도우미 · 첫걸음</div>
 
-<h1 data-addr="slide-01.content.title">한 줄 결론을 여기에</h1>
+<h1 data-addr="slide-01.content.title">어려운 행정, 쉬운 첫 걸음</h1>
 
-<div class="mt-4 max-w-3xl opacity-80 text-lg" data-addr="slide-01.content.subtitle">누구에게 · 무엇을 · 어떻게 해결하는지 한 문장으로</div>
+<div class="mt-4 max-w-3xl opacity-80 text-lg" data-addr="slide-01.content.subtitle">받은 문서나 막막한 상황을 넣으면 — 무슨 뜻인지·언제까지·당장 뭘 하면 되는지를, 공식 출처와 함께</div>
 </div>
 
-<div v-click class="mt-8" data-addr="slide-01.content.footnote"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80">근거·데이터 출처를 여기에</div></div>
+<div v-click class="mt-8" data-addr="slide-01.content.footnote"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80">문서·고지서·지원금·민원까지</div></div>
 
 <!--
-발표 첫 문장입니다. 결론(결과)부터 한 문장으로 말합니다. (이 파일은 레이아웃 데모용 placeholder이며, 새 주제로 내용을 갈아끼웁니다.)
+행정은 평생 몇 번 안 합니다. 그런데 막상 닥치면 겁부터 납니다. 첫걸음은 받은 문서·상황을 쉬운 말과 당장 할 첫 걸음으로, 공식 출처와 함께 바꿔줍니다.
 -->
 
 ---
 class: px-14 py-10
-title: "기존 방식 vs 우리 접근"
+title: "정보가 없어서가 아니라, 막막함과 불신"
 glowSeed: 285
 glow: left
 slideId: "slide-02"
-semanticLayout: "contrast"
-durationSeconds: 50
+semanticLayout: "problem-flow"
+durationSeconds: 35
 impl: "implemented"
 ---
 
-<h1 data-addr="slide-02.content.title">기존 방식 vs 우리 접근</h1>
+<h1 data-addr="slide-02.content.title">정보가 없어서가 아니라, 막막함과 불신</h1>
 
-<div mt-8 grid grid-cols-2 gap-6 items-start>
-  <div data-addr="slide-02.content.left" border="2 solid red-800" bg="red-800/20" rounded-lg overflow-hidden>
-    <div bg="red-800/40" px-5 py-3 flex items-center>
-      <div i-carbon:warning-alt text-red-300 text-2xl mr-2 shrink-0 />
-      <span font-bold text-xl>기존 방식</span>
+<div mt-8>
+  <div data-addr="slide-02.content.items" border="2 solid amber-800" bg="amber-800/20" rounded-lg overflow-hidden>
+    <div bg="amber-800/40" px-5 py-3 flex items-center>
+      <div i-carbon:warning-alt text-amber-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>문제</span>
     </div>
     <div px-5 py-4 flex flex-col gap-1>
-      <div flex items-center gap-2 py-1 data-addr="slide-02.content.left.0">
-        <div i-carbon:close text-red-300 text-xl shrink-0 />
-        <span text-lg>기존 한계 1</span>
+      <div flex items-center gap-2 py-1 data-addr="slide-02.content.items.0">
+        <div i-carbon:warning-alt text-amber-300 text-xl shrink-0 />
+        <span text-lg>27살 민우 씨, 법원에서 '지급명령'을 받는다</span>
       </div>
-      <div flex items-center gap-2 py-1 data-addr="slide-02.content.left.1">
-        <div i-carbon:close text-red-300 text-xl shrink-0 />
-        <span text-lg>기존 한계 2</span>
+      <div flex items-center gap-2 py-1 data-addr="slide-02.content.items.1">
+        <div i-carbon:warning-alt text-amber-300 text-xl shrink-0 />
+        <span text-lg>'송달·이의신청·청구이의' — 무슨 말인지 모른다</span>
       </div>
-      <div flex items-center gap-2 py-1 data-addr="slide-02.content.left.2">
-        <div i-carbon:close text-red-300 text-xl shrink-0 />
-        <span text-lg>기존 한계 3</span>
+      <div flex items-center gap-2 py-1 data-addr="slide-02.content.items.2">
+        <div i-carbon:warning-alt text-amber-300 text-xl shrink-0 />
+        <span text-lg>2주 안에 대응 안 하면 확정되는 것도 모른다</span>
       </div>
-    </div>
-  </div>
-  <div v-click data-addr="slide-02.content.right" border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
-    <div bg="green-800/40" px-5 py-3 flex items-center>
-      <div i-carbon:idea text-green-300 text-2xl mr-2 shrink-0 />
-      <span font-bold text-xl>우리 접근</span>
-    </div>
-    <div px-5 py-4 flex flex-col gap-1>
-      <div flex items-center gap-2 py-1 data-addr="slide-02.content.right.0">
-        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>개선점 1</span>
-      </div>
-      <div flex items-center gap-2 py-1 data-addr="slide-02.content.right.1">
-        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>개선점 2</span>
-      </div>
-      <div flex items-center gap-2 py-1 data-addr="slide-02.content.right.2">
-        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>개선점 3</span>
+      <div flex items-center gap-2 py-1 data-addr="slide-02.content.items.3">
+        <div i-carbon:warning-alt text-amber-300 text-xl shrink-0 />
+        <span text-lg>검색하면 블로그가 쏟아지는데, '내가 뭘 해야 하는지'와 '이게 맞는지'는 안 나온다</span>
       </div>
     </div>
   </div>
 </div>
 
 <!--
-문제를 다르게 보는 관점을 좌우 대비로 보여줍니다.
+정부24도 있습니다. 문제는 정보 부족이 아니라 첫 걸음 앞의 막막함과, 뭐가 맞는지 모르는 불신입니다.
 -->
 
 ---
 class: px-14 py-10
-title: "핵심 데모 장면"
+title: "관점을 뒤집다 — '받는 방향'"
 glowSeed: 286
 glow: right
 slideId: "slide-03"
-semanticLayout: "demo-callout"
-durationSeconds: 90
+semanticLayout: "contrast"
+durationSeconds: 35
 impl: "implemented"
 ---
 
-<h1 data-addr="slide-03.content.title">핵심 데모 장면</h1>
+<h1 data-addr="slide-03.content.title">관점을 뒤집다 — '받는 방향'</h1>
+
+<div text-xl opacity-70 mt-1 data-addr="slide-03.content.lead">쉬운 말 · 당장 첫 걸음 · 출처, 셋을 한 화면에.</div>
+
+<div mt-8 grid grid-cols-2 gap-6 items-start>
+  <div data-addr="slide-03.content.left" border="2 solid red-800" bg="red-800/20" rounded-lg overflow-hidden>
+    <div bg="red-800/40" px-5 py-3 flex items-center>
+      <div i-carbon:warning-alt text-red-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>정부24</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+      <div flex items-center gap-2 py-1 data-addr="slide-03.content.left.0">
+        <div i-carbon:close text-red-300 text-xl shrink-0 />
+        <span text-lg>내가 '신청할 것'을 돕는다 (미는 방향, 용어 아는 사람용)</span>
+      </div>
+    </div>
+  </div>
+  <div v-click data-addr="slide-03.content.right" border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
+    <div bg="green-800/40" px-5 py-3 flex items-center>
+      <div i-carbon:idea text-green-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>첫걸음</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+      <div flex items-center gap-2 py-1 data-addr="slide-03.content.right.0">
+        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
+        <span text-lg>내가 '받은 것'에서 출발한다 (받는 방향, 용어 모르는 사람용)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+정부24는 신청을 돕습니다. 우리는 받은 문서에서 출발합니다. 그리고 쉬운 말·첫 걸음·출처를 한 화면에 묶었습니다 — 정부24도 ChatGPT도 안 하는 조합입니다.
+-->
+
+---
+class: px-14 py-10
+title: "받은 문서 → 첫 걸음 (라이브 데모)"
+glowSeed: 287
+glow: center
+slideId: "slide-04"
+semanticLayout: "demo-callout"
+durationSeconds: 130
+impl: "implemented"
+---
+
+<h1 data-addr="slide-04.content.title">받은 문서 → 첫 걸음 (라이브 데모)</h1>
 
 <div mt-6 grid grid-cols-2 gap-8 items-center>
 
 <div>
 
-<div border="2 solid white/10" bg="white/5" backdrop-blur-sm rounded-xl grid place-items-center text-center class="h-[55vh]" data-addr="slide-03.assets.image" data-asset-status="placeholder">
-  <div><div i-carbon:image text-6xl opacity-40 mx-auto /><div opacity-60 mt-2>데모 화면</div><div text-xs opacity-40 mt-2 break-all>../output/captures/demo-main.png</div></div>
-</div>
+<img src="/assets/wow-guide-card.png" alt="데모 화면" class="rounded-xl shadow-2xl mx-auto" data-addr="slide-04.assets.image" data-asset-status="real">
 
 </div>
 
@@ -121,16 +149,8 @@ impl: "implemented"
 
 <v-clicks>
 
-<div data-addr="slide-03.content.callout.0" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
-<div flex items-center gap-2><div i-carbon:checkmark text-cyan-300 text-xl shrink-0 /><span font-medium text-lg>데모 포인트 1</span></div>
-</div>
-
-<div data-addr="slide-03.content.callout.1" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
-<div flex items-center gap-2><div i-carbon:checkmark text-amber-300 text-xl shrink-0 /><span font-medium text-lg>데모 포인트 2</span></div>
-</div>
-
-<div data-addr="slide-03.content.callout.2" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
-<div flex items-center gap-2><div i-carbon:checkmark text-green-300 text-xl shrink-0 /><span font-medium text-lg>데모 포인트 3</span></div>
+<div data-addr="slide-04.content.callout.0" border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
+<div flex items-center gap-2><div i-carbon:checkmark text-cyan-300 text-xl shrink-0 /><span font-medium text-lg>무서운 한자어 문서가 3초 만에 [뜻·기한·첫걸음·관할·출처] 카드로 바뀝니다.</span></div>
 </div>
 
 </v-clicks>
@@ -139,122 +159,157 @@ impl: "implemented"
 
 </div>
 
-<div opacity-50 text-xs data-addr="slide-03.content.caption">데모 화면 캡처 자리</div>
+<div mt-4 text-sm opacity-70 data-addr="slide-04.content.points">
+- 기한 '2주(14일) 이내' · 첫 걸음 '그 법원에 이의신청서 제출'
+- 각 안내에 출처 배지 — 법제처·법원의 진짜 공식 링크 (AI가 지어낸 게 아니라 검증된 출처에서만 인용)
+- 근거 없으면 '공식 확인 필요'라고 솔직히 말한다
+- 즉석에서 미리 안 짜둔 입력(건강보험 체납)도 같은 엔진이 처리 — 대본이 아니다
+</div>
 
 <!--
-실제 동작을 보여주는 부분입니다. 발표 시간의 절반 이상을 여기에 씁니다.
+말로 설명하는 대신 직접 보여드립니다. 지급명령을 붙여넣고 분석 → 카드. 핵심은 출처 배지(진짜 공식 링크)입니다. 즉석 입력으로 대본이 아님을 보입니다. 라이브가 흔들리면 이 캡처(run1-03-wow.png)로 진행.
 -->
 
 ---
 layout: center
-title: "핵심 지표"
-glowSeed: 287
-glow: center
-slideId: "slide-04"
+title: "공식 출처로 검증되는 공공·복지 서비스"
+glowSeed: 288
+glow: bottom
+slideId: "slide-05"
 semanticLayout: "big-number"
-durationSeconds: 40
+durationSeconds: 15
 impl: "implemented"
 ---
 
 <div class="text-center">
 
-<div class="opacity-70 tracking-wide" data-addr="slide-04.content.label">핵심 지표</div>
+<div class="opacity-70 tracking-wide" data-addr="slide-05.content.label">공식 출처로 검증되는 공공·복지 서비스</div>
 
-<div v-click class="my-3 text-7xl font-extrabold text-cyan-300 leading-none" data-addr="slide-04.content.number">00 → 00</div>
+<div v-click class="my-3 text-7xl font-extrabold text-cyan-300 leading-none" data-addr="slide-05.content.number">약 1.6만</div>
 
-<div class="mt-4 opacity-55 text-sm max-w-xl mx-auto" data-addr="slide-04.content.caption">측정 근거를 여기에 (표본·기준 명시)</div>
+<div class="mt-4 opacity-55 text-sm max-w-xl mx-auto" data-addr="slide-05.content.caption">정부24·복지로 공개 데이터를 근거로, 지원금·복지·민원까지 진짜 공식 URL로 인용</div>
 
 </div>
 
 <!--
-효과를 숫자 하나로 보여줍니다. 근거를 함께 말합니다.
+무서운 문서뿐 아니라 약 1만6천 건의 공공·복지 서비스에 대해서도 공식 출처로 안내합니다.
 -->
 
 ---
 class: px-14 py-10
-title: "한계와 안전장치"
-glowSeed: 288
-glow: bottom
-slideId: "slide-05"
-semanticLayout: "limitation-guardrail"
-durationSeconds: 50
-impl: "mocked"
+title: "똑똑함이 아니라 정직함"
+glowSeed: 289
+glow: top
+slideId: "slide-06"
+semanticLayout: "architecture"
+durationSeconds: 25
+impl: "implemented"
 ---
 
-<div class="absolute top-4 right-6 text-xs px-2 py-0.5 rounded-full border border-amber-400/40 bg-amber-400/10 text-amber-200">MOCKED</div>
+<h1 data-addr="slide-06.content.title">똑똑함이 아니라 정직함</h1>
 
-<h1 data-addr="slide-05.content.title">한계와 안전장치</h1>
+<div mt-8>
+  <div data-addr="slide-06.content.steps" border="2 solid blue-800" bg="blue-800/20" rounded-lg overflow-hidden>
+    <div bg="blue-800/40" px-5 py-3 flex items-center>
+      <div i-carbon:flow text-blue-300 text-2xl mr-2 shrink-0 />
+      <span font-bold text-xl>동작 흐름</span>
+    </div>
+    <div px-5 py-4 flex flex-col gap-1>
+      <div flex items-center gap-3 py-1 data-addr="slide-06.content.steps.0"><div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="blue-800/60" text-blue-100 text-sm font-bold>1</div><div><div font-medium text-lg>멀티모달 AI가 받은 임의 문서를 해독</div></div></div>
+      <div flex items-center gap-3 py-1 data-addr="slide-06.content.steps.1"><div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="blue-800/60" text-blue-100 text-sm font-bold>2</div><div><div font-medium text-lg>시민의 말을 행정 개념으로 옮김 (검색·규칙 불가)</div></div></div>
+      <div flex items-center gap-3 py-1 data-addr="slide-06.content.steps.2"><div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="blue-800/60" text-blue-100 text-sm font-bold>3</div><div><div font-medium text-lg>답은 검증된 공식 출처 안에서만 인용 (화이트리스트)</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div v-click mt-6 flex justify-center>
+  <div border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-6 py-3 flex items-center gap-3>
+    <div i-carbon:idea text-yellow-300 text-2xl shrink-0 />
+    <span text-lg><b>결과:</b> 그럴듯한 답이 아니라, 믿을 수 있는 안내</span>
+  </div>
+</div>
+
+<!--
+AI가 꼭 필요한 두 가지 — 임의 문서 해독, 시민 언어 변환. 단 출처는 검증된 코퍼스 안에서만 인용해 환각을 구조적으로 막습니다.
+-->
+
+---
+class: px-14 py-10
+title: "정직한 범위"
+glowSeed: 290
+glow: full
+slideId: "slide-07"
+semanticLayout: "limitation-guardrail"
+durationSeconds: 25
+impl: "implemented"
+---
+
+<h1 data-addr="slide-07.content.title">정직한 범위</h1>
 
 <div mt-8 grid grid-cols-2 gap-6 items-start>
-  <div data-addr="slide-05.content.limitations" border="2 solid amber-800" bg="amber-800/20" rounded-lg overflow-hidden>
+  <div data-addr="slide-07.content.limitations" border="2 solid amber-800" bg="amber-800/20" rounded-lg overflow-hidden>
     <div bg="amber-800/40" px-5 py-3 flex items-center>
       <div i-carbon:warning-alt text-amber-300 text-2xl mr-2 shrink-0 />
       <span font-bold text-xl>한계</span>
     </div>
     <div px-5 py-4 flex flex-col gap-1>
-      <div flex items-center gap-2 py-1 data-addr="slide-05.content.limitations.0">
+      <div flex items-center gap-2 py-1 data-addr="slide-07.content.limitations.0">
         <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
-        <span text-lg>한계 1</span>
+        <span text-lg>첫 걸음까지만 — 실제 신청·제출은 정부24로 핸드오프</span>
       </div>
-      <div flex items-center gap-2 py-1 data-addr="slide-05.content.limitations.1">
+      <div flex items-center gap-2 py-1 data-addr="slide-07.content.limitations.1">
         <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
-        <span text-lg>한계 2 (미구현/mocked)</span>
-      </div>
-      <div flex items-center gap-2 py-1 data-addr="slide-05.content.limitations.2">
-        <div i-carbon:dot-mark text-amber-300 text-xl shrink-0 />
-        <span text-lg>한계 3</span>
+        <span text-lg>법률 자문이 아님 (이해를 돕는 보조 도구)</span>
       </div>
     </div>
   </div>
-  <div v-click data-addr="slide-05.content.guardrails" border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
+  <div v-click data-addr="slide-07.content.guardrails" border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
     <div bg="green-800/40" px-5 py-3 flex items-center>
       <div i-carbon:shield-checkmark text-green-300 text-2xl mr-2 shrink-0 />
       <span font-bold text-xl>안전장치</span>
     </div>
     <div px-5 py-4 flex flex-col gap-1>
-      <div flex items-center gap-2 py-1 data-addr="slide-05.content.guardrails.0">
+      <div flex items-center gap-2 py-1 data-addr="slide-07.content.guardrails.0">
         <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>안전장치 1</span>
+        <span text-lg>근거 없으면 단정하지 않고 '공식 확인 필요'</span>
       </div>
-      <div flex items-center gap-2 py-1 data-addr="slide-05.content.guardrails.1">
+      <div flex items-center gap-2 py-1 data-addr="slide-07.content.guardrails.1">
         <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>안전장치 2</span>
-      </div>
-      <div flex items-center gap-2 py-1 data-addr="slide-05.content.guardrails.2">
-        <div i-carbon:checkmark text-green-300 text-xl shrink-0 />
-        <span text-lg>안전장치 3</span>
+        <span text-lg>출처는 화이트리스트에서만 — 환각 URL 차단 (데모 검증)</span>
       </div>
     </div>
   </div>
 </div>
 
 <!--
-한계를 솔직히 말하고, 그에 대한 안전장치를 제시합니다.
+정직합니다. 첫 걸음까지만 책임지고, 모르면 모른다고 말합니다.
 -->
 
 ---
 layout: center
-title: "기억에 남을 마지막 문장"
-glowSeed: 289
-glow: top
-slideId: "slide-06"
+title: "정부24는 '신청 버튼'을 줍니다."
+glowSeed: 291
+glow: left
+slideId: "slide-08"
 semanticLayout: "closing"
-durationSeconds: 40
+durationSeconds: 10
 impl: "implemented"
 ---
 
 <div class="text-center">
 
-<h1 data-addr="slide-06.content.title">기억에 남을 마지막 문장</h1>
+<h1 data-addr="slide-08.content.title">정부24는 '신청 버튼'을 줍니다.</h1>
 
-<div class="opacity-70 mt-3 max-w-2xl mx-auto" data-addr="slide-06.content.subtitle">다음 단계를 여기에</div>
+<div class="opacity-70 mt-3 max-w-2xl mx-auto" data-addr="slide-08.content.subtitle">우리는, 그 버튼이 어디 있는지조차 모르는 사람을 — 거기까지 데려다줍니다.</div>
 
 </div>
 
-<div v-click class="mt-8" data-addr="slide-06.content.cta"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-cyan-100"><span class="i-carbon:play" /> 데모 주소를 여기에</div></div>
+<div v-click class="mt-8" data-addr="slide-08.content.cta"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-cyan-100"><span class="i-carbon:play" /> 첫걸음 — 어려운 행정, 쉬운 첫 걸음</div></div>
 
-<div class="mt-8" data-addr="slide-06.content.contact"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80"><span class="i-carbon:logo-github" /> 팀 이름 · 연락처</div></div>
+<div class="mt-4 flex flex-wrap gap-2 justify-center" data-addr="slide-08.content.tags"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-xs opacity-75">쉬운 말</div><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-xs opacity-75">당장 첫 걸음</div><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm text-xs opacity-75">공식 출처</div></div>
+
+<div class="mt-8" data-addr="slide-08.content.contact"><div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm opacity-80"><span class="i-carbon:logo-github" /> 데모: 지급명령·전입신고·지원금 + 즉석 입력</div></div>
 
 <!--
-마지막 한 문장으로 닫습니다.
+오프닝과 수렴하는 마지막 문장입니다(concept.md 그대로).
 -->

@@ -26,11 +26,11 @@
 - 카카오맵 JS키는 **도메인 등록** 필요 — 배포 도메인을 카카오 콘솔에 등록(없으면 `KakaoMap`이 안내 패널로 폴백).
 
 ## 4. (선택) 네이티브 APK — 보통 스킵
-진짜 네이티브 앱이 꼭 필요할 때만. **고위험**: 빌드환경(JDK17 + Android SDK, 멀티GB) + 첫 빌드 + **AI가 기기화면 못 봐 검증 약함**. 주는 노트북·4시간엔 비현실적.
-- 전제(미리 깔려있어야): JDK 17, Android SDK(Platform API 34·Build-Tools·Platform-Tools[adb]·cmdline-tools) + 라이선스 동의 + `ANDROID_HOME`. (Android Studio가 한 방 설치)
-- Capacitor: `npm i @capacitor/core @capacitor/cli @capacitor/geolocation @capacitor/local-notifications` → `npx cap init` → `npx cap add android` → `cd android && ./gradlew assembleDebug`.
-- 권한(AndroidManifest): `ACCESS_FINE_LOCATION`·`INTERNET`·`POST_NOTIFICATIONS`, dev 서버(http) 로드 시 `usesCleartextTraffic="true"`.
-- 로드 방식: `server.url`(라이브 dev 서버) 또는 정적 export. server.url이면 API route 작동.
+진짜 네이티브 앱이 꼭 필요할 때만. **고위험**: 빌드환경(JDK + Android SDK) + 첫 빌드 + **AI가 기기화면 못 봐 검증 약함**. 주는 노트북·4시간엔 비현실적.
+- **실제로 성공한 전체 절차·함정 정리 → `docs/android-apk-build.md`** (Android Studio 없이 명령줄만으로 성공한 검증 레시피).
+- 핵심만: **JDK 21**(Cap 7), Android SDK는 cmdline-tools만(공백 없는 `C:\Android\sdk`), `server.url=localhost:3000`+`adb reverse`(USB 터널), **빌드는 사용자 본인 터미널에서**(AI 샌드박스는 Gradle 루프백 차단), 위치는 `@capacitor/geolocation`(http에선 `navigator.geolocation` 차단), 카카오는 origin을 JS SDK 도메인에 등록.
+- 권한(AndroidManifest): `INTERNET`·`ACCESS_FINE_LOCATION`(+`POST_NOTIFICATIONS`), http 로드 시 `usesCleartextTraffic="true"`.
+- 로드 방식: `server.url`(라이브 서버) — 이 앱은 `/api/*` 때문에 정적 export 불가. **설정 바꾸면 `npx cap sync` 필수.**
 
 ## 5. 데모/시연
 | 방법 | 진짜같음 | 준비 | 비고 |

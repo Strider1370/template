@@ -1,6 +1,7 @@
 // web/lib/llm.ts — OpenAI(ChatGPT) Chat Completions 호출 헬퍼 (서버 전용)
 //
-// 키(OPENAI_API_KEY) 없으면 null → 호출부가 폴백(드롭다운/템플릿/기본문구)으로 동작.
+// 키(OPENAI_API_KEY) 없으면 null 반환. 이 앱은 AI only(코드 규칙 폴백 없음) — 호출부(/api/guide)는
+// null이면 가짜 답을 짓지 않고 "정부24에서 직접 확인" 안내만 내린다(needsConfirmation).
 // 모델은 OPENAI_MODEL 로 교체 (기본 gpt-4.1-mini, 비전 지원). gpt-5.x / o-시리즈는 파라미터가 달라
 // 자동 대응(max_completion_tokens, temperature 미지정).
 //

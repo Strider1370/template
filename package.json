@@ -13,7 +13,6 @@
     "workflow:resume": "node workflow/scripts/resume.mjs",
     "workflow:approve": "node workflow/scripts/approve-stage.mjs",
     "workflow:fail": "node workflow/scripts/fail-stage.mjs",
-
     "gate:intake": "node workflow/gates/validate-intake.mjs",
     "gate:research": "node workflow/gates/validate-research.mjs",
     "gate:insight": "node workflow/gates/validate-insight.mjs",
@@ -27,9 +26,7 @@
     "gate:presentation-visual": "node workflow/gates/validate-presentation-visual.mjs",
     "gate:rehearsal": "node workflow/gates/validate-rehearsal.mjs",
     "gate:package": "node workflow/gates/validate-package.mjs",
-
     "cross-review": "node workflow/gates/cross-review.mjs",
-
     "presentation:scenes": "node presentation/generator/generate-scenes.mjs",
     "presentation:layouts": "node presentation/generator/select-layouts.mjs",
     "presentation:slidev": "node presentation/generator/generate-slidev.mjs",
@@ -39,7 +36,6 @@
     "presentation:validate-deck": "node presentation/generator/validate-deck.mjs",
     "presentation:validate-slides": "node presentation/generator/validate-slides.mjs",
     "presentation:build": "npm run presentation:validate-deck && npm run presentation:slidev && npm run presentation:static && npm run presentation:validate-slides",
-
     "web:build": "npm --prefix web run build",
     "web:check-identity": "node web/scripts/check-identity.mjs",
     "web:lint": "npm --prefix web run lint",
@@ -51,5 +47,8 @@
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.0"
   }
 }

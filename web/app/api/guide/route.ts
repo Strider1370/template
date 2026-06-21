@@ -3,6 +3,7 @@ import { openaiChat } from '@/lib/llm';
 import { SOURCES, matchSources } from '@/lib/sources';
 import { searchCatalog, catalogById } from '@/lib/catalog';
 import { OFFICE_LABELS } from '@/lib/offices';
+import { classifyDomain } from '@/lib/domains';
 
 type Evidence = { id: string; title: string; snippet: string };
 type ResolvedSource = { id: string; title: string; url: string; publisher: string; asOf: string };
@@ -159,9 +160,29 @@ export async function POST(req: Request) {
 
   const needsConfirmation = !guide.confident || sources.length === 0;
 
+  // 대분류 라우팅(안전망): 입력 + AI 출력 텍스트를 키워드로 대분류에 매핑해
+  // 지도 관청(officeCategory)·처리 URL(actionUrl)을 결정적으로 채운다. (사진 입력은 text가 비므로 AI 출력까지 스캔)
+  const domainText = [text, guide.summary, guide.firstStep, guide.jurisdiction, guide.channel].join(' ');
+  const domain = classifyDomain(domainText);
+  // officeCategory: 대분류가 맞으면 그걸로 교정(AI 오분류 차단), 아니면 AI 값(허용 라벨일 때만).
+  const officeCategory = domain
+    ? domain.officeCategory
+    : OFFICE_LABELS.includes(guide.officeCategory)
+      ? guide.officeCategory
+      : '';
+  // actionUrl 우선순위: 대분류 공식 처리채널(위택스 등) > 인용된 출처 > 정부24.
+  // (대분류가 잡히면 실제 "처리하는 곳"으로 보내는 게 맞다. 카탈로그 매칭 URL보다 우선.)
+  const actionUrl = domain?.actionUrl ?? sources[0]?.url ?? 'https://www.gov.kr';
+  // 위치 안내: 'nearest' 대분류(어디서나 방문)만 내 주변 지도. 'jurisdiction'(자동차세·국세·지급명령)은
+  // 관할 고정 + 온라인 처리라 최근접 관청이 오히려 오해 → 지도 숨김(관할 텍스트 + 처리 버튼만).
+  const locationApplies = domain
+    ? (domain.locationMode ?? 'nearest') === 'nearest' && domain.officeCategory !== ''
+    : guide.locationApplies;
+
   return NextResponse.json({
     provider: 'openai',
     needsConfirmation,
+    domain: domain?.id ?? null,
     guide: {
       summary: guide.summary,
       deadline: guide.deadline,
@@ -169,11 +190,11 @@ export async function POST(req: Request) {
       steps: guide.steps,
       jurisdiction: guide.jurisdiction,
       channel: guide.channel,
-      locationApplies: guide.locationApplies,
-      officeCategory: guide.officeCategory,
+      locationApplies,
+      officeCategory,
     },
-    // "처리하러 가기" 공식 링크 — 인용된 출처 화이트리스트에서만(없으면 정부24).
-    actionUrl: sources[0]?.url ?? 'https://www.gov.kr',
+    // "처리하러 가기" 공식 링크 — 인용 출처 > 대분류 공식 채널 > 정부24.
+    actionUrl,
     sources,
   });
 }

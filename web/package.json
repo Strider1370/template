@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@capacitor/geolocation": "^8.2.0",
+    "@capacitor/local-notifications": "^8.2.0",
     "@krds-ui/core": "^0.6.0",
     "next": "^14.2.35",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
     "@krds-ui/tailwindcss-plugin": "^0.6.0",
     "@types/node": "20.14.10",
     "@types/react": "18.3.3",

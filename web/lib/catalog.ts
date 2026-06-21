@@ -22,8 +22,13 @@ function decode(s: unknown): string {
 }
 
 function loadJson(rel: string): any[] {
-  // dev: cwd=web/ → ../data/snapshots. 못 읽으면 빈 배열(데모는 큐레이션 SOURCES로 동작).
-  for (const base of [path.resolve(process.cwd(), '..', 'data', 'snapshots'), path.resolve(process.cwd(), 'data', 'snapshots')]) {
+  // 배포·dev 공통: web/data/catalog (process.cwd()=web/). 못 읽으면 레포 루트 data/snapshots 폴백.
+  // (Vercel은 web/ 밖 파일을 배포에 포함하지 않으므로 web/data/catalog 가 1순위.)
+  for (const base of [
+    path.resolve(process.cwd(), 'data', 'catalog'),
+    path.resolve(process.cwd(), '..', 'data', 'snapshots'),
+    path.resolve(process.cwd(), 'data', 'snapshots'),
+  ]) {
     try {
       const d = JSON.parse(readFileSync(path.join(base, rel), 'utf8'));
       return Array.isArray(d) ? d : [];

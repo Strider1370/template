@@ -7,11 +7,11 @@ project:
   deadlineMinutes: 240
   presentationMinutes: 5
 current:
-  stageNumber: 5
-  stageId: parallel-build
-  status: awaiting_direction
-  startedAt: '2026-06-20T12:25:34.011Z'
-  budgetMinutes: 85
+  stageNumber: 10
+  stageId: presentation-validation
+  status: in_progress
+  startedAt: '2026-06-21T00:10:54.720Z'
+  budgetMinutes: 10
 completedStages:
   - stageNumber: 0
     stageId: intake
@@ -49,24 +49,48 @@ completedStages:
     completedAt: '2026-06-20T12:42:30.995Z'
     actualMinutes: 16.9
     budgetMinutes: 85
+  - stageNumber: 6
+    stageId: integration
+    startedAt: '2026-06-20T14:43:57.428Z'
+    completedAt: '2026-06-20T14:54:29.923Z'
+    actualMinutes: 10.5
+    budgetMinutes: 20
+  - stageNumber: 7
+    stageId: demo-validation
+    startedAt: '2026-06-20T14:59:05.049Z'
+    completedAt: '2026-06-20T15:06:54.122Z'
+    actualMinutes: 7.8
+    budgetMinutes: 15
+  - stageNumber: 8
+    stageId: script
+    startedAt: '2026-06-20T15:07:37.043Z'
+    completedAt: '2026-06-20T15:11:47.695Z'
+    actualMinutes: 4.2
+    budgetMinutes: 10
+  - stageNumber: 9
+    stageId: presentation-generation
+    startedAt: '2026-06-20T15:16:04.048Z'
+    completedAt: '2026-06-20T15:27:30.139Z'
+    actualMinutes: 11.4
+    budgetMinutes: 20
 requiredReads:
-  - workflow/stages/05-parallel-build.md
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 3. Stage 05'
-  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 15. 서브에이전트 권한'
+  - workflow/stages/10-presentation-validation.md
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 13. 캡처 레퍼런스 활용'
+  - 'docs/CLAUDE_Notion_Slidev_Integration_Guide.md :: 14. Stage 10 검증 기준'
 activeAgents: []
 blockedBy: []
 nextGate:
-  command: npm run gate:build
-  report: workflow/history/stage-05-gate.md
+  command: npm run gate:presentation-visual
+  report: workflow/history/stage-10-gate.md
 humanApproval:
   required: false
   status: not_required
   decisionFile: null
-lastHandoff: workflow/history/stage-05-parallel-build.md
+lastHandoff: workflow/history/stage-09-presentation-generation.md
 lastSuccessfulCheckpoint:
-  stageNumber: 5
-  stageId: parallel-build
-  commit: null
+  stageNumber: 9
+  stageId: presentation-generation
+  commit: 314278aeb511c35f60e6b428b2d4baf9c4b41fd1
 contextPolicy:
   maxPrimaryFiles: 5
   useHandoffBeforeHistory: true
@@ -74,4 +98,4 @@ contextPolicy:
     - unrelated stage reports
     - full chat history
     - raw research not referenced by current task
-lastUpdatedAt: '2026-06-20T12:42:31.032Z'
+lastUpdatedAt: '2026-06-21T00:10:54.721Z'

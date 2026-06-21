@@ -1,20 +1,104 @@
 {
-  "_comment": "Stage 06(통합) 산출물 스켈레톤. 각 기능의 실제 구현 상태를 구조화한다. Stage 08(스크립트)·09(발표)가 이 파일을 필수 입력으로 읽는다. 발표에서는 mocked/fallback을 완전 구현처럼 표현하지 않는다. 개인정보: fixture/데모 데이터는 가상 페르소나·익명만 사용.",
+  "_comment": "Stage 06(통합) 산출물. 각 기능의 실제 구현 상태. Stage 08·09가 읽음. 발표에서 mocked/fallback/dropped를 완전 구현처럼 표현하지 말 것. fixture는 가상 페르소나·익명만.",
   "_statusEnum": {
     "implemented": "실제로 동작. 발표에서 확정적으로 시연/주장 가능.",
-    "mocked": "UI/흐름은 있으나 내부는 가짜 데이터. 발표 시 mock임을 흐리지 말 것.",
-    "fallback": "실시간/외부 연동 대신 정적 백업으로 동작. 폴백임을 명시.",
-    "dropped": "범위에서 제외(시간 부족 등). 발표에 넣지 않는다.",
-    "blocked": "외부 의존(키·차단 등)으로 막힘. 위험으로 기록."
+    "mocked": "UI/흐름은 있으나 내부는 가짜 데이터.",
+    "fallback": "실시간/외부 연동 대신 정적 백업으로 동작.",
+    "dropped": "범위에서 제외. 발표에 넣지 않는다.",
+    "blocked": "외부 의존(키·차단 등)으로 막힘."
   },
   "version": 1,
   "features": [
     {
-      "id": "feature-01",
-      "name": "예시 기능 (실제 작성 시 이 항목을 교체할 것)",
+      "id": "guide-engine",
+      "name": "AI 가이드 엔진 (받은 문서/상황 → 뜻·기한·첫걸음·관할·출처)",
       "status": "implemented",
-      "notes": "상태 근거 한 줄. 폴백/막힌 이유 등.",
-      "demoPath": "demo/demo.scenario.yaml#step-1"
+      "notes": "AI only(멀티모달+LLM, /api/guide). 텍스트·상황 입력 라이브 검증(지급명령·전입신고·과태료 등).",
+      "demoPath": "demo/demo.scenario.yaml#step-1,2"
+    },
+    {
+      "id": "trust-grading",
+      "name": "신뢰 등급 (✅ 공식 출처 확인 / ⚠ AI 일반 안내)",
+      "status": "implemented",
+      "notes": "근거 매칭 시 confident+출처 인용, 미매칭 시 needsConfirmation. 라이브 검증.",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "source-curated",
+      "name": "큐레이션 출처 (지급명령·전입신고 공식 스니펫+URL)",
+      "status": "implemented",
+      "notes": "web/lib/sources.ts, 화이트리스트 인용으로 환각 URL 차단. 라이브 검증.",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "source-catalog",
+      "name": "공공/복지 카탈로그 검증 (받아둔 약 1.6만건)",
+      "status": "implemented",
+      "notes": "gov24(10,957)+복지로(5,021) 전수 키워드 매칭→gov.kr/복지로 실제 URL 인용. 라이브 검증(보육료·법률구조 등). 배포용 web/data/catalog + outputFileTracingIncludes.",
+      "demoPath": "demo/demo.scenario.yaml#step-3"
+    },
+    {
+      "id": "first-step-full-path",
+      "name": "첫 걸음 + 전체 경로 스텝퍼",
+      "status": "implemented",
+      "notes": "응답 schema의 firstStep/steps를 카드로. 라이브 검증.",
+      "demoPath": "demo/demo.scenario.yaml#step-2"
+    },
+    {
+      "id": "office-location",
+      "name": "관청 분류 + 내 주변 찾기(카카오 장소검색·지도)",
+      "status": "implemented",
+      "notes": "offices.ts 분류표→AI 선택→후보 재시도. 지역선택 검색·지도 마커 라벨·목록 필터 라이브 검증. ※카카오 NEXT_PUBLIC_KAKAO_MAP_KEY 의존(없으면 '지도 키 없음' 폴백) + 배포 도메인 등록 필요. geolocation은 브라우저 권한 의존. 데모 핵심경로(입력→카드→출처→첫걸음)와는 독립인 부가기능.",
+      "demoPath": "web/components/NearbyOffices.tsx"
+    },
+    {
+      "id": "vision-photo",
+      "name": "사진 입력(멀티모달 비전)",
+      "status": "implemented",
+      "notes": "llm.ts 비전 확장(image→content 배열, 모델가드·토큰·타임아웃 상향). 코드 경로 완성. ※라이브 사진 OCR은 미검증 — 데모는 검증 샘플/붙여넣기 우선.",
+      "demoPath": "web/lib/llm.ts"
+    },
+    {
+      "id": "design-krds",
+      "name": "KRDS 디자인 (컴포넌트·공식 그림자·라인아이콘·GPT 배너·반응형)",
+      "status": "implemented",
+      "notes": "입력은 KRDS 컴포넌트(TextArea/Button/Badge), 공식 엘리베이션 토큰, GPT 생성 hero-banner.png, 모바일 375px 무overflow 검증.",
+      "demoPath": "web/app/page.tsx"
+    },
+    {
+      "id": "pwa",
+      "name": "PWA (홈 화면에 추가)",
+      "status": "implemented",
+      "notes": "app/manifest.ts + icon-192/512 존재. 빌드에 manifest.webmanifest 생성. ※실제 기기 '홈 화면 추가'는 배포 후 확인 권장.",
+      "demoPath": "web/app/manifest.ts"
+    },
+    {
+      "id": "deploy",
+      "name": "배포 URL (Vercel https)",
+      "status": "blocked",
+      "notes": "데이터 번들링·빌드 준비 완료(outputFileTracingIncludes). 실제 배포는 사용자 Vercel 계정 필요 → 사용자 액션 대기.",
+      "demoPath": null
+    },
+    {
+      "id": "voice-multilang",
+      "name": "음성 입력·다국어",
+      "status": "dropped",
+      "notes": "스트레치. 발표에선 '같은 엔진이 확장 가능' 수준 언급만, 시연 안 함.",
+      "demoPath": null
+    },
+    {
+      "id": "native-apk",
+      "name": "네이티브 APK",
+      "status": "dropped",
+      "notes": "계획대로 스킵(배포 URL+PWA로 충족).",
+      "demoPath": null
+    },
+    {
+      "id": "notifications",
+      "name": "알림/푸시",
+      "status": "dropped",
+      "notes": "spec 범위 밖.",
+      "demoPath": null
     }
   ]
 }

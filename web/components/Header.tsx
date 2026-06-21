@@ -14,7 +14,10 @@ const GNB_ITEMS = [
 export function Header() {
   return (
     <header className="relative z-10 border-b border-gray-30 bg-white shadow-soft">
-      <Masthead />
+      {/* 정부 식별 Masthead — 데스크톱만. 모바일은 앱 셸처럼 군더더기 제거. */}
+      <div className="hidden md:block">
+        <Masthead />
+      </div>
 
       <div className="mx-auto flex min-h-14 max-w-container items-center justify-between gap-3 px-4 py-2.5 md:min-h-20 md:py-4">
         <a href="/" className="flex min-w-0 items-center gap-2.5 md:gap-3">
@@ -39,7 +42,7 @@ export function Header() {
         </a>
       </div>
 
-      <nav aria-label="주요 메뉴" className="border-t border-gray-10">
+      <nav aria-label="주요 메뉴" className="hidden border-t border-gray-10 md:block">
         <div className="mx-auto flex max-w-container gap-1 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {GNB_ITEMS.map((item) => (
             <a

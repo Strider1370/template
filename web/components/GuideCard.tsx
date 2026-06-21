@@ -134,10 +134,12 @@ export function GuideCard({ result }: { result: GuideResult }) {
           </div>
         </div>
 
-        {/* 위치 찾기 */}
-        <div className="mt-5">
-          <NearbyOffices officeCategory={guide.officeCategory || ''} />
-        </div>
+        {/* 위치 찾기 — 어디서나 방문 가능한 사안(locationApplies)에만. 관할고정·온라인 처리는 숨김(처리 버튼으로). */}
+        {guide.locationApplies && (
+          <div className="mt-5">
+            <NearbyOffices officeCategory={guide.officeCategory || ''} />
+          </div>
+        )}
 
         {/* 전체 경로 — 세로 스텝퍼 */}
         {steps.length > 0 && (
