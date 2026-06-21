@@ -29,7 +29,7 @@
 - 해당 없음.
 
 ## 9. 생성해야 하는 산출물
-- `dist/submission/`: `web/`, `presentation.html`, `presentation.pdf`, `demo/`(단계별 스크린샷+Wow), `README.md`, `qna.md`, `sources.md`, `spec.md`. (배포했으면 **접속 URL을 README에 명시**; 네이티브 APK를 빌드했으면 `app.apk`도 포함.)
+- `dist/submission/`: `web/`, `presentation.html`, `presentation.pdf`, `demo/`(단계별 스크린샷+Wow), `README.md`, `qna.md`, `sources.md`, `spec.md`. **(기본: 배포 URL `https://projectamo.co.kr`을 README에 명시 + `app.apk`(서버 빌드) 포함.** 배포·빌드 절차 `docs/deploy-runbook.md`, 결정 `workflow/decisions/deployment-target.md`.)
 
 ## 10. 파일 소유권
 - 메인 전용: `dist/submission/`, `sources.md`, `README.md`.

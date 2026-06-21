@@ -22,7 +22,7 @@
 - `demo/demo.scenario.yaml`을 작성한다(스텝별 화면·selector·assertion 계획 포함).
 - **화면 입출력 명시**: Solution(§7)에 **보여주는 페이지의 입력 요소(필드·컨트롤)와 출력 요소(결과 표시)를 구체적으로 나열**한다(추상 흐름 X). 데모 시나리오(§8)·Wow Moment(§9)와 일치. (가이드 `docs/AI_Hackathon_Operating_System.md §6.6`)
 - "4시간 현실성" 헤딩에서 범위가 과한지 판정하고, 과하면 범위 밖으로 옮긴다.
-- **데모 형태 결정(모바일 여부)**: 여기서 **위치·알림 등 모바일 기능을 데모에 넣을지 결정·명시**하고, 데모 시나리오(§8)·Wow Moment(§9)에 반영한다(반응형은 기본 전제 — 결정 사항 아님). 깊이(APK 빌드 vs 미러링 시연)는 Stage 04 plan에서 정한다. 상세 `docs/mobile-webview-target.md`.
+- **데모 형태 결정(모바일 여부)**: 여기서 **위치·알림 등 모바일 기능을 데모에 넣을지 결정·명시**하고, 데모 시나리오(§8)·Wow Moment(§9)에 반영한다(반응형은 기본 전제). **배포·시연 형태는 이미 결정됨 = 자체 AWS https 배포 + 네이티브 APK 미러링이 기본**(`workflow/decisions/deployment-target.md`, 절차 `docs/deploy-runbook.md`). 구현 작업화는 Stage 04 plan.
 
 spec.md 16헤딩(정확히):
 `## 1. Answer First` · `## 2. Problem` · `## 3. 최종 Insight` · `## 4. JTBD` · `## 5. AI Leverage` · `## 6. Differentiation` · `## 7. Solution` · `## 8. 데모 시나리오` · `## 9. Wow Moment` · `## 10. Impact` · `## 11. Credibility` · `## 12. Limitation` · `## 13. Guardrail` · `## 14. Closing Message` · `## 15. 범위 밖` · `## 16. 4시간 현실성`
