@@ -83,6 +83,7 @@ npm run generate-banner -- --topic "동네별 폭염 행동 가이드"
 ---
 
 ## 사전 준비 (대회 전에 미리!)
+- **⚠️ 프로젝트 경로에 공백 금지**: 폴더 경로(특히 윈도우 사용자명)에 공백이 있으면 Slidev 빌드·dev가 깨진다(Vite가 공백을 %20로 인코딩 → 검은 화면). Slidev를 쓸 거면 공백 없는 경로(예: C:\dev\<repo>)에 두라. 정적 HTML 백업(presentation/output/static/presentation.html)은 공백 경로에서도 정상.
 - **카카오맵 JS 키**: developers.kakao.com 발급 + **도메인 등록**(localhost:3000). 당일엔 늦다. `web/.env.local.example` → `.env.local` 복사 후 `NEXT_PUBLIC_KAKAO_MAP_KEY` 채움. (지도 안 써도 fallback으로 앱은 돈다.)
 - **공공데이터**: 주제에 필요한 **권위 단일 데이터셋**(예: 복지=복지로 복지서비스정보)을 **대회 전에 미리 받아 레포 `data/`에 넣어 두라** — 막힌 환경에선 당일 다운로드가 안 된다(403). 받은 파일은 `web/scripts/build-shelters.mjs` 같은 변환 패턴으로 가공. 어떤 파일이 필요한지·받는 경로는 `data/data-sources.md`.
 

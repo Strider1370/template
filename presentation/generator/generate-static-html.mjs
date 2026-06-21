@@ -10,9 +10,9 @@
  *  - 최소 뷰어(←/→) + 편집 오버레이(?edit=1 또는 'e') 인라인.
  *  - 입력 없으면 안내 후 exit 0 (throw 금지).
  */
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { readFileSync, existsSync, mkdirSync, writeFileSync, copyFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { dirname, resolve, basename } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const presentationRoot = resolve(__dirname, "..");
@@ -22,6 +22,27 @@ const themeDir = resolve(presentationRoot, "theme");
 const notionDir = resolve(themeDir, "notion");
 const outDir = resolve(presentationRoot, "output", "static");
 const outPath = resolve(outDir, "presentation.html");
+
+const repoRoot = resolve(presentationRoot, "..");
+
+// 자산 자동 배치: src 를 여러 후보 위치에서 찾아 output/static/assets/ 로 복사하고 상대경로를 돌려준다.
+function placeAsset(src) {
+  if (!src) return null;
+  for (const base of [outDir, presentationRoot, repoRoot]) {
+    const abs = resolve(base, src);
+    if (existsSync(abs)) {
+      const name = basename(src);
+      try {
+        mkdirSync(resolve(outDir, "assets"), { recursive: true });
+        copyFileSync(abs, resolve(outDir, "assets", name));
+        return "assets/" + name;
+      } catch {
+        return src;
+      }
+    }
+  }
+  return src;
+}
 
 const BANNER = "[generate-static-html]";
 
@@ -109,10 +130,11 @@ function renderSlotGeneric(id, slot, value, tag) {
 function renderImageRaw(id, slotName, asset, className) {
   const a = normAsset(asset);
   if (!a) return "";
+  const finalSrc = placeAsset(a.src) || a.src;
   return (
     '<img class="' + esc(className || "ee-img") + '" data-addr="' + esc(id + ".assets." + slotName) + '"' +
     ' data-asset-status="' + esc(a.status) + '"' +
-    ' src="' + esc(a.src) + '" alt="">'
+    ' src="' + esc(finalSrc) + '" alt="">'
   );
 }
 
