@@ -1,0 +1,55 @@
+# 환경세팅 서브에이전트 작업 계약 (Stage 00에서 백그라운드로 띄움)
+# 목적: 새 환경에서 "배포+시연 툴체인"을 미리 점검/설치해 두고, 사람이 직접 할 항목만 체크리스트로 남긴다.
+#       메인은 이걸 백그라운드로 띄운 즉시 사용자와 intake/발산을 이어간다(대기 금지).
+# 실행 규약:
+# - run_in_background 로 띄운다. 완료 알림이 오면 메인이 결과를 사용자에게 요약 보고한다.
+# - 이 에이전트는 "검증 + 무해한 자동설치"만 한다. 사람 개입 필요한 건 절대 대신하지 않고 체크리스트로 남긴다.
+
+taskId: env-setup-preflight
+stage: intake
+agentRole: env-setup
+
+objective: >
+  배포(자체 https 서버)와 시연(APK+미러링) 툴체인을 점검하고, 빠진 무해 항목은 설치하며,
+  사람이 직접 해야 할 것(시크릿 입력·GUI 드라이버·폰 조작)은 체크리스트로 남긴다.
+
+read:                       # 이 환경의 구체값은 여기서 읽는다
+  - docs/deploy-runbook.md            # A 세팅 / B 서버접속 / C 대회당일
+  - workflow/decisions/deployment-target.md   # 도메인·IP·인스턴스 등 확정값
+
+write:                      # 사람이 그대로 읽을 보고서 1개 (run 출력)
+  - workflow/history/stage-00-env-preflight.md
+
+doNotWrite:
+  - workflow/state.yaml
+  - workflow/stages.yaml
+  - spec.md
+  - plan.md
+  - docs/deploy-runbook.md            # 읽기 전용 참조
+
+deadlineMinutes: 10
+
+# 자동으로 해도 되는 것 (무해)
+autoOk:
+  - AWS CLI 설치(winget) + `aws sts get-caller-identity`로 인증 확인 (자격증명은 건드리지 않음)
+  - 서버 라이브 확인: 배포 도메인 https 200 + DNS가 EIP를 가리키나
+  - 로컬 adb/scrcpy 존재·버전 확인, 없으면 scrcpy win64 zip 다운로드
+  - 폰 연결·삼성 ADB 드라이버 상태 확인 (`adb devices`, Get-PnpDevice)
+  - (키가 이미 있으면) 서버 SSH 접속 + 빌드환경(java/android-sdk) 존재 확인
+
+# 절대 자동으로 하지 않는 것 → 체크리스트로만 남긴다
+manualOnly:
+  - AWS 액세스 키 입력(`aws configure`) — 시크릿이라 사람이 직접
+  - 보안그룹(SG) 22번에 현재 IP 추가 — 인프라 변경이라 사람 승인 후
+  - 삼성 USB 드라이버 GUI 설치 — developer.samsung.com/android-usb-driver
+  - 폰 USB 디버깅 ON + "허용" 수락, 무선 디버깅 페어링 코드 입력
+
+completionCriteria:
+  - autoOk 항목을 모두 점검(또는 설치)했다.
+  - manualOnly 중 미충족 항목을 "사람이 할 일" 체크리스트로 명확히 적었다.
+  - 한 줄 종합 판정(GO / 무엇만 하면 GO)을 남겼다.
+
+reportFormat:              # workflow/history/stage-00-env-preflight.md 에 이 형식으로
+  - readyItems             # ✅ 준비됨
+  - needsManualAction      # ⚠️ 사람이 직접 (정확한 명령/단계 포함)
+  - verdict                # 한 줄: 지금 배포+시연 가능한가 / 무엇만 하면 되는가
