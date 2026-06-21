@@ -56,3 +56,6 @@ presentation/output/
 
 # 공공데이터 전수 스냅샷: data/snapshots/ 는 무키 데모를 위해 저장소에 커밋한다(gov24 10,957 + 복지 5,021건).
 # 재생성은 data/scripts/dump-*.mjs (DATA_GO_KR_KEY 필요).
+
+# 제출 패키지(재생성 가능, 대용량)
+dist/
