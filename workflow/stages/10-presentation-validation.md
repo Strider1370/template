@@ -16,9 +16,10 @@
 ## 5. 필수 입력
 - Stage 09 발표 산출물. 없으면 시작하지 않는다.
 
-## 6. 메인 에이전트의 역할
-- **캡처 생성: `npm run presentation:capture`** (기본 = Slidev 빌드·캡처 → `presentation/output/captures/NN-<layout>.png`; Slidev/브라우저 미가용 시 Notion 정적 HTML 폴백). throw 없이 안내 후 종료되므로, 도구 미비 시 안내에 따라 수동 캡처. **검증 대상 = 실제 발표 매체인 Slidev 화면.**
-- **LLM이 캡처를 직접 검토**: 텍스트 overflow, 깨진 자산(이미지/폰트/아이콘), 동일 레이아웃 단조 반복, 데모 화면이 너무 작지 않은지, **글자가 너무 작은지 / 여백이 과다한지**(→ Stage 09로 돌아가 해당 슬라이드 `contentScale` 조정).
+> **시간단축(사용자 결정): 시각 판단은 사람 눈이 기본 — AI 캡처-검토 루프 최소화.** 사람이 렌더된 덱을 1분 훑는 게 AI가 PNG를 한 장씩 "보고" 재렌더 도는 것보다 훨씬 빠르고 정확하다.
+- **1) 자동 게이트 먼저(빠름).** `npm run gate:presentation-visual`(enforced) — overflow·깨진 자산을 **기계가 자동 검사**. 여기서 잡힌 건 명확하니 바로 수정.
+- **2) 사람이 렌더된 덱을 훑고 지목.** `npm run presentation:capture`로 캡처를 만들거나 Slidev 프리뷰(`?edit=1`)를 사람이 보고 — 작은 글씨/과다 여백/단조 반복/데모 화면 크기 등 **이상한 슬라이드만 주소로 지목**. **검증 대상 = 실제 발표 매체 Slidev 화면.**
+- **3) AI는 지목된 것만 수정.** 사람이 짚은 슬라이드의 `contentScale`/내용을 Stage 09로 돌아가 고친다. (AI가 전 슬라이드를 일일이 캡처-판독하는 루프는 돌지 않는다 — 1번 자동게이트 + 2번 사람 지목으로 대체.)
 - 발표 시간(분량) 확인.
 - `presentation/output/captures/`에 캡처, `presentation/output/validation-report.md`에 결함 목록 + 통과 여부 기록.
 

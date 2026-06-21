@@ -17,13 +17,14 @@
 - Stage 05 산출물(`web/`, fixture). 없으면 시작하지 않는다.
 
 ## 6. 메인 에이전트의 역할
+> **시간단축(조건부 생략): 통합할 게 없으면 이 단계를 05에 흡수한다.** 앱이 작고(단일 페이지·독립 파일 <3) Stage 05를 **메인 단독으로** 빌드했다면, 병합 작업이 사실상 없다 → 별도 통합 의식을 건너뛰고 **이 단계에선 `manifest.json` 작성 + 빌드 통과 + 데모 핵심경로 1회 완주 + 배포만** 하고 바로 Gate로 간다(20분 통째 절약). **병렬 빌드였거나 파일이 여러 개면** 아래 통합을 정상 수행한다.
 - 병렬 결과를 병합하고 import/라우팅/데이터 흐름을 연결한다.
 - fixture 모드로 데모 핵심경로를 처음부터 끝까지 한 번 통과시킨다.
 - `npm run web:build` 통과 확인.
 - spec과 실제 구현의 차이를 기록.
 - `implementation/manifest.json`에 각 기능 상태를 기록: `implemented | mocked | fallback | dropped | blocked`.
 - **룩 마감 점검**: 스캐폴드 정체성 교체 완료 + 주제 맞춤 상단 배너(`npm run generate-banner -- --topic "<주제>"`) 적용 여부 확인 — 데모 캡처(Stage 07) 전에 배너가 있어야 한다.
-- **배포 + (선택) 앱화**: 통합 웹앱을 **배포(Vercel/Netlify 등 — https URL)** 한다 = 제출 기본. "앱처럼"이면 **PWA(매니페스트+아이콘, 홈 화면 추가)** 동작을 확인. **네이티브 APK(Capacitor)는 선택**이며 환경·시간 안 되면 스킵(배포 URL/PWA로 충분). 상세 `docs/mobile-webview-target.md`. ⚠️ **APK 빌드는 AI가 샌드박스에서 못 돌린다(`gradlew` loopback 차단) → 사용자 본인 터미널, `npx cap sync` 필수** — 검증 절차 `docs/android-apk-recipe.md`.
+- **배포 + 앱화 (사용자 결정 — `workflow/decisions/deployment-target.md`)**: 통합 웹앱을 **자체 AWS 서버 https로 배포**(`https://projectamo.co.kr`) = 제출 기본. **네이티브 APK가 기본 시연 매체**(서버 https 로드, USB+scrcpy 미러링 / 무선 폴백). PWA는 APK 안 될 때 폴백. ⚠️ **APK 빌드는 로컬 gradlew가 막히니 서버에서** 한다. **전체 절차·명령 = `docs/deploy-runbook.md`(C절).**
 - 작동 상태가 되면 체크포인트 커밋.
 
 ## 7. 병렬 서브에이전트 구성
