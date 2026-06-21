@@ -3,6 +3,8 @@ import { Masthead } from '@krds-ui/core';
 
 // 범용 헤더 스켈레톤 — 새 주제에 맞게 서비스명/메뉴만 교체하면 됩니다.
 // (정부 식별 Masthead + 엠블럼 + GNB).
+// 모바일(앱/PWA)에선 Masthead·GNB를 숨겨 "컴팩트 헤더 1줄"로 — 데스크톱 크롬을 폰에 욱여넣지 않는다
+// (md: 분기로 데스크톱은 그대로). 상세 docs/android-apk-recipe.md §8.
 
 const SERVICE_NAME = '공공 서비스 스타터'; // TODO: 새 주제 서비스명으로 교체
 const GNB_ITEMS = [
@@ -14,7 +16,10 @@ const GNB_ITEMS = [
 export function Header() {
   return (
     <header className="border-b border-gray-20 bg-white">
-      <Masthead />
+      {/* 정부 식별 Masthead — 모바일에선 숨김(앱 셸 컴팩트) */}
+      <div className="hidden md:block">
+        <Masthead />
+      </div>
 
       <div className="mx-auto flex min-h-14 max-w-container items-center justify-between gap-3 px-4 py-2.5 md:min-h-20 md:py-4">
         <a href="/" className="flex min-w-0 items-center gap-2.5 md:gap-3">
@@ -39,7 +44,7 @@ export function Header() {
         </a>
       </div>
 
-      <nav aria-label="주요 메뉴" className="border-t border-gray-10">
+      <nav aria-label="주요 메뉴" className="hidden border-t border-gray-10 md:block">
         <div className="mx-auto flex max-w-container gap-1 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {GNB_ITEMS.map((item) => (
             <a

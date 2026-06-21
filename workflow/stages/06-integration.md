@@ -23,7 +23,7 @@
 - spec과 실제 구현의 차이를 기록.
 - `implementation/manifest.json`에 각 기능 상태를 기록: `implemented | mocked | fallback | dropped | blocked`.
 - **룩 마감 점검**: 스캐폴드 정체성 교체 완료 + 주제 맞춤 상단 배너(`npm run generate-banner -- --topic "<주제>"`) 적용 여부 확인 — 데모 캡처(Stage 07) 전에 배너가 있어야 한다.
-- **배포 + (선택) 앱화**: 통합 웹앱을 **배포(Vercel/Netlify 등 — https URL)** 한다 = 제출 기본. "앱처럼"이면 **PWA(매니페스트+아이콘, 홈 화면 추가)** 동작을 확인. **네이티브 APK(Capacitor)는 선택**이며 환경·시간 안 되면 스킵(배포 URL/PWA로 충분). 상세 `docs/mobile-webview-target.md`.
+- **배포 + (선택) 앱화**: 통합 웹앱을 **배포(Vercel/Netlify 등 — https URL)** 한다 = 제출 기본. "앱처럼"이면 **PWA(매니페스트+아이콘, 홈 화면 추가)** 동작을 확인. **네이티브 APK(Capacitor)는 선택**이며 환경·시간 안 되면 스킵(배포 URL/PWA로 충분). 상세 `docs/mobile-webview-target.md`. ⚠️ **APK 빌드는 AI가 샌드박스에서 못 돌린다(`gradlew` loopback 차단) → 사용자 본인 터미널, `npx cap sync` 필수** — 검증 절차 `docs/android-apk-recipe.md`.
 - 작동 상태가 되면 체크포인트 커밋.
 
 ## 7. 병렬 서브에이전트 구성

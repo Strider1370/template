@@ -21,6 +21,9 @@
     background: var(--background);
     color: var(--foreground);
     -webkit-font-smoothing: antialiased;
+    /* 한국어 줄바꿈: 제목/본문이 음절 중간에서 깨지지 않게(예: "첫 걸음"). 공백 단위로만 줄바꿈. */
+    word-break: keep-all;
+    overflow-wrap: anywhere; /* 단, URL 등 공백 없는 긴 토큰은 넘치지 않게 폴백 */
   }
   /* KRDS 접근성: 명확한 포커스 표시 */
   *:focus-visible {
