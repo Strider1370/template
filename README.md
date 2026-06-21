@@ -2,8 +2,7 @@
 
 4시간 AI 해커톤에서 주제를 받자마자 "돌아가는 데모 + 발표"까지 만들기 위한 **참고 키트**입니다.
 
-> ⚠️ 이건 **자동 워크플로우 엔진이 아닙니다.** 사람이 직접 운전하는 **진행 체크리스트 + 참고 라이브러리 + 빈 스캐폴드**입니다.
-> 결과물은 **대회 당일 공개되는 시제를 받고 새로 제작**합니다(사전 제작물 반입 아님).
+> **진행 체크리스트 + 참고 라이브러리 + 빈 스캐폴드.** 결과물(앱·발표)은 주제를 받고 새로 만듭니다.
 
 ## 구성
 - **`PROCESS-CHECKLIST.md`** — 척추. 13단계 진행 방법(일반). 이걸 보며 단계를 직접 끌고 갑니다.
@@ -23,6 +22,15 @@
 | `presentation/slidev/` | `npm install` | 슬라이드 렌더·프리뷰 |
 
 **키는 코드/저장소에 넣지 않습니다.** LLM 키는 앱 런타임에 직접 입력(설정 ⚙️·⋯ → 키 모달), 없으면 폴백 동작. (상세 `reference/06-AI연동.md`)
+
+## 실행
+| 명령 | 동작 |
+|---|---|
+| `npm run web:dev` | 웹앱 개발 서버 → http://localhost:3000 |
+| `npm run presentation:build` | `deck.json` → Slidev `slides.md` + Notion `presentation.html` 생성 |
+| `cd presentation/slidev && npm run dev` | Slidev 발표 미리보기 → http://localhost:3030 (`?edit=1` 또는 `e` 키로 편집) |
+| `npm run presentation:capture` | 슬라이드 PNG 캡처 (선택 — Playwright 필요: `npm i -g playwright && npx playwright install chromium`) |
+| `npm run generate-banner -- --topic "<주제>"` | 홈 히어로 배너 교체 (선택 — `OPENAI_API_KEY` 있을 때) |
 
 ## 쓰는 법
 1. `PROCESS-CHECKLIST.md`를 펼친다 (인쇄 권장).
