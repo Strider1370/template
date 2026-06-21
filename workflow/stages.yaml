@@ -166,3 +166,25 @@ gatePolicy:
     - script
     - rehearsal
     - package
+
+# LLM 교차검토(cross-review / Codex) 정책 — "린 프로파일" (사용자 결정 2026-06-21).
+# 각 단계문서 "14. LLM Review Gate"는 기본이 '실행'이지만, 아래 정책이 우선한다.
+# enabled 단계에서만 `npm run cross-review -- <대상>`을 돌리고, 나머지는 생략한다.
+# (기계 게이트 npm run gate:* 와 사용자 승인 02·11 은 영향 없음 — 그대로 유지.)
+crossReviewPolicy:
+  profile: lean
+  enabled:             # 품질이 결과물에 직결 → Codex 교차검토 유지
+    - insight          # 02 — 레드팀 (품질 핵심, 절대 생략 금지)
+    - spec             # 03 — 데모 약속 일관성
+    - build            # 05 — 구현 vs spec 일치
+    - script           # 08 — 발표 허위주장 방지 (manifest 대조)
+    - presentation-generation  # 09 — 발표 품질
+  skipped:             # 저가치·중복 → Codex 교차검토 생략 (기계 게이트는 유지)
+    - intake           # 00
+    - research         # 01
+    - plan             # 04
+    - integration      # 06 (05와 중복)
+    - demo             # 07 (게이트가 이미 실검증)
+    - presentation-visual  # 10 (시각 게이트가 실검증)
+    - rehearsal        # 11 (08과 중복)
+    - package          # 12

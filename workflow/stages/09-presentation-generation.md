@@ -18,6 +18,7 @@
 - `presentation/script.md`, `implementation/manifest.json`. 없으면 시작하지 않는다.
 
 ## 6. 메인 에이전트의 역할 — B안 흐름
+> **사용자 결정(필독): 화면 카피는 "AI 초안 + 사람 덮어쓰기 + 잠금".** 시작 전 `workflow/decisions/presentation-authoring.md`를 읽는다. 요지: ① AI가 구조(레이아웃·슬롯·글자수)를 정하고 **각 슬롯에 tone-guide 적용 초안을 채워** `presentation/copy.md`를 깐다(빈칸 아님) → ② 사용자가 마음에 안 드는 칸만 채팅 주소(`slide-03.title`)·편집 오버레이·copy.md "내수정:"으로 갈아끼운다 → ③ **고친 슬롯만** deck.json에서 `authoredBy:user`로 잠그고 AI는 글자를 안 바꾼다(안 고친 칸=AI초안 유지) → ④ 잠긴 칸은 오버플로우·미구현 허위주장만 **경고**(자동수정 X). 톤은 `presentation/tone-guide.md` 적용.
 1. **deck.json 작성(판단).** `script.md`를 슬라이드로 분해해 `presentation/deck.json`을 직접 쓴다. 각 슬라이드:
    - `semanticLayout`은 `layout-registry.json`의 16개 중에서만 고른다(임의 layout 금지). 규칙(§10): answer-first→hero, demo+wow→demo-callout, insight→contrast/insight-statement, impact+숫자→big-number, 한계→limitation-guardrail, 마지막→closing.
    - `content` 슬롯은 해당 layout의 slot 이름에 맞춰 채운다.

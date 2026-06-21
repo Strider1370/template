@@ -17,10 +17,11 @@
 - `implementation/manifest.json`(정직성 기준), 데모 검증 결과. 없으면 시작하지 않는다.
 
 ## 6. 메인 에이전트의 역할
-- `presentation/script.md`(5분) 작성: Answer First → 문제 → Insight/킥 → 데모 → Closing. 데모+킥 ≥50%, 프로그램 로직은 1장 분량.
+> **사용자 결정(필독): 발표 카피는 사람이 쓴다.** 작성 전 `workflow/decisions/presentation-authoring.md`를 읽고, `presentation/tone-guide.md`를 적용한다. 화면에 박히는 카피는 여기서 확정하지 말고(09에서 사람이 채움) 스피커 노트·구조만 잡는다.
+- `presentation/script.md`(5분) 작성: Answer First → 문제 → Insight/킥 → 데모 → Closing. 데모+킥 ≥50%, 프로그램 로직은 1장 분량. (톤: `presentation/tone-guide.md` — 금지어·말투 준수)
 - **내러티브 척추 = `concept.md`.** 첫 문장은 한 문장 피치, 데모는 Wow Moment, **Closing은 concept.md의 "기억에 남을 마지막 문장"을 그대로** 쓴다(처음의 한 문장으로 수렴).
 - **manifest에서 implemented/mocked가 아닌 기능은 발표에 넣지 않는다.** 라이브 데모는 단계별 스크린샷 백업 전제로 서술.
-- `presentation/qna.md`(예상 질문 + 답변) 작성: 차별점·AI 필요성·구현 한계·데이터 출처 대비.
+- `presentation/qna.md`(예상 질문 + 답변) 작성: 먼저 **AI가 심사위원 관점의 날카로운 공격질문 10개**를 뽑는다(차별점·AI 필요성·"AI 없이도 되지 않나"·구현 한계·데이터 출처·확장성·비용), 그 다음 각 질문에 manifest 근거로 답변 초안을 단다.
 
 ## 7. 병렬 서브에이전트 구성
 - 없음(작성 집약). 교차검토는 Gate.
