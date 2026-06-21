@@ -12,10 +12,9 @@
 - 저지연/저가 필요 화면은 `mini` 변형 고려. 통역만 필요하면 `gpt-realtime-translate`.
 - 한국어: 양호하나 보장 아님 → **실제 화자·실제 잡음으로 사전 테스트**.
 
-## 2. 임시키(ephemeral key) — 브라우저 인증
-- 진짜 `OPENAI_API_KEY`는 **브라우저에 절대 노출 금지**. 대신 **1분짜리 임시키** 사용(호텔 카드키 개념).
-- 흐름: ① 앱 → 내 AWS 서버에 토큰 요청 → ② 서버(진짜 키 보관)가 OpenAI에서 임시키 발급 → ③ 앱에 전달 → ④ 앱이 임시키로 OpenAI Realtime에 **WebRTC 직접 연결**.
-- 구현: 우리 서버(이미 `OPENAI_API_KEY` 보유)에 `/api/realtime-token` 라우트 하나 추가.
+## 2. 키 입력 = "앱에서 직접 입력"(표준 A안)
+- 템플릿 표준(`workflow/decisions/llm-key-input.md`): **설정/더보기(⚙️·⋯) 아이콘 → 키 모달**에서 운영자가 그 자리에서 키 입력 → 메모리/sessionStorage 저장 → 그 키로 Realtime 연결. **코드·.env·APK·git에 키 금지.** 데모는 운영자가 직접 시연하므로 이게 가장 단순.
+- (참고 B안 — 불특정 다수가 자기 폰에서 쓸 때만) **임시키(ephemeral)**: 진짜 키는 서버에만 두고, 서버 `/api/realtime-token`이 1분짜리 임시키 발급 → 앱이 그걸로 WebRTC 연결. 데모용이면 불필요.
 
 ## 3. 연결 — WebRTC + Agents SDK
 - 브라우저/모바일은 **WebRTC**(WebSocket 아님 — 그건 서버-서버용).

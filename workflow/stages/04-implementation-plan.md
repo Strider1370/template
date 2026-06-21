@@ -23,6 +23,7 @@ spec를 작업으로 분해하고, 병렬 빌드를 위한 파일 소유권·서
 - 각 빌드 에이전트의 Agent Task 계약 초안 작성(`agent-task.yaml` 형식).
 - 재사용 자산 매핑(`web/` 스캐폴드, `regions.ts`, `shelters.ts`, `KakaoMap.tsx`, 대피소 JSON). 같은 걸 새로 만들지 않게 명시.
 - 사용자 사전준비 안내: 카카오맵 키·공공데이터(`data/data-sources.md` 기준, data.go.kr/safetydata.go.kr는 403 차단 → 사람이 직접 다운로드).
+- **LLM 키는 런타임 입력(표준 — `workflow/decisions/llm-key-input.md`)**: `.env`에 박지 말고 **앱 설정/더보기(⚙️·⋯) 아이콘 → 키 모달**로 그 자리에서 넣게 계획. 무키 폴백 필수. (음성 Realtime도 동일 — `docs/voice-realtime-notes.md`.)
 - **모바일/배포 계획 (사용자 결정 — `workflow/decisions/deployment-target.md`)**: 모바일 반응형 기본 + (모바일 주제면) 위치·알림 포함. **제출/시연은 자체 AWS 서버 https 배포(`https://projectamo.co.kr`) + 네이티브 APK가 기본.** APK는 **서버에서 빌드**(로컬 gradlew는 막힘), 시연은 **USB+scrcpy 미러링 기본 / 무선 페어링 폴백**. PWA는 APK가 안 될 때의 폴백. **전체 절차·명령은 `docs/deploy-runbook.md`(C절 대회 당일 워크플로우) 기준.**
 
 ## 7. 병렬 서브에이전트 구성
