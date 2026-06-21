@@ -6,7 +6,7 @@
 > 단계 매핑: 반응형+위치/알림 = **Stage 05** · 배포/PWA(+선택 APK) = **Stage 06** · 시연 = **Stage 07**.
 
 ## 0. 웹에서 챙길 3가지
-1. **모바일 반응형** — 필수. 폰 폭(≈390px) 우선, Tailwind/KRDS.
+1. **모바일 반응형** — 필수. 폰 폭(≈390px) 우선, Tailwind/KRDS. **앱답게 만드는 체크리스트 → `docs/mobile-design-checklist.md`**(웹 크롬 걷어내기·입력 우선·한글 줄바꿈·사진 입력 UX·playwright 검증).
 2. **위치** — `navigator.geolocation`(https/배포 URL에서 동작). `MapPanel`/`KakaoMap`이 `userLocation`을 받음.
 3. **알림** — 데모는 인앱 배너로 충분. PWA면 웹 알림(Notification API)이 폰 알림 내림창에 뜸.
 

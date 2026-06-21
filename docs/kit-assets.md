@@ -82,6 +82,15 @@ npm run generate-banner -- --topic "동네별 폭염 행동 가이드"
 
 ---
 
+## 위치 기능 함정 (주변 찾기 — 실측)
+`NearbyOffices`/`KakaoMap` 등 위치 기능을 쓰는 모든 주제에 해당. 데스크톱·도심에선 안 보이다가 실기기·농촌·관할 사안에서 드러난다.
+- **농촌 반경**: 카카오 keywordSearch 반경 5km는 **군 단위에서 0건**(가까운 군청/시청이 5km 밖). → 반경 **20km(카카오 최대) + 반경 제거 전국 최근접 폴백**. (스캐폴드 `NearbyOffices.tsx`는 이미 적용됨.)
+- **관할 vs 최근접 (개념 위반 주의)**: "내 주변 가장 가까운"은 **관할이 정해진 사안엔 틀린다** — 자동차세는 차량 등록지(예: 무안군청)지 현재 위치 근처(목포시청)가 아니다. concept이 "관할은 주소·사건 기준"이라면 **관할 고정 사안은 지도를 숨기고 처리 채널(위택스 등) 버튼**으로, 어디서나 가능한 사안(전입·복지)만 최근접 지도. (사안별 `locationMode` 분기.)
+- **http에서 geolocation 차단**: `navigator.geolocation`은 **보안 출처(https)가 아니면 막힌다** — OS 권한을 줘도 안 됨. 네이티브 앱(http localhost 로드)·로컬 http에선 `@capacitor/geolocation` 네이티브 플러그인으로 우회하거나 https 배포. (`docs/android-apk-build.md` §5 G.)
+- **카카오 도메인 등록**: JS SDK는 페이지 **origin을 도메인에 등록**해야 동작(미등록 referer→401). server.url이 바뀌면(localhost/공인IP/배포) 그 origin을 등록. 실제 origin은 `console.log(location.origin)`로 확인.
+
+---
+
 ## 사전 준비 (대회 전에 미리!)
 - **⚠️ 프로젝트 경로에 공백 금지**: 폴더 경로(특히 윈도우 사용자명)에 공백이 있으면 — 예: `C:\Users\Jon Doe\...` — **Slidev 빌드·dev가 깨진다**(Vite가 공백을 `%20`로 인코딩 → 검은 화면). 발표 자료 Slidev를 쓸 거면 **공백 없는 경로**(예: `C:\dev\<repo>`)에 두라. (정적 HTML 백업 `presentation/output/static/presentation.html`은 공백 경로에서도 정상 — 발표는 이걸로도 됨.)
 - **카카오맵 JS 키**: developers.kakao.com 발급 + **도메인 등록**(localhost:3000). 당일엔 늦다. `web/.env.local.example` → `.env.local` 복사 후 `NEXT_PUBLIC_KAKAO_MAP_KEY` 채움. (지도 안 써도 fallback으로 앱은 돈다.)
