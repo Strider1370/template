@@ -104,10 +104,10 @@ if (cap?.isNativePlatform?.()) {
   navigator.geolocation.getCurrentPosition(/* 웹/PWA: https에서 동작 */);
 }
 ```
-**H 상세** — 카카오 콘솔 → JS SDK 도메인에 앱이 실제 띄우는 **origin 그대로** 등록(localhost:3000 / 공인IP / vercel.app). 막히는 건 referer(origin) 미등록 → 401.
+**H 상세** — 카카오 콘솔 → JS SDK 도메인에 앱이 실제 띄우는 **origin 그대로** 등록(localhost:3000 / 공인IP / 배포 도메인 `https://projectamo.co.kr`). 막히는 건 referer(origin) 미등록 → 401.
 
 ## 6. 더 견고한 종착지 — https 배포
-USB 터널은 시연엔 충분하나 케이블·dev서버에 묶인다. **Vercel https 배포 후 `server.url='https://...'`**(→`cap sync`→재빌드):
+USB 터널은 시연엔 충분하나 케이블·dev서버에 묶인다. **자체 AWS 서버 https 배포 후 `server.url='https://projectamo.co.kr'`**(→`cap sync`→재빌드):
 - 위치 **자동 해결**(secure context), 카카오는 배포 도메인만 등록, USB·공인IP 의존 사라짐.
 - **위치까지 포함한 완성형은 결국 https 배포가 정답.** USB 레시피는 배포 전 로컬 검증·시연용 최단 경로.
 
