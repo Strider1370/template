@@ -1,59 +1,26 @@
-'use client';
-
-import Image from 'next/image';
-import { Display, Heading, Body, Badge } from '@krds-ui/core';
-import { UserInfoForm } from '@/components/blocks/UserInfoForm';
-import { MapPanel } from '@/components/blocks/MapPanel';
+import { Display, Body, Badge } from '@krds-ui/core';
 
 // ─────────────────────────────────────────────────────────────
-// 이 홈은 "조립 예시"다. 주제가 정해지면 이 파일을 새로 짜라.
-// 아래 폼+지도 배치에 종속되지 마라 — 그저 부품을 어떻게 쓰는지 보여줄 뿐이다.
-//
-// 공통 블록(재사용 부품) — 필요한 것만 골라 import, 필요 없으면 빼라:
-//   - 입력 폼: `@/components/blocks/UserInfoForm`
-//   - 지도   : `@/components/blocks/MapPanel` (POI·center 를 주제 데이터로 연결)
-//   - 그 외  : `@/components/KakaoMap`, `@/lib/regions`, `@/lib/shelters` 등
+// 빈 스캐폴드 홈. 주제가 정해지면 이 파일을 새로 짜라.
+// 폼·지도 등 공통 부품은 기본 포함돼 있지 않다 — 필요하면 그때 추가(말로 요청하면 금방).
 // ─────────────────────────────────────────────────────────────
 
 export default function Home() {
   return (
-    <>
-      {/* Hero (배경 배너 + 왼쪽 스크림). 배너는 주제 맞춤 자동 생성:
-          npm run generate-banner -- --topic "<주제>"  (없으면 기본 청사 사진) */}
-      <section className="relative overflow-hidden bg-primary-5">
-        <Image src="/hero-banner.png" alt="" aria-hidden fill priority unoptimized className="object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-5 via-primary-5/85 to-primary-5/20" />
-        <div className="relative mx-auto max-w-container px-4 py-12 md:py-16">
-          <Badge label="KRDS 스타터 키트" variant="primary" size="small" />
-          <Display size="s" color="gray-90" className="mt-3 !text-heading-l md:!text-display-s">
-            한국 공공 서비스 해커톤 스타터
-          </Display>
-          <Body size="l" color="gray-70" className="mt-3 max-w-xl">
-            Next.js + KRDS + 한국 지역·지도 데이터가 미리 셋업돼 있습니다.
-            새 주제를 받으면 이 화면부터 교체하세요.
-          </Body>
-        </div>
-      </section>
+    <section className="mx-auto max-w-container px-4 py-16">
+      <Badge label="KRDS 스타터 키트" variant="primary" size="small" />
+      <Display size="s" color="gray-90" className="mt-3 !text-heading-l md:!text-display-s">
+        한국 공공 서비스 해커톤 스타터
+      </Display>
+      <Body size="l" color="gray-70" className="mt-3 max-w-xl">
+        Next.js + KRDS 가 셋업된 빈 스캐폴드입니다. 새 주제를 받으면 이 화면부터 새로 만드세요.
+      </Body>
 
-      {/* 조립 예시: 공통 부품(UserInfoForm + MapPanel)을 가져다 배치한 것뿐. 주제에 맞게 새로 짜세요. */}
-      <section id="section-1" className="mx-auto max-w-container px-4 py-12">
-        <Heading size="s" color="gray-90">사용자 정보 입력 (조립 예시)</Heading>
-        <Body size="m" color="gray-60" className="mt-2">
-          지역·사용자 정보·지도는 자주 쓰이는 <strong>부품</strong>입니다(`web/components/blocks/`).
-          이 배치는 예시일 뿐 — 주제가 정해지면 이 화면을 새로 짜고, 필요한 부품만 가져다 쓰세요.
+      <div className="mt-8 rounded-krds border border-dashed border-gray-30 bg-gray-5 px-4 py-6">
+        <Body size="m" color="gray-70">
+          여기에 주제 화면을 만드세요. 입력 폼·지도·결과 카드 같은 부품은 필요할 때 추가하면 됩니다.
         </Body>
-
-        <div className="mt-4 rounded-krds border border-dashed border-gray-30 bg-gray-5 px-4 py-3">
-          <Body size="s" color="gray-70">
-            ⚠ 이 레이아웃에 종속되지 마세요. 부품은 그대로 두고 <code>app/page.tsx</code>만 주제에 맞게 갈아끼우면 됩니다.
-          </Body>
-        </div>
-
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <UserInfoForm />
-          <MapPanel />
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
