@@ -66,24 +66,33 @@ aws sts get-caller-identity                # Account 632752099407 나오면 OK
 
 서버 OS = Amazon Linux 2023 → **EC2 Instance Connect 내장.** 다른 컴퓨터에서 접속할 때 챙길 건 **AWS 액세스 키 하나뿐.**
 
-> 권한: IAM 사용자에 **AdministratorAccess**가 있으면 EC2 Instance Connect 자동 포함(별도 인라인 정책 불필요).
+> **대회는 새 노트북 + 새 인터넷에서 진행 확정.** "저장된 키·IP" 가정은 전부 무효 — 서버/배포/APK 작업 시 **매번 아래 0단계 부트스트랩을 수행**한다. (실측 2026-06: IP 바뀐 새 환경에서 성공.)
+> 권한: IAM 사용자에 **AdministratorAccess**(또는 `ec2-instance-connect:SendSSHPublicKey`)면 EC2 Instance Connect 자동 포함.
 > ⚠️ **EC2 Instance Connect CLI는 RSA 키만 받는다**(구버전 CLI가 ed25519 거부). 반드시 `-t rsa`.
+
+### 0단계 — 부트스트랩 (서버 접속 전 항상)
+- **0a. AWS CLI 없으면 설치** — `winget install -e --id Amazon.AWSCLI`.
+- **0b. ★자격증명 게이트★** — `aws sts get-caller-identity` 실패 시 **즉시 멈추고** 사용자에게 요청: "터미널에서 직접 `aws configure` 실행(Access Key ID / Secret Access Key / region `ap-northeast-2` / format `json`). ⚠️ **시크릿 키를 채팅·env·git에 적지 말 것.** 끝나면 알려주세요." → 완료 후 재시도.
+  **AI는 시크릿을 받지·명령에 넣지·파일에 쓰지 않는다.** 공인 IP도 사용자가 알려줄 필요 없다(아래 1)에서 자동 감지).
 
 ```powershell
 $AWS="C:\Program Files\Amazon\AWSCLIV2\aws.exe"
-# 1) 이 컴퓨터 공인 IP를 SSH(22) 허용에 추가
+# 0c) 인스턴스 running 확인 — stopped면 켜고 기다린다
+& $AWS ec2 start-instances --instance-ids i-02e07f23649fd05fe 2>$null
+& $AWS ec2 wait instance-running --instance-ids i-02e07f23649fd05fe
+# 1) 이 컴퓨터 공인 IP를 자동 감지해 SSH(22) 허용에 추가 (사용자가 IP 알려줄 필요 없음)
 $myip=(Invoke-WebRequest https://checkip.amazonaws.com -UseBasicParsing).Content.Trim()
-& $AWS ec2 authorize-security-group-ingress --group-id sg-0144bd538dfba7047 --protocol tcp --port 22 --cidr "$myip/32"
-# 2) RSA 키 생성
-ssh-keygen -t rsa -b 2048 -f $HOME\.ssh\projectamo_rsa -N '""'
-# 3) EC2 Instance Connect로 공개키 푸시(60초 창) → 즉시 접속
+& $AWS ec2 authorize-security-group-ingress --group-id sg-0144bd538dfba7047 --protocol tcp --port 22 --cidr "$myip/32" 2>$null   # 이미 있으면 Duplicate=정상
+# 2) 임시 RSA 키 생성 (기존 키 있으면 지우고 새로)
+Remove-Item $HOME\.ssh\projectamo_rsa* -ErrorAction SilentlyContinue
+ssh-keygen -t rsa -b 2048 -f $HOME\.ssh\projectamo_rsa -N '""' -q
+# 3) EC2 Instance Connect로 공개키 푸시(60초 창) → 사이에 딴짓 없이 즉시 접속
 & $AWS ec2-instance-connect send-ssh-public-key --instance-id i-02e07f23649fd05fe `
   --availability-zone ap-northeast-2c --instance-os-user ec2-user `
   --ssh-public-key (Get-Content $HOME\.ssh\projectamo_rsa.pub -Raw)
 ssh -i $HOME\.ssh\projectamo_rsa ec2-user@3.34.113.37    # 60초 안에
-# 4) 한 번 들어가서 키를 영구 등록하면 이후 60초 제한 없이 접속
-#    (서버에서) mkdir -p ~/.ssh; cat >> ~/.ssh/authorized_keys  ← 공개키 붙여넣기
 ```
+> 새 노트북엔 로컬 키가 없어 **매번 Instance Connect로 60초 창 안에 접속**한다(영구 키 등록에 기대지 말 것). 운영은 키(Instance Connect) 단일 경로로 — 비밀번호 SSH는 SG 개방이 필요해 쓰지 않는다.
 
 ---
 
