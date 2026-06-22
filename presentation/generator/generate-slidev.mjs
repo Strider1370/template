@@ -71,6 +71,13 @@ const registry = JSON.parse(readFileSync(registryPath, "utf8"));
 const layoutById = new Map(registry.layouts.map((l) => [l.semanticId, l]));
 const meta = deck.meta || {};
 
+// 점진 표시(v-clicks)는 기본 OFF — 모든 내용을 즉시 노출해 사람이 실제 밀도를 판단한다.
+// (reference/04 §5.2 — 빈칸 많아 보이는 문제 회피.) 점진 표시를 원하면 deck.meta.clicks=true.
+const CLICKS = meta.clicks === true;
+const vcAttr = CLICKS ? " v-click" : "";          // 인라인 v-click 속성용
+// 블록 목록을 점진 표시할 땐 <v-clicks>로 감싸고, 아니면 그대로 노출.
+const wrapClicks = (inner) => (CLICKS ? `<v-clicks>\n\n${inner}\n\n</v-clicks>` : inner);
+
 // ---- 고정 라벨(i18n 최소) ----
 const EN = meta.language === "en";
 const L = EN
@@ -111,21 +118,21 @@ function frost(inner, cls = "") {
   return `<div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 ${cls}">\n${inner}\n</div>`;
 }
 function pill(text, cls = "") {
-  return `<div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-sm ${cls}">${text}</div>`;
+  return `<div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-base ${cls}">${text}</div>`;
 }
 function header(icon, color, title) {
   return `# <span class="${icon} ${color}" /> ${title}`;
 }
 function itemRow(it, accent = "") {
   const { title, desc } = itemParts(it);
-  const d = desc ? `\n  <div class="text-sm opacity-70 mt-1">${desc}</div>` : "";
+  const d = desc ? `\n  <div class="text-base opacity-70 mt-1">${desc}</div>` : "";
   return `<div class="rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-left ${accent}">\n  <div class="font-medium">${title}</div>${d}\n</div>`;
 }
-// 여러 카드를 <v-clicks> 로 감싸 스태거 등장(블록 사이 빈 줄 필수).
+// 여러 카드를 목록으로 — CLICKS 켜지면 <v-clicks> 스태거(블록 사이 빈 줄 필수), 아니면 즉시 노출.
 function clickList(items, accent = "") {
   if (!items.length) return "";
   const rows = items.map((it) => itemRow(it, accent)).join("\n\n");
-  return `<v-clicks>\n\n${rows}\n\n</v-clicks>`;
+  return wrapClicks(rows);
 }
 function bullets(items) {
   return asArr(items).map((it) => "- " + toText(it)).join("\n");
@@ -152,17 +159,17 @@ function panelItem(it, iconCls, iconColor, addr) {
   if (desc) {
     return `      <div flex items-start gap-2 py-1${da(addr)}>
         <div ${iconCls} text-${iconColor}-300 text-xl mt-1 shrink-0 />
-        <div><div font-bold>${title}</div><div text-sm opacity-80>${desc}</div></div>
+        <div><div font-bold>${title}</div><div text-base opacity-80>${desc}</div></div>
       </div>`;
   }
   return `      <div flex items-center gap-2 py-1${da(addr)}>
         <div ${iconCls} text-${iconColor}-300 text-xl shrink-0 />
-        <span text-lg>${title}</span>
+        <span text-xl>${title}</span>
       </div>`;
 }
 function colorPanel({ color, headIcon, head, items, itemIcon, itemColor, vclick, addr, itemAddr }) {
   const rows = asArr(items).map((it, i) => panelItem(it, itemIcon, itemColor || color, subA(itemAddr, i))).join("\n");
-  const vc = vclick ? " v-click" : "";
+  const vc = (vclick && CLICKS) ? " v-click" : "";
   return `  <div${vc}${da(addr)} border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden>
     <div bg="${color}-800/40" px-5 py-3 flex items-center>
       <div ${headIcon} text-${color}-300 text-2xl mr-2 shrink-0 />
@@ -194,16 +201,16 @@ function neutralCard(card, idx, addr) {
   if (card && typeof card === "object" && Array.isArray(card.items)) {
     body = card.items.map((x) => {
       const p = itemParts(x);
-      const d = p.desc ? `<div text-xs opacity-70>${p.desc}</div>` : "";
-      return `      <div><div text-sm font-medium>${p.title}</div>${d}</div>`;
+      const d = p.desc ? `<div text-sm opacity-70>${p.desc}</div>` : "";
+      return `      <div><div text-base font-medium>${p.title}</div>${d}</div>`;
     }).join("\n");
   } else {
-    body = `      <div text-sm opacity-80>${desc || ""}</div>`;
+    body = `      <div text-base opacity-80>${desc || ""}</div>`;
   }
   return `  <div${da(addr)} border="2 solid white/5" rounded-lg overflow-hidden bg="white/5" backdrop-blur-sm h-full>
     <div flex items-center bg="white/10" backdrop-blur px-3 py-2>
       <div ${ic} text-${accent}-300 text-xl mr-2 shrink-0 />
-      <div font-semibold text-lg>${title}</div>
+      <div font-semibold text-xl>${title}</div>
     </div>
     <div px-4 py-3 flex flex-col gap-2>
 ${body}
@@ -217,11 +224,11 @@ function coloredCard(card, idx, addr) {
   const color = HUES[idx % HUES.length];
   const list = card && typeof card === "object" && Array.isArray(card.items) ? card.items : null;
   const body = list
-    ? list.map((x) => `      <div flex items-center gap-2 py-1><div i-carbon:dot-mark text-${color}-300 shrink-0 /><span text-sm>${toText(x)}</span></div>`).join("\n")
-    : `      <div text-sm opacity-80>${desc || ""}</div>`;
+    ? list.map((x) => `      <div flex items-center gap-2 py-1><div i-carbon:dot-mark text-${color}-300 shrink-0 /><span text-base>${toText(x)}</span></div>`).join("\n")
+    : `      <div text-base opacity-80>${desc || ""}</div>`;
   return `  <div${da(addr)} border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden h-full>
     <div bg="${color}-800/40" px-4 py-2 flex items-center justify-center>
-      <span font-bold text-lg>${title}</span>
+      <span font-bold text-xl>${title}</span>
     </div>
     <div px-4 py-4 flex flex-col gap-1>
 ${body}
@@ -236,11 +243,7 @@ function cardGrid(cards, render, { cols, height = "h-75", addrBase } = {}) {
   const inner = list.map((c, i) => render(c, i, subA(addrBase, i))).join("\n\n");
   return `<div mt-6 grid grid-cols-${n} gap-4 ${height}>
 
-<v-clicks>
-
-${inner}
-
-</v-clicks>
+${wrapClicks(inner)}
 
 </div>`;
 }
@@ -252,8 +255,8 @@ function stepPanel({ color, head, headIcon, steps, numbered, addr, itemAddr }) {
     const marker = numbered
       ? `<div w-6 h-6 shrink-0 grid place-items-center rounded-full bg="${color}-800/60" text-${color}-100 text-sm font-bold>${i + 1}</div>`
       : `<div i-carbon:dot-mark text-${color}-300 text-xl shrink-0 />`;
-    const d = desc ? `<div text-sm opacity-70>${desc}</div>` : "";
-    return `      <div flex items-center gap-3 py-1${da(subA(itemAddr, i))}>${marker}<div><div font-medium text-lg>${title}</div>${d}</div></div>`;
+    const d = desc ? `<div text-base opacity-70>${desc}</div>` : "";
+    return `      <div flex items-center gap-3 py-1${da(subA(itemAddr, i))}>${marker}<div><div font-medium text-xl>${title}</div>${d}</div></div>`;
   }).join("\n");
   return `  <div${da(addr)} border="2 solid ${color}-800" bg="${color}-800/20" rounded-lg overflow-hidden>
     <div bg="${color}-800/40" px-5 py-3 flex items-center>
@@ -268,10 +271,10 @@ ${rows}
 
 // 하단 결론 콜아웃 바(127): white/5 + idea 아이콘 + 문장.
 function calloutBar(icon, text) {
-  return `<div v-click mt-6 flex justify-center>
+  return `<div${vcAttr} mt-6 flex justify-center>
   <div border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-6 py-3 flex items-center gap-3>
     <div ${icon} text-yellow-300 text-2xl shrink-0 />
-    <span text-lg>${text}</span>
+    <span text-xl>${text}</span>
   </div>
 </div>`;
 }
@@ -280,9 +283,9 @@ function calloutBar(icon, text) {
 function calloutRow(it, idx, addr) {
   const { title, desc } = itemParts(it);
   const accent = ACCENTS[idx % ACCENTS.length];
-  const d = desc ? `<div text-sm opacity-70 mt-1 pl-7>${desc}</div>` : "";
+  const d = desc ? `<div text-base opacity-70 mt-1 pl-7>${desc}</div>` : "";
   return `<div${da(addr)} border="2 solid white/5" bg="white/5" backdrop-blur-sm rounded-lg px-5 py-3>
-<div flex items-center gap-2><div i-carbon:checkmark text-${accent}-300 text-xl shrink-0 /><span font-medium text-lg>${title}</span></div>${d}
+<div flex items-center gap-2><div i-carbon:checkmark text-${accent}-300 text-xl shrink-0 /><span font-medium text-xl>${title}</span></div>${d}
 </div>`;
 }
 
@@ -308,8 +311,8 @@ const renderers = {
   hero(c, s) {
     const id = s && s.id;
     const eyebrow = c.eyebrow ? `<div class="text-cyan-300 tracking-widest text-sm font-semibold uppercase opacity-90"${da(slotA(id, "eyebrow"))}>${toText(c.eyebrow)}</div>` : "";
-    const subtitle = c.subtitle ? `<div class="mt-4 max-w-3xl opacity-80 text-lg"${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>` : "";
-    const footnote = c.footnote ? `\n\n<div v-click class="mt-8"${da(slotA(id, "footnote"))}>${pill(toText(c.footnote), "opacity-80")}</div>` : "";
+    const subtitle = c.subtitle ? `<div class="mt-4 max-w-3xl opacity-80 text-xl"${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>` : "";
+    const footnote = c.footnote ? `\n\n<div${vcAttr} class="mt-8"${da(slotA(id, "footnote"))}>${pill(toText(c.footnote), "opacity-80")}</div>` : "";
     return `<div class="flex flex-col items-center justify-center text-center">
 
 ${eyebrow}
@@ -357,7 +360,7 @@ ${right}
   "insight-statement"(c, s) {
     const id = s && s.id;
     const sub = c.subtitle
-      ? `\n\n<div v-click class="mt-8 mx-auto max-w-2xl">${frost(`<div class="opacity-90"${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>`)}</div>`
+      ? `\n\n<div${vcAttr} class="mt-8 mx-auto max-w-2xl">${frost(`<div class="opacity-90"${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>`)}</div>`
       : "";
     return `<div class="text-center">
 
@@ -390,8 +393,8 @@ ${imageBlock(s.assets, L.demo, assetA(id, "image"))}
   "demo-callout"(c, s) {
     const id = s && s.id;
     const rows = asArr(c.callout).map((it, i) => calloutRow(it, i, subA(slotA(id, "callout"), i))).join("\n\n");
-    const callouts = rows ? `<v-clicks>\n\n${rows}\n\n</v-clicks>` : "";
-    const points = c.points ? `\n\n<div mt-4 text-sm opacity-70${da(slotA(id, "points"))}>\n${bullets(c.points)}\n</div>` : "";
+    const callouts = rows ? wrapClicks(rows) : "";
+    const points = c.points ? `\n\n<div mt-4 text-base opacity-70${da(slotA(id, "points"))}>\n${bullets(c.points)}\n</div>` : "";
     const caption = c.caption ? `\n\n<div opacity-50 text-xs${da(slotA(id, "caption"))}>${toText(c.caption)}</div>` : "";
     return `${titleH1(c.title, null, slotA(id, "title"))}
 
@@ -431,11 +434,11 @@ ${panel}
     const id = s && s.id;
     const before = `  <div${da(slotA(id, "beforeCaption"))} border="2 solid red-800" bg="red-800/20" rounded-lg overflow-hidden>
     <div bg="red-800/40" px-5 py-3 flex items-center><div i-carbon:close-outline text-red-300 text-2xl mr-2 /><span font-bold text-xl>${toText(c.beforeLabel) || L.before}</span></div>
-    <div px-5 py-4 text-lg opacity-90>${toText(c.beforeCaption)}</div>
+    <div px-5 py-4 text-xl opacity-90>${toText(c.beforeCaption)}</div>
   </div>`;
-    const after = `  <div v-click${da(slotA(id, "afterCaption"))} border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
+    const after = `  <div${vcAttr}${da(slotA(id, "afterCaption"))} border="2 solid green-800" bg="green-800/20" rounded-lg overflow-hidden>
     <div bg="green-800/40" px-5 py-3 flex items-center><div i-carbon:checkmark-outline text-green-300 text-2xl mr-2 /><span font-bold text-xl>${toText(c.afterLabel) || L.after}</span></div>
-    <div px-5 py-4 text-lg>${toText(c.afterCaption)}</div>
+    <div px-5 py-4 text-xl>${toText(c.afterCaption)}</div>
   </div>`;
     return `${titleH1(c.title, null, slotA(id, "title"))}
 
@@ -449,12 +452,12 @@ ${after}
   "big-number"(c, s) {
     const id = s && s.id;
     const label = c.label ? `<div class="opacity-70 tracking-wide"${da(slotA(id, "label"))}>${toText(c.label)}</div>` : "";
-    const caption = c.caption ? `<div class="mt-4 opacity-55 text-sm max-w-xl mx-auto"${da(slotA(id, "caption"))}>${toText(c.caption)}</div>` : "";
+    const caption = c.caption ? `<div class="mt-4 opacity-55 text-base max-w-xl mx-auto"${da(slotA(id, "caption"))}>${toText(c.caption)}</div>` : "";
     return `<div class="text-center">
 
 ${label}
 
-<div v-click class="my-3 text-7xl font-extrabold text-cyan-300 leading-none"${da(slotA(id, "number"))}>${toText(c.number)}</div>
+<div${vcAttr} class="my-3 text-7xl font-extrabold text-cyan-300 leading-none"${da(slotA(id, "number"))}>${toText(c.number)}</div>
 
 ${caption}
 
@@ -525,7 +528,7 @@ ${cardGrid(c.tiers, coloredCard, { addrBase: slotA(id, "tiers") })}`;
   closing(c, s) {
     const id = s && s.id;
     const subtitle = c.subtitle ? `<div class="opacity-70 mt-3 max-w-2xl mx-auto"${da(slotA(id, "subtitle"))}>${toText(c.subtitle)}</div>` : "";
-    const cta = c.cta ? `\n\n<div v-click class="mt-8"${da(slotA(id, "cta"))}>${pill(`<span class="i-carbon:play" /> ${toText(c.cta)}`, "text-cyan-100")}</div>` : "";
+    const cta = c.cta ? `\n\n<div${vcAttr} class="mt-8"${da(slotA(id, "cta"))}>${pill(`<span class="i-carbon:play" /> ${toText(c.cta)}`, "text-cyan-100")}</div>` : "";
     const tags = c.tags ? `\n\n<div class="mt-4 flex flex-wrap gap-2 justify-center"${da(slotA(id, "tags"))}>${asArr(c.tags).map((t) => pill(toText(t), "text-xs opacity-75")).join("")}</div>` : "";
     const foot = [c.team, c.contact].filter(Boolean).map(toText).join(" · ");
     const contact = foot ? `\n\n<div class="mt-8"${da(slotA(id, "contact"))}>${pill(`<span class="i-carbon:logo-github" /> ${foot}`, "opacity-80")}</div>` : "";

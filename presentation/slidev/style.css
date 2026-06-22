@@ -16,6 +16,14 @@
     ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
+/* 빔 원거리 시인성 — 본문 베이스 폰트 상향. 크기 속성(text-sm 등)이 없는 plain 텍스트까지
+   커버하는 바닥값. 생성기 기본 토큰도 한 단계 키워둠(reference/04 §2·§6.2).
+   특정 덱만 더 키울 땐 attributify 속성 선택자([text-lg] 등)로 override(클래스 .text-lg 는 안 먹음). */
+.slidev-layout {
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
 /* Goto(슬라이드 점프) 다이얼로그 숨김 — 슬라이드가 많으면 닫힌 상태(-top-20)에서도
    목록이 아래로 삐져나와 캡처/익스포트에 끼어든다. 발표 덱엔 'g' 점프가 불필요. */
 #slidev-goto-dialog {
