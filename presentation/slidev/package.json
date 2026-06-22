@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "slidev --port 3030 --open",
+    "dev": "slidev --host --port 3030 --open",
     "build": "slidev build",
     "export": "slidev export --with-clicks --per-slide --wait-until none"
   },
