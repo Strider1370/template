@@ -1,0 +1,347 @@
+{
+  "version": 1,
+  "meta": {
+    "engine": "slidev",
+    "title": "레이아웃 갤러리 (16종)",
+    "language": "ko",
+    "presentationMinutes": 0
+  },
+  "slides": [
+    {
+      "id": "slide-01",
+      "semanticLayout": "hero",
+      "content": {
+        "eyebrow": "EYEBROW",
+        "title": "hero",
+        "subtitle": "부제목 — 한 줄 설명",
+        "footnote": "각주 / 태그"
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [hero] — 슬롯: eyebrow, title, subtitle, footnote"
+    },
+    {
+      "id": "slide-02",
+      "semanticLayout": "problem-flow",
+      "content": {
+        "title": "problem-flow",
+        "items": [
+          {
+            "title": "items 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "items 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "items 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ]
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [problem-flow] — 슬롯: title, items"
+    },
+    {
+      "id": "slide-03",
+      "semanticLayout": "contrast",
+      "content": {
+        "title": "contrast",
+        "lead": "리드 문장 (대비/맥락)",
+        "leftLabel": "기존",
+        "left": [
+          {
+            "title": "left 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "left 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "left 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ],
+        "rightLabel": "개선",
+        "right": [
+          {
+            "title": "right 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "right 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "right 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ]
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [contrast] — 슬롯: title, lead, leftLabel, left, rightLabel, right"
+    },
+    {
+      "id": "slide-04",
+      "semanticLayout": "insight-statement",
+      "content": {
+        "title": "insight-statement",
+        "subtitle": "부제목 — 한 줄 설명"
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [insight-statement] — 슬롯: title, subtitle"
+    },
+    {
+      "id": "slide-05",
+      "semanticLayout": "product-overview",
+      "content": {
+        "title": "product-overview",
+        "features": [
+          {
+            "title": "features 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "features 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "features 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ]
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [product-overview] — 슬롯: title, features"
+    },
+    {
+      "id": "slide-06",
+      "semanticLayout": "demo-fullscreen",
+      "content": {
+        "title": "demo-fullscreen",
+        "subtitle": "부제목 — 한 줄 설명"
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [demo-fullscreen] — 슬롯: title, subtitle"
+    },
+    {
+      "id": "slide-07",
+      "semanticLayout": "demo-callout",
+      "content": {
+        "title": "demo-callout",
+        "callout": [
+          {
+            "title": "callout 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "callout 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "callout 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ],
+        "points": [
+          {
+            "title": "points 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "points 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "points 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ]
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [demo-callout] — 슬롯: title, callout, points"
+    },
+    {
+      "id": "slide-08",
+      "semanticLayout": "architecture",
+      "content": {
+        "title": "architecture",
+        "steps": [
+          {
+            "title": "steps 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "steps 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "steps 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ],
+        "result": "핵심 결과 한 줄"
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [architecture] — 슬롯: title, steps, result"
+    },
+    {
+      "id": "slide-09",
+      "semanticLayout": "before-after",
+      "content": {
+        "title": "before-after",
+        "beforeLabel": "기존",
+        "afterLabel": "개선",
+        "beforeCaption": "기존 상태 설명",
+        "afterCaption": "개선된 상태 설명"
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [before-after] — 슬롯: title, beforeLabel, afterLabel, beforeCaption, afterCaption"
+    },
+    {
+      "id": "slide-10",
+      "semanticLayout": "big-number",
+      "content": {
+        "label": "big-number",
+        "number": "3분",
+        "caption": "보조 설명 캡션"
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [big-number] — 슬롯: label, number, caption"
+    },
+    {
+      "id": "slide-11",
+      "semanticLayout": "card-grid",
+      "content": {
+        "title": "card-grid",
+        "cards": [
+          {
+            "title": "cards 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "cards 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "cards 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ]
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [card-grid] — 슬롯: title, cards"
+    },
+    {
+      "id": "slide-12",
+      "semanticLayout": "timeline",
+      "content": {
+        "title": "timeline",
+        "steps": [
+          {
+            "title": "steps 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "steps 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "steps 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ]
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [timeline] — 슬롯: title, steps"
+    },
+    {
+      "id": "slide-13",
+      "semanticLayout": "quote",
+      "content": {
+        "quote": "기억에 남을 한 문장.",
+        "attribution": "quote"
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [quote] — 슬롯: quote, attribution"
+    },
+    {
+      "id": "slide-14",
+      "semanticLayout": "limitation-guardrail",
+      "content": {
+        "title": "limitation-guardrail",
+        "limitations": [
+          {
+            "title": "limitations 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "limitations 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "limitations 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ],
+        "guardrails": [
+          {
+            "title": "guardrails 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "guardrails 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "guardrails 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ]
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [limitation-guardrail] — 슬롯: title, limitations, guardrails"
+    },
+    {
+      "id": "slide-15",
+      "semanticLayout": "expansion-map",
+      "content": {
+        "title": "expansion-map",
+        "tiers": [
+          {
+            "title": "tiers 항목 1",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "tiers 항목 2",
+            "desc": "샘플 설명 텍스트"
+          },
+          {
+            "title": "tiers 항목 3",
+            "desc": "샘플 설명 텍스트"
+          }
+        ]
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [expansion-map] — 슬롯: title, tiers"
+    },
+    {
+      "id": "slide-16",
+      "semanticLayout": "closing",
+      "content": {
+        "title": "closing",
+        "subtitle": "부제목 — 한 줄 설명",
+        "cta": "데모 보기",
+        "tags": [
+          "태그1",
+          "태그2",
+          "태그3"
+        ],
+        "contact": "github.com/team"
+      },
+      "durationSeconds": 20,
+      "speakerNotes": "레이아웃 [closing] — 슬롯: title, subtitle, cta, tags, contact"
+    }
+  ]
+}

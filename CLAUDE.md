@@ -6,6 +6,7 @@
 - **`PROCESS-CHECKLIST.md`** 를 따라 13단계를 진행한다.
 - 각 단계에서 필요한 `reference/` 문서를 펼쳐 적용한다.
 - 결과물(앱·발표)은 주제를 받고 새로 만든다.
+- **모듈 적재**: 시작은 `0-base`만. 단계가 오면 무거운 번들을 루트에 투입한다 — **05 빌드→`2-build`**, **09 발표→`3-present`**, **12 배포→`4-deploy`**. (매핑·복원 명령: `PROCESS-CHECKLIST.md` "모듈 적재" + `modules/README.md`)
 
 ## 참고 라이브러리 (`reference/`)
 | 파일 | 내용 |
