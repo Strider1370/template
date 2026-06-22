@@ -14,11 +14,10 @@
 ```text
 발표 대본(script)
 → 장면 분해(scenes)
-→ 슬라이드 계약(deck.json)
+→ 슬라이드 계약(deck.json)  (+ copy.md 함께 — §5.2)
 → Slidev 슬라이드(slides.md)
-→ 빌드
-→ (선택) 정적 HTML 백업
-→ 다시 캡처해 눈으로 점검
+→ slidev build (dist)
+→ dist 정적 서빙으로 캡처해 눈으로 점검
 ```
 
 핵심 원칙은 **"사람이 만든 템플릿·스타일을 보존하고, 내용만 채운다"**는 것이다. 슬라이드마다 CSS를 새로 짜지 말고, 이미 있는 레이아웃을 골라 슬롯에 내용을 넣는다.
@@ -31,10 +30,10 @@
 → 렌더링
 ```
 
-### 엔진 선택
-- **기본 엔진: Slidev.** 한 번 만든 `deck.json` 하나로 Slidev와 정적 HTML 백업을 모두 만든다.
-- **백업: Notion 스타일 정적 HTML.** Slidev 빌드 실패·오프라인 발표·단일 HTML 전달용.
-- Reveal/Marp는 기본 경로에서 쓰지 않는다(참고용·기존 자료 호환용으로만). 임의로 기본 엔진을 바꾸지 마라.
+### 엔진 = Slidev 단일
+- **발표 엔진은 Slidev로 고정.** `deck.json` 하나가 진실의 원천이고, 렌더러는 Slidev 하나뿐이다(이중 렌더러가 만들던 슬롯 필드명 불일치도 사라짐 — §3 슬롯 필드맵).
+- **오프라인/백업도 Slidev로**: `slidev build` 결과(`dist/`)를 정적 서빙하면 인터넷 없이도 발표·캡처가 된다(별도 HTML 엔진 불필요). dev 서버는 헤드리스에서 charset이 깨지니 **캡처·발표는 dist 정적 서빙 경로**를 쓴다(§7).
+- 다른 엔진(Notion 정적 HTML·Reveal·Marp)은 이 키트에서 쓰지 않는다.
 
 ---
 
@@ -65,26 +64,52 @@
 ```
 슬라이드별 inline style로 충돌을 해결하거나 `!important`를 남용하지 마라. 같은 역할의 스타일을 여러 파일에 중복 정의하지 마라.
 
+### ⚠️ 폰트 크기 override 함정 (attributify)
+생성기는 UnoCSS **attributify** 문법(`<div text-lg>` — 클래스가 아니라 **속성**)으로 출력한다. 그래서 덱 `style.css`에서 크기를 키울 때:
+- ❌ `.text-lg { … }` (클래스 선택자) — **안 먹는다.**
+- ✅ `[text-lg] { … }` (**속성 선택자**) 로 타깃. + 크기 속성이 없는 plain 텍스트까지 덮으려면 `.slidev-layout` **베이스 폰트**를 함께 상향.
+
+> 근본 해결은 override보다 **생성기 기본 사이즈 상향**(이미 한 단계 키워둠 — §6.2 크기 기준). 그래도 특정 덱만 더 키울 때 위 속성 선택자를 쓴다.
+
 ---
 
 ## 3. 레이아웃 규칙 — Semantic Layout
 
-실제 Slidev 레이아웃 이름을 바로 고르지 말고, 먼저 **공통 의미 ID(semantic layout)** 중 하나를 고른 뒤 엔진별 실제 구현으로 매핑한다. 이렇게 하면 Slidev와 정적 HTML이 같은 의미 구조를 공유한다.
+실제 Slidev 레이아웃 이름을 바로 고르지 말고, 먼저 **공통 의미 ID(semantic layout)** 중 하나를 고른다. 렌더러가 이를 실제 Slidev 레이아웃으로 매핑한다(`layout-registry.json`).
 
-공통 semantic ID 예:
+공통 semantic ID(16종):
 ```text
 hero · problem-flow · contrast · insight-statement · product-overview
 demo-fullscreen · demo-callout · architecture · before-after · big-number
 card-grid · timeline · quote · limitation-guardrail · expansion-map · closing
 ```
 
-매핑 예:
+매핑 예(Slidev 단일 렌더러):
 ```json
-{
-  "semanticId": "contrast",
-  "renderers": { "slidev": "two-cols", "notion-html": "notion-two-column" }
-}
+{ "semanticId": "contrast", "renderers": { "slidev": "two-cols" } }
 ```
+
+### 레이아웃별 슬롯 필드맵 (한 장)
+> `deck.json`의 `content`에 넣는 슬롯 이름. **이 이름 그대로** 채운다(예전 이중 렌더러 시절의 `heading/num` 같은 변형명 쓰지 말 것). 배열 슬롯(`items`·`cards`·`features`·`steps`·`tiers`)의 각 항목은 `{ title, desc }` 형태.
+
+| semanticId | content 슬롯 |
+|---|---|
+| hero | `eyebrow` · `title` · `subtitle` · `footnote` |
+| problem-flow | `title` · `items[]` |
+| contrast | `title` · `lead` · `leftLabel` · `left` · `rightLabel` · `right` |
+| insight-statement | `title` · `subtitle` |
+| product-overview | `title` · `features[]` |
+| demo-fullscreen | `title` · `subtitle` |
+| demo-callout | `title` · `callout` · `points` |
+| architecture | `title` · `steps[]` · `result` |
+| before-after | `title` · `beforeLabel` · `afterLabel` · `beforeCaption` · `afterCaption` |
+| big-number | `label` · `number` · `caption` |
+| card-grid | `title` · `cards[]` |
+| timeline | `title` · `steps[]` |
+| quote | `quote` · `attribution` |
+| limitation-guardrail | `title` · `limitations` · `guardrails` |
+| expansion-map | `title` · `tiers[]` |
+| closing | `title` · `subtitle` · `cta` · `tags` · `contact` |
 
 ### 어떤 레이아웃을 고르나 (규칙 우선 + 판단 보조)
 ```text
@@ -129,12 +154,12 @@ card-grid · timeline · quote · limitation-guardrail · expansion-map · closi
 }
 ```
 
-### `deck.json` — Slidev와 정적 HTML이 함께 쓰는 단일 계약
+### `deck.json` — Slidev 슬라이드의 단일 계약
 ```json
 {
   "version": 1,
   "meta": {
-    "title": "프로젝트명", "engine": "slidev", "theme": "notion-slidev",
+    "title": "프로젝트명", "engine": "slidev",
     "aspectRatio": "16:9", "language": "ko"
   },
   "slides": [
@@ -156,7 +181,7 @@ card-grid · timeline · quote · limitation-guardrail · expansion-map · closi
   ]
 }
 ```
-- **두 엔진용 내용을 따로 쓰지 마라** — `deck.json` 하나가 진실의 원천이다.
+- `deck.json` 하나가 진실의 원천이다. 슬롯 이름은 §3 필드맵을 따른다.
 - 검증 가능한 주장·수치는 출처 ID와 연결할 수 있다(예: `"claimIds": [...], "sourceIds": [...]`).
 - 구현 상태가 실제(`implemented`)가 아닌 기능은 실제처럼 표현하지 않는다 — 목업(`mocked`)·폴백(`fallback`)은 그렇게 표시하고, 제거된(`dropped`/`blocked`) 기능은 발표에서 뺀다.
 
@@ -174,9 +199,11 @@ card-grid · timeline · quote · limitation-guardrail · expansion-map · closi
 ### 5.2 방식 — "AI 초안 + 사람 덮어쓰기 + 잠금"
 빈칸을 던지는 게 아니다. **AI가 초안을 다 채워두고**, 사람은 마음에 안 드는 칸만 갈아끼운다. 손 안 댄 칸은 AI 초안이 그대로 남는다.
 
-**(a) AI가 초안을 채운 양식을 깐다**
+**(a) AI가 초안을 채운 양식을 깐다 — `copy.md`는 항상 함께 만든다**
 - AI는 구조(슬라이드 수·`semanticLayout`·슬롯·**슬롯별 글자 수 한도**)를 정하고, 각 슬롯에 톤 가이드를 적용한 초안을 채워 넣는다.
-- 사람 검토·수정용 양식(예: `copy.md`) — 슬롯마다 "AI초안 + 내수정 자리":
+- **초안은 풍부하게.** 빈칸·한 단어로 두지 말고 슬롯마다 **1~2문장 구체 내용**(숫자·근거)으로 꽉 채운다 — 사람은 초안을 보고 **덜어내며** 다듬으니, 부족하게보다 꽉 차게 시작한다. (덱은 `meta.clicks:false`로 모든 내용을 즉시 노출해 사람이 실제 밀도를 판단하게 한다. 오버플로만 §8로 점검.)
+- **`copy.md`는 선택이 아니라 필수.** `deck.json`을 만들면 **항상** `presentation/copy.md`(슬롯마다 "AI초안 + 내수정 자리")를 함께 만든다. 슬라이드 구조가 바뀌면 `copy.md`도 다시 만든다.
+- 양식(`copy.md`) — 슬롯마다 "AI초안 + 내수정 자리":
   ```
   slide-03 (hero)
     title     [≤22자] | AI초안: 핵심 약속 한 줄        | 내수정:
@@ -220,7 +247,8 @@ card-grid · timeline · quote · limitation-guardrail · expansion-map · closi
 ### 6.2 말투 규칙
 - **구어체 단문.** 한 슬롯 = 한 메시지. 접속사로 늘이지 말 것.
 - **명사로 끝내거나 동사 원형으로 끊기** (슬라이드 카피는 문장보다 구).
-- 화면 카피는 **짧게** — 레이아웃 글자수 한도 안에서. 설명은 스피커 노트로.
+- 화면 카피는 **짧게** — 레이아웃 글자수 한도 안에서. 설명은 스피커 노트로. (※ "짧게"는 **분량** 축이다. 초안을 비우라는 뜻이 아니다 — §5.2(a)대로 초안은 풍부히 채우고, 사람이 덜어내며 최종을 짧게 만든다.)
+- **글자 크기는 분량과 별개의 축.** 빔 뒤쪽 좌석에서도 읽히게 **본문은 슬라이드 높이의 ≥ ~3%**(720p 기준 ≈ 22px+, 18~24pt 상당)로. 생성기 기본 사이즈를 이미 한 단계 키워뒀다(§2 attributify override). 키워서 넘치면 분량을 줄이거나 미세조정(§8 overflow).
 - 숫자는 **근거 있는 것만**. 없으면 정성적으로.
 - **톤 = 인물.** 화자를 추상어("전문적인")가 아니라 구체적 인물로 설정하고 그 말투로 쓴다. (예: "과장에 회의적인 시니어 엔지니어" / "현장 담당자") — §6.4에서 이 프로젝트 인물 확정.
 - **첫 문장은 사람이 쓴다.** 슬라이드1 제목 + 오프닝 한 줄은 발표 인상을 좌우한다 → AI는 후보 2~3개만 제시하고, 확정 카피는 사람이 고르거나 직접 쓴다(=잠금).
@@ -242,22 +270,25 @@ card-grid · timeline · quote · limitation-guardrail · expansion-map · closi
 
 ## 7. 생성기 — 선택적 도구 (쓰면 편하다)
 
-`presentation/generator/`에 `deck.json` → `slides.md` 변환, 정적 HTML 생성, 슬라이드 검증 스크립트가 있을 수 있다. **필수가 아니다** — 손으로 슬라이드를 짜도 되고, 양이 많거나 반복 작업이 많을 때 쓰면 편하다.
+`presentation/generator/`에 `deck.json` → `slides.md` 변환, 슬라이드 검증, 캡처 스크립트가 있다. **필수가 아니다** — 손으로 슬라이드를 짜도 되고, 양이 많거나 반복 작업이 많을 때 쓰면 편하다.
 
-자주 쓰는 명령(있을 때):
+자주 쓰는 명령:
 ```bash
-npm run presentation:scenes      # script → scenes.json
-npm run presentation:layouts     # 레이아웃 선택
-npm run presentation:slidev      # deck.json → slides.md
-npm run presentation:static      # 정적 HTML 백업 생성
-npm run presentation:validate    # 슬라이드 자가 점검
-npm run presentation:export-pdf  # PDF 내보내기
-npm run presentation:build       # scenes + layouts + slidev 한 번에
+npm run presentation:scenes          # script → scenes.json
+npm run presentation:layouts         # 레이아웃 선택
+npm run presentation:slidev          # deck.json → slides.md
+npm run presentation:validate-deck   # deck.json 계약 점검
+npm run presentation:validate-slides # 생성된 슬라이드 점검(overflow 등)
+npm run presentation:capture         # dist 정적 서빙 + Playwright 스크린샷
+npm run presentation:pdf             # PDF 내보내기
+npm run presentation:build           # validate-deck → slidev → validate-slides
+npm run presentation:gallery         # 16개 레이아웃 한 장씩 채운 갤러리
 ```
 생성기를 쓰든 손으로 짜든, 결과 품질은 §8로 스스로 점검한다.
 
 ### Slidev 빌드/서빙 팁
 - 헤드리스/미리보기 환경에서는 `slidev dev`가 검은 화면·charset 깨짐이 날 수 있다. 이때는 `slidev build` 결과물을 정적 서빙하면 UTF-8·다크 테마가 정상 렌더된다(캡처·발표 모두 이 경로 권장).
+- 시각 검증은 `npm run presentation:capture`로 — **dist 정적 서빙 + Playwright 스크린샷**을 한 번에 한다(미리보기 스크린샷은 헤드리스에서 타임아웃 남). 매번 직접 셋업하지 말 것.
 - 발표자 노트는 반드시 포함한다. 실제 앱 캡처가 있으면 placeholder·목업보다 우선한다.
 - 외부 URL 자산(폰트·아이콘·이미지)은 로컬로 복사해 **인터넷 없이도 발표 가능**하게 한다.
 
@@ -275,6 +306,7 @@ npm run presentation:build       # scenes + layouts + slidev 한 번에
 **시각 점검**
 - 같은 레이아웃 3장 연속 사용하지 않았는가?
 - 제목 3줄 초과, 본문 과다, 대본 통째 복사 아닌가?
+- **빔 뒤쪽 좌석에서 본문이 읽히나?** (본문 ≥ 슬라이드 높이 3% — §6.2)
 - 데모 이미지가 화면의 60% 이상인가?
 - 강조색 과다, 원본과 다른 폰트, 정보 밀도 과다 아닌가?
 - 실제 구현 화면 대신 목업만 쓰고 있지 않은가?
@@ -299,6 +331,6 @@ npm run presentation:build       # scenes + layouts + slidev 한 번에
 6. 빌드 실패를 완료로 처리하지 않는다.
 7. 실제 앱 캡처가 있으면 목업보다 우선한다. 외부 URL 자산은 로컬로 복사한다.
 8. 인터넷 없이 발표 가능해야 한다.
-9. `deck.json`을 엔진별로 중복 작성하지 않는다.
+9. 엔진은 Slidev 단일. `deck.json`을 만들면 **`copy.md`도 항상 함께** 만든다(슬롯 이름은 §3 필드맵).
 10. **화면 카피는 사람이 쓴다.** 잠긴 카피의 글자를 AI가 바꾸지 않는다 — 경고만.
 11. 구현되지 않은 기능을 실제처럼 발표하지 않는다.
