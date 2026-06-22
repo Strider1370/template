@@ -27,10 +27,10 @@
 | 명령 | 동작 |
 |---|---|
 | `npm run web:dev` | 웹앱 개발 서버 → http://localhost:3000 |
-| `npm run presentation:build` | `deck.json` → Slidev `slides.md` + Notion `presentation.html` 생성 |
+| `npm run presentation:build` | `deck.json` 검증 → Slidev `slides.md` 생성 → 슬라이드 검증 |
 | `npm run presentation:gallery` | **16개 레이아웃을 한 장씩 채운 "갤러리" 생성** — 처음에 어떤 레이아웃 쓸지 훑어보기용 |
-| `cd presentation/slidev && npm run dev` | Slidev 발표 미리보기 → http://localhost:3030 (`?edit=1` 또는 `e` 키로 편집) |
-| `npm run presentation:capture` | 슬라이드 PNG 캡처 (선택 — Playwright 필요: `npm i -g playwright && npx playwright install chromium`) |
+| `cd presentation/slidev && npm run dev` | Slidev 발표 미리보기 → http://localhost:3030 (`--host`로 LAN 공유 가능) |
+| `npm run presentation:capture` | `slidev build`(dist) 정적 서빙 + Playwright 슬라이드 PNG 캡처 (Playwright 필요: `npm i -g playwright && npx playwright install chromium`) |
 | `npm run generate-banner -- --topic "<주제>"` | 홈 히어로 배너 교체 (선택 — `OPENAI_API_KEY` 있을 때) |
 
 ## 쓰는 법

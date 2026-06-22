@@ -3,8 +3,6 @@
   "meta": {
     "title": "샘플 발표 (레이아웃 데모)",
     "engine": "slidev",
-    "fallbackEngine": "notion-static-html",
-    "theme": "notion-slidev",
     "aspectRatio": "16:9",
     "language": "ko",
     "presentationMinutes": 5,

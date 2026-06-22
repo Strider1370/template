@@ -12,12 +12,6 @@
       "runtimeExecutable": "node",
       "runtimeArgs": ["presentation/serve-static.mjs", "presentation/slidev/dist", "3030", "spa"],
       "port": 3030
-    },
-    {
-      "name": "notion",
-      "runtimeExecutable": "node",
-      "runtimeArgs": ["presentation/serve-static.mjs", "presentation/output", "3033"],
-      "port": 3033
     }
   ]
 }

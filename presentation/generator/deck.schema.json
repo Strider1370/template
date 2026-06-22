@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "presentation/generator/deck.schema.json",
   "title": "deck.json",
-  "description": "Slidev와 정적 HTML이 함께 사용하는 단일 슬라이드 계약. 엔진별 중복 작성 금지. Doc2 §9.2.",
+  "description": "Slidev 슬라이드의 단일 계약. 슬롯 이름은 reference/04 §3 슬롯 필드맵과 일치.",
   "type": "object",
   "required": ["version", "meta", "slides"],
   "additionalProperties": false,
@@ -16,17 +16,14 @@
         "title": { "type": "string" },
         "engine": {
           "type": "string",
-          "description": "기본 생성 엔진. engine-registry.json의 primary와 일치(slidev).",
+          "description": "생성 엔진. Slidev 단일.",
           "enum": ["slidev"]
         },
-        "fallbackEngine": {
-          "type": "string",
-          "enum": ["notion-static-html"],
-          "description": "백업 출력 엔진. 선택(기본 notion-static-html)."
-        },
-        "theme": { "type": "string", "description": "예: notion-slidev" },
+        "theme": { "type": "string", "description": "Slidev 테마(생략 시 기본 테마)." },
         "aspectRatio": { "type": "string", "default": "16:9" },
         "language": { "type": "string", "default": "ko" },
+        "clicks": { "type": "boolean", "description": "점진 표시(v-clicks). 기본 false=모든 내용 즉시 노출.", "default": false },
+        "presentationMinutes": { "type": "integer", "minimum": 0 },
         "totalDurationSeconds": { "type": "integer", "minimum": 0 }
       }
     },

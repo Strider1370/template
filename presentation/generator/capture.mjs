@@ -2,9 +2,8 @@
 /**
  * capture.mjs — 발표 슬라이드를 슬라이드별 PNG 로 캡처.
  *
- * 기본 엔진 = Slidev (실제로 발표하는 매체). deck.json 의 meta.engine=slidev 와 일치.
- *  1) Slidev 우선: slides.md → `slidev build`(dist) → 로컬 서버 → 라우트별 스크린샷.
- *  2) 폴백: Slidev 빌드/플레이라이트 불가 시 Notion 정적 HTML(output/static/presentation.html) 캡처.
+ * 엔진 = Slidev 단일. slides.md → `slidev build`(dist) → 로컬 서버 → 라우트별 스크린샷.
+ *  (dist 정적 서빙이라 dev 서버 charset 깨짐을 피한다 — reference/04 §7.)
  *
  * 목적: LLM 이 렌더된 슬라이드를 *직접 보고* per-slide contentScale(및 내용)을 조정(판단=LLM, 적용=코드).
  *  - 저장: presentation/output/captures/NN-<layout>.png (레이아웃명은 deck.json 기준).
@@ -24,7 +23,6 @@ const presentationRoot = resolve(__dirname, "..");
 const slidevDir = resolve(presentationRoot, "slidev");
 const distDir = resolve(slidevDir, "dist");
 const deckPath = resolve(presentationRoot, "deck.json");
-const htmlPath = resolve(presentationRoot, "output", "static", "presentation.html");
 const capturesDir = resolve(presentationRoot, "output", "captures");
 
 const BANNER = "[capture]";
@@ -70,15 +68,15 @@ async function launch(playwright) {
   }
 }
 
-// ---- 1) Slidev 캡처(기본) ----
+// ---- Slidev 캡처 ----
 async function captureSlidev(playwright) {
   if (!existsSync(resolve(slidevDir, "package.json"))) return false;
-  // 최신 slides.md 반영을 위해 매번 빌드. 실패하면 폴백.
+  // 최신 slides.md 반영을 위해 매번 빌드.
   try {
     info("Slidev 빌드 중… (slides.md → dist)");
     execSync("npx slidev build --out dist", { cwd: slidevDir, stdio: "pipe" });
   } catch (e) {
-    info("Slidev 빌드 실패 → Notion 정적 HTML 폴백. (" + (e && e.message ? e.message.split("\n")[0] : e) + ")");
+    info("Slidev 빌드 실패 — 캡처를 건너뜁니다. (" + (e && e.message ? e.message.split("\n")[0] : e) + ")");
     return false;
   }
   if (!existsSync(resolve(distDir, "index.html"))) return false;
@@ -121,36 +119,6 @@ async function captureSlidev(playwright) {
   }
 }
 
-// ---- 2) Notion 정적 HTML 캡처(폴백) ----
-async function captureStatic(playwright) {
-  if (!existsSync(htmlPath)) {
-    info("폴백 입력 없음: " + htmlPath + " (먼저 `npm run presentation:static`).");
-    return false;
-  }
-  const browser = await launch(playwright);
-  if (!browser) return false;
-  try {
-    mkdirSync(capturesDir, { recursive: true });
-    const page = await browser.newPage({ viewport: VIEWPORT });
-    await page.goto("file://" + htmlPath, { waitUntil: "networkidle" });
-    const slides = await page.$$eval(".slide", (els) => els.map((el) => el.getAttribute("data-layout") || "slide"));
-    if (!slides.length) { info("슬라이드 0개 — 건너뜁니다."); await browser.close(); return false; }
-    for (let i = 0; i < slides.length; i++) {
-      await page.$$eval(".slide", (els, idx) => els.forEach((el, k) => el.classList.toggle("ee-active", k === idx)), i);
-      await page.waitForTimeout(120);
-      const layout = String(slides[i]).replace(/[^a-z0-9-]/gi, "");
-      await page.screenshot({ path: resolve(capturesDir, pad2(i + 1) + "-" + (layout || "slide") + ".png"), clip: { x: 0, y: 0, ...VIEWPORT } });
-    }
-    info("Notion(폴백) 캡처 완료: " + slides.length + "장 → " + capturesDir);
-    await browser.close();
-    return true;
-  } catch (e) {
-    info("폴백 캡처 중 오류 — 건너뜁니다: " + (e && e.message ? e.message.split("\n")[0] : e));
-    try { await browser.close(); } catch { /* ignore */ }
-    return false;
-  }
-}
-
 async function main() {
   if (!process.env.PLAYWRIGHT_BROWSERS_PATH) {
     info("PLAYWRIGHT_BROWSERS_PATH 미설정 — 기본 경로 사용. 권장: `npm run presentation:capture`.");
@@ -160,9 +128,7 @@ async function main() {
     info("Playwright 모듈을 찾지 못했습니다(전역 설치 필요). 캡처를 건너뜁니다.");
     process.exit(0);
   }
-  // Slidev 우선 → 실패 시 Notion 정적 HTML.
-  const ok = await captureSlidev(playwright);
-  if (!ok) await captureStatic(playwright);
+  await captureSlidev(playwright);
   process.exit(0);
 }
 

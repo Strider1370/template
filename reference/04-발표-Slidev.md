@@ -215,10 +215,9 @@ card-grid · timeline · quote · limitation-guardrail · expansion-map · closi
   → 사람은 "내수정:" 칸에 **고치고 싶은 것만** 적는다. 비워두면 AI초안 채택.
 - 슬롯 이름은 레이아웃 정의 기준(예: hero=eyebrow/title/subtitle/footnote, demo-callout=title/callout/points, big-number=label/number/caption, insight-statement=title/subtitle, closing=title/subtitle/cta/tags/contact).
 
-**(b) 사람이 문구를 주는 3통로 (조합 가능)**
+**(b) 사람이 문구를 주는 2통로 (조합 가능)**
 - **A. 채팅 주소 지정**: "slide-03 title을 '○○'로." → 해당 필드만 고침.
-- **B. 편집 오버레이 클릭**: 렌더 후 편집 모드에서 슬롯 클릭→주소 복사(`slide-04.content.callout`)→채팅에 붙여 + 새 문구.
-- **C. 양식 직접 편집**: `copy.md` 빈칸을 한꺼번에 채움 → `deck.json`에 반영.
+- **B. 양식 직접 편집**: `copy.md`의 "내수정:" 칸을 채움 → `deck.json`에 반영.
 
 **(c) 잠금 — 사람 카피 보호 (핵심)**
 - 사람이 고친/지정한 슬롯만 `deck.json`에서 **`"authoredBy": "user"`(또는 `"locked": true`)** 로 표시.

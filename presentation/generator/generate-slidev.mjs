@@ -144,9 +144,10 @@ function colsFor(n) {
 // 가운데 정렬로 두는 레이아웃(타이틀/숫자/인용/마무리). 그 외 본문 슬라이드는 위 정렬(큰 제목).
 const CENTERED = new Set(["hero", "insight-statement", "big-number", "quote", "closing"]);
 
-// ---- 편집 주소 (Notion 정적 HTML 과 동일 규약: id.content.slot[.index] / id.assets.name) ----
-// global-top.vue 편집 오버레이가 data-addr 를 읽어 배지·주소복사·오버플로우 경고에 쓴다.
-const da = (addr) => (addr ? ` data-addr="${addr}"` : "");
+// ---- 편집 주소 ----
+// 편집 오버레이는 제거됨(카피 편집은 copy.md 로 — reference/04 §5.2). data-addr 는 출력하지 않는다.
+// slotA/subA/assetA 는 호출부 시그니처 유지를 위해 남겨두되, da() 가 빈 문자열을 내 출력엔 안 남는다.
+const da = () => "";
 const slotA = (id, slot) => (id ? `${id}.content.${slot}` : "");
 const subA = (base, i) => (base ? `${base}.${i}` : "");
 const assetA = (id, name) => (id ? `${id}.assets.${name}` : "");
@@ -624,7 +625,7 @@ visibleSlides.forEach((s, idx) => {
     body.push("title: " + JSON.stringify(deriveTitle(s)));
     body.push("glowSeed: " + seedFor(s, idx));
     body.push("glow: " + glowFor(idx));
-    // 편집 오버레이(global-top.vue)가 읽는 슬라이드 메타 — 레이아웃·시간·자산상태 배지용.
+    // 슬라이드 메타(nav title·검증용). 레이아웃·시간·자산상태.
     body.push("slideId: " + JSON.stringify(slideId));
     body.push("semanticLayout: " + JSON.stringify(s.semanticLayout || "slide"));
     body.push("durationSeconds: " + (Number(s.durationSeconds) || 0));
@@ -642,7 +643,7 @@ visibleSlides.forEach((s, idx) => {
   const sForRender = s.id ? s : { ...s, id: slideId };
   const rendered = renderer ? renderer(content, sForRender) : fallbackRender(content);
   // per-slide contentScale(0.5~2, 미지정=1): 본문 블록 전체를 zoom 으로 확대/축소(프레임 여백은 고정).
-  // 미지정/1 이면 래퍼 없이 그대로 — 기본 출력은 변화 0. (Notion 폴백은 글자만 calc 로 배율)
+  // 미지정/1 이면 래퍼 없이 그대로 — 기본 출력은 변화 0.
   const scaleRaw = typeof s.contentScale === "number" ? s.contentScale : 1;
   const scale = Math.min(2, Math.max(0.5, scaleRaw));
   const scaled = scale !== 1 ? `<div style="zoom:${scale}">\n\n${rendered}\n\n</div>` : rendered;

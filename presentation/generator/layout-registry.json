@@ -1,85 +1,85 @@
 {
   "version": 1,
-  "description": "Doc2 §8 공통 semantic layout 16개. AI는 먼저 semanticId를 고르고, 렌더러가 엔진별 실제 layout으로 매핑한다. 등록되지 않은 layout은 임의 생성 금지(Doc2 §17 #2). slidev 값은 기존 slidev 템플릿/내장 layout, notion-html 값은 propca 테마(marp/themes/propca-notion-style.css)의 검증된 section 클래스를 가리킨다.",
+  "description": "공통 semantic layout 16개. AI는 먼저 semanticId를 고르고, 렌더러가 실제 Slidev layout으로 매핑한다. 등록되지 않은 layout은 임의 생성 금지. slidev 값은 Slidev 내장/템플릿 layout. content 슬롯 이름은 reference/04 §3 슬롯 필드맵과 일치.",
   "layouts": [
     {
       "semanticId": "hero",
-      "renderers": { "slidev": "cover", "notion-html": "cover" },
+      "renderers": { "slidev": "cover" },
       "slots": ["eyebrow", "title", "subtitle", "footnote"]
     },
     {
       "semanticId": "problem-flow",
-      "renderers": { "slidev": "default", "notion-html": "icon-list" },
+      "renderers": { "slidev": "default" },
       "slots": ["title", "items"]
     },
     {
       "semanticId": "contrast",
-      "renderers": { "slidev": "two-cols", "notion-html": "compare" },
+      "renderers": { "slidev": "two-cols" },
       "slots": ["title", "lead", "leftLabel", "left", "rightLabel", "right"]
     },
     {
       "semanticId": "insight-statement",
-      "renderers": { "slidev": "statement", "notion-html": "yellow-banner" },
+      "renderers": { "slidev": "statement" },
       "slots": ["title", "subtitle"]
     },
     {
       "semanticId": "product-overview",
-      "renderers": { "slidev": "default", "notion-html": "block-features" },
+      "renderers": { "slidev": "default" },
       "slots": ["title", "features"]
     },
     {
       "semanticId": "demo-fullscreen",
-      "renderers": { "slidev": "image", "notion-html": "bg-full" },
+      "renderers": { "slidev": "image" },
       "slots": ["title", "subtitle"]
     },
     {
       "semanticId": "demo-callout",
-      "renderers": { "slidev": "image-right", "notion-html": "split" },
+      "renderers": { "slidev": "image-right" },
       "slots": ["title", "callout", "points"]
     },
     {
       "semanticId": "architecture",
-      "renderers": { "slidev": "default", "notion-html": "steps-result" },
+      "renderers": { "slidev": "default" },
       "slots": ["title", "steps", "result"]
     },
     {
       "semanticId": "before-after",
-      "renderers": { "slidev": "two-cols", "notion-html": "before-after" },
+      "renderers": { "slidev": "two-cols" },
       "slots": ["title", "beforeLabel", "afterLabel", "beforeCaption", "afterCaption"]
     },
     {
       "semanticId": "big-number",
-      "renderers": { "slidev": "center", "notion-html": "big-number" },
+      "renderers": { "slidev": "center" },
       "slots": ["label", "number", "caption"]
     },
     {
       "semanticId": "card-grid",
-      "renderers": { "slidev": "default", "notion-html": "pastel-blocks" },
+      "renderers": { "slidev": "default" },
       "slots": ["title", "cards"]
     },
     {
       "semanticId": "timeline",
-      "renderers": { "slidev": "default", "notion-html": "timeline" },
+      "renderers": { "slidev": "default" },
       "slots": ["title", "steps"]
     },
     {
       "semanticId": "quote",
-      "renderers": { "slidev": "quote", "notion-html": "hero-quote" },
+      "renderers": { "slidev": "quote" },
       "slots": ["quote", "attribution"]
     },
     {
       "semanticId": "limitation-guardrail",
-      "renderers": { "slidev": "default", "notion-html": "limitation-guardrail" },
+      "renderers": { "slidev": "default" },
       "slots": ["title", "limitations", "guardrails"]
     },
     {
       "semanticId": "expansion-map",
-      "renderers": { "slidev": "default", "notion-html": "roadmap" },
+      "renderers": { "slidev": "default" },
       "slots": ["title", "tiers"]
     },
     {
       "semanticId": "closing",
-      "renderers": { "slidev": "end", "notion-html": "end" },
+      "renderers": { "slidev": "end" },
       "slots": ["title", "subtitle", "cta", "tags", "contact"]
     }
   ],

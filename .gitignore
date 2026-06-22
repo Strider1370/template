@@ -45,9 +45,6 @@ Thumbs.db
 # 발표 레퍼런스 캡처 — 스크린샷은 재생성 가능(서드파티 렌더)이라 로컬 보관
 presentation/slidev/reference-capture/shots/
 
-# Marp 빌드 산출물
-presentation/marp/output/
-
 # Slidev 빌드 산출물 (빌드는 로컬에서 재생성)
 presentation/slidev/dist/
 presentation/slidev/dist-presets/
